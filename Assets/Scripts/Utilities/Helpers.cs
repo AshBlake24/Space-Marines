@@ -34,5 +34,17 @@ namespace Roguelike.Utilities
             return s_waitDictionary[timeInSeconds];
         }
         #endregion Time
+        
+        #region Pool
+        private static Transform s_generalPoolsContainer;
+
+        public static Transform GetGeneralPoolsContainer()
+        {
+            if (s_generalPoolsContainer == null)
+                s_generalPoolsContainer = new GameObject($"Pools").transform;
+
+            return s_generalPoolsContainer;
+        }
+        #endregion
     }
 }
