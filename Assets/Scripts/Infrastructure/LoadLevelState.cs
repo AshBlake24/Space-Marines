@@ -1,6 +1,6 @@
 namespace Roguelike.Infrastructure
 {
-    public class LoadLevelState : IState
+    public class LoadLevelState : IPayloadedState<string>
     {
         private readonly GameStateMachine _stateMachine;
         private readonly SceneLoader _sceneLoader;
@@ -11,10 +11,8 @@ namespace Roguelike.Infrastructure
             _sceneLoader = sceneLoader;
         }
 
-        public void Enter()
-        {
-            _sceneLoader.Load("Test01");
-        }
+        public void Enter(string sceneName) => 
+            _sceneLoader.Load(sceneName);
 
         public void Exit()
         {
