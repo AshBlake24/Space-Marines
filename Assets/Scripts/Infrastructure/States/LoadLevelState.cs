@@ -1,7 +1,7 @@
 using Roguelike.Logic;
 using UnityEngine;
 
-namespace Roguelike.Infrastructure
+namespace Roguelike.Infrastructure.States
 {
     public class LoadLevelState : IPayloadedState<string>
     {

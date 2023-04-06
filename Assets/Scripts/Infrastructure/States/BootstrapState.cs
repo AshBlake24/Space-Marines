@@ -1,4 +1,4 @@
-namespace Roguelike.Infrastructure
+namespace Roguelike.Infrastructure.States
 {
     public class BootstrapState : IState
     {

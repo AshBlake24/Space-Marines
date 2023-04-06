@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using Roguelike.Logic;
 
-namespace Roguelike.Infrastructure
+namespace Roguelike.Infrastructure.States
 {
     public class GameStateMachine
     {
