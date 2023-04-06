@@ -23,7 +23,7 @@ namespace Roguelike.Infrastructure
         }
 
         private void EnterLoadLevel() => 
-            _stateMachine.Enter<LoadLevelState>();
+            _stateMachine.Enter<LoadLevelState, string>("Test01");
 
         private void RegisterServices()
         {
