@@ -1,5 +1,3 @@
-using Roguelike.Infrastructure.Services;
-using Roguelike.Infrastructure.States;
 using Roguelike.Logic;
 
 namespace Roguelike.Infrastructure
@@ -10,7 +8,7 @@ namespace Roguelike.Infrastructure
 
         public Game(ICoroutineRunner coroutineRunner, LoadingScreen loadingScreen)
         {
-            StateMachine = new GameStateMachine(new SceneLoader(coroutineRunner), loadingScreen, AllServices.Container);
+            StateMachine = new GameStateMachine(new SceneLoader(coroutineRunner), loadingScreen);
         }
     }
 }
