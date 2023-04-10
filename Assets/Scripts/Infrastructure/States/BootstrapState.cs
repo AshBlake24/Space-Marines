@@ -1,3 +1,6 @@
+using Agava.YandexGames;
+using Roguelike.Services.Input;
+
 namespace Roguelike.Infrastructure.States
 {
     public class BootstrapState : IState
@@ -22,11 +25,24 @@ namespace Roguelike.Infrastructure.States
         {
         }
 
-        private void EnterLoadLevel() => 
+        private void EnterLoadLevel() =>
             _stateMachine.Enter<LoadLevelState, string>("Test01");
 
         private void RegisterServices()
         {
+            Game.InputService = RegisterInputService();
+        }
+
+        private IInputService RegisterInputService()
+        {
+#if UNITY_WEBGL && !UNITY_EDITOR
+            if (YandexGamesSdk.Environment == "Desktop")
+                return new DesktopInputService();
+            else
+                return new MobileInputService();
+#else
+            return new DesktopInputService();
+#endif
         }
     }
 }
