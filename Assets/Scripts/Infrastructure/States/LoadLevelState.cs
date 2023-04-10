@@ -1,4 +1,5 @@
 using Roguelike.Logic;
+using Roguelike.Logic.Camera;
 using UnityEngine;
 
 namespace Roguelike.Infrastructure.States
@@ -34,6 +35,8 @@ namespace Roguelike.Infrastructure.States
             GameObject initialPoint = GameObject.FindWithTag(InitialPointTag);
             GameObject player = Instantiate(PlayerPath, initialPoint.transform.position);
             
+            CameraFollow(player);
+            
             _stateMachine.Enter<GameLoopState>();
         }
 
@@ -47,6 +50,13 @@ namespace Roguelike.Infrastructure.States
         {
             GameObject prefab = Resources.Load<GameObject>(path);
             return Object.Instantiate(prefab, postition, Quaternion.identity);
+        }
+        
+        private void CameraFollow(GameObject hero)
+        { 
+            Camera.main
+                .GetComponent<CameraFollower>()
+                .Follow(hero);
         }
     }
 }
