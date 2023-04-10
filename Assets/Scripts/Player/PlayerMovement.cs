@@ -1,4 +1,5 @@
-using Roguelike.Infrastructure.Services;
+using System;
+using Roguelike.Infrastructure;
 using Roguelike.Services.Input;
 using UnityEngine;
 
@@ -11,43 +12,35 @@ namespace Roguelike.Player
         [SerializeField] private float _moveSpeed;
         [SerializeField] private PlayerAnimator _playerAnimator;
         [SerializeField] private CharacterController _characterController;
+        [SerializeField] private Animator _animator;
 
         private IInputService _inputService;
-        private Vector3 _direction;
-        private float _currentVelocity;
+        private Camera _camera;
 
         private void Awake()
         {
-            _inputService = AllServices.Container.Single<IInputService>();
+            _inputService = Game.InputService;
+        }
+
+        private void Start()
+        {
+            _camera = Camera.main;
         }
 
         private void Update()
         {
-            _direction = GetDirection();
-            _direction.Normalize();
+            Vector3 direction = Vector3.zero;
 
-            if (_direction.magnitude >= 0.1f)
-                Rotate();
-            
-            _direction += Physics.gravity;
-            Move();
-        }
+            if (_inputService.Axis.sqrMagnitude > 0.001f)
+            {
+                direction.x = _inputService.Axis.x;
+                direction.y = 0f;
+                direction.z = _inputService.Axis.y;
+                direction.Normalize();
 
-        private Vector3 GetDirection() =>
-            new(_inputService.Axis.x, 0, _inputService.Axis.y);
-
-        private void Move()
-        {
-            _characterController.Move(_direction * _moveSpeed * Time.deltaTime);
-            _playerAnimator.Move(_characterController.velocity.magnitude);
-        }
-
-        private void Rotate()
-        {
-            float rotationAngle = Mathf.Atan2(_direction.x, _direction.z) * Mathf.Rad2Deg;
-            float rotationAngleSmooth = Mathf.SmoothDampAngle(transform.eulerAngles.y, rotationAngle, ref _currentVelocity, SmoothTime);
-
-            transform.rotation = Quaternion.Euler(0, rotationAngleSmooth, 0);
+                transform.forward = direction;
+            }
+            _characterController.Move(direction * _moveSpeed * Time.deltaTime);
         }
     }
 }

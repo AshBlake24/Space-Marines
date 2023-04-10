@@ -42,9 +42,18 @@ namespace Roguelike.Infrastructure.States
             
             CameraFollow(player);
             
+            CameraFollow(player);
+            
             _stateMachine.Enter<GameLoopState>();
         }
 
+        private void CameraFollow(GameObject hero)
+        { 
+            Camera.main
+                .GetComponent<CameraFollower>()
+                .Follow(hero);
+        }
+        
         private void CameraFollow(GameObject hero)
         { 
             Camera.main

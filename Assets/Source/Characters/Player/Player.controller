@@ -1,5 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+<<<<<<< HEAD
 --- !u!1101 &-8201092957921339985
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -25,6 +26,8 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
+=======
+>>>>>>> Start working on Player Movement
 --- !u!206 &-7472375726514566775
 BlendTree:
   m_ObjectHideFlags: 1
@@ -40,19 +43,32 @@ BlendTree:
   m_UseAutomaticThresholds: 1
   m_NormalizedBlendValues: 0
   m_BlendType: 0
+<<<<<<< HEAD
 --- !u!1102 &-4774118556220300791
+=======
+--- !u!1102 &-5337808191205983687
+>>>>>>> Start working on Player Movement
 AnimatorState:
   serializedVersion: 6
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+<<<<<<< HEAD
   m_Name: Death
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
   m_StateMachineBehaviours:
   - {fileID: 3908401968429441377}
+=======
+  m_Name: Armature|idle
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_Transitions:
+  - {fileID: 2341272078726226578}
+  m_StateMachineBehaviours: []
+>>>>>>> Start working on Player Movement
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
@@ -61,13 +77,21 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
+<<<<<<< HEAD
   m_Motion: {fileID: 4348485665485846014, guid: 2301fa7a08e27024a8f75095f85fb9e6, type: 3}
+=======
+  m_Motion: {fileID: -1978303741906493279, guid: 3a9db110a4934644785f154b32af8656, type: 3}
+>>>>>>> Start working on Player Movement
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
+<<<<<<< HEAD
 --- !u!1101 &-3253264636638557013
+=======
+--- !u!1101 &-4837687262833223283
+>>>>>>> Start working on Player Movement
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -75,19 +99,32 @@ AnimatorStateTransition:
   m_PrefabAsset: {fileID: 0}
   m_Name: 
   m_Conditions:
+<<<<<<< HEAD
   - m_ConditionMode: 1
     m_ConditionEvent: Die
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -4774118556220300791}
+=======
+  - m_ConditionMode: 4
+    m_ConditionEvent: Speed
+    m_EventTreshold: 0.01
+  m_DstStateMachine: {fileID: 0}
+  m_DstState: {fileID: -5337808191205983687}
+>>>>>>> Start working on Player Movement
   m_Solo: 0
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 3
   m_TransitionDuration: 0.25
   m_TransitionOffset: 0
+<<<<<<< HEAD
   m_ExitTime: 0.75
   m_HasExitTime: 0
+=======
+  m_ExitTime: 0.5
+  m_HasExitTime: 1
+>>>>>>> Start working on Player Movement
   m_HasFixedDuration: 1
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
@@ -138,12 +175,15 @@ AnimatorController:
     m_DefaultInt: 0
     m_DefaultBool: 0
     m_Controller: {fileID: 0}
+<<<<<<< HEAD
   - m_Name: Die
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
     m_Controller: {fileID: 0}
+=======
+>>>>>>> Start working on Player Movement
   m_AnimatorLayers:
   - serializedVersion: 5
     m_Name: Base Layer
@@ -157,6 +197,7 @@ AnimatorController:
     m_IKPass: 0
     m_SyncedLayerAffectsTiming: 0
     m_Controller: {fileID: 9100000}
+<<<<<<< HEAD
 --- !u!114 &1536166085234159107
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -170,6 +211,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1101 &2097301462250634576
+=======
+--- !u!1101 &2341272078726226578
+>>>>>>> Start working on Player Movement
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -177,23 +221,37 @@ AnimatorStateTransition:
   m_PrefabAsset: {fileID: 0}
   m_Name: 
   m_Conditions:
+<<<<<<< HEAD
   - m_ConditionMode: 4
     m_ConditionEvent: Speed
     m_EventTreshold: 1
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 4030608504064953166}
+=======
+  - m_ConditionMode: 3
+    m_ConditionEvent: Speed
+    m_EventTreshold: 0.01
+  m_DstStateMachine: {fileID: 0}
+  m_DstState: {fileID: 6360726117001851609}
+>>>>>>> Start working on Player Movement
   m_Solo: 0
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 3
   m_TransitionDuration: 0.25
   m_TransitionOffset: 0
+<<<<<<< HEAD
   m_ExitTime: 0.5
   m_HasExitTime: 0
+=======
+  m_ExitTime: 0.85
+  m_HasExitTime: 1
+>>>>>>> Start working on Player Movement
   m_HasFixedDuration: 1
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
+<<<<<<< HEAD
 --- !u!1102 &2427171989800833472
 AnimatorState:
   serializedVersion: 6
@@ -223,10 +281,15 @@ AnimatorState:
   m_TimeParameter: 
 --- !u!114 &3908401968429441377
 MonoBehaviour:
+=======
+--- !u!206 &5517357313012983999
+BlendTree:
+>>>>>>> Start working on Player Movement
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+<<<<<<< HEAD
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
@@ -234,12 +297,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1102 &4030608504064953166
+=======
+  m_Name: BlendTree
+  m_Childs: []
+  m_BlendParameter: Blend
+  m_BlendParameterY: Blend
+  m_MinThreshold: 0
+  m_MaxThreshold: 1
+  m_UseAutomaticThresholds: 1
+  m_NormalizedBlendValues: 0
+  m_BlendType: 0
+--- !u!1102 &6360726117001851609
+>>>>>>> Start working on Player Movement
 AnimatorState:
   serializedVersion: 6
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+<<<<<<< HEAD
   m_Name: Idle
   m_Speed: 1
   m_CycleOffset: 0
@@ -247,6 +323,14 @@ AnimatorState:
   - {fileID: -8201092957921339985}
   m_StateMachineBehaviours:
   - {fileID: 1536166085234159107}
+=======
+  m_Name: Armature|run
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_Transitions:
+  - {fileID: -4837687262833223283}
+  m_StateMachineBehaviours: []
+>>>>>>> Start working on Player Movement
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
@@ -255,12 +339,17 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
+<<<<<<< HEAD
   m_Motion: {fileID: -3100369314251171874, guid: 2301fa7a08e27024a8f75095f85fb9e6, type: 3}
+=======
+  m_Motion: {fileID: 1303299601406483602, guid: 3a9db110a4934644785f154b32af8656, type: 3}
+>>>>>>> Start working on Player Movement
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
+<<<<<<< HEAD
 --- !u!206 &5517357313012983999
 BlendTree:
   m_ObjectHideFlags: 1
@@ -276,6 +365,8 @@ BlendTree:
   m_UseAutomaticThresholds: 1
   m_NormalizedBlendValues: 0
   m_BlendType: 0
+=======
+>>>>>>> Start working on Player Movement
 --- !u!1107 &6836328257538754293
 AnimatorStateMachine:
   serializedVersion: 6
@@ -286,6 +377,7 @@ AnimatorStateMachine:
   m_Name: Base Layer
   m_ChildStates:
   - serializedVersion: 1
+<<<<<<< HEAD
     m_State: {fileID: 4030608504064953166}
     m_Position: {x: 500, y: 60, z: 0}
   - serializedVersion: 1
@@ -305,3 +397,20 @@ AnimatorStateMachine:
   m_ExitPosition: {x: 200, y: 0, z: 0}
   m_ParentStateMachinePosition: {x: 800, y: 20, z: 0}
   m_DefaultState: {fileID: 4030608504064953166}
+=======
+    m_State: {fileID: -5337808191205983687}
+    m_Position: {x: 450, y: -40, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: 6360726117001851609}
+    m_Position: {x: 450, y: 60, z: 0}
+  m_ChildStateMachines: []
+  m_AnyStateTransitions: []
+  m_EntryTransitions: []
+  m_StateMachineTransitions: {}
+  m_StateMachineBehaviours: []
+  m_AnyStatePosition: {x: 270, y: 370, z: 0}
+  m_EntryPosition: {x: 470, y: -130, z: 0}
+  m_ExitPosition: {x: 470, y: 370, z: 0}
+  m_ParentStateMachinePosition: {x: 800, y: 20, z: 0}
+  m_DefaultState: {fileID: -5337808191205983687}
+>>>>>>> Start working on Player Movement
