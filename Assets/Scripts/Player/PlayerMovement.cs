@@ -1,4 +1,5 @@
 using Roguelike.Infrastructure;
+using Roguelike.Infrastructure.Services;
 using Roguelike.Services.Input;
 using UnityEngine;
 
@@ -18,7 +19,7 @@ namespace Roguelike.Player
 
         private void Awake()
         {
-            _inputService = Game.InputService;
+            _inputService = AllServices.Container.Single<IInputService>();
         }
 
         private void Update()
