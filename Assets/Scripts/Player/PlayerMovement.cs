@@ -1,4 +1,4 @@
-using Roguelike.Infrastructure;
+using Roguelike.Infrastructure.Services;
 using Roguelike.Services.Input;
 using UnityEngine;
 
@@ -6,7 +6,7 @@ namespace Roguelike.Player
 {
     public class PlayerMovement : MonoBehaviour
     {
-        private const float SmoothTime = 0.04f;
+        private const float SmoothTime = 0.1f;
         
         [SerializeField] private float _moveSpeed;
         [SerializeField] private Animator _animator;
