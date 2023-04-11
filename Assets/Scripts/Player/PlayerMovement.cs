@@ -9,7 +9,7 @@ namespace Roguelike.Player
         private const float SmoothTime = 0.1f;
         
         [SerializeField] private float _moveSpeed;
-        [SerializeField] private Animator _animator;
+        [SerializeField] private PlayerAnimator _playerAnimator;
         [SerializeField] private CharacterController _characterController;
 
         private IInputService _inputService;
@@ -24,19 +24,23 @@ namespace Roguelike.Player
         private void Update()
         {
             _direction = GetDirection();
-            
+            _direction.Normalize();
+
             if (_direction.magnitude >= 0.1f)
-            {
-                Move();
                 Rotate();
-            }
+            
+            _direction += Physics.gravity;
+            Move();
         }
 
         private Vector3 GetDirection() =>
             new(_inputService.Axis.x, 0, _inputService.Axis.y);
 
-        private void Move() => 
+        private void Move()
+        {
             _characterController.Move(_direction * _moveSpeed * Time.deltaTime);
+            _playerAnimator.Move(_characterController.velocity.magnitude);
+        }
 
         private void Rotate()
         {
