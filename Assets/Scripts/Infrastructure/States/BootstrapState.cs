@@ -1,4 +1,7 @@
 using Agava.YandexGames;
+using Roguelike.Infrastructure.AssetManagement;
+using Roguelike.Infrastructure.Factory;
+using Roguelike.Infrastructure.Services;
 using Roguelike.Services.Input;
 
 namespace Roguelike.Infrastructure.States
@@ -8,16 +11,19 @@ namespace Roguelike.Infrastructure.States
         private const string InitialScene = "Initial";
         private readonly GameStateMachine _stateMachine;
         private readonly SceneLoader _sceneLoader;
+        private readonly AllServices _services;
 
-        public BootstrapState(GameStateMachine stateMachine, SceneLoader sceneLoader)
+        public BootstrapState(GameStateMachine stateMachine, SceneLoader sceneLoader, AllServices services)
         {
             _stateMachine = stateMachine;
             _sceneLoader = sceneLoader;
+            _services = services;
+            
+            RegisterServices();
         }
 
         public void Enter()
         {
-            RegisterServices();
             _sceneLoader.Load(InitialScene, onLoaded: EnterLoadLevel);
         }
 
@@ -30,10 +36,12 @@ namespace Roguelike.Infrastructure.States
 
         private void RegisterServices()
         {
-            Game.InputService = RegisterInputService();
+            _services.RegisterSingle<IInputService>(GetInputService());
+            _services.RegisterSingle<IAssetProvider>(new AssetProvider());
+            _services.RegisterSingle<IGameFactory>(new GameFactory(_services.Single<IAssetProvider>()));
         }
 
-        private IInputService RegisterInputService()
+        private IInputService GetInputService()
         {
 #if UNITY_WEBGL && !UNITY_EDITOR
             if (YandexGamesSdk.Environment == "Desktop")
