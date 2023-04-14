@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using Roguelike.Infrastructure.Factory;
 using Roguelike.Infrastructure.Services;
+using Roguelike.Infrastructure.Services.PersistentData;
+using Roguelike.Infrastructure.Services.SaveLoad;
 using Roguelike.Logic;
 
 namespace Roguelike.Infrastructure.States
@@ -16,7 +18,8 @@ namespace Roguelike.Infrastructure.States
             _states = new Dictionary<Type, IExitableState>
             {
                 [typeof(BootstrapState)] = new BootstrapState(this, sceneLoader, services),
-                [typeof(LoadLevelState)] = new LoadLevelState(this, sceneLoader, loadingScreen, services.Single<IGameFactory>()),
+                [typeof(LoadLevelState)] = new LoadLevelState(this, sceneLoader, loadingScreen, services.Single<IGameFactory>(), services.Single<IPersistentDataService>()),
+                [typeof(LoadProgressState)] = new LoadProgressState(this, services.Single<IPersistentDataService>(), services.Single<ISaveLoadService>()),
                 [typeof(GameLoopState)] = new GameLoopState(this),
             };
         }
