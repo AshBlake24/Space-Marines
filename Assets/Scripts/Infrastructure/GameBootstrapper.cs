@@ -6,6 +6,7 @@ namespace Roguelike.Infrastructure
     public class GameBootstrapper : MonoBehaviour, ICoroutineRunner
     {
         [SerializeField] private LoadingScreen _loadingScreenPrefab;
+
         private Game _game;
 
         private void Awake()
