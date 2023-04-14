@@ -1,5 +1,5 @@
 using Roguelike.Infrastructure.Services;
-using Roguelike.Services.Input;
+using Roguelike.Infrastructure.Services.Input;
 using UnityEngine;
 
 namespace Roguelike.Player
