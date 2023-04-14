@@ -10,7 +10,6 @@ namespace Roguelike.Infrastructure
 
         private void Awake()
         {
-            Debug.Log("Game Run!");
             if (s_isInitialized)
                 return;
 
@@ -20,7 +19,6 @@ namespace Roguelike.Infrastructure
                 Instantiate(_gameBootstrapperPrefab);
 
             s_isInitialized = true;
-            Debug.Log("Game Initialized!");
         }
     }
 }
