@@ -5,6 +5,7 @@ using Roguelike.Infrastructure.Services;
 using Roguelike.Infrastructure.Services.Input;
 using Roguelike.Infrastructure.Services.PersistentData;
 using Roguelike.Infrastructure.Services.SaveLoad;
+using Roguelike.Infrastructure.Services.StaticData;
 
 namespace Roguelike.Infrastructure.States
 {
@@ -45,6 +46,14 @@ namespace Roguelike.Infrastructure.States
             _services.RegisterSingle<IGameFactory>(new GameFactory(_services.Single<IAssetProvider>()));
             _services.RegisterSingle<IPersistentDataService>(new PersistentDataService());
             _services.RegisterSingle<ISaveLoadService>(new SaveLoadService(_services.Single<IGameFactory>(), _services.Single<IPersistentDataService>()));
+            RegisterStaticData();
+        }
+
+        private void RegisterStaticData()
+        {
+            IStaticDataService staticDataService = new StaticDataService();
+            staticDataService.LoadWeapons();
+            _services.RegisterSingle<IStaticDataService>(staticDataService);
         }
 
         private IInputService GetInputService()
