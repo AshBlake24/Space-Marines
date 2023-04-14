@@ -15,13 +15,14 @@ namespace Roguelike.Player
             _animator.SetFloat(s_speedHash, speed);
 
         public void PlayDeath() => _animator.SetTrigger(s_dieHash);
-        public void SetOneHandedWeapon() => _animator.SetBool(s_hasOneHanded, true);
-        public void SetTwoHandedWeapon() => _animator.SetBool(s_hasTwoHanded, true);
+        public void SetOneHandedWeapon() => SetWeapon(true, false);
+        public void SetTwoHandedWeapon() => SetWeapon(false, true);
+        public void RemoveWeapon() => SetWeapon(false, false);
 
-        public void RemoveWeapon()
+        private void SetWeapon(bool hasOneHanded, bool hasTwoHanded)
         {
-            _animator.SetBool(s_hasOneHanded, false);
-            _animator.SetBool(s_hasTwoHanded, false);
+            _animator.SetBool(s_hasOneHanded, hasOneHanded);
+            _animator.SetBool(s_hasTwoHanded, hasTwoHanded);
         }
     }
 }

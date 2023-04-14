@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Roguelike.Infrastructure.AssetManagement;
 using Roguelike.Infrastructure.Services.PersistentData;
+using Roguelike.Player;
 using UnityEngine;
 
 namespace Roguelike.Infrastructure.Factory
