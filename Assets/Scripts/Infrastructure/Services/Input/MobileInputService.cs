@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Roguelike.Services.Input
+namespace Roguelike.Infrastructure.Services.Input
 {
     public class MobileInputService : InputService
     {
