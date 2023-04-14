@@ -2,13 +2,17 @@ using Agava.YandexGames;
 using Roguelike.Infrastructure.AssetManagement;
 using Roguelike.Infrastructure.Factory;
 using Roguelike.Infrastructure.Services;
-using Roguelike.Services.Input;
+using Roguelike.Infrastructure.Services.Input;
+using Roguelike.Infrastructure.Services.PersistentData;
+using Roguelike.Infrastructure.Services.SaveLoad;
 
 namespace Roguelike.Infrastructure.States
 {
     public class BootstrapState : IState
     {
         private const string InitialScene = "Initial";
+        private const string DesktopEnvironment = "Desktop";
+
         private readonly GameStateMachine _stateMachine;
         private readonly SceneLoader _sceneLoader;
         private readonly AllServices _services;
@@ -32,19 +36,21 @@ namespace Roguelike.Infrastructure.States
         }
 
         private void EnterLoadLevel() =>
-            _stateMachine.Enter<LoadLevelState, string>("Test01");
+            _stateMachine.Enter<LoadProgressState>();
 
         private void RegisterServices()
         {
             _services.RegisterSingle<IInputService>(GetInputService());
             _services.RegisterSingle<IAssetProvider>(new AssetProvider());
             _services.RegisterSingle<IGameFactory>(new GameFactory(_services.Single<IAssetProvider>()));
+            _services.RegisterSingle<IPersistentDataService>(new PersistentDataService());
+            _services.RegisterSingle<ISaveLoadService>(new SaveLoadService(_services.Single<IGameFactory>(), _services.Single<IPersistentDataService>()));
         }
 
         private IInputService GetInputService()
         {
 #if UNITY_WEBGL && !UNITY_EDITOR
-            if (YandexGamesSdk.Environment == "Desktop")
+            if (YandexGamesSdk.Environment == DesktopEnvironment)
                 return new DesktopInputService();
             else
                 return new MobileInputService();
