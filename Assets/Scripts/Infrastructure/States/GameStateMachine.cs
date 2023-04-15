@@ -18,7 +18,7 @@ namespace Roguelike.Infrastructure.States
             _states = new Dictionary<Type, IExitableState>
             {
                 [typeof(BootstrapState)] = new BootstrapState(this, sceneLoader, services),
-                [typeof(LoadLevelState)] = new LoadLevelState(this, sceneLoader, loadingScreen, services.Single<IGameFactory>(), services.Single<IPersistentDataService>()),
+                [typeof(LoadLevelState)] = new LoadLevelState(this, sceneLoader, loadingScreen, services.Single<IGameFactory>(), services.Single<ISaveLoadService>(), services.Single<IPersistentDataService>()),
                 [typeof(LoadProgressState)] = new LoadProgressState(this, services.Single<IPersistentDataService>(), services.Single<ISaveLoadService>(), services.Single<IWeaponFactory>()),
                 [typeof(GameLoopState)] = new GameLoopState(this),
             };

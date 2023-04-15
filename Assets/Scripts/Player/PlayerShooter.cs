@@ -9,21 +9,27 @@ namespace Roguelike.Player
     public class PlayerShooter : MonoBehaviour
     {
         [SerializeField] private PlayerAnimator _playerAnimator;
+        [SerializeField] private Transform _weaponSpawnPoint;
         
-        private Transform _weaponSpawnPoint;
         private IInputService _inputService;
         private List<IWeapon> _weapons;
         private IWeapon _currentWeapon;
+        private int _currentWeaponIndex;
+
+        public Transform WeaponSpawnPoint => _weaponSpawnPoint;
 
         private void Awake()
         {
             _inputService = AllServices.Container.Single<IInputService>();
         }
 
-        public void Construct(Transform weaponSpawnPoint, List<IWeapon> weapons)
+        public void Construct(List<IWeapon> weapons)
         {
-            _weaponSpawnPoint = weaponSpawnPoint;
             _weapons = weapons;
+            _currentWeaponIndex = 0;
+            _currentWeapon = _weapons[_currentWeaponIndex];
+            _currentWeapon.Show();
+            _playerAnimator.SetWeapon(_currentWeapon.Stats.Size);
         }
     }
 }

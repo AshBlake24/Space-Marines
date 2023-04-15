@@ -7,8 +7,6 @@ namespace Roguelike.Infrastructure.Factory
 {
     public interface IGameFactory : IService
     {
-        IReadOnlyList<IProgressReader> ProgressReaders { get; }
-        IReadOnlyList<IProgressWriter> ProgressWriters { get; }
         GameObject CreatePlayer(Transform playerInitialPoint);
 
         GameObject GenerateLevel();

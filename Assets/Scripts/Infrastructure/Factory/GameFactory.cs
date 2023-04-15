@@ -1,7 +1,11 @@
 using System.Collections.Generic;
+using Roguelike.Data;
 using Roguelike.Infrastructure.AssetManagement;
 using Roguelike.Infrastructure.Services.PersistentData;
+using Roguelike.Infrastructure.Services.SaveLoad;
 using Roguelike.Infrastructure.Services.StaticData;
+using Roguelike.Player;
+using Roguelike.Weapons;
 using UnityEngine;
 
 namespace Roguelike.Infrastructure.Factory
@@ -9,53 +13,42 @@ namespace Roguelike.Infrastructure.Factory
     public class GameFactory : IGameFactory
     {
         private readonly IAssetProvider _assetProvider;
+        private readonly IWeaponFactory _weaponFactory;
+        private readonly ISaveLoadService _saveLoadService;
+        private readonly IPersistentDataService _persistentData;
         private readonly IStaticDataService _staticDataService;
-        private readonly List<IProgressReader> _progressReaders;
-        private readonly List<IProgressWriter> _progressWriters;
-
-        public IReadOnlyList<IProgressReader> ProgressReaders => _progressReaders;
-        public IReadOnlyList<IProgressWriter> ProgressWriters => _progressWriters;
-
-        public GameFactory(IAssetProvider assetProvider)
+        
+        public GameFactory(IAssetProvider assetProvider, IPersistentDataService persistentData, ISaveLoadService saveLoadService, IWeaponFactory weaponFactory)
         {
             _assetProvider = assetProvider;
-            _progressReaders = new List<IProgressReader>();
-            _progressWriters = new List<IProgressWriter>();
+            _weaponFactory = weaponFactory;
+            _persistentData = persistentData;
+            _saveLoadService = saveLoadService;
         }
         
-        public GameObject CreatePlayer(Transform playerInitialPoint) => 
-            _assetProvider.Instantiate(AssetPath.PlayerPath, playerInitialPoint.position);
-
-        public GameObject GenerateLevel() =>
-            _assetProvider.Instantiate(AssetPath.LevelGeneratorPath);
-            InstantiateRegistered(AssetPath.PlayerPath, playerInitialPoint.position);
-
-        public void Cleanup()
+        public GameObject CreatePlayer(Transform playerInitialPoint)
         {
-            _progressReaders.Clear();
-            _progressWriters.Clear();
+            GameObject player = InstantiateRegistered(AssetPath.PlayerPath, playerInitialPoint.position);
+
+            List<IWeapon> weapons = new();
+            PlayerShooter playerShooter = player.GetComponent<PlayerShooter>();
+
+            foreach (RangedWeaponsData rangedWeapon in _persistentData.PlayerProgress.PlayerWeapons.RangedWeapons)
+            {
+                weapons.Add(_weaponFactory.CreateWeapon(rangedWeapon.ID, playerShooter.WeaponSpawnPoint));
+            }
+            
+            playerShooter.Construct(weapons);
+
+            return player;
         }
 
         private GameObject InstantiateRegistered(string prefabPath, Vector3 postition)
         {
             GameObject gameObject = _assetProvider.Instantiate(prefabPath, postition);
-            RegisterProgressWatchers(gameObject);
+            _saveLoadService.RegisterProgressWatchers(gameObject);
 
             return gameObject;
-        }
-
-        private void RegisterProgressWatchers(GameObject gameObject)
-        {
-            foreach (IProgressReader progressReader in gameObject.GetComponentsInChildren<IProgressReader>())
-                Register(progressReader);
-        }
-
-        private void Register(IProgressReader progressReader)
-        {
-            if (progressReader is IProgressWriter progressWriter)
-                _progressWriters.Add(progressWriter);
-            
-            _progressReaders.Add(progressReader);
         }
     }
 }
