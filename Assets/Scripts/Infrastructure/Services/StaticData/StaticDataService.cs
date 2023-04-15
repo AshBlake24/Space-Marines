@@ -12,7 +12,7 @@ namespace Roguelike.Infrastructure.Services.StaticData
         public void LoadWeapons()
         {
             _weapons = Resources.LoadAll<WeaponStaticData>("Weapons")
-                .ToDictionary(x => x._weaponId);
+                .ToDictionary(x => x.WeaponId);
         }
 
         public WeaponStaticData GetWeaponData(WeaponId id) => 

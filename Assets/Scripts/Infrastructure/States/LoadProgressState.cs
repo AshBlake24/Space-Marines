@@ -42,7 +42,16 @@ namespace Roguelike.Infrastructure.States
                 _saveLoadService.LoadProgress()
                 ?? CreateNewProgress();
 
-        private PlayerProgress CreateNewProgress() => 
-            new PlayerProgress(StartLevel, _weaponFactory.CreateWeapon(WeaponId.PistolBasic));
+        private PlayerProgress CreateNewProgress()
+        {
+            IWeapon weapon = _weaponFactory.CreateWeapon(WeaponId.BasicPistol);
+            IEnumerable<IWeapon> weapons = new []
+            {
+                weapon
+            };
+
+
+            return new PlayerProgress(StartLevel, weapons);
+        }
     }
 }

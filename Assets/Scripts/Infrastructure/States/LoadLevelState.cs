@@ -1,6 +1,7 @@
 using System;
 using Roguelike.Infrastructure.Factory;
 using Roguelike.Infrastructure.Services.PersistentData;
+using Roguelike.Infrastructure.Services.SaveLoad;
 using Roguelike.Logic;
 using Roguelike.Logic.Camera;
 using UnityEngine;
@@ -15,21 +16,23 @@ namespace Roguelike.Infrastructure.States
         private readonly SceneLoader _sceneLoader;
         private readonly LoadingScreen _loadingScreen;
         private readonly IGameFactory _gameFactory;
+        private readonly ISaveLoadService _saveLoadService;
         private readonly IPersistentDataService _progressService;
 
-        public LoadLevelState(GameStateMachine stateMachine, SceneLoader sceneLoader, LoadingScreen loadingScreen, IGameFactory gameFactory, IPersistentDataService progressService)
+        public LoadLevelState(GameStateMachine stateMachine, SceneLoader sceneLoader, LoadingScreen loadingScreen, IGameFactory gameFactory, ISaveLoadService saveLoadService, IPersistentDataService progressService)
         {
             _stateMachine = stateMachine;
             _sceneLoader = sceneLoader;
             _loadingScreen = loadingScreen;
             _gameFactory = gameFactory;
+            _saveLoadService = saveLoadService;
             _progressService = progressService;
         }
 
         public void Enter(string sceneName)
         {
             _loadingScreen.Show();
-            _gameFactory.Cleanup();
+            _saveLoadService.Cleanup();
             _sceneLoader.Load(sceneName, OnLoaded);
         }
 
@@ -56,7 +59,7 @@ namespace Roguelike.Infrastructure.States
 
         private void InformProgressReaders()
         {
-            foreach (IProgressReader progressReader in _gameFactory.ProgressReaders)
+            foreach (IProgressReader progressReader in _saveLoadService.ProgressReaders)
                 progressReader.ReadProgress(_progressService.PlayerProgress);
         }
 
