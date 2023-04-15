@@ -1,3 +1,5 @@
+using System;
+using Roguelike.Weapons.Stats;
 using UnityEngine;
 
 namespace Roguelike.Player
@@ -15,9 +17,22 @@ namespace Roguelike.Player
             _animator.SetFloat(s_speedHash, speed);
 
         public void PlayDeath() => _animator.SetTrigger(s_dieHash);
-        public void SetOneHandedWeapon() => SetWeapon(true, false);
-        public void SetTwoHandedWeapon() => SetWeapon(false, true);
-        public void RemoveWeapon() => SetWeapon(false, false);
+
+        public void SetWeapon(WeaponSize weaponSize)
+        {
+            switch (weaponSize)
+            {
+                case WeaponSize.OneHanded:
+                    SetWeapon(true, false);
+                    break;
+                case WeaponSize.TwoHanded:
+                    SetWeapon(false, true);
+                    break;
+                default:
+                    SetWeapon(false, false);
+                    break;
+            }
+        }
 
         private void SetWeapon(bool hasOneHanded, bool hasTwoHanded)
         {
