@@ -1,6 +1,11 @@
+using System.Collections.Generic;
 using Roguelike.Data;
+using Roguelike.Infrastructure.AssetManagement;
+using Roguelike.Infrastructure.Factory;
 using Roguelike.Infrastructure.Services.PersistentData;
 using Roguelike.Infrastructure.Services.SaveLoad;
+using Roguelike.StaticData.Weapons;
+using Roguelike.Weapons;
 
 namespace Roguelike.Infrastructure.States
 {
@@ -11,12 +16,14 @@ namespace Roguelike.Infrastructure.States
         private readonly GameStateMachine _stateMachine;
         private readonly IPersistentDataService _progressService;
         private readonly ISaveLoadService _saveLoadService;
+        private readonly IWeaponFactory _weaponFactory;
 
-        public LoadProgressState(GameStateMachine stateMachine, IPersistentDataService progressService, ISaveLoadService saveLoadService)
+        public LoadProgressState(GameStateMachine stateMachine, IPersistentDataService progressService, ISaveLoadService saveLoadService, IWeaponFactory weaponFactory)
         {
             _stateMachine = stateMachine;
             _progressService = progressService;
             _saveLoadService = saveLoadService;
+            _weaponFactory = weaponFactory;
         }
 
         public void Enter()
@@ -36,6 +43,6 @@ namespace Roguelike.Infrastructure.States
                 ?? CreateNewProgress();
 
         private PlayerProgress CreateNewProgress() => 
-            new PlayerProgress(StartLevel);
+            new PlayerProgress(StartLevel, _weaponFactory.CreateWeapon(WeaponId.PistolBasic));
     }
 }

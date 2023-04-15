@@ -41,12 +41,13 @@ namespace Roguelike.Infrastructure.States
 
         private void RegisterServices()
         {
+            RegisterStaticData();
             _services.RegisterSingle<IInputService>(GetInputService());
             _services.RegisterSingle<IAssetProvider>(new AssetProvider());
-            _services.RegisterSingle<IGameFactory>(new GameFactory(_services.Single<IAssetProvider>()));
             _services.RegisterSingle<IPersistentDataService>(new PersistentDataService());
+            _services.RegisterSingle<IGameFactory>(new GameFactory(_services.Single<IAssetProvider>()));
+            _services.RegisterSingle<IWeaponFactory>(new WeaponFactory(_services.Single<IStaticDataService>()));
             _services.RegisterSingle<ISaveLoadService>(new SaveLoadService(_services.Single<IGameFactory>(), _services.Single<IPersistentDataService>()));
-            RegisterStaticData();
         }
 
         private void RegisterStaticData()

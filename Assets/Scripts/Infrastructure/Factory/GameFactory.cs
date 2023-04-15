@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using Roguelike.Infrastructure.AssetManagement;
 using Roguelike.Infrastructure.Services.PersistentData;
-using Roguelike.Player;
+using Roguelike.Infrastructure.Services.StaticData;
 using UnityEngine;
 
 namespace Roguelike.Infrastructure.Factory
@@ -9,6 +9,7 @@ namespace Roguelike.Infrastructure.Factory
     public class GameFactory : IGameFactory
     {
         private readonly IAssetProvider _assetProvider;
+        private readonly IStaticDataService _staticDataService;
         private readonly List<IProgressReader> _progressReaders;
         private readonly List<IProgressWriter> _progressWriters;
 
