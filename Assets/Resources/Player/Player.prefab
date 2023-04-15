@@ -127,6 +127,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playerAnimator: {fileID: 1225606247818609378}
+  _weaponSpawnPoint: {fileID: 5167727887040060501}
 --- !u!1001 &1153865465075085820
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -184,6 +185,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 12079bf49bf4a004ba737acab0e38e61, type: 3}
+--- !u!4 &5167727887040060501 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6319728561859276201, guid: 12079bf49bf4a004ba737acab0e38e61, type: 3}
+  m_PrefabInstance: {fileID: 1153865465075085820}
+  m_PrefabAsset: {fileID: 0}
 --- !u!95 &6881646079875534262 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 5729667383196712010, guid: 12079bf49bf4a004ba737acab0e38e61, type: 3}
