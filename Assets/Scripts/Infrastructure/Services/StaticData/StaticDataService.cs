@@ -7,16 +7,16 @@ namespace Roguelike.Infrastructure.Services.StaticData
 {
     public class StaticDataService : IStaticDataService
     {
-        private Dictionary<WeaponTypeId, WeaponStaticData> _weapons;
+        private Dictionary<WeaponId, WeaponStaticData> _weapons;
 
         public void LoadWeapons()
         {
             _weapons = Resources.LoadAll<WeaponStaticData>("Weapons")
-                .ToDictionary(x => x.WeaponTypeId);
+                .ToDictionary(x => x._weaponId);
         }
 
-        public WeaponStaticData GetWeaponData(WeaponTypeId typeId) => 
-            _weapons.TryGetValue(typeId, out WeaponStaticData staticData) 
+        public WeaponStaticData GetWeaponData(WeaponId id) => 
+            _weapons.TryGetValue(id, out WeaponStaticData staticData) 
                 ? staticData 
                 : null;
     }
