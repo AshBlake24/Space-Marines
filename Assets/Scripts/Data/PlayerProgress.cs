@@ -8,12 +8,12 @@ namespace Roguelike.Data
     public class PlayerProgress
     {
         public WorldData WorldData;
-        public WeaponsData WeaponsData;
+        public PlayerWeapons PlayerWeapons;
 
-        public PlayerProgress(string initialLevel, IWeapon startWeapon)
+        public PlayerProgress(string initialLevel, IEnumerable<IWeapon> startWeapons)
         {
             WorldData = new WorldData(initialLevel);
-            WeaponsData = new WeaponsData(startWeapon);
+            PlayerWeapons = new PlayerWeapons(startWeapons);
         }
     }
 }
