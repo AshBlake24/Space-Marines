@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Roguelike.StaticData.Weapons;
 using Roguelike.Weapons;
 
@@ -8,36 +9,46 @@ namespace Roguelike.Data
     [Serializable]
     public class PlayerWeapons
     {
-        public List<RangedWeaponsData> RangedWeapons;
+        public List<WeaponId> Available;
+        public List<AmmoData> Ammo;
 
         public PlayerWeapons(IEnumerable<IWeapon> startWeapons)
         {
-            RangedWeapons = new List<RangedWeaponsData>();
+            Available = new List<WeaponId>();
+            Ammo = new List<AmmoData>();
 
             InitializeStartWeapons(startWeapons);
         }
-
+        
         public void SaveRangedWeapon(WeaponId id, int currentAmmo, int currentClipAmmo)
         {
-            RangedWeaponsData weapon = RangedWeapons.Find(x => x.ID == id);
-
-            if (weapon != null)
+            if (Available.Contains(id) == false)
             {
-                weapon.CurrentAmmo = currentAmmo;
-                weapon.CurrentClipAmmo = currentClipAmmo;
+                Available.Add(id);
+                AmmoData ammoData = new()
+                {
+                    ID = id,
+                    CurrentAmmo = currentAmmo,
+                    CurrentClipAmmo = currentClipAmmo
+                };
+                Ammo.Add(ammoData);
             }
             else
             {
-                RangedWeapons.Add(new RangedWeaponsData(id, currentAmmo, currentClipAmmo));
+                AmmoData rangedWeapon = Ammo.Single(weapon => weapon.ID == id);
+                rangedWeapon.CurrentAmmo = currentAmmo;
+                rangedWeapon.CurrentClipAmmo = currentClipAmmo;
             }
         }
-
+        
         private void InitializeStartWeapons(IEnumerable<IWeapon> startWeapons)
         {
             foreach (IWeapon weapon in startWeapons)
             {
                 if (weapon is RangedWeapon rangedWeapon)
                     SaveRangedWeapon(rangedWeapon.Stats.ID, rangedWeapon.CurrentAmmo, rangedWeapon.CurrentClipAmmo);
+                else
+                    Available.Add(weapon.Stats.ID);
             }
         }
     }
