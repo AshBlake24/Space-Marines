@@ -1,6 +1,7 @@
+using System.Collections;
 using Roguelike.Data;
 using Roguelike.Infrastructure.Services.PersistentData;
-using Roguelike.StaticData.Weapons;
+using Roguelike.Utilities;
 using Roguelike.Weapons.Stats;
 using UnityEngine;
 
@@ -15,17 +16,13 @@ namespace Roguelike.Weapons
         public override WeaponStats Stats => _stats;
         public int CurrentAmmo { get; private set; }
         public int CurrentClipAmmo { get; private set; }
+        private bool CanReload => (CurrentClipAmmo < _stats.ClipSize) && (CurrentAmmo > 0);
 
         public void Construct(RangedWeaponStats stats)
         {
             _stats = stats;
             CurrentAmmo = stats.MaxAmmo;
             CurrentClipAmmo = stats.ClipSize;
-        }
-
-        public override void Attack()
-        {
-            throw new System.NotImplementedException();
         }
 
         public void ReadProgress(PlayerProgress progress)
@@ -41,5 +38,41 @@ namespace Roguelike.Weapons
 
         public void WriteProgress(PlayerProgress progress) => 
             progress.PlayerWeapons.SaveRangedWeapon(Stats.ID, CurrentAmmo, CurrentClipAmmo);
+
+        public override bool TryAttack()
+        {
+            if (CurrentClipAmmo > 0)
+            {
+                Shot();
+                return true;
+            }
+
+            if (CanReload)
+                StartCoroutine(Reloading());
+            else
+                Debug.Log("Not enough ammo");
+
+            return false;
+        }
+
+        private void Shot()
+        {
+            CurrentClipAmmo--;
+            Debug.Log($"{_stats.Name} shot! Bullets in magazine: {CurrentClipAmmo}. Bullets amount: {CurrentAmmo}");
+        }
+
+        private IEnumerator Reloading()
+        {
+            Debug.Log("Reloading!");
+            yield return Helpers.GetTime(_stats.ReloadTime);
+
+            int maxReloadAmount = Mathf.Min(_stats.ClipSize, CurrentAmmo);
+            int availableBulletsInCurrentClip = _stats.ClipSize - CurrentClipAmmo;
+            int reloadAmount = Mathf.Min(maxReloadAmount, availableBulletsInCurrentClip);
+            CurrentClipAmmo += reloadAmount;
+            CurrentAmmo -= reloadAmount;
+
+            Debug.Log($"{_stats.Name} reloaded. Bullets in magazine: {CurrentClipAmmo}. Bullets amount: {CurrentAmmo}");
+        }
     }
 }

@@ -8,7 +8,7 @@ namespace Roguelike.Weapons
         WeaponStats Stats { get; }
         Vector3 PositionOffset { get; }
         Vector3 RotationOffset { get; }
-        void Attack();
+        bool TryAttack();
         void Show();
         void Hide();
     }

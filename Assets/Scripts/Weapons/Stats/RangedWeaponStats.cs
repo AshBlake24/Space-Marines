@@ -7,6 +7,7 @@ namespace Roguelike.Weapons.Stats
         private readonly int _maxAmmo;
         private readonly int _clipSize;
         private readonly float _reloadTime;
+        
         public RangedWeaponStats(RangedWeaponStaticData weaponData) : base(weaponData)
         {
             _maxAmmo = weaponData.MaxAmmo;
