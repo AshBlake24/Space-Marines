@@ -1,10 +1,10 @@
 using System.Collections.Generic;
+using System.Linq;
 using Roguelike.Data;
-using Roguelike.Infrastructure.AssetManagement;
 using Roguelike.Infrastructure.Factory;
 using Roguelike.Infrastructure.Services.PersistentData;
 using Roguelike.Infrastructure.Services.SaveLoad;
-using Roguelike.StaticData.Weapons;
+using Roguelike.Infrastructure.Services.StaticData;
 using Roguelike.Weapons;
 
 namespace Roguelike.Infrastructure.States
@@ -17,13 +17,15 @@ namespace Roguelike.Infrastructure.States
         private readonly IPersistentDataService _progressService;
         private readonly ISaveLoadService _saveLoadService;
         private readonly IWeaponFactory _weaponFactory;
+        private readonly IStaticDataService _staticDataService;
 
-        public LoadProgressState(GameStateMachine stateMachine, IPersistentDataService progressService, ISaveLoadService saveLoadService, IWeaponFactory weaponFactory)
+        public LoadProgressState(GameStateMachine stateMachine, IPersistentDataService progressService, ISaveLoadService saveLoadService, IWeaponFactory weaponFactory, IStaticDataService staticDataService)
         {
             _stateMachine = stateMachine;
             _progressService = progressService;
             _saveLoadService = saveLoadService;
             _weaponFactory = weaponFactory;
+            _staticDataService = staticDataService;
         }
 
         public void Enter()
@@ -45,16 +47,9 @@ namespace Roguelike.Infrastructure.States
         private PlayerProgress CreateNewProgress() => 
             new PlayerProgress(StartLevel, CreateStartWeapons());
 
-        private IEnumerable<IWeapon> CreateStartWeapons()
-        {
-            IWeapon weapon = _weaponFactory.CreateWeapon(WeaponId.BasicPistol);
-            
-            IEnumerable<IWeapon> weapons = new[]
-            {
-                weapon
-            };
-
-            return weapons;
-        }
+        private IEnumerable<IWeapon> CreateStartWeapons() => 
+            _staticDataService.Player.StartWeapons
+                .Select(weaponId => _weaponFactory.CreateWeapon(weaponId))
+                .ToList();
     }
 }

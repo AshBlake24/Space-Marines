@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Roguelike.StaticData.Player;
 using Roguelike.StaticData.Weapons;
 using UnityEngine;
 
@@ -8,6 +9,13 @@ namespace Roguelike.Infrastructure.Services.StaticData
     public class StaticDataService : IStaticDataService
     {
         private Dictionary<WeaponId, WeaponStaticData> _weapons;
+        
+        public PlayerStaticData Player { get; private set; }
+
+        public void LoadPlayer()
+        {
+            Player = Resources.Load<PlayerStaticData>("Player/PlayerStaticData");
+        }
 
         public void LoadWeapons()
         {
