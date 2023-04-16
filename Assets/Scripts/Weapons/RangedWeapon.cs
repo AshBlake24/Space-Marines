@@ -11,7 +11,6 @@ namespace Roguelike.Weapons
         [SerializeField] private Transform _firePoint;
 
         private RangedWeaponStats _stats;
-        private float _lastShotTime;
 
         public override WeaponStats Stats => _stats;
         public int CurrentAmmo { get; private set; }
