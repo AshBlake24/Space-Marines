@@ -12,6 +12,7 @@ namespace Roguelike.Weapons
         [SerializeField] private Transform _firePoint;
 
         private RangedWeaponStats _stats;
+        private bool _isReloading;
 
         public override WeaponStats Stats => _stats;
         public int CurrentAmmo { get; private set; }
@@ -41,6 +42,9 @@ namespace Roguelike.Weapons
 
         public override bool TryAttack()
         {
+            if (_isReloading)
+                return false;
+            
             if (CurrentClipAmmo > 0)
             {
                 Shot();
@@ -64,6 +68,8 @@ namespace Roguelike.Weapons
         private IEnumerator Reloading()
         {
             Debug.Log("Reloading!");
+            _isReloading = true;
+
             yield return Helpers.GetTime(_stats.ReloadTime);
 
             int maxReloadAmount = Mathf.Min(_stats.ClipSize, CurrentAmmo);
@@ -73,6 +79,7 @@ namespace Roguelike.Weapons
             CurrentAmmo -= reloadAmount;
 
             Debug.Log($"{_stats.Name} reloaded. Bullets in magazine: {CurrentClipAmmo}. Bullets amount: {CurrentAmmo}");
+            _isReloading = false;
         }
     }
 }
