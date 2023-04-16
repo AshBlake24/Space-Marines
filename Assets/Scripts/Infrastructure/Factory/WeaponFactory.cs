@@ -52,12 +52,15 @@ namespace Roguelike.Infrastructure.Factory
             weapon.Construct(InitializeRangedWeaponStats(weaponData));
             weapon.transform.localPosition = weapon.PositionOffset;
             weapon.transform.localRotation = Quaternion.Euler(weapon.RotationOffset);
-            weapon.gameObject.SetActive(false);
+            weapon.Hide();
             
-            _saveLoadService.RegisterProgressWatchers(weapon.gameObject);
+            RegisterWeapon(weapon.gameObject);
 
             return weapon;
         }
+
+        private void RegisterWeapon(GameObject gameObject) => 
+            _saveLoadService.RegisterProgressWatchers(gameObject);
 
         private RangedWeaponStats InitializeRangedWeaponStats(RangedWeaponStaticData weaponData) =>
             new RangedWeaponStats(weaponData);
