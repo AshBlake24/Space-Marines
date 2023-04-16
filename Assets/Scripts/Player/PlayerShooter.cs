@@ -16,6 +16,7 @@ namespace Roguelike.Player
         private IWeapon _currentWeapon;
         private int _currentWeaponIndex;
         private float _lastShotTime;
+        private bool _isAttacking;
 
         public Transform WeaponSpawnPoint => _weaponSpawnPoint;
 
@@ -33,26 +34,26 @@ namespace Roguelike.Player
 
         private void OnEnable()
         {
-            _inputService.Attack += OnAttack;
+            _inputService.Attacking += OnAttacking;
             _inputService.WeaponChanged += OnWeaponChanged;
         }
 
         private void OnDisable()
         {
-            _inputService.Attack -= OnAttack;
+            _inputService.Attacking -= OnAttacking;
             _inputService.WeaponChanged -= OnWeaponChanged;
         }
 
-        private void SetWeapon()
+        private void Update()
         {
-            _currentWeapon?.Hide();
-            _currentWeapon = _weapons[_currentWeaponIndex];
-            _currentWeapon.Show();
-            _playerAnimator.SetWeapon(_currentWeapon.Stats.Size);
+            TryAttack();
         }
 
-        private void OnAttack()
+        private void TryAttack()
         {
+            if (_isAttacking == false)
+                return;
+
             if (Time.time < (_currentWeapon.Stats.AttackRate + _lastShotTime))
                 return;
 
@@ -61,6 +62,14 @@ namespace Roguelike.Player
                 _lastShotTime = Time.time;
                 _playerAnimator.PlayShot();
             }
+        }
+
+        private void SetWeapon()
+        {
+            _currentWeapon?.Hide();
+            _currentWeapon = _weapons[_currentWeaponIndex];
+            _currentWeapon.Show();
+            _playerAnimator.SetWeapon(_currentWeapon.Stats.Size);
         }
 
         private void OnWeaponChanged(bool switchToNext)
@@ -77,8 +86,9 @@ namespace Roguelike.Player
                 _currentWeaponIndex = _weapons.Count - 1;
 
             SetWeapon();
-
-            Debug.Log($"Current weapon - {_currentWeapon.Stats.Name}");
         }
+
+        private void OnAttacking(bool isAtacking) => 
+            _isAttacking = isAtacking;
     }
 }
