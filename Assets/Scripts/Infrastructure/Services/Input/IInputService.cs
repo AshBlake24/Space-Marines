@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace Roguelike.Infrastructure.Services.Input
@@ -5,6 +6,7 @@ namespace Roguelike.Infrastructure.Services.Input
     public interface IInputService : IService
     {
         Vector2 Axis { get; }
-        bool IsAttackButtonUp();
+        event Action Attack;
+        event Action<bool> WeaponChanged;
     }
 }

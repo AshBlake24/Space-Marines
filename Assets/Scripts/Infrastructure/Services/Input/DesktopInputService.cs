@@ -4,9 +4,26 @@ namespace Roguelike.Infrastructure.Services.Input
 {
     public class DesktopInputService : InputService
     {
-        public override Vector2 Axis => 
-            new (UnityEngine.Input.GetAxisRaw(HorizontalAxis), UnityEngine.Input.GetAxisRaw(VerticalAxis));
+        private readonly PlayerInput _playerInput;
+        
+        public DesktopInputService()
+        {
+            _playerInput = new PlayerInput();
+            InitializePlayerInput();
+        }
 
-        public override bool IsAttackButtonUp() => UnityEngine.Input.GetButton("Fire1");
+        public override Vector2 Axis =>
+            _playerInput.Player.Move.ReadValue<Vector2>();
+
+        private void InitializePlayerInput()
+        {
+            _playerInput.Enable();
+            _playerInput.Player.Attack.performed += (ctx) => OnAttack();
+            _playerInput.Player.SwitchWeapon.performed += (ctx) =>
+            {
+                float value = ctx.ReadValue<float>();
+                OnWeaponChanged(value > 0);
+            };
+        }
     }
 }
