@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using Roguelike.Infrastructure.Services;
 using Roguelike.Infrastructure.Services.Input;
@@ -11,7 +10,7 @@ namespace Roguelike.Player
     {
         [SerializeField] private PlayerAnimator _playerAnimator;
         [SerializeField] private Transform _weaponSpawnPoint;
-        
+
         private IInputService _inputService;
         private List<IWeapon> _weapons;
         private IWeapon _currentWeapon;
@@ -29,21 +28,57 @@ namespace Roguelike.Player
         {
             _weapons = weapons;
             _currentWeaponIndex = 0;
+            SetWeapon();
+        }
+
+        private void OnEnable()
+        {
+            _inputService.Attack += OnAttack;
+            _inputService.WeaponChanged += OnWeaponChanged;
+        }
+
+        private void OnDisable()
+        {
+            _inputService.Attack -= OnAttack;
+            _inputService.WeaponChanged -= OnWeaponChanged;
+        }
+
+        private void SetWeapon()
+        {
+            _currentWeapon?.Hide();
             _currentWeapon = _weapons[_currentWeaponIndex];
             _currentWeapon.Show();
             _playerAnimator.SetWeapon(_currentWeapon.Stats.Size);
         }
 
-        private void Update()
+        private void OnAttack()
         {
-            if(_inputService.IsAttackButtonUp() == false)
+            if (Time.time < (_currentWeapon.Stats.AttackRate + _lastShotTime))
                 return;
-            
-            if (Time.time > (_currentWeapon.Stats.AttackRate + _lastShotTime))
+
+            if (_currentWeapon.TryAttack())
             {
                 _lastShotTime = Time.time;
                 _playerAnimator.PlayShot();
             }
+        }
+
+        private void OnWeaponChanged(bool switchToNext)
+        {
+            if (switchToNext)
+                _currentWeaponIndex++;
+            else
+                _currentWeaponIndex--;
+
+            if (_currentWeaponIndex >= _weapons.Count)
+                _currentWeaponIndex = 0;
+
+            if (_currentWeaponIndex < 0)
+                _currentWeaponIndex = _weapons.Count - 1;
+
+            SetWeapon();
+
+            Debug.Log($"Current weapon - {_currentWeapon.Stats.Name}");
         }
     }
 }
