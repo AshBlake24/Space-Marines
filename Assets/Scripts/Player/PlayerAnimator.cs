@@ -8,6 +8,7 @@ namespace Roguelike.Player
     {
         private static readonly int s_speedHash = Animator.StringToHash("Speed");
         private static readonly int s_dieHash = Animator.StringToHash("Die");
+        private static readonly int s_shot = Animator.StringToHash("Shot");
         private static readonly int s_hasOneHanded = Animator.StringToHash("HasOneHandedWeapon");
         private static readonly int s_hasTwoHanded = Animator.StringToHash("HasTwoHandedWeapon");
 
@@ -17,6 +18,8 @@ namespace Roguelike.Player
             _animator.SetFloat(s_speedHash, speed);
 
         public void PlayDeath() => _animator.SetTrigger(s_dieHash);
+
+        public void PlayShot() => _animator.SetTrigger(s_shot);
 
         public void SetWeapon(WeaponSize weaponSize)
         {

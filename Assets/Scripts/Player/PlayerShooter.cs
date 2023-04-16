@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Roguelike.Infrastructure.Services;
 using Roguelike.Infrastructure.Services.Input;
@@ -15,6 +16,7 @@ namespace Roguelike.Player
         private List<IWeapon> _weapons;
         private IWeapon _currentWeapon;
         private int _currentWeaponIndex;
+        private float _lastShotTime;
 
         public Transform WeaponSpawnPoint => _weaponSpawnPoint;
 
@@ -30,6 +32,18 @@ namespace Roguelike.Player
             _currentWeapon = _weapons[_currentWeaponIndex];
             _currentWeapon.Show();
             _playerAnimator.SetWeapon(_currentWeapon.Stats.Size);
+        }
+
+        private void Update()
+        {
+            if(_inputService.IsAttackButtonUp() == false)
+                return;
+            
+            if (Time.time > (_currentWeapon.Stats.AttackRate + _lastShotTime))
+            {
+                _lastShotTime = Time.time;
+                _playerAnimator.PlayShot();
+            }
         }
     }
 }
