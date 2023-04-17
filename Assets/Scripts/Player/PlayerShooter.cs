@@ -56,7 +56,7 @@ namespace Roguelike.Player
 
             if (Time.time < (_currentWeapon.Stats.AttackRate + _lastShotTime))
                 return;
-
+            
             if (_currentWeapon.TryAttack())
             {
                 _lastShotTime = Time.time;

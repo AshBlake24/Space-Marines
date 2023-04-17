@@ -7,6 +7,10 @@ namespace Roguelike.Weapons.Projectiles
         private ShrapnelStats _stats;
         
         public override ProjectileStats Stats => _stats;
+        public override void Init()
+        {
+            throw new System.NotImplementedException();
+        }
 
         public void Construct(ShrapnelStats stats)
         {
