@@ -1,7 +1,9 @@
 using System.Collections;
 using Roguelike.Data;
 using Roguelike.Infrastructure.Services.PersistentData;
+using Roguelike.StaticData.Projectiles;
 using Roguelike.Utilities;
+using Roguelike.Weapons.Projectiles;
 using Roguelike.Weapons.Stats;
 using UnityEngine;
 
@@ -11,6 +13,7 @@ namespace Roguelike.Weapons
     {
         [SerializeField] private Transform _firePoint;
 
+        private ObjectPool<ProjectileId, Projectile> _pool;
         private RangedWeaponStats _stats;
         private bool _isReloading;
 
@@ -19,11 +22,13 @@ namespace Roguelike.Weapons
         public int CurrentClipAmmo { get; private set; }
         private bool CanReload => (CurrentClipAmmo < _stats.ClipSize) && (CurrentAmmo > 0);
 
-        public void Construct(RangedWeaponStats stats)
+        public void Construct(RangedWeaponStats stats, Projectile projectile)
         {
             _stats = stats;
             CurrentAmmo = stats.MaxAmmo;
             CurrentClipAmmo = stats.ClipSize;
+
+            _pool = new ObjectPool<ProjectileId, Projectile>(projectile.gameObject);
         }
 
         public void ReadProgress(PlayerProgress progress)
