@@ -5,10 +5,11 @@ namespace Roguelike.StaticData.Weapons
 {
     public abstract class WeaponStaticData : ScriptableObject
     {
+        [Header("Weapon Config")]
         public WeaponId Id;
         public WeaponType Type;
         public WeaponSize Size;
-        public GameObject Prefab;
+        public GameObject WeaponPrefab;
         public string Name;
         public float AttackRate;
     }
