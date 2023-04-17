@@ -36,7 +36,7 @@ namespace Roguelike.Infrastructure.Factory
 
         private IWeapon ConstructWeapon(WeaponStaticData weaponData, Transform parent = null)
         {
-            return weaponData.WeaponType switch
+            return weaponData.Type switch
             {
                 WeaponType.Ranged => CreateRangedWeapon(weaponData as RangedWeaponStaticData, parent),
                 _ => throw new ArgumentNullException(nameof(WeaponType), "This weapon type does not exist")
