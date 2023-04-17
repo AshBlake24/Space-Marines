@@ -13,8 +13,8 @@ namespace Roguelike.Weapons.Stats
         {
             _name = weaponData.Name;
             _attackRate = weaponData.AttackRate;
-            _weaponSize = weaponData.WeaponSize;
-            _id = weaponData.WeaponId;
+            _weaponSize = weaponData.Size;
+            _id = weaponData.Id;
         }
         
         public string Name => _name;
