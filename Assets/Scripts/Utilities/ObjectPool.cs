@@ -7,6 +7,7 @@ namespace Roguelike.Utilities
     public class ObjectPool<TSource> where TSource : Component
     {
         private readonly GameObject _prefab;
+        private readonly Transform _container;
         private readonly Queue<TSource> _pool;
 
         public ObjectPool(GameObject prefab)
@@ -20,8 +21,8 @@ namespace Roguelike.Utilities
             _pool = new Queue<TSource>();
             _prefab = prefab;
 
-            Transform container = new GameObject($"Pool - {prefab.name}").transform;
-            container.SetParent(Helpers.GetGeneralPoolsContainer());
+            _container = new GameObject($"Pool - {prefab.name}").transform;
+            _container.SetParent(Helpers.GetGeneralPoolsContainer());
         }
 
         public bool HasObjects => _pool.Count > 0;
@@ -31,6 +32,7 @@ namespace Roguelike.Utilities
         public void AddInstance(TSource instance)
         {
             _pool.Enqueue(instance);
+            instance.transform.SetParent(_container);
             instance.gameObject.SetActive(false);
         }
     }
