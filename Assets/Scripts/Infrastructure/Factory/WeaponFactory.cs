@@ -48,8 +48,8 @@ namespace Roguelike.Infrastructure.Factory
             RangedWeapon weapon = (parent == null) 
                 ? Object.Instantiate(weaponData.WeaponPrefab).GetComponent<RangedWeapon>() 
                 : Object.Instantiate(weaponData.WeaponPrefab, parent.position, Quaternion.identity, parent).GetComponent<RangedWeapon>();
-
-            weapon.Construct(InitializeRangedWeaponStats(weaponData), weaponData.ProjectilePrefab);
+            
+            weapon.Construct(InitializeRangedWeaponStats(weaponData));
             weapon.transform.localPosition = weapon.PositionOffset;
             weapon.transform.localRotation = Quaternion.Euler(weapon.RotationOffset);
             weapon.Hide();

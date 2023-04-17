@@ -1,3 +1,4 @@
+using Roguelike.StaticData.Projectiles;
 using Roguelike.Weapons.Projectiles;
 using UnityEngine;
 
@@ -7,7 +8,7 @@ namespace Roguelike.StaticData.Weapons
     public class RangedWeaponStaticData : WeaponStaticData
     {
         [Header("Ranged Weapon Config")]
-        public Projectile ProjectilePrefab;
+        public ProjectileStaticData Projectile;
         public int MaxAmmo;
         public int ClipSize;
         public float ReloadTime;
