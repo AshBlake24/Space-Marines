@@ -27,8 +27,6 @@ namespace Roguelike.Weapons.Projectiles
         }
         private void FixedUpdate()
         {
-            transform.rotation = Quaternion.LookRotation(Rigidbody.velocity); // Sets rotation to look at direction of movement
-            
             
         }
 
