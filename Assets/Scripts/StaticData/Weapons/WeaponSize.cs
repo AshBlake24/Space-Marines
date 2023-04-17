@@ -1,4 +1,4 @@
-namespace Roguelike.Weapons.Stats
+namespace Roguelike.StaticData.Weapons
 {
     public enum WeaponSize
     {
