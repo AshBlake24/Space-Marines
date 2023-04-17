@@ -1,5 +1,4 @@
-using System;
-using Roguelike.Weapons.Stats;
+using Roguelike.StaticData.Weapons;
 using UnityEngine;
 
 namespace Roguelike.Player

@@ -46,6 +46,7 @@ namespace Roguelike.Infrastructure.States
             _services.RegisterSingle<IAssetProvider>(new AssetProvider());
             _services.RegisterSingle<IPersistentDataService>(new PersistentDataService());
             _services.RegisterSingle<ISaveLoadService>(new SaveLoadService(_services.Single<IPersistentDataService>()));
+            _services.RegisterSingle<IProjectileFactory>(new ProjectileFactory(_services.Single<IStaticDataService>()));
             _services.RegisterSingle<IWeaponFactory>(new WeaponFactory(_services.Single<IStaticDataService>(), _services.Single<ISaveLoadService>()));
             _services.RegisterSingle<IGameFactory>(new GameFactory(_services.Single<IAssetProvider>(), _services.Single<IPersistentDataService>(), _services.Single<ISaveLoadService>(), _services.Single<IWeaponFactory>()));
         }
@@ -53,8 +54,9 @@ namespace Roguelike.Infrastructure.States
         private void RegisterStaticData()
         {
             IStaticDataService staticDataService = new StaticDataService();
-            staticDataService.LoadWeapons();
             staticDataService.LoadPlayer();
+            staticDataService.LoadWeapons();
+            staticDataService.LoadProjectiles();
             _services.RegisterSingle<IStaticDataService>(staticDataService);
         }
 
