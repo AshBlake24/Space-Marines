@@ -9,6 +9,5 @@ namespace Roguelike.Data
         public WeaponId ID;
         public bool InfinityAmmo;
         public int CurrentAmmo;
-        public int CurrentClipAmmo;
     }
 }

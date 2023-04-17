@@ -1,4 +1,3 @@
-using System.Collections;
 using Roguelike.Data;
 using Roguelike.Infrastructure.Factory;
 using Roguelike.Infrastructure.Services;
@@ -17,13 +16,10 @@ namespace Roguelike.Weapons
         private IProjectileFactory _factory;
         private RangedWeaponStats _stats;
         private ObjectPool<Projectile> _pool;
-        private bool _isReloading;
 
         public override WeaponStats Stats => _stats;
         public int CurrentAmmo { get; private set; }
-        public int CurrentClipAmmo { get; private set; }
         public bool InfinityAmmo { get; private set; }
-        private bool CanReload => (CurrentClipAmmo < _stats.ClipSize) && (CurrentAmmo > 0);
 
         private void Awake()
         {
@@ -35,7 +31,6 @@ namespace Roguelike.Weapons
             _stats = stats;
             InfinityAmmo = stats.InfinityAmmo;
             CurrentAmmo = stats.MaxAmmo;
-            CurrentClipAmmo = stats.ClipSize;
 
             InitializePool();
         }
@@ -46,63 +41,44 @@ namespace Roguelike.Weapons
 
             if (ammoData != null)
             {
+                InfinityAmmo = ammoData.InfinityAmmo;
                 CurrentAmmo = ammoData.CurrentAmmo;
-                CurrentClipAmmo = ammoData.CurrentClipAmmo;
             }
         }
 
         public void WriteProgress(PlayerProgress progress) =>
-            progress.PlayerWeapons.SaveRangedWeapon(Stats.ID, InfinityAmmo, CurrentAmmo, CurrentClipAmmo);
+            progress.PlayerWeapons.SaveRangedWeapon(Stats.ID, InfinityAmmo, CurrentAmmo);
 
         public override bool TryAttack()
         {
-            if (_isReloading)
-                return false;
-
-            if (CurrentClipAmmo > 0)
+            if (InfinityAmmo)
             {
                 Shot();
+                Debug.Log($"{_stats.Name} shot! Bullets amount: Infinity");
                 return true;
             }
 
-            if (InfinityAmmo || CanReload)
-                StartCoroutine(Reloading());
-            else
-                Debug.Log("Not enough ammo");
-
+            if (CurrentAmmo > 0)
+            {
+                Shot();
+                CurrentAmmo--;
+                Debug.Log($"{_stats.Name} shot! Bullets amount: {CurrentAmmo}");
+                return true;
+            }
+            
+            Debug.Log("Not enough ammo");
             return false;
         }
 
         private void Shot()
         {
-            Projectile projectile = _pool.HasObjects 
-                ? _pool.GetInstance() 
+            Projectile projectile = _pool.HasObjects
+                ? _pool.GetInstance()
                 : GetProjectile();
 
             projectile.transform.SetPositionAndRotation(_firePoint.position, _firePoint.rotation);
             projectile.gameObject.SetActive(true);
             projectile.Init();
-            
-            CurrentClipAmmo--;
-
-            Debug.Log($"{_stats.Name} shot! Bullets in magazine: {CurrentClipAmmo}. Bullets amount: {CurrentAmmo}");
-        }
-
-        private IEnumerator Reloading()
-        {
-            Debug.Log("Reloading!");
-            _isReloading = true;
-
-            yield return Helpers.GetTime(_stats.ReloadTime);
-
-            int maxReloadAmount = Mathf.Min(_stats.ClipSize, CurrentAmmo);
-            int availableBulletsInCurrentClip = _stats.ClipSize - CurrentClipAmmo;
-            int reloadAmount = Mathf.Min(maxReloadAmount, availableBulletsInCurrentClip);
-            CurrentClipAmmo += reloadAmount;
-            CurrentAmmo -= reloadAmount;
-
-            Debug.Log($"{_stats.Name} reloaded. Bullets in magazine: {CurrentClipAmmo}. Bullets amount: {CurrentAmmo}");
-            _isReloading = false;
         }
 
         private void InitializePool()
