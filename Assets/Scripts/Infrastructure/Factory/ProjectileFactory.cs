@@ -1,6 +1,7 @@
 using System;
 using Roguelike.Infrastructure.Services.StaticData;
 using Roguelike.StaticData.Projectiles;
+using Roguelike.Utilities;
 using Roguelike.Weapons.Projectiles;
 using Roguelike.Weapons.Projectiles.Stats;
 using Object = UnityEngine.Object;
@@ -16,34 +17,34 @@ namespace Roguelike.Infrastructure.Factory
             _staticDataService = staticDataService;
         }
 
-        public Projectile CreateProjectile(ProjectileId id)
+        public Projectile CreateProjectile(ProjectileId id, ObjectPool<Projectile> pool)
         {
             ProjectileStaticData projectileData = _staticDataService.GetProjectileData(id);
 
-            return ConstructProjectile(projectileData);
+            return ConstructProjectile(projectileData, pool);
         }
 
-        private Projectile ConstructProjectile(ProjectileStaticData projectileData)
+        private Projectile ConstructProjectile(ProjectileStaticData projectileData, ObjectPool<Projectile> pool)
         {
             return projectileData.Type switch
             {
-                ProjectileType.Bullet => CreateBullet(projectileData as BulletStaticData),
-                ProjectileType.Shrapnel => CreateShrapnel(projectileData as ShrapnelStaticData),
-                ProjectileType.Exploding => CreateExplodingProjectile(projectileData as ExplodingProjectileStaticData),
+                ProjectileType.Bullet => CreateBullet(projectileData as BulletStaticData, pool),
+                ProjectileType.Shrapnel => CreateShrapnel(projectileData as ShrapnelStaticData, pool),
+                ProjectileType.Exploding => CreateExplodingProjectile(projectileData as ExplodingProjectileStaticData, pool),
                 _ => throw new ArgumentOutOfRangeException()
             };
         }
 
-        private Projectile CreateBullet(BulletStaticData projectileData)
+        private Projectile CreateBullet(BulletStaticData projectileData, ObjectPool<Projectile> pool)
         {
             Bullet bullet = Object.Instantiate(projectileData.Prefab).GetComponent<Bullet>();
 
-            bullet.Construct(InitializeBulletStats(projectileData));
+            bullet.Construct(InitializeBulletStats(projectileData), pool);
 
             return bullet;
         }
 
-        private Projectile CreateShrapnel(ShrapnelStaticData projectileData)
+        private Projectile CreateShrapnel(ShrapnelStaticData projectileData, ObjectPool<Projectile> pool)
         {
             Shrapnel shrapnel = Object.Instantiate(projectileData.Prefab).GetComponent<Shrapnel>();
 
@@ -52,7 +53,7 @@ namespace Roguelike.Infrastructure.Factory
             return shrapnel;
         }
 
-        private Projectile CreateExplodingProjectile(ExplodingProjectileStaticData projectileData)
+        private Projectile CreateExplodingProjectile(ExplodingProjectileStaticData projectileData, ObjectPool<Projectile> pool)
         {
             ExplodingProjectile explodingProjectile =
                 Object.Instantiate(projectileData.Prefab).GetComponent<ExplodingProjectile>();

@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using Roguelike.Data;
 using Roguelike.Infrastructure.Factory;
@@ -61,7 +60,6 @@ namespace Roguelike.Weapons
             if (CurrentClipAmmo > 0)
             {
                 Shot();
-
                 return true;
             }
 
@@ -113,6 +111,6 @@ namespace Roguelike.Weapons
         }
 
         private Projectile GetProjectile() =>
-            _factory.CreateProjectile(_stats.ProjectileData.Id);
+            _factory.CreateProjectile(_stats.ProjectileData.Id, _pool);
     }
 }
