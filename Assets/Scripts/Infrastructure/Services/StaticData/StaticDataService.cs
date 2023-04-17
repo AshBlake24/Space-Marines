@@ -16,18 +16,18 @@ namespace Roguelike.Infrastructure.Services.StaticData
 
         public void LoadPlayer()
         {
-            Player = Resources.Load<PlayerStaticData>("Player/PlayerStaticData");
+            Player = Resources.Load<PlayerStaticData>("StaticData/Player/PlayerStaticData");
         }
 
         public void LoadWeapons()
         {
-            _weapons = Resources.LoadAll<WeaponStaticData>("Weapons")
+            _weapons = Resources.LoadAll<WeaponStaticData>("StaticData/Weapons")
                 .ToDictionary(weapon => weapon.Id);
         }
 
         public void LoadProjectiles()
         {
-            _projectiles = Resources.LoadAll<ProjectileStaticData>("Projectiles")
+            _projectiles = Resources.LoadAll<ProjectileStaticData>("StaticData/Projectiles")
                 .ToDictionary(projectile => projectile.Id);
         }
 
