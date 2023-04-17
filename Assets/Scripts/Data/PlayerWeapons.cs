@@ -19,8 +19,8 @@ namespace Roguelike.Data
 
             InitializeStartWeapons(startWeapons);
         }
-        
-        public void SaveRangedWeapon(WeaponId id, int currentAmmo, int currentClipAmmo)
+
+        public void SaveRangedWeapon(WeaponId id, bool infinityAmmo, int currentAmmo, int currentClipAmmo)
         {
             if (Available.Contains(id) == false)
             {
@@ -28,6 +28,7 @@ namespace Roguelike.Data
                 AmmoData ammoData = new()
                 {
                     ID = id,
+                    InfinityAmmo = infinityAmmo,
                     CurrentAmmo = currentAmmo,
                     CurrentClipAmmo = currentClipAmmo
                 };
@@ -40,15 +41,23 @@ namespace Roguelike.Data
                 rangedWeapon.CurrentClipAmmo = currentClipAmmo;
             }
         }
-        
+
         private void InitializeStartWeapons(IEnumerable<IWeapon> startWeapons)
         {
             foreach (IWeapon weapon in startWeapons)
             {
                 if (weapon is RangedWeapon rangedWeapon)
-                    SaveRangedWeapon(rangedWeapon.Stats.ID, rangedWeapon.CurrentAmmo, rangedWeapon.CurrentClipAmmo);
+                {
+                    SaveRangedWeapon(
+                        rangedWeapon.Stats.ID, 
+                        rangedWeapon.InfinityAmmo, 
+                        rangedWeapon.CurrentAmmo,
+                        rangedWeapon.CurrentClipAmmo);
+                }
                 else
+                {
                     Available.Add(weapon.Stats.ID);
+                }
             }
         }
     }

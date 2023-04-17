@@ -22,6 +22,7 @@ namespace Roguelike.Weapons
         public override WeaponStats Stats => _stats;
         public int CurrentAmmo { get; private set; }
         public int CurrentClipAmmo { get; private set; }
+        public bool InfinityAmmo { get; private set; }
         private bool CanReload => (CurrentClipAmmo < _stats.ClipSize) && (CurrentAmmo > 0);
 
         private void Awake()
@@ -32,6 +33,7 @@ namespace Roguelike.Weapons
         public void Construct(RangedWeaponStats stats)
         {
             _stats = stats;
+            InfinityAmmo = stats.InfinityAmmo;
             CurrentAmmo = stats.MaxAmmo;
             CurrentClipAmmo = stats.ClipSize;
 
@@ -50,7 +52,7 @@ namespace Roguelike.Weapons
         }
 
         public void WriteProgress(PlayerProgress progress) =>
-            progress.PlayerWeapons.SaveRangedWeapon(Stats.ID, CurrentAmmo, CurrentClipAmmo);
+            progress.PlayerWeapons.SaveRangedWeapon(Stats.ID, InfinityAmmo, CurrentAmmo, CurrentClipAmmo);
 
         public override bool TryAttack()
         {
@@ -63,7 +65,7 @@ namespace Roguelike.Weapons
                 return true;
             }
 
-            if (CanReload)
+            if (InfinityAmmo || CanReload)
                 StartCoroutine(Reloading());
             else
                 Debug.Log("Not enough ammo");
