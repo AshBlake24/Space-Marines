@@ -48,7 +48,7 @@ namespace Roguelike.Infrastructure.Factory
         {
             Shrapnel shrapnel = Object.Instantiate(projectileData.Prefab).GetComponent<Shrapnel>();
 
-            shrapnel.Construct(InitializeSrapnelStats(projectileData));
+            shrapnel.Construct(InitializeSrapnelStats(projectileData), pool);
 
             return shrapnel;
         }
@@ -58,7 +58,7 @@ namespace Roguelike.Infrastructure.Factory
             ExplodingProjectile explodingProjectile =
                 Object.Instantiate(projectileData.Prefab).GetComponent<ExplodingProjectile>();
             
-            explodingProjectile.Construct(InitializeExplodingProjectileStats(projectileData));
+            explodingProjectile.Construct(InitializeExplodingProjectileStats(projectileData), pool);
 
             return explodingProjectile;
         }
