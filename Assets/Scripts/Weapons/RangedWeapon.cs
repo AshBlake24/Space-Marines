@@ -31,8 +31,8 @@ namespace Roguelike.Weapons
             _stats = stats;
             InfinityAmmo = stats.InfinityAmmo;
             CurrentAmmo = stats.MaxAmmo;
-
-            InitializePool();
+            
+            _pool = new ObjectPool<Projectile>(_stats.ProjectileData.Prefab);
         }
 
         public void ReadProgress(PlayerProgress progress)
@@ -79,13 +79,6 @@ namespace Roguelike.Weapons
             projectile.transform.SetPositionAndRotation(_firePoint.position, _firePoint.rotation);
             projectile.gameObject.SetActive(true);
             projectile.Init();
-        }
-
-        private void InitializePool()
-        {
-            Projectile projectile = GetProjectile();
-            _pool = new ObjectPool<Projectile>(projectile.gameObject);
-            _pool.AddInstance(projectile);
         }
 
         private Projectile GetProjectile() =>
