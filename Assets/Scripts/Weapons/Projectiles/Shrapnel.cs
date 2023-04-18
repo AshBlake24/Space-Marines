@@ -1,3 +1,4 @@
+using Roguelike.Utilities;
 using Roguelike.Weapons.Projectiles.Stats;
 
 namespace Roguelike.Weapons.Projectiles
@@ -5,12 +6,10 @@ namespace Roguelike.Weapons.Projectiles
     public class Shrapnel : Projectile
     {
         private ShrapnelStats _stats;
-        
-        public override ProjectileStats Stats => _stats;
 
-        public void Construct(ShrapnelStats stats)
+        public override void Construct<TStats>(TStats stats, ObjectPool<Projectile> pool)
         {
-            _stats = stats;
+            throw new System.NotImplementedException();
         }
 
         public override void Init()

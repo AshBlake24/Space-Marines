@@ -9,30 +9,48 @@ namespace Roguelike.Weapons.Projectiles
     {
         private BulletStats _stats;
         private ObjectPool<Projectile> _pool;
+        private float _accumulatedTime;
 
-        public override ProjectileStats Stats => _stats;
-
-        public void Construct(BulletStats stats, ObjectPool<Projectile> pool)
+        public override void Construct<TStats>(TStats stats, ObjectPool<Projectile> pool)
         {
-            _stats = stats;
-            _pool = pool;
+            if (stats is BulletStats bulletStats)
+                _stats = bulletStats;
+            else
+                throw new ArgumentNullException(nameof(stats), $"Expected to get the {typeof(BulletStats)}");
+
+            if (pool != null)
+                _pool = pool;
+            else
+                throw new ArgumentNullException(nameof(pool), "Pool cannot be null");
         }
 
         public override void Init()
         {
-            Rigidbody.AddForce(transform.forward * Stats.Speed, ForceMode.VelocityChange);
-            
+            _accumulatedTime = 0f;
+
+            Rigidbody.velocity = Vector3.zero;
+            Rigidbody.AddForce(transform.forward * _stats.Speed, ForceMode.VelocityChange);
+
             //MuzzleVFX = Instantiate(MuzzleVFX, transform.position, transform.rotation);
             //Destroy(MuzzleVFX, 1.5f);
         }
-        private void FixedUpdate()
+
+        private void Update()
         {
-            
+            LifetimeTick();
+        }
+
+        private void LifetimeTick()
+        {
+            _accumulatedTime += Time.deltaTime;
+
+            if (_accumulatedTime >= _stats.Lifetime)
+                _pool.AddInstance(this);
         }
 
         private void OnTriggerEnter(Collider other)
         {
-            
+            _pool.AddInstance(this);
         }
     }
 }
