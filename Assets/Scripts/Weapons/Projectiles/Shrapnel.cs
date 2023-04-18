@@ -7,7 +7,7 @@ namespace Roguelike.Weapons.Projectiles
     {
         private ShrapnelStats _stats;
 
-        public override void Construct<TStats>(TStats stats, ObjectPool<Projectile> pool)
+        public override void Construct<TStats>(TStats stats, ObjectPool<Projectile> projectilePool)
         {
             throw new System.NotImplementedException();
         }
