@@ -9,5 +9,6 @@ namespace Roguelike.StaticData.Projectiles
         public GameObject Prefab;
         public int Damage;
         public float Speed;
+        public float Lifetime;
     }
 }
