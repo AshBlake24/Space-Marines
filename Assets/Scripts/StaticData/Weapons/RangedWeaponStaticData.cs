@@ -1,4 +1,5 @@
 using System;
+using Roguelike.Logic;
 using Roguelike.StaticData.Projectiles;
 using Roguelike.Weapons.Projectiles;
 using UnityEngine;
@@ -12,5 +13,8 @@ namespace Roguelike.StaticData.Weapons
         public ProjectileStaticData Projectile;
         public bool InfinityAmmo;
         public int MaxAmmo;
+        
+        [Header("VFX")]
+        public VFX MuzzleVFX;
     }
 }

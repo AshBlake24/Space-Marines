@@ -8,14 +8,11 @@ namespace Roguelike.Weapons.Projectiles
     [RequireComponent(typeof(Rigidbody))]
     public abstract class Projectile : MonoBehaviour
     {
-        protected const float Lifetime = 1.5f;
-        
         [SerializeField] protected Rigidbody Rigidbody;
         
-        [Header("Visual Settings")]
+        [Header("VFX")]
         [SerializeField] protected GameObject ImpactVFX;
-        [SerializeField] protected GameObject IrojectileVFX;
-        [SerializeField] protected GameObject MuzzleVFX;
+        [SerializeField] protected GameObject ProjectileVFX;
 
         public abstract void Construct<TStats>(TStats stats, ObjectPool<Projectile> pool);
         public abstract void Init();
