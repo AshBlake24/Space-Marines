@@ -332,12 +332,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enemies:
-  - {fileID: 8580841062445009136, guid: 7e244ec40c1a52e40a72e85800253a57, type: 3}
+  - {fileID: 6427255510042871189, guid: 886ba1b474fa18a49ba4961158bd4f1a, type: 3}
   _spawnPositions:
   - {fileID: 7103815754900407913}
   - {fileID: 4070641018234032763}
   - {fileID: 8546252111572415589}
   - {fileID: 5463690472468292805}
+  _enterPoint: {fileID: 7619028267635629495}
 --- !u!1 &3729889507952549784
 GameObject:
   m_ObjectHideFlags: 0
@@ -563,6 +564,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7084029359872249472}
+  - component: {fileID: 7486347925442008481}
+  - component: {fileID: 7619028267635629495}
   m_Layer: 0
   m_Name: EnterPoint
   m_TagString: Untagged
@@ -585,6 +588,31 @@ Transform:
   m_Father: {fileID: 5040344463351529081}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &7486347925442008481
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8764161220274332836}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2.1755338, y: 0.8094077, z: 0.30944633}
+  m_Center: {x: -0.10773015, y: 0.49852592, z: 0.1529398}
+--- !u!114 &7619028267635629495
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8764161220274332836}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78d3aed8c270ad4469e47be26a1e1d46, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &772678674013070587
 PrefabInstance:
   m_ObjectHideFlags: 0

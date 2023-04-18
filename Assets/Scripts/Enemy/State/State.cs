@@ -1,3 +1,4 @@
+using Roguelike.Player;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,7 +10,7 @@ namespace Roguelike
     {
         [SerializeField] private List<Transition> _transitions;
 
-        protected Player player;
+        protected PlayerComponent player;
 
         public event UnityAction<State> StateFinished;
 
@@ -31,7 +32,7 @@ namespace Roguelike
             }
         }
 
-        public virtual void Enter(Player target)
+        public virtual void Enter(PlayerComponent target)
         {
             player = target;
             enabled = true;

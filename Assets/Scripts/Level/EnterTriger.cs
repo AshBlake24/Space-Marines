@@ -1,17 +1,20 @@
+using Roguelike.Player;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Roguelike.Player;
+using UnityEngine.Events;
 
 namespace Roguelike
 {
-    public class PlayerIsArrived : Transition
+    public class EnterTriger : MonoBehaviour
     {
+        public event UnityAction<PlayerComponent> PlayerHasEntered;
+
         private void OnTriggerEnter(Collider other)
         {
             if (other.gameObject.TryGetComponent<PlayerComponent>(out PlayerComponent player))
             {
-                NeedTransit?.Invoke(targetState);
+                PlayerHasEntered?.Invoke(player);
             }
         }
     }

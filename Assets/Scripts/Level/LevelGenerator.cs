@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.AI;
 using UnityEngine;
 
 public class LevelGenerator : MonoBehaviour
@@ -43,6 +44,8 @@ public class LevelGenerator : MonoBehaviour
         }
 
         _currentRoom.HideExit();
+
+        NavMeshBuilder.BuildNavMesh();
     }
 
     private void ConnectCorridor()
@@ -62,7 +65,7 @@ public class LevelGenerator : MonoBehaviour
 
     private void ConnectBonusRoom()
     {
-        Room bonusRoom = CreateRoom(_currentCorridor, _bonusRooms);
+        CreateRoom(_currentCorridor, _bonusRooms);
     }
 
     private Room CreateRoom(Room exitRoom, List<Room> roomType, ExitPoint currentExitPoint = null)

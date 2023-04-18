@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Roguelike.Player;
 
 namespace Roguelike
 {
@@ -8,10 +9,10 @@ namespace Roguelike
     {
         [SerializeField] private State _startState;
 
-        private Player _player;
+        private PlayerComponent _player;
         private State _currentState;
 
-        public void Init (Player player) 
+        public void Init (PlayerComponent player) 
         {
             _player = player;
             SwitchState(_startState);
