@@ -2,6 +2,7 @@ using Roguelike.Data;
 using Roguelike.Infrastructure.Factory;
 using Roguelike.Infrastructure.Services;
 using Roguelike.Infrastructure.Services.PersistentData;
+using Roguelike.Logic;
 using Roguelike.Utilities;
 using Roguelike.Weapons.Projectiles;
 using Roguelike.Weapons.Stats;
@@ -15,7 +16,9 @@ namespace Roguelike.Weapons
 
         private IProjectileFactory _factory;
         private RangedWeaponStats _stats;
-        private ObjectPool<Projectile> _pool;
+        private ObjectPool<Projectile> _projectilesPool;
+        private ObjectPool<VFX> _vfxPool;
+        private VFX _muzzleVFX;
 
         public override WeaponStats Stats => _stats;
         public int CurrentAmmo { get; private set; }
@@ -31,8 +34,9 @@ namespace Roguelike.Weapons
             _stats = stats;
             InfinityAmmo = stats.InfinityAmmo;
             CurrentAmmo = stats.MaxAmmo;
-            
-            _pool = new ObjectPool<Projectile>(_stats.ProjectileData.Prefab);
+
+            _projectilesPool = new ObjectPool<Projectile>(_stats.ProjectileData.Prefab);
+            _vfxPool = new ObjectPool<VFX>(_stats.MuzzleVFX.gameObject);
         }
 
         public void ReadProgress(PlayerProgress progress)
@@ -55,6 +59,7 @@ namespace Roguelike.Weapons
             {
                 Shot();
                 Debug.Log($"{_stats.Name} shot! Bullets amount: Infinity");
+
                 return true;
             }
 
@@ -63,25 +68,46 @@ namespace Roguelike.Weapons
                 Shot();
                 CurrentAmmo--;
                 Debug.Log($"{_stats.Name} shot! Bullets amount: {CurrentAmmo}");
+
                 return true;
             }
-            
+
             Debug.Log("Not enough ammo");
+
             return false;
         }
 
         private void Shot()
         {
-            Projectile projectile = _pool.HasObjects
-                ? _pool.GetInstance()
+            Projectile projectile = _projectilesPool.HasObjects
+                ? _projectilesPool.GetInstance()
                 : GetProjectile();
 
             projectile.transform.SetPositionAndRotation(_firePoint.position, _firePoint.rotation);
             projectile.gameObject.SetActive(true);
             projectile.Init();
+
+            SpawnMuzzleVFX();
+        }
+
+        private void SpawnMuzzleVFX()
+        {
+            if (_vfxPool.HasObjects)
+            {
+                _muzzleVFX = _vfxPool.GetInstance();
+            } 
+            else
+            {
+                _muzzleVFX = Instantiate(_stats.MuzzleVFX);
+                _muzzleVFX.Counstruct(_vfxPool);
+            }
+
+            _muzzleVFX.transform.SetPositionAndRotation(_firePoint.position, _firePoint.rotation);
+            _muzzleVFX.transform.SetParent(_firePoint);
+            _muzzleVFX.gameObject.SetActive(true);
         }
 
         private Projectile GetProjectile() =>
-            _factory.CreateProjectile(_stats.ProjectileData.Id, _pool);
+            _factory.CreateProjectile(_stats.ProjectileData.Id, _projectilesPool);
     }
 }

@@ -30,9 +30,6 @@ namespace Roguelike.Weapons.Projectiles
 
             Rigidbody.velocity = Vector3.zero;
             Rigidbody.AddForce(transform.forward * _stats.Speed, ForceMode.VelocityChange);
-
-            //MuzzleVFX = Instantiate(MuzzleVFX, transform.position, transform.rotation);
-            //Destroy(MuzzleVFX, 1.5f);
         }
 
         private void Update()
