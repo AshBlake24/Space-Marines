@@ -1,4 +1,5 @@
 using System;
+using Roguelike.Logic;
 using Roguelike.Utilities;
 using Roguelike.Weapons.Projectiles.Stats;
 using UnityEngine;
@@ -11,10 +12,10 @@ namespace Roguelike.Weapons.Projectiles
         [SerializeField] protected Rigidbody Rigidbody;
         
         [Header("VFX")]
-        [SerializeField] protected GameObject ImpactVFX;
-        [SerializeField] protected GameObject ProjectileVFX;
+        [SerializeField] protected VFX ImpactVFX;
+        [SerializeField] protected VFX ProjectileVFX;
 
-        public abstract void Construct<TStats>(TStats stats, ObjectPool<Projectile> pool);
+        public abstract void Construct<TStats>(TStats stats, ObjectPool<Projectile> projectilePool);
         public abstract void Init();
     }
 }
