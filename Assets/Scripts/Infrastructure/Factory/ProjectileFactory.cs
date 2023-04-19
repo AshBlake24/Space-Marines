@@ -29,7 +29,6 @@ namespace Roguelike.Infrastructure.Factory
             return projectileData.Type switch
             {
                 ProjectileType.Bullet => CreateBullet(projectileData as BulletStaticData, pool),
-                ProjectileType.Shrapnel => throw new NotImplementedException(),
                 ProjectileType.Exploding => throw new NotImplementedException(),
                 _ => throw new ArgumentOutOfRangeException()
             };

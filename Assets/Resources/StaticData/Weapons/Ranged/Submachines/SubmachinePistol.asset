@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c7aad5e3325f48a1b72e5ee59fd2f45f, type: 3}
-  m_Name: DoubleBarrel
+  m_Name: SubmachinePistol
   m_EditorClassIdentifier: 
-  Id: 1
+  Id: 3
   Type: 0
-  Size: 1
-  WeaponPrefab: {fileID: 6477369674253553553, guid: a2366a1db9c6688478db94746e73ea78, type: 3}
-  Name: DoubleBarreled Shotgun
-  AttackRate: 0.8
-  Projectile: {fileID: 11400000, guid: f9a86b8f7bf267543bdffca82cd7de45, type: 2}
-  MaxAmmo: 60
-  ClipSize: 2
-  ReloadTime: 0.8
+  Size: 0
+  WeaponPrefab: {fileID: 3810806931607102091, guid: add88d0cb1faa0740acb6e83bbd23b5d, type: 3}
+  Name: Submachine Pistol
+  AttackRate: 0.12
+  Spread: 0.08
+  Projectile: {fileID: 11400000, guid: 5b004ce136d0b8044a335c7f1c71b416, type: 2}
+  InfinityAmmo: 0
+  MaxAmmo: 200
