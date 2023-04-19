@@ -9,6 +9,8 @@ namespace Roguelike.Logic.Camera
         [SerializeField] private Vector3 _positionOffset;
         [SerializeField] private Vector3 _rotationOffset;
 
+        private Wall _hiddenWall;
+
         private void LateUpdate()
         {
             if(_following == null)
@@ -16,6 +18,8 @@ namespace Roguelike.Logic.Camera
             
             transform.position = _following.position + _positionOffset;;
             transform.rotation = Quaternion.Euler(_rotationOffset);
+
+            HideWall();
         }
 
         public void Follow(GameObject following)
@@ -24,6 +28,24 @@ namespace Roguelike.Logic.Camera
                 throw new ArgumentNullException(nameof(following), "Following object can't be null!");
             
             _following = following.transform;
+        }
+
+        public void HideWall()
+        {
+            if (Physics.Raycast(transform.position, _following.position - transform.position, out RaycastHit hit, 20))
+            {
+                if (hit.collider.TryGetComponent<Wall>(out Wall wall))
+                {
+                    if (wall != _hiddenWall)
+                    {
+                        _hiddenWall?.Show();
+
+                        wall.Hide();
+
+                        _hiddenWall = wall;
+                    }
+                }
+            }
         }
     }
 }

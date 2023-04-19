@@ -2,17 +2,19 @@ using Roguelike.Player;
 using Roguelike.Utilities;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Roguelike
 {
     public class Bullet : MonoBehaviour
     {
+        [SerializeField] private float _speed;
         private Vector3 _direction;
 
         public void Init(Vector3 direction)
         {
-            _direction= direction;
+            _direction= (transform.position + direction*100);
         }
 
         private void OnEnable()
@@ -30,13 +32,18 @@ namespace Roguelike
             if (other.gameObject.TryGetComponent<PlayerComponent>(out PlayerComponent player))
             {
                 Debug.Log("Hit");
-                gameObject.SetActive(false);
+                Destroy(gameObject);
+            }
+            else if (other.gameObject.TryGetComponent<Wall>(out Wall wall))
+            {
+                Debug.Log("Wall");
+                Destroy(gameObject);
             }
         }
 
         private void Move()
         {
-            transform.position += _direction * Time.deltaTime;
+            transform.position = Vector3.MoveTowards(transform.position, _direction, _speed*Time.deltaTime);
         }
 
         private IEnumerator LifeTimer(float time)

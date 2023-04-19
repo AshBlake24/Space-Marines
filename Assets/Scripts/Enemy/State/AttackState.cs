@@ -9,6 +9,7 @@ namespace Roguelike
     public class AttackState : State
     {
         [SerializeField] private Bullet _bullet;
+        [SerializeField] private Transform _shotPoint;
 
         protected override void OnDisable()
         {
@@ -28,7 +29,7 @@ namespace Roguelike
         {
             while (true)
             {
-                Bullet bullet = Instantiate<Bullet>(_bullet, transform.position, Quaternion.identity);
+                Bullet bullet = Instantiate<Bullet>(_bullet, _shotPoint.position, Quaternion.identity);
                 bullet.Init(player.transform.position - transform.position);
 
                 yield return new WaitForSeconds(0.5f);
