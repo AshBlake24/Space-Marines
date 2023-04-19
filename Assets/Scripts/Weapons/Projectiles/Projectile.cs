@@ -11,10 +11,6 @@ namespace Roguelike.Weapons.Projectiles
     {
         [SerializeField] protected Rigidbody Rigidbody;
         
-        [Header("VFX")]
-        [SerializeField] protected VFX ImpactVFX;
-        [SerializeField] protected VFX ProjectileVFX;
-
         public abstract void Construct<TStats>(TStats stats, ObjectPool<Projectile> projectilePool);
         public abstract void Init();
     }

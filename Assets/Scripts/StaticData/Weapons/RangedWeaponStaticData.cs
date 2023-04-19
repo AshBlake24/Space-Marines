@@ -13,8 +13,5 @@ namespace Roguelike.StaticData.Weapons
         public ProjectileStaticData Projectile;
         public bool InfinityAmmo;
         public int MaxAmmo;
-        
-        [Header("VFX")]
-        public VFX MuzzleVFX;
     }
 }

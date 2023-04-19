@@ -9,27 +9,27 @@ namespace Roguelike.Weapons.Projectiles
     public class Bullet : Projectile
     {
         private BulletStats _stats;
-        private ObjectPool<VFX> _trailVFXPool;
-        private ObjectPool<VFX> _impactVFXPool;
-        private ObjectPool<Projectile> _projectilePool;
-        private VFX _trail;
-        private VFX _impact;
+        private ObjectPool<ParticleSystem> _projectileVFXPool;
+        private ObjectPool<ParticleSystem> _impactVFXPool;
+        private ObjectPool<Projectile> _bulletPool;
+        private ParticleSystem _projectileVFX;
+        private ParticleSystem _impactVFX;
         private float _accumulatedTime;
 
-        public override void Construct<TStats>(TStats stats, ObjectPool<Projectile> projectilePool)
+        public override void Construct<TStats>(TStats stats, ObjectPool<Projectile> bulletPool)
         {
             if (stats is BulletStats bulletStats)
                 _stats = bulletStats;
             else
                 throw new ArgumentNullException(nameof(stats), $"Expected to get the {typeof(BulletStats)}");
 
-            if (projectilePool != null)
-                _projectilePool = projectilePool;
+            if (bulletPool != null)
+                _bulletPool = bulletPool;
             else
-                throw new ArgumentNullException(nameof(projectilePool), "Pool cannot be null");
+                throw new ArgumentNullException(nameof(bulletPool), "Pool cannot be null");
 
-            _trailVFXPool = new ObjectPool<VFX>(ProjectileVFX.gameObject);
-            _impactVFXPool = new ObjectPool<VFX>(ImpactVFX.gameObject);
+            _projectileVFXPool = new ObjectPool<ParticleSystem>(_stats.ProjectileVFX.gameObject);
+            _impactVFXPool = new ObjectPool<ParticleSystem>(_stats.ImpactVFX.gameObject);
         }
 
         public override void Init()
@@ -63,40 +63,40 @@ namespace Roguelike.Weapons.Projectiles
         private void ReturnToPool()
         {
             Rigidbody.velocity = Vector3.zero;
-            _projectilePool.AddInstance(this);
+            _bulletPool.AddInstance(this);
         }
 
         private void SpawnTrailVFX()
         {
-            if (_trailVFXPool.HasObjects)
+            if (_projectileVFXPool.HasObjects)
             {
-                _trail = _trailVFXPool.GetInstance();
+                _projectileVFX = _projectileVFXPool.GetInstance();
             }
             else
             {
-                _trail = Instantiate(ProjectileVFX);
-                _trail.Counstruct(_trailVFXPool);
+                _projectileVFX = Instantiate(_stats.ProjectileVFX);
+                //_trail.Counstruct(_projectileVFXPool);
             }
 
-            _trail.transform.SetPositionAndRotation(transform.position, transform.rotation);
-            _trail.transform.SetParent(transform);
-            _trail.gameObject.SetActive(true);
+            _projectileVFX.transform.SetPositionAndRotation(transform.position, transform.rotation);
+            _projectileVFX.transform.SetParent(transform);
+            _projectileVFX.gameObject.SetActive(true);
         }
 
         private void SpawnImpactVFX()
         {
             if (_impactVFXPool.HasObjects)
             {
-                _impact = _impactVFXPool.GetInstance();
+                _impactVFX = _impactVFXPool.GetInstance();
             }
             else
             {
-                _impact = Instantiate(ImpactVFX);
-                _impact.Counstruct(_impactVFXPool);
+                _impactVFX = Instantiate(_stats.ImpactVFX);
+                //_impact.Counstruct(_impactVFXPool);
             }
 
-            _impact.transform.SetPositionAndRotation(transform.position, transform.rotation);
-            _impact.gameObject.SetActive(true);
+            _impactVFX.transform.SetPositionAndRotation(transform.position, transform.rotation);
+            _impactVFX.gameObject.SetActive(true);
         }
     }
 }

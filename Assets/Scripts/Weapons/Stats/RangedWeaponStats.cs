@@ -10,19 +10,16 @@ namespace Roguelike.Weapons.Stats
         private readonly int _maxAmmo;
         private readonly bool _infinityAmmo;
         private readonly ProjectileStaticData _projectileData;
-        private readonly VFX _muzzleVFX;
 
         public RangedWeaponStats(RangedWeaponStaticData weaponData) : base(weaponData)
         {
             _maxAmmo = weaponData.MaxAmmo;
             _infinityAmmo = weaponData.InfinityAmmo;
             _projectileData = weaponData.Projectile;
-            _muzzleVFX = weaponData.MuzzleVFX;
         }
 
         public int MaxAmmo => _maxAmmo;
         public bool InfinityAmmo => _infinityAmmo;
         public ProjectileStaticData ProjectileData => _projectileData;
-        public VFX MuzzleVFX => _muzzleVFX;
     }
 }

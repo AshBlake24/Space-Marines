@@ -29,8 +29,8 @@ namespace Roguelike.Infrastructure.Factory
             return projectileData.Type switch
             {
                 ProjectileType.Bullet => CreateBullet(projectileData as BulletStaticData, pool),
-                ProjectileType.Shrapnel => CreateShrapnel(projectileData as ShrapnelStaticData, pool),
-                ProjectileType.Exploding => CreateExplodingProjectile(projectileData as ExplodingProjectileStaticData, pool),
+                ProjectileType.Shrapnel => throw new NotImplementedException(),
+                ProjectileType.Exploding => throw new NotImplementedException(),
                 _ => throw new ArgumentOutOfRangeException()
             };
         }
@@ -44,32 +44,7 @@ namespace Roguelike.Infrastructure.Factory
             return bullet;
         }
 
-        private Projectile CreateShrapnel(ShrapnelStaticData projectileData, ObjectPool<Projectile> pool)
-        {
-            Shrapnel shrapnel = Object.Instantiate(projectileData.Prefab).GetComponent<Shrapnel>();
-
-            shrapnel.Construct(InitializeSrapnelStats(projectileData), pool);
-
-            return shrapnel;
-        }
-
-        private Projectile CreateExplodingProjectile(ExplodingProjectileStaticData projectileData, ObjectPool<Projectile> pool)
-        {
-            ExplodingProjectile explodingProjectile =
-                Object.Instantiate(projectileData.Prefab).GetComponent<ExplodingProjectile>();
-            
-            explodingProjectile.Construct(InitializeExplodingProjectileStats(projectileData), pool);
-
-            return explodingProjectile;
-        }
-
         private BulletStats InitializeBulletStats(BulletStaticData projectileData) => 
             new BulletStats(projectileData);
-
-        private ShrapnelStats InitializeSrapnelStats(ShrapnelStaticData projectileData) => 
-            new ShrapnelStats(projectileData);
-
-        private ExplodingProjectileStats InitializeExplodingProjectileStats(ExplodingProjectileStaticData projectileData) => 
-            new ExplodingProjectileStats(projectileData);
     }
 }

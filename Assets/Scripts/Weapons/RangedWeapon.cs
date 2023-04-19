@@ -17,8 +17,8 @@ namespace Roguelike.Weapons
         private IProjectileFactory _factory;
         private RangedWeaponStats _stats;
         private ObjectPool<Projectile> _projectilesPool;
-        private ObjectPool<VFX> _vfxPool;
-        private VFX _muzzleVFX;
+        private ObjectPool<ParticleSystem> _muzzleFlashPool;
+        private ParticleSystem _muzzleVFX;
 
         public override WeaponStats Stats => _stats;
         public int CurrentAmmo { get; private set; }
@@ -36,7 +36,7 @@ namespace Roguelike.Weapons
             CurrentAmmo = stats.MaxAmmo;
 
             _projectilesPool = new ObjectPool<Projectile>(_stats.ProjectileData.Prefab);
-            _vfxPool = new ObjectPool<VFX>(_stats.MuzzleVFX.gameObject);
+            _muzzleFlashPool = new ObjectPool<ParticleSystem>(_stats.ProjectileData.MuzzleFlashVFX.gameObject);
         }
 
         public void ReadProgress(PlayerProgress progress)
@@ -92,14 +92,14 @@ namespace Roguelike.Weapons
 
         private void SpawnMuzzleVFX()
         {
-            if (_vfxPool.HasObjects)
+            if (_muzzleFlashPool.HasObjects)
             {
-                _muzzleVFX = _vfxPool.GetInstance();
+                _muzzleVFX = _muzzleFlashPool.GetInstance();
             } 
             else
             {
-                _muzzleVFX = Instantiate(_stats.MuzzleVFX);
-                _muzzleVFX.Counstruct(_vfxPool);
+                _muzzleVFX = Instantiate(_stats.ProjectileData.MuzzleFlashVFX);
+                //_muzzleVFX.Counstruct(_muzzleFlashPool);
             }
 
             _muzzleVFX.transform.SetPositionAndRotation(_firePoint.position, _firePoint.rotation);
