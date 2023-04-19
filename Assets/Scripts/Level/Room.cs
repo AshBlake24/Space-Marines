@@ -23,9 +23,6 @@ public class Room : MonoBehaviour
             _exitPoints.Remove(connectingPoint);
             connectingPoint.Hide();
 
-            if (gameObject.name != "Corridor(Clone)")
-                Debug.Log("Cast");
-
             if (_exitPoints.Count != 0)
                 connectingPoint = _exitPoints[Random.Range(0, _exitPoints.Count)];
             else

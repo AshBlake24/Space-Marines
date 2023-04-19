@@ -27,6 +27,12 @@ public class ExitPoint : MonoBehaviour
             _hideWall.SetActive(true);
     }
 
+    public void Show()
+    {
+        if (_hideWall != null)
+            _hideWall.SetActive(false);
+    }
+
     public bool IsNextZoneFull(Room room)
     {
         if (_castPoint != null)

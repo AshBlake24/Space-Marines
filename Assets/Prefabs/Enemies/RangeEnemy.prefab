@@ -61,6 +61,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _startState: {fileID: 4873355964408096285}
+  _enemy: {fileID: 2877471091989350941}
 --- !u!114 &4873355964408096285
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -74,7 +75,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _transitions: []
-  _prefab: {fileID: 6524420605035840549, guid: 12e59f28e545e0a4fa4bafa5f2f99a11, type: 3}
   _bullet: {fileID: -321624766068031101, guid: 12e59f28e545e0a4fa4bafa5f2f99a11, type: 3}
 --- !u!195 &992037642609969639
 NavMeshAgent:
@@ -110,6 +110,7 @@ GameObject:
   - component: {fileID: 5428774164977646253}
   - component: {fileID: 6677215565608345886}
   - component: {fileID: 8815684368458250469}
+  - component: {fileID: 2877471091989350941}
   m_Layer: 0
   m_Name: Capsule
   m_TagString: Untagged
@@ -196,3 +197,15 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0.013554791, y: 0, z: 0}
+--- !u!114 &2877471091989350941
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8396033113490134149}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21f0bfe0c99ebb242b76359dc6fad057, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

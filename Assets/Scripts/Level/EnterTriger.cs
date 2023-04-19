@@ -15,6 +15,7 @@ namespace Roguelike
             if (other.gameObject.TryGetComponent<PlayerComponent>(out PlayerComponent player))
             {
                 PlayerHasEntered?.Invoke(player);
+                gameObject.SetActive(false);
             }
         }
     }
