@@ -16,10 +16,9 @@ namespace Roguelike.Weapons
         [SerializeField] private Transform _firePoint;
 
         private IProjectileFactory _factory;
-        private IParticlesPoolService _particlesPool;
         private RangedWeaponStats _stats;
         private ObjectPool<Projectile> _projectilesPool;
-        private string _muzzleFlashKey;
+        private ParticleSystem _muzzleFlashVFX;
 
         public override WeaponStats Stats => _stats;
         public int CurrentAmmo { get; private set; }
@@ -28,7 +27,6 @@ namespace Roguelike.Weapons
         private void Awake()
         {
             _factory = AllServices.Container.Single<IProjectileFactory>();
-            _particlesPool = AllServices.Container.Single<IParticlesPoolService>();
         }
 
         public void Construct(RangedWeaponStats stats)
@@ -39,8 +37,12 @@ namespace Roguelike.Weapons
 
             _projectilesPool = new ObjectPool<Projectile>(_stats.ProjectileData.Prefab);
             
-            _muzzleFlashKey = _stats.ProjectileData.MuzzleFlashVFX.gameObject.name;
-            _particlesPool.CreateNewPool(_muzzleFlashKey, _stats.ProjectileData.MuzzleFlashVFX);
+            _muzzleFlashVFX = Instantiate(
+                stats.ProjectileData.MuzzleFlashVFX, 
+                _firePoint.position, 
+                _firePoint.rotation,
+                _firePoint);
+            _muzzleFlashVFX.Stop(withChildren: true, ParticleSystemStopBehavior.StopEmittingAndClear);
         }
 
         public void ReadProgress(PlayerProgress progress)
@@ -94,15 +96,8 @@ namespace Roguelike.Weapons
             SpawnMuzzleFlashVFX();
         }
 
-        private void SpawnMuzzleFlashVFX()
-        {
-            ParticleSystem particles = _particlesPool.GetInstance(_muzzleFlashKey);
-            particles.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
-            particles.transform.SetPositionAndRotation(_firePoint.position, _firePoint.rotation);
-            //particles.transform.SetParent(_firePoint);
-            particles.gameObject.SetActive(true);
-            particles.Play();
-        }
+        private void SpawnMuzzleFlashVFX() => 
+            _muzzleFlashVFX.Play();
 
         private Projectile GetProjectile() =>
             _factory.CreateProjectile(_stats.ProjectileData.Id, _projectilesPool);
