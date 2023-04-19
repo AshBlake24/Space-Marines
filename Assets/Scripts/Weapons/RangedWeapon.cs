@@ -2,6 +2,7 @@ using Roguelike.Data;
 using Roguelike.Infrastructure.Factory;
 using Roguelike.Infrastructure.Services;
 using Roguelike.Infrastructure.Services.PersistentData;
+using Roguelike.Infrastructure.Services.Random;
 using Roguelike.Utilities;
 using Roguelike.Weapons.Projectiles;
 using Roguelike.Weapons.Stats;
@@ -14,6 +15,7 @@ namespace Roguelike.Weapons
     {
         [SerializeField] private Transform _firePoint;
 
+        private IRandomService _random;
         private IProjectileFactory _factory;
         private IObjectPool<Projectile> _projectilesPool;
         private Transform _projectilesContainer;
@@ -26,6 +28,7 @@ namespace Roguelike.Weapons
 
         private void Awake()
         {
+            _random = AllServices.Container.Single<IRandomService>();
             _factory = AllServices.Container.Single<IProjectileFactory>();
         }
 
@@ -109,6 +112,9 @@ namespace Roguelike.Weapons
         private void SpawnMuzzleFlashVFX() => 
             _muzzleFlashVFX.Play();
 
+        private Vector3 GetSpread() =>
+            new Vector3(_random.Next(-_stats.Spread, _stats.Spread), 0, 0);
+
         private Projectile GetProjectile() =>
             _factory.CreateProjectile(_stats.ProjectileData.Id, _projectilesPool);
 
@@ -123,6 +129,7 @@ namespace Roguelike.Weapons
         private void OnTakeFromPool(Projectile projectile)
         {
             projectile.transform.SetPositionAndRotation(_firePoint.position, _firePoint.rotation);
+            projectile.transform.forward += GetSpread();
             projectile.gameObject.SetActive(true);
             projectile.Init();
         }
