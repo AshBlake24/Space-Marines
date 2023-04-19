@@ -2,6 +2,7 @@ using Roguelike.Data;
 using Roguelike.Infrastructure.Factory;
 using Roguelike.Infrastructure.Services;
 using Roguelike.Infrastructure.Services.PersistentData;
+using Roguelike.Utilities;
 using Roguelike.Weapons.Projectiles;
 using Roguelike.Weapons.Stats;
 using UnityEngine;
@@ -15,6 +16,7 @@ namespace Roguelike.Weapons
 
         private IProjectileFactory _factory;
         private IObjectPool<Projectile> _projectilesPool;
+        private Transform _projectilesContainer;
         private ParticleSystem _muzzleFlashVFX;
         private RangedWeaponStats _stats;
 
@@ -93,6 +95,9 @@ namespace Roguelike.Weapons
 
         private void CreateProjectilesPool()
         {
+            _projectilesContainer = new GameObject($"Pool - {_stats.ProjectileData.Prefab.gameObject.name}").transform;
+            _projectilesContainer.SetParent(Helpers.GetGeneralPoolsContainer());
+            
             _projectilesPool = new ObjectPool<Projectile>(
                 CreatePoolItem,
                 OnTakeFromPool,
@@ -107,8 +112,13 @@ namespace Roguelike.Weapons
         private Projectile GetProjectile() =>
             _factory.CreateProjectile(_stats.ProjectileData.Id, _projectilesPool);
 
-        private Projectile CreatePoolItem() => 
-            GetProjectile();
+        private Projectile CreatePoolItem()
+        {
+            Projectile projectile = GetProjectile();
+            projectile.transform.SetParent(_projectilesContainer);
+
+            return projectile;
+        }
 
         private void OnTakeFromPool(Projectile projectile)
         {
