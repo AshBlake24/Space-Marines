@@ -1,13 +1,11 @@
-using System;
 using Roguelike.Data;
 using Roguelike.Infrastructure.Factory;
 using Roguelike.Infrastructure.Services;
 using Roguelike.Infrastructure.Services.PersistentData;
-using Roguelike.Infrastructure.Services.Pools;
-using Roguelike.Utilities;
 using Roguelike.Weapons.Projectiles;
 using Roguelike.Weapons.Stats;
 using UnityEngine;
+using UnityEngine.Pool;
 
 namespace Roguelike.Weapons
 {
@@ -16,9 +14,9 @@ namespace Roguelike.Weapons
         [SerializeField] private Transform _firePoint;
 
         private IProjectileFactory _factory;
-        private RangedWeaponStats _stats;
-        private ObjectPool<Projectile> _projectilesPool;
+        private IObjectPool<Projectile> _projectilesPool;
         private ParticleSystem _muzzleFlashVFX;
+        private RangedWeaponStats _stats;
 
         public override WeaponStats Stats => _stats;
         public int CurrentAmmo { get; private set; }
@@ -34,15 +32,9 @@ namespace Roguelike.Weapons
             _stats = stats;
             InfinityAmmo = stats.InfinityAmmo;
             CurrentAmmo = stats.MaxAmmo;
-
-            _projectilesPool = new ObjectPool<Projectile>(_stats.ProjectileData.Prefab);
             
-            _muzzleFlashVFX = Instantiate(
-                stats.ProjectileData.MuzzleFlashVFX, 
-                _firePoint.position, 
-                _firePoint.rotation,
-                _firePoint);
-            _muzzleFlashVFX.Stop(withChildren: true, ParticleSystemStopBehavior.StopEmittingAndClear);
+            CreateProjectilesPool();
+            CreateMuzzleFlashVFX(stats);
         }
 
         public void ReadProgress(PlayerProgress progress)
@@ -85,15 +77,28 @@ namespace Roguelike.Weapons
 
         private void Shot()
         {
-            Projectile projectile = _projectilesPool.HasObjects
-                ? _projectilesPool.GetInstance()
-                : GetProjectile();
-
-            projectile.transform.SetPositionAndRotation(_firePoint.position, _firePoint.rotation);
-            projectile.gameObject.SetActive(true);
-            projectile.Init();
-
+            _projectilesPool.Get();
             SpawnMuzzleFlashVFX();
+        }
+        
+        private void CreateMuzzleFlashVFX(RangedWeaponStats stats)
+        {
+            _muzzleFlashVFX = Instantiate(
+                stats.ProjectileData.MuzzleFlashVFX,
+                _firePoint.position,
+                _firePoint.rotation,
+                _firePoint);
+            _muzzleFlashVFX.Stop(withChildren: true, ParticleSystemStopBehavior.StopEmittingAndClear);
+        }
+
+        private void CreateProjectilesPool()
+        {
+            _projectilesPool = new ObjectPool<Projectile>(
+                CreatePoolItem,
+                OnTakeFromPool,
+                OnReleaseToPool,
+                OnDestroyItem,
+                false);
         }
 
         private void SpawnMuzzleFlashVFX() => 
@@ -101,5 +106,21 @@ namespace Roguelike.Weapons
 
         private Projectile GetProjectile() =>
             _factory.CreateProjectile(_stats.ProjectileData.Id, _projectilesPool);
+
+        private Projectile CreatePoolItem() => 
+            GetProjectile();
+
+        private void OnTakeFromPool(Projectile projectile)
+        {
+            projectile.transform.SetPositionAndRotation(_firePoint.position, _firePoint.rotation);
+            projectile.gameObject.SetActive(true);
+            projectile.Init();
+        }
+
+        private void OnReleaseToPool(Projectile projectile) => 
+            projectile.gameObject.SetActive(false);
+
+        private void OnDestroyItem(Projectile projectile) => 
+            Destroy(projectile.gameObject);
     }
 }
