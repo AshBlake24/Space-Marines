@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace Roguelike
+namespace Roguelike.Level
 {
     public class EnterTriger : MonoBehaviour
     {

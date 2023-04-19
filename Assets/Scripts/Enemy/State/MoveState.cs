@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-namespace Roguelike
+namespace Roguelike.Enemy
 {
     public class MoveState : State
     {

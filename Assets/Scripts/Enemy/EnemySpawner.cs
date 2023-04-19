@@ -1,73 +1,77 @@
 using Roguelike;
+using Roguelike.Level;
 using Roguelike.Player;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.AI;
 using UnityEngine;
 
-public class EnemySpawner : MonoBehaviour
+namespace Roguelike.Enemy
 {
-    [SerializeField] private List<EnemyStateMachine> _enemies;
-    [SerializeField] private List<GameObject> _spawnPositions;
-    [SerializeField] private EnterTriger _enterPoint;
-    [SerializeField] private List<EnemyStateMachine> _enemiesInRoom;
-    [SerializeField] private List<ExitPoint> _doors;
-    [SerializeField] private Room _room;
-
-    private void OnEnable()
+    public class EnemySpawner : MonoBehaviour
     {
-        _enterPoint.PlayerHasEntered += OnPlayerHasEntered;
-    }
+        [SerializeField] private List<EnemyStateMachine> _enemies;
+        [SerializeField] private List<GameObject> _spawnPositions;
+        [SerializeField] private EnterTriger _enterPoint;
+        [SerializeField] private List<EnemyStateMachine> _enemiesInRoom;
+        [SerializeField] private List<ExitPoint> _doors;
+        [SerializeField] private Room _room;
 
-    private void OnDisable()
-    {
-        _enterPoint.PlayerHasEntered -= OnPlayerHasEntered;
-
-        foreach (var enemy in _enemiesInRoom)
+        private void OnEnable()
         {
-            enemy.EnemyDied -= OnEnemyDied;
-        }
-    }
-
-    private void Spawn(Transform spawnPosition, PlayerComponent target)
-    {
-        EnemyStateMachine enemy = Instantiate(_enemies[Random.Range(0, _enemies.Count)], spawnPosition.position, Quaternion.identity);
-
-        _enemiesInRoom.Add(enemy);
-
-        enemy.Init(target);
-    }
-
-    private void OnPlayerHasEntered(PlayerComponent player)
-    {
-        foreach (var position in _spawnPositions)
-        {
-            Spawn(position.transform, player);
+            _enterPoint.PlayerHasEntered += OnPlayerHasEntered;
         }
 
-        foreach (var enemy in _enemiesInRoom)
+        private void OnDisable()
         {
-            enemy.EnemyDied += OnEnemyDied;
+            _enterPoint.PlayerHasEntered -= OnPlayerHasEntered;
+
+            foreach (var enemy in _enemiesInRoom)
+            {
+                enemy.EnemyDied -= OnEnemyDied;
+            }
         }
 
-        foreach (var door in _doors)
+        private void Spawn(Transform spawnPosition, PlayerComponent target)
         {
-            door.Hide();
+            EnemyStateMachine enemy = Instantiate(_enemies[Random.Range(0, _enemies.Count)], spawnPosition.position, Quaternion.identity);
+
+            _enemiesInRoom.Add(enemy);
+
+            enemy.Init(target);
         }
-    }
 
-    private void OnEnemyDied(EnemyStateMachine enemy)
-    {
-        enemy.EnemyDied -= OnEnemyDied;
-
-        _enemiesInRoom.Remove(enemy);
-
-        if (_enemiesInRoom.Count == 0)
+        private void OnPlayerHasEntered(PlayerComponent player)
         {
+            foreach (var position in _spawnPositions)
+            {
+                Spawn(position.transform, player);
+            }
+
+            foreach (var enemy in _enemiesInRoom)
+            {
+                enemy.EnemyDied += OnEnemyDied;
+            }
+
             foreach (var door in _doors)
             {
-                door.Show();
-                _room.HideExit();
+                door.Hide();
+            }
+        }
+
+        private void OnEnemyDied(EnemyStateMachine enemy)
+        {
+            enemy.EnemyDied -= OnEnemyDied;
+
+            _enemiesInRoom.Remove(enemy);
+
+            if (_enemiesInRoom.Count == 0)
+            {
+                foreach (var door in _doors)
+                {
+                    door.Show();
+                    _room.HideExit();
+                }
             }
         }
     }

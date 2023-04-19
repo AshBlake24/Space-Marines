@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Roguelike.Player;
 
-namespace Roguelike
+namespace Roguelike.Enemy
 {
     public class PlayerIsArrived : Transition
     {

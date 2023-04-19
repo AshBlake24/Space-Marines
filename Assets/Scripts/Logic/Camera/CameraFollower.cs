@@ -1,3 +1,4 @@
+using Roguelike.Level;
 using System;
 using UnityEngine;
 
@@ -44,6 +45,11 @@ namespace Roguelike.Logic.Camera
 
                         _hiddenWall = wall;
                     }
+                }
+                else
+                {
+                    _hiddenWall?.Show();
+                    _hiddenWall = null;
                 }
             }
         }

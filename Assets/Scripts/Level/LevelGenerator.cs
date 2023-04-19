@@ -3,82 +3,85 @@ using System.Collections.Generic;
 using UnityEditor.AI;
 using UnityEngine;
 
-public class LevelGenerator : MonoBehaviour
+namespace Roguelike.Level
 {
-    [SerializeField] private Vector3 _startPosition;
-    [SerializeField] private int _roomsCount;
-    [SerializeField] private int _bonusRoomCount;
-    [SerializeField] private Room _startRoom;
-    [SerializeField] private List<Room> _corridors;
-    [SerializeField] private List<Room> _areaRooms;
-    [SerializeField] private List<Room> _bonusRooms;
-
-    private Room _currentRoom;
-    private Room _currentCorridor;
-    private ExitPoint _connectingPoint;
-
-    public void Awake()
+    public class LevelGenerator : MonoBehaviour
     {
-        BuildLevel();
-    }
+        [SerializeField] private Vector3 _startPosition;
+        [SerializeField] private int _roomsCount;
+        [SerializeField] private int _bonusRoomCount;
+        [SerializeField] private Room _startRoom;
+        [SerializeField] private List<Room> _corridors;
+        [SerializeField] private List<Room> _areaRooms;
+        [SerializeField] private List<Room> _bonusRooms;
 
-    public void BuildLevel()
-    {
-        _currentRoom = Instantiate(_startRoom, _startPosition, Quaternion.identity);
-        _roomsCount--;
+        private Room _currentRoom;
+        private Room _currentCorridor;
+        private ExitPoint _connectingPoint;
 
-        while (_roomsCount > 0)
+        public void Awake()
         {
-            ConnectCorridor();
-
-            ConnectRoom();
-
-            if (_bonusRoomCount > 0)
-            {
-                ConnectCorridor();
-                ConnectBonusRoom();
-                _bonusRoomCount--;
-            }
-
-            _roomsCount--;
+            BuildLevel();
         }
 
-        _currentRoom.HideExit();
+        public void BuildLevel()
+        {
+            _currentRoom = Instantiate(_startRoom, _startPosition, Quaternion.identity);
+            _roomsCount--;
 
-        NavMeshBuilder.BuildNavMesh();
-    }
+            while (_roomsCount > 0)
+            {
+                ConnectCorridor();
 
-    private void ConnectCorridor()
-    {
-        _connectingPoint = _currentRoom.SelectExitPoint();
-        _currentCorridor = CreateRoom(_currentRoom, _corridors, _connectingPoint);
-    }
+                ConnectRoom();
 
-    private void ConnectRoom()
-    {
-        Room areaRoom = CreateRoom(_currentCorridor, _areaRooms);
+                if (_bonusRoomCount > 0)
+                {
+                    ConnectCorridor();
+                    ConnectBonusRoom();
+                    _bonusRoomCount--;
+                }
 
-        _currentRoom.HideExit();
+                _roomsCount--;
+            }
 
-        _currentRoom = areaRoom;
-    }
+            _currentRoom.HideExit();
 
-    private void ConnectBonusRoom()
-    {
-        CreateRoom(_currentCorridor, _bonusRooms);
-    }
+            NavMeshBuilder.BuildNavMesh();
+        }
 
-    private Room CreateRoom(Room exitRoom, List<Room> roomType, ExitPoint currentExitPoint = null)
-    {
-        Room nextRoom = roomType[Random.Range(0, roomType.Count)];
+        private void ConnectCorridor()
+        {
+            _connectingPoint = _currentRoom.SelectExitPoint();
+            _currentCorridor = CreateRoom(_currentRoom, _corridors, _connectingPoint);
+        }
 
-        if (currentExitPoint == null)
-            currentExitPoint = exitRoom.SelectExitPoint();
+        private void ConnectRoom()
+        {
+            Room areaRoom = CreateRoom(_currentCorridor, _areaRooms);
 
-        nextRoom = Instantiate(nextRoom, currentExitPoint.transform.position, Quaternion.identity);
+            _currentRoom.HideExit();
 
-        nextRoom.Init(_connectingPoint);
+            _currentRoom = areaRoom;
+        }
 
-        return nextRoom;
+        private void ConnectBonusRoom()
+        {
+            CreateRoom(_currentCorridor, _bonusRooms);
+        }
+
+        private Room CreateRoom(Room exitRoom, List<Room> roomType, ExitPoint currentExitPoint = null)
+        {
+            Room nextRoom = roomType[Random.Range(0, roomType.Count)];
+
+            if (currentExitPoint == null)
+                currentExitPoint = exitRoom.SelectExitPoint();
+
+            nextRoom = Instantiate(nextRoom, currentExitPoint.transform.position, Quaternion.identity);
+
+            nextRoom.Init(_connectingPoint);
+
+            return nextRoom;
+        }
     }
 }

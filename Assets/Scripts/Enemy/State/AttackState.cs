@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Roguelike
+namespace Roguelike.Enemy
 {
     public class AttackState : State
     {

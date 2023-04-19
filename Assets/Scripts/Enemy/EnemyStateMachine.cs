@@ -5,7 +5,7 @@ using Roguelike.Player;
 using System;
 using UnityEngine.Events;
 
-namespace Roguelike
+namespace Roguelike.Enemy
 {
     public class EnemyStateMachine : MonoBehaviour
     {

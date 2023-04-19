@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace Roguelike
+namespace Roguelike.Enemy
 {
     public class Transition : MonoBehaviour
     {

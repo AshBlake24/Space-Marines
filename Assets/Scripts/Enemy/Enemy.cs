@@ -5,16 +5,19 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Events;
 
-public class Enemy : MonoBehaviour
+namespace Roguelike.Enemy
 {
-    public event UnityAction EnemyDied;
-
-    private void OnTriggerEnter(Collider other)
+    public class Enemy : MonoBehaviour
     {
-        if (other.gameObject.TryGetComponent<PlayerComponent>(out PlayerComponent player))
+        public event UnityAction EnemyDied;
+
+        private void OnTriggerEnter(Collider other)
         {
-            EnemyDied?.Invoke();
-            Destroy(gameObject);
+            if (other.gameObject.TryGetComponent(out PlayerComponent player))
+            {
+                EnemyDied?.Invoke();
+                Destroy(gameObject);
+            }
         }
     }
 }

@@ -1,11 +1,9 @@
+using Roguelike.Level;
 using Roguelike.Player;
-using Roguelike.Utilities;
 using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
-namespace Roguelike
+namespace Roguelike.Enemy
 {
     public class Bullet : MonoBehaviour
     {
@@ -36,7 +34,6 @@ namespace Roguelike
             }
             else if (other.gameObject.TryGetComponent<Wall>(out Wall wall))
             {
-                Debug.Log("Wall");
                 Destroy(gameObject);
             }
         }
