@@ -3,7 +3,10 @@ namespace Roguelike.StaticData.Projectiles
     public enum ProjectileId
     {
         BasicPistolBullet,
+        AntimatterPistolBullet,
+        RevolverBullet,
+        SubmachinePistolBullet,
         BoltRifleBullet,
-        DoubleBarreledShotgunShrapnel,
+        M4A1Bullet
     }
 }
