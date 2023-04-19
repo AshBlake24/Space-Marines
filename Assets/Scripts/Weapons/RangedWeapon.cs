@@ -18,7 +18,6 @@ namespace Roguelike.Weapons
         private IRandomService _random;
         private IProjectileFactory _factory;
         private IObjectPool<Projectile> _projectilesPool;
-        private Transform _projectilesContainer;
         private ParticleSystem _muzzleFlashVFX;
         private RangedWeaponStats _stats;
 
@@ -98,9 +97,6 @@ namespace Roguelike.Weapons
 
         private void CreateProjectilesPool()
         {
-            _projectilesContainer = new GameObject($"Pool - {_stats.ProjectileData.Prefab.gameObject.name}").transform;
-            _projectilesContainer.SetParent(Helpers.GetGeneralPoolsContainer());
-            
             _projectilesPool = new ObjectPool<Projectile>(
                 CreatePoolItem,
                 OnTakeFromPool,
@@ -121,7 +117,7 @@ namespace Roguelike.Weapons
         private Projectile CreatePoolItem()
         {
             Projectile projectile = GetProjectile();
-            projectile.transform.SetParent(_projectilesContainer);
+            projectile.transform.SetParent(Helpers.GetPoolsContainer(projectile.gameObject.name));
 
             return projectile;
         }
