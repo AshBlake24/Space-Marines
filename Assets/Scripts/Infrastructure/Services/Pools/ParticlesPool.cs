@@ -1,12 +1,13 @@
 using Roguelike.Utilities;
 using Roguelike.Weapons;
 using UnityEngine;
+using UnityEngine.Pool;
 
 namespace Roguelike.Infrastructure.Services.Pools
 {
     public class ParticlesPool
     {
-        private readonly UnityEngine.Pool.ObjectPool<ParticleSystem> _pool;
+        private readonly ObjectPool<ParticleSystem> _pool;
         private readonly ParticleSystem _particlesPrefab;
         private readonly Transform _container;
 
@@ -15,7 +16,7 @@ namespace Roguelike.Infrastructure.Services.Pools
             _container = new GameObject($"Pool - {particlesPrefab.gameObject.name}").transform;
             _container.SetParent(Helpers.GetGeneralPoolsContainer());
             _particlesPrefab = particlesPrefab;
-            _pool = new UnityEngine.Pool.ObjectPool<ParticleSystem>(
+            _pool = new ObjectPool<ParticleSystem>(
                 CreatePoolItem,
                 OnTakeFromPool,
                 OnReleaseToPool,

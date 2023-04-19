@@ -1,8 +1,5 @@
-using System;
-using Roguelike.Logic;
-using Roguelike.Utilities;
-using Roguelike.Weapons.Projectiles.Stats;
 using UnityEngine;
+using UnityEngine.Pool;
 
 namespace Roguelike.Weapons.Projectiles
 {
@@ -11,7 +8,7 @@ namespace Roguelike.Weapons.Projectiles
     {
         [SerializeField] protected Rigidbody Rigidbody;
         
-        public abstract void Construct<TStats>(TStats stats, ObjectPool<Projectile> projectilePool);
+        public abstract void Construct<TStats>(TStats stats, IObjectPool<Projectile> projectilePool);
         public abstract void Init();
     }
 }
