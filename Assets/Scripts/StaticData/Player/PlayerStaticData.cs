@@ -8,5 +8,6 @@ namespace Roguelike.StaticData.Player
     public class PlayerStaticData : ScriptableObject
     {
         public List<WeaponId> StartWeapons;
+        public float WeaponSwtichCooldown;
     }
 }
