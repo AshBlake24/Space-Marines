@@ -15,6 +15,8 @@ namespace Roguelike.Player
         private List<IWeapon> _weapons;
         private IWeapon _currentWeapon;
         private int _currentWeaponIndex;
+        private float _weaponSwitchCooldown;
+        private float _lastWeaponSwitchTime;
         private float _lastShotTime;
         private bool _isAttacking;
 
@@ -25,9 +27,10 @@ namespace Roguelike.Player
             _inputService = AllServices.Container.Single<IInputService>();
         }
 
-        public void Construct(List<IWeapon> weapons)
+        public void Construct(List<IWeapon> weapons, float weaponSwitchCooldown)
         {
             _weapons = weapons;
+            _weaponSwitchCooldown = weaponSwitchCooldown;
             _currentWeaponIndex = 0;
             SetWeapon();
         }
@@ -74,18 +77,23 @@ namespace Roguelike.Player
 
         private void OnWeaponChanged(bool switchToNext)
         {
-            if (switchToNext)
-                _currentWeaponIndex++;
-            else
-                _currentWeaponIndex--;
+            if (Time.time > _lastWeaponSwitchTime + _weaponSwitchCooldown)
+            {
+                _lastWeaponSwitchTime = Time.time;
+                
+                if (switchToNext)
+                    _currentWeaponIndex++;
+                else
+                    _currentWeaponIndex--;
 
-            if (_currentWeaponIndex >= _weapons.Count)
-                _currentWeaponIndex = 0;
+                if (_currentWeaponIndex >= _weapons.Count)
+                    _currentWeaponIndex = 0;
 
-            if (_currentWeaponIndex < 0)
-                _currentWeaponIndex = _weapons.Count - 1;
+                if (_currentWeaponIndex < 0)
+                    _currentWeaponIndex = _weapons.Count - 1;
 
-            SetWeapon();
+                SetWeapon();
+            }
         }
 
         private void OnAttacking(bool isAtacking) => 

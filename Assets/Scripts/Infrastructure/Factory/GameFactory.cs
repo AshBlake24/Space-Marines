@@ -20,12 +20,13 @@ namespace Roguelike.Infrastructure.Factory
         private readonly IPersistentDataService _persistentData;
         private readonly IStaticDataService _staticDataService;
         
-        public GameFactory(IAssetProvider assetProvider, IPersistentDataService persistentData, ISaveLoadService saveLoadService, IWeaponFactory weaponFactory)
+        public GameFactory(IAssetProvider assetProvider, IPersistentDataService persistentData, IStaticDataService staticDataService, ISaveLoadService saveLoadService, IWeaponFactory weaponFactory)
         {
             _assetProvider = assetProvider;
             _weaponFactory = weaponFactory;
             _persistentData = persistentData;
             _saveLoadService = saveLoadService;
+            _staticDataService = staticDataService;
         }
         
         public GameObject CreatePlayer(Transform playerInitialPoint)
@@ -45,7 +46,7 @@ namespace Roguelike.Infrastructure.Factory
                 .Select(weaponId => _weaponFactory.CreateWeapon(weaponId, playerShooter.WeaponSpawnPoint))
                 .ToList();
 
-            playerShooter.Construct(weapons);
+            playerShooter.Construct(weapons, _staticDataService.Player.WeaponSwtichCooldown);
         }
 
         private GameObject InstantiateRegistered(string prefabPath, Vector3 postition)
