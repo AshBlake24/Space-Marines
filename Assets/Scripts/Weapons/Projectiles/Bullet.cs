@@ -12,9 +12,8 @@ namespace Roguelike.Weapons.Projectiles
         private BulletStats _stats;
         private Utilities.ObjectPool<Projectile> _bulletPool;
         private float _accumulatedTime;
-        private string _projectileVFXKey;
         private string _impactVFXKey;
-        private Transform _container;
+        private ParticleSystem _projectileVFX;
 
         private void Awake()
         {
@@ -34,11 +33,11 @@ namespace Roguelike.Weapons.Projectiles
                 throw new ArgumentNullException(nameof(bulletPool), "Pool cannot be null");
 
 
-            _projectileVFXKey = _stats.ProjectileVFX.gameObject.name;
-            _impactVFXKey = _stats.ImpactVFX.gameObject.name;
-
-            _particlesPool.CreateNewPool(_projectileVFXKey, _stats.ProjectileVFX);
+            _impactVFXKey = _stats.ProjectileVFX.gameObject.name;
             _particlesPool.CreateNewPool(_impactVFXKey, _stats.ImpactVFX);
+
+            _projectileVFX = Instantiate(_stats.ProjectileVFX, transform.position, transform.rotation, transform);
+            StopProjectileVFX();
         }
 
         public override void Init()
@@ -47,7 +46,7 @@ namespace Roguelike.Weapons.Projectiles
 
             Rigidbody.velocity = transform.forward * _stats.Speed;
 
-            SpawnVFX(_projectileVFXKey, transform);
+            _projectileVFX.Play();
         }
 
         private void Update()
@@ -75,21 +74,13 @@ namespace Roguelike.Weapons.Projectiles
             _bulletPool.AddInstance(this);
         }
 
-        private void SpawnVFX(string key, Transform parent = null)
+        private void StopProjectileVFX() => 
+            _projectileVFX.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+
+        private void SpawnVFX(string key)
         {
             ParticleSystem particles = _particlesPool.GetInstance(key);
-
-            if (parent != null)
-            {
-                particles.transform.SetParent(transform);
-                particles.transform.SetPositionAndRotation(parent.position, parent.rotation);
-            }
-            else
-            {
-                particles.transform.SetPositionAndRotation(transform.position, transform.rotation);
-            }
-            
-            particles.gameObject.SetActive(true);
+            particles.transform.SetPositionAndRotation(transform.position, transform.rotation);
             particles.Play();
         }
     }
