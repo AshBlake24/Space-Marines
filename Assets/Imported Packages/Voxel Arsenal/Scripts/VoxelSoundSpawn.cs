@@ -15,7 +15,7 @@ namespace VoxelArsenal
         public float pitchRandomMultiplier = 1f;
 
         // Use this for initialization
-        void Start()
+        void OnEnable()
         {
             //Spawn the sound object
             GameObject m_Sound = Instantiate(prefabSound, transform.position, Quaternion.identity);
