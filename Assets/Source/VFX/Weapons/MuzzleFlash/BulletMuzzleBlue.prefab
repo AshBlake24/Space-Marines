@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 4286989069604206}
   - component: {fileID: 198165553389220676}
   - component: {fileID: 199679537008057722}
-  - component: {fileID: 2531746252178622006}
   m_Layer: 0
   m_Name: BulletMuzzleBlue
   m_TagString: Untagged
@@ -53,7 +52,7 @@ ParticleSystem:
   emitterVelocityMode: 0
   looping: 0
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   startDelay:
@@ -4903,18 +4902,6 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
---- !u!114 &2531746252178622006
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1168529448764166}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f01a482afef44e1489a4ffe9c9454653, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1287340191328222
 GameObject:
   m_ObjectHideFlags: 0
@@ -4965,7 +4952,7 @@ ParticleSystem:
   emitterVelocityMode: 0
   looping: 0
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   startDelay:
@@ -9874,7 +9861,7 @@ ParticleSystem:
   emitterVelocityMode: 0
   looping: 0
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   startDelay:

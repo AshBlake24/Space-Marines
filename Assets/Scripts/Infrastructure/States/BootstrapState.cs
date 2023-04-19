@@ -4,6 +4,7 @@ using Roguelike.Infrastructure.Factory;
 using Roguelike.Infrastructure.Services;
 using Roguelike.Infrastructure.Services.Input;
 using Roguelike.Infrastructure.Services.PersistentData;
+using Roguelike.Infrastructure.Services.Pools;
 using Roguelike.Infrastructure.Services.SaveLoad;
 using Roguelike.Infrastructure.Services.StaticData;
 
@@ -44,6 +45,7 @@ namespace Roguelike.Infrastructure.States
             RegisterStaticData();
             _services.RegisterSingle<IInputService>(GetInputService());
             _services.RegisterSingle<IAssetProvider>(new AssetProvider());
+            _services.RegisterSingle<IParticlesPoolService>(new ParticlesPoolService());
             _services.RegisterSingle<IPersistentDataService>(new PersistentDataService());
             _services.RegisterSingle<ISaveLoadService>(new SaveLoadService(_services.Single<IPersistentDataService>()));
             _services.RegisterSingle<IProjectileFactory>(new ProjectileFactory(_services.Single<IStaticDataService>()));

@@ -1,6 +1,6 @@
 using System;
-using Roguelike.Logic;
-using Roguelike.Utilities;
+using Roguelike.Infrastructure.Services;
+using Roguelike.Infrastructure.Services.Pools;
 using Roguelike.Weapons.Projectiles.Stats;
 using UnityEngine;
 
@@ -8,15 +8,20 @@ namespace Roguelike.Weapons.Projectiles
 {
     public class Bullet : Projectile
     {
+        private IParticlesPoolService _particlesPool;
         private BulletStats _stats;
-        private ObjectPool<ParticleSystem> _projectileVFXPool;
-        private ObjectPool<ParticleSystem> _impactVFXPool;
-        private ObjectPool<Projectile> _bulletPool;
-        private ParticleSystem _projectileVFX;
-        private ParticleSystem _impactVFX;
+        private Utilities.ObjectPool<Projectile> _bulletPool;
         private float _accumulatedTime;
+        private string _projectileVFXKey;
+        private string _impactVFXKey;
+        private Transform _container;
 
-        public override void Construct<TStats>(TStats stats, ObjectPool<Projectile> bulletPool)
+        private void Awake()
+        {
+            _particlesPool = AllServices.Container.Single<IParticlesPoolService>();
+        }
+
+        public override void Construct<TStats>(TStats stats, Utilities.ObjectPool<Projectile> bulletPool)
         {
             if (stats is BulletStats bulletStats)
                 _stats = bulletStats;
@@ -28,8 +33,12 @@ namespace Roguelike.Weapons.Projectiles
             else
                 throw new ArgumentNullException(nameof(bulletPool), "Pool cannot be null");
 
-            _projectileVFXPool = new ObjectPool<ParticleSystem>(_stats.ProjectileVFX.gameObject);
-            _impactVFXPool = new ObjectPool<ParticleSystem>(_stats.ImpactVFX.gameObject);
+
+            _projectileVFXKey = _stats.ProjectileVFX.gameObject.name;
+            _impactVFXKey = _stats.ImpactVFX.gameObject.name;
+
+            _particlesPool.CreateNewPool(_projectileVFXKey, _stats.ProjectileVFX);
+            _particlesPool.CreateNewPool(_impactVFXKey, _stats.ImpactVFX);
         }
 
         public override void Init()
@@ -38,7 +47,7 @@ namespace Roguelike.Weapons.Projectiles
 
             Rigidbody.velocity = transform.forward * _stats.Speed;
 
-            SpawnTrailVFX();
+            SpawnVFX(_projectileVFXKey, transform);
         }
 
         private void Update()
@@ -48,7 +57,7 @@ namespace Roguelike.Weapons.Projectiles
 
         private void OnCollisionEnter(Collision collision)
         {
-            SpawnImpactVFX();
+            SpawnVFX(_impactVFXKey);
             ReturnToPool();
         }
 
@@ -66,37 +75,22 @@ namespace Roguelike.Weapons.Projectiles
             _bulletPool.AddInstance(this);
         }
 
-        private void SpawnTrailVFX()
+        private void SpawnVFX(string key, Transform parent = null)
         {
-            if (_projectileVFXPool.HasObjects)
+            ParticleSystem particles = _particlesPool.GetInstance(key);
+
+            if (parent != null)
             {
-                _projectileVFX = _projectileVFXPool.GetInstance();
+                particles.transform.SetParent(transform);
+                particles.transform.SetPositionAndRotation(parent.position, parent.rotation);
             }
             else
             {
-                _projectileVFX = Instantiate(_stats.ProjectileVFX);
-                //_trail.Counstruct(_projectileVFXPool);
+                particles.transform.SetPositionAndRotation(transform.position, transform.rotation);
             }
-
-            _projectileVFX.transform.SetPositionAndRotation(transform.position, transform.rotation);
-            _projectileVFX.transform.SetParent(transform);
-            _projectileVFX.gameObject.SetActive(true);
-        }
-
-        private void SpawnImpactVFX()
-        {
-            if (_impactVFXPool.HasObjects)
-            {
-                _impactVFX = _impactVFXPool.GetInstance();
-            }
-            else
-            {
-                _impactVFX = Instantiate(_stats.ImpactVFX);
-                //_impact.Counstruct(_impactVFXPool);
-            }
-
-            _impactVFX.transform.SetPositionAndRotation(transform.position, transform.rotation);
-            _impactVFX.gameObject.SetActive(true);
+            
+            particles.gameObject.SetActive(true);
+            particles.Play();
         }
     }
 }
