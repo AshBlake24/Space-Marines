@@ -7,6 +7,7 @@ namespace Roguelike.Weapons.Stats
 {
     public class RangedWeaponStats : WeaponStats
     {
+        private readonly float _spread;
         private readonly int _maxAmmo;
         private readonly bool _infinityAmmo;
         private readonly ProjectileStaticData _projectileData;
@@ -16,8 +17,10 @@ namespace Roguelike.Weapons.Stats
             _maxAmmo = weaponData.MaxAmmo;
             _infinityAmmo = weaponData.InfinityAmmo;
             _projectileData = weaponData.Projectile;
+            _spread = weaponData.Spread;
         }
 
+        public float Spread => _spread;
         public int MaxAmmo => _maxAmmo;
         public bool InfinityAmmo => _infinityAmmo;
         public ProjectileStaticData ProjectileData => _projectileData;
