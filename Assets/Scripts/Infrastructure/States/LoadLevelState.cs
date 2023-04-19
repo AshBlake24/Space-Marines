@@ -35,6 +35,8 @@ namespace Roguelike.Infrastructure.States
 
         private void OnLoaded()
         {
+            GameObject levelGenerator = _gameFactory.GenerateLevel();
+
             GameObject initialPoint = GameObject.FindWithTag(InitialPointTag);
             GameObject player = _gameFactory.CreatePlayer(initialPoint.transform);
             

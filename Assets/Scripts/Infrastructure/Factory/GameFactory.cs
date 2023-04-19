@@ -14,5 +14,8 @@ namespace Roguelike.Infrastructure.Factory
         
         public GameObject CreatePlayer(Transform playerInitialPoint) => 
             _assetProvider.Instantiate(AssetPath.PlayerPath, playerInitialPoint.position);
+
+        public GameObject GenerateLevel() =>
+            _assetProvider.Instantiate(AssetPath.LevelGeneratorPath);
     }
 }

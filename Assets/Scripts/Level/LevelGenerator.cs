@@ -17,16 +17,16 @@ public class LevelGenerator : MonoBehaviour
     private Room _currentCorridor;
     private ExitPoint _connectingPoint;
 
-    private void Start()
+    public void Awake()
+    {
+        BuildLevel();
+    }
+
+    public void BuildLevel()
     {
         _currentRoom = Instantiate(_startRoom, _startPosition, Quaternion.identity);
         _roomsCount--;
 
-        BuildLevel();
-    }
-
-    private void BuildLevel()
-    {
         while (_roomsCount > 0)
         {
             ConnectCorridor();
