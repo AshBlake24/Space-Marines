@@ -50,6 +50,11 @@ namespace Roguelike.Player
             _inputService.WeaponChanged -= OnWeaponChanged;
         }
 
+        private void Start()
+        {
+            WeaponChanged?.Invoke(_currentWeapon);
+        }
+
         private void Update()
         {
             TryAttack();

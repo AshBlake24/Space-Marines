@@ -55,33 +55,22 @@ namespace Roguelike.Weapons
 
         public override bool TryAttack()
         {
-            if (AmmoData.InfinityAmmo)
+            if (AmmoData.CurrentAmmo > 0 || AmmoData.InfinityAmmo)
             {
                 Shot();
-                Debug.Log($"{_stats.Name} shot! Bullets amount: Infinity");
-
                 return true;
             }
-
-            if (AmmoData.CurrentAmmo > 0)
-            {
-                Shot();
-                AmmoData.CurrentAmmo--;
-                Debug.Log($"{_stats.Name} shot! Bullets amount: {AmmoData.CurrentAmmo}");
-
-                return true;
-            }
-
-            Debug.Log("Not enough ammo");
-
+            
             return false;
         }
 
         private void Shot()
         {
+            if (AmmoData.InfinityAmmo == false)
+                AmmoData.CurrentAmmo--;
+            
             _projectilesPool.Get();
             SpawnMuzzleFlashVFX();
-            
             Fired?.Invoke();
         }
 
