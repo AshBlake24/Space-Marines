@@ -16,6 +16,9 @@ namespace Roguelike.Player
         public void Move(float speed) =>
             _animator.SetFloat(s_speedHash, speed);
 
+        public void PlayHit() => 
+            throw new System.NotImplementedException();
+
         public void PlayDeath() => _animator.SetTrigger(s_dieHash);
 
         public void PlayShot() => _animator.SetTrigger(s_shot);
