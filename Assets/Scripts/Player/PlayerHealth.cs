@@ -36,6 +36,7 @@ namespace Roguelike.Player
         public void ReadProgress(PlayerProgress progress)
         {
             _state = progress.State;
+            HealthChanged?.Invoke();
         }
 
         public void WriteProgress(PlayerProgress progress)
