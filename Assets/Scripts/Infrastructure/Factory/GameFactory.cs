@@ -7,6 +7,7 @@ using Roguelike.Infrastructure.Services.SaveLoad;
 using Roguelike.Infrastructure.Services.StaticData;
 using Roguelike.Player;
 using Roguelike.StaticData.Weapons;
+using Roguelike.UI;
 using Roguelike.Weapons;
 using UnityEngine;
 
@@ -38,6 +39,12 @@ namespace Roguelike.Infrastructure.Factory
             return player;
         }
 
+        public GameObject CreateDesktopHud() => 
+            InstantiateRegistered(AssetPath.DesktopHudPath);
+
+        public GameObject CreateMobileHud()=>
+            InstantiateRegistered(AssetPath.MobileHudPath);
+
         private void InitializeShooterComponent(GameObject player)
         {
             PlayerShooter playerShooter = player.GetComponent<PlayerShooter>();
@@ -47,6 +54,14 @@ namespace Roguelike.Infrastructure.Factory
                 .ToList();
 
             playerShooter.Construct(weapons, _staticDataService.Player.WeaponSwtichCooldown);
+        }
+        
+        private GameObject InstantiateRegistered(string prefabPath)
+        {
+            GameObject gameObject = _assetProvider.Instantiate(prefabPath);
+            _saveLoadService.RegisterProgressWatchers(gameObject);
+
+            return gameObject;
         }
 
         private GameObject InstantiateRegistered(string prefabPath, Vector3 postition)
