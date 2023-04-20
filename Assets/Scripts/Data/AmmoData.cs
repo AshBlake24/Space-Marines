@@ -1,5 +1,4 @@
 using System;
-using Roguelike.StaticData.Weapons;
 
 namespace Roguelike.Data
 {
@@ -8,11 +7,13 @@ namespace Roguelike.Data
     {
         public bool InfinityAmmo;
         public int CurrentAmmo;
+        public int MaxAmmo;
 
-        public AmmoData(bool infinityAmmo, int currentAmmo)
+        public AmmoData(bool infinityAmmo, int currentAmmo, int maxAmmo)
         {
             InfinityAmmo = infinityAmmo;
             CurrentAmmo = currentAmmo;
+            MaxAmmo = maxAmmo;
         }
     }
 }

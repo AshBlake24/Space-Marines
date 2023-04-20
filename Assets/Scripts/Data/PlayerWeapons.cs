@@ -17,7 +17,7 @@ namespace Roguelike.Data
 
             InitializeStartWeapons(startWeapons);
         }
-
+        
         public IEnumerable<WeaponId> GetWeapons() => 
             RangedWeapons.Select(rangedWeaponData => rangedWeaponData.ID)
                 .ToList();

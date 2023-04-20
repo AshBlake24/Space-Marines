@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Roguelike.Infrastructure.Services;
 using Roguelike.Infrastructure.Services.Input;
@@ -20,6 +21,8 @@ namespace Roguelike.Player
         private float _lastShotTime;
         private bool _isAttacking;
 
+        public event Action<IWeapon> WeaponChanged;
+        
         public Transform WeaponSpawnPoint => _weaponSpawnPoint;
 
         private void Awake()
@@ -73,6 +76,8 @@ namespace Roguelike.Player
             _currentWeapon = _weapons[_currentWeaponIndex];
             _currentWeapon.Show();
             _playerAnimator.SetWeapon(_currentWeapon.Stats.Size);
+            
+            WeaponChanged?.Invoke(_currentWeapon);
         }
 
         private void OnWeaponChanged(bool switchToNext)
