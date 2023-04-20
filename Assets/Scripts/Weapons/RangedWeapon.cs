@@ -22,8 +22,7 @@ namespace Roguelike.Weapons
         private RangedWeaponStats _stats;
 
         public override WeaponStats Stats => _stats;
-        public int CurrentAmmo { get; private set; }
-        public bool InfinityAmmo { get; private set; }
+        public AmmoData AmmoData { get; private set; }
 
         private void Awake()
         {
@@ -34,30 +33,27 @@ namespace Roguelike.Weapons
         public void Construct(RangedWeaponStats stats)
         {
             _stats = stats;
-            InfinityAmmo = stats.InfinityAmmo;
-            CurrentAmmo = stats.MaxAmmo;
+            AmmoData = new AmmoData(_stats.InfinityAmmo, _stats.MaxAmmo);
             
             CreateProjectilesPool();
             CreateMuzzleFlashVFX(stats);
         }
 
-        public void WriteProgress(PlayerProgress progress) =>
-            progress.PlayerWeapons.SaveRangedWeapon(Stats.ID, InfinityAmmo, CurrentAmmo);
+        public void WriteProgress(PlayerProgress progress) => 
+            progress.PlayerWeapons.SaveRangedWeapon(_stats.ID, AmmoData);
 
         public void ReadProgress(PlayerProgress progress)
         {
-            AmmoData ammoData = progress.PlayerWeapons.Ammo.Find(weapon => weapon.ID == Stats.ID);
+            RangedWeaponData weaponData = progress.PlayerWeapons.RangedWeapons.Find(weapon => weapon.ID == Stats.ID);
 
-            if (ammoData != null)
-            {
-                InfinityAmmo = ammoData.InfinityAmmo;
-                CurrentAmmo = ammoData.CurrentAmmo;
-            }
+            AmmoData = weaponData != null 
+                ? weaponData.AmmoData 
+                : new AmmoData(_stats.InfinityAmmo, _stats.MaxAmmo);
         }
 
         public override bool TryAttack()
         {
-            if (InfinityAmmo)
+            if (AmmoData.InfinityAmmo)
             {
                 Shot();
                 Debug.Log($"{_stats.Name} shot! Bullets amount: Infinity");
@@ -65,11 +61,11 @@ namespace Roguelike.Weapons
                 return true;
             }
 
-            if (CurrentAmmo > 0)
+            if (AmmoData.CurrentAmmo > 0)
             {
                 Shot();
-                CurrentAmmo--;
-                Debug.Log($"{_stats.Name} shot! Bullets amount: {CurrentAmmo}");
+                AmmoData.CurrentAmmo--;
+                Debug.Log($"{_stats.Name} shot! Bullets amount: {AmmoData.CurrentAmmo}");
 
                 return true;
             }
@@ -84,16 +80,7 @@ namespace Roguelike.Weapons
             _projectilesPool.Get();
             SpawnMuzzleFlashVFX();
         }
-
-        private void SpawnMuzzleFlashVFX() => 
-            _muzzleFlashVFX.Play();
-
-        private Vector3 GetSpread() =>
-            new Vector3(_random.Next(-_stats.Spread, _stats.Spread), 0, 0);
-
-        private Projectile GetProjectile() =>
-            _factory.CreateProjectile(_stats.ProjectileData.Id, _projectilesPool);
-
+        
         private void CreateMuzzleFlashVFX(RangedWeaponStats stats)
         {
             _muzzleFlashVFX = Instantiate(
@@ -113,6 +100,15 @@ namespace Roguelike.Weapons
                 OnDestroyItem,
                 false);
         }
+
+        private void SpawnMuzzleFlashVFX() => 
+            _muzzleFlashVFX.Play();
+
+        private Vector3 GetSpread() =>
+            new Vector3(_random.Next(-_stats.Spread, _stats.Spread), 0, 0);
+
+        private Projectile GetProjectile() =>
+            _factory.CreateProjectile(_stats.ProjectileData.Id, _projectilesPool);
 
         private Projectile CreatePoolItem()
         {

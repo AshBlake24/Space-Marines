@@ -42,7 +42,7 @@ namespace Roguelike.Infrastructure.Factory
         {
             PlayerShooter playerShooter = player.GetComponent<PlayerShooter>();
             
-            List<IWeapon> weapons = _persistentData.PlayerProgress.PlayerWeapons.Available
+            List<IWeapon> weapons = _persistentData.PlayerProgress.PlayerWeapons.GetWeapons()
                 .Select(weaponId => _weaponFactory.CreateWeapon(weaponId, playerShooter.WeaponSpawnPoint))
                 .ToList();
 
