@@ -6,6 +6,7 @@ using Roguelike.Logic;
 using Roguelike.Logic.Camera;
 using Roguelike.Player;
 using Roguelike.UI;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Roguelike.Infrastructure.States
@@ -88,6 +89,8 @@ namespace Roguelike.Infrastructure.States
             
             hud.GetComponentInChildren<AmmoCounter>()
                 .Construct(player.GetComponent<PlayerShooter>());
+            hud.GetComponentInChildren<ActorUI>()
+                .Construct(player.GetComponent<PlayerHealth>()); 
         }
 
         private void InformProgressReaders()

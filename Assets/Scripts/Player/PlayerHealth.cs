@@ -12,12 +12,21 @@ namespace Roguelike.Player
         
         private State _state;
 
+        public event Action HealthChanged;
+
         public int CurrentHealth
         {
             get => _state.CurrentHealth;
-            private set => _state.CurrentHealth = value;
+            private set
+            {
+                if (_state.CurrentHealth != value)
+                {
+                    _state.CurrentHealth = value;
+                    HealthChanged?.Invoke();
+                }
+            }
         }
-        
+
         public int MaxHealth
         {
             get => _state.MaxHealth;
