@@ -9,35 +9,27 @@ namespace Roguelike.Data
     [Serializable]
     public class PlayerWeapons
     {
-        public List<WeaponId> Available;
-        public List<AmmoData> Ammo;
+        public List<RangedWeaponData> RangedWeapons;
 
         public PlayerWeapons(IEnumerable<IWeapon> startWeapons)
         {
-            Available = new List<WeaponId>();
-            Ammo = new List<AmmoData>();
+            RangedWeapons = new List<RangedWeaponData>();
 
             InitializeStartWeapons(startWeapons);
         }
 
-        public void SaveRangedWeapon(WeaponId id, bool infinityAmmo, int currentAmmo)
+        public IEnumerable<WeaponId> GetWeapons() => 
+            RangedWeapons.Select(rangedWeaponData => rangedWeaponData.ID)
+                .ToList();
+
+        public void SaveRangedWeapon(WeaponId id, AmmoData ammoData)
         {
-            if (Available.Contains(id) == false)
-            {
-                Available.Add(id);
-                AmmoData ammoData = new()
-                {
-                    ID = id,
-                    InfinityAmmo = infinityAmmo,
-                    CurrentAmmo = currentAmmo,
-                };
-                Ammo.Add(ammoData);
-            }
+            RangedWeaponData weaponData = RangedWeapons.Find(x => x.ID == id);
+
+            if (weaponData != null)
+                weaponData.AmmoData = ammoData;
             else
-            {
-                AmmoData rangedWeapon = Ammo.Single(weapon => weapon.ID == id);
-                rangedWeapon.CurrentAmmo = currentAmmo;
-            }
+                RangedWeapons.Add(new RangedWeaponData(id, ammoData));
         }
 
         private void InitializeStartWeapons(IEnumerable<IWeapon> startWeapons)
@@ -45,9 +37,7 @@ namespace Roguelike.Data
             foreach (IWeapon weapon in startWeapons)
             {
                 if (weapon is RangedWeapon rangedWeapon)
-                    SaveRangedWeapon(rangedWeapon.Stats.ID, rangedWeapon.InfinityAmmo, rangedWeapon.CurrentAmmo);
-                else
-                    Available.Add(weapon.Stats.ID);
+                    SaveRangedWeapon(rangedWeapon.Stats.ID, rangedWeapon.AmmoData);
             }
         }
     }

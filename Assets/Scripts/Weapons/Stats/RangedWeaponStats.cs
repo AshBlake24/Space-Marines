@@ -1,3 +1,4 @@
+using Roguelike.Data;
 using Roguelike.Logic;
 using Roguelike.StaticData.Projectiles;
 using Roguelike.StaticData.Weapons;
@@ -7,10 +8,10 @@ namespace Roguelike.Weapons.Stats
 {
     public class RangedWeaponStats : WeaponStats
     {
-        private readonly float _spread;
         private readonly int _maxAmmo;
         private readonly bool _infinityAmmo;
         private readonly ProjectileStaticData _projectileData;
+        private readonly float _spread;
 
         public RangedWeaponStats(RangedWeaponStaticData weaponData) : base(weaponData)
         {
@@ -20,9 +21,9 @@ namespace Roguelike.Weapons.Stats
             _spread = weaponData.Spread;
         }
 
-        public float Spread => _spread;
         public int MaxAmmo => _maxAmmo;
         public bool InfinityAmmo => _infinityAmmo;
         public ProjectileStaticData ProjectileData => _projectileData;
+        public float Spread => _spread;
     }
 }
