@@ -41,6 +41,9 @@ namespace Roguelike.Weapons
             CreateMuzzleFlashVFX(stats);
         }
 
+        public void WriteProgress(PlayerProgress progress) =>
+            progress.PlayerWeapons.SaveRangedWeapon(Stats.ID, InfinityAmmo, CurrentAmmo);
+
         public void ReadProgress(PlayerProgress progress)
         {
             AmmoData ammoData = progress.PlayerWeapons.Ammo.Find(weapon => weapon.ID == Stats.ID);
@@ -51,9 +54,6 @@ namespace Roguelike.Weapons
                 CurrentAmmo = ammoData.CurrentAmmo;
             }
         }
-
-        public void WriteProgress(PlayerProgress progress) =>
-            progress.PlayerWeapons.SaveRangedWeapon(Stats.ID, InfinityAmmo, CurrentAmmo);
 
         public override bool TryAttack()
         {
@@ -84,7 +84,16 @@ namespace Roguelike.Weapons
             _projectilesPool.Get();
             SpawnMuzzleFlashVFX();
         }
-        
+
+        private void SpawnMuzzleFlashVFX() => 
+            _muzzleFlashVFX.Play();
+
+        private Vector3 GetSpread() =>
+            new Vector3(_random.Next(-_stats.Spread, _stats.Spread), 0, 0);
+
+        private Projectile GetProjectile() =>
+            _factory.CreateProjectile(_stats.ProjectileData.Id, _projectilesPool);
+
         private void CreateMuzzleFlashVFX(RangedWeaponStats stats)
         {
             _muzzleFlashVFX = Instantiate(
@@ -104,15 +113,6 @@ namespace Roguelike.Weapons
                 OnDestroyItem,
                 false);
         }
-
-        private void SpawnMuzzleFlashVFX() => 
-            _muzzleFlashVFX.Play();
-
-        private Vector3 GetSpread() =>
-            new Vector3(_random.Next(-_stats.Spread, _stats.Spread), 0, 0);
-
-        private Projectile GetProjectile() =>
-            _factory.CreateProjectile(_stats.ProjectileData.Id, _projectilesPool);
 
         private Projectile CreatePoolItem()
         {
