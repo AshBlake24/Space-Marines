@@ -17,7 +17,7 @@ namespace Roguelike.UI
         {
             _playerHealth = playerHealth;
             _playerHealth.HealthChanged += OnHealthChanged;
-        }
+            }
         
         private void OnHealthChanged()
         {
