@@ -2,6 +2,7 @@ using Agava.YandexGames;
 using Roguelike.Infrastructure.AssetManagement;
 using Roguelike.Infrastructure.Factory;
 using Roguelike.Infrastructure.Services;
+using Roguelike.Infrastructure.Services.Environment;
 using Roguelike.Infrastructure.Services.Input;
 using Roguelike.Infrastructure.Services.PersistentData;
 using Roguelike.Infrastructure.Services.Pools;
@@ -14,7 +15,6 @@ namespace Roguelike.Infrastructure.States
     public class BootstrapState : IState
     {
         private const string InitialScene = "Initial";
-        private const string DesktopEnvironment = "Desktop";
 
         private readonly GameStateMachine _stateMachine;
         private readonly SceneLoader _sceneLoader;
@@ -44,9 +44,10 @@ namespace Roguelike.Infrastructure.States
         private void RegisterServices()
         {
             RegisterStaticData();
-            _services.RegisterSingle<IInputService>(GetInputService());
+            _services.RegisterSingle<IEnvironmentService>(new EnvironmentService());
             _services.RegisterSingle<IRandomService>(new UnityRandomService());
             _services.RegisterSingle<IAssetProvider>(new AssetProvider());
+            _services.RegisterSingle<IInputService>(GetInputService());
             _services.RegisterSingle<IParticlesPoolService>(new ParticlesPoolService());
             _services.RegisterSingle<IPersistentDataService>(new PersistentDataService());
             _services.RegisterSingle<ISaveLoadService>(new SaveLoadService(_services.Single<IPersistentDataService>()));
@@ -66,14 +67,11 @@ namespace Roguelike.Infrastructure.States
 
         private IInputService GetInputService()
         {
-#if UNITY_WEBGL && !UNITY_EDITOR
-            if (YandexGamesSdk.Environment == DesktopEnvironment)
-                return new DesktopInputService();
-            else
-                return new MobileInputService();
-#else
-            return new DesktopInputService();
-#endif
+            EnvironmentType deviceType = _services.Single<IEnvironmentService>().GetDeviceType();
+
+            return deviceType == EnvironmentType.Desktop 
+                ? new DesktopInputService() 
+                : new MobileInputService();
         }
     }
 }
