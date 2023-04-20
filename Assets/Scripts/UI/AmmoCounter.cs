@@ -1,3 +1,4 @@
+using System;
 using Roguelike.Data;
 using Roguelike.Player;
 using Roguelike.Weapons;
@@ -16,7 +17,6 @@ namespace Roguelike.UI
 
         public void Construct(PlayerShooter playerShooter)
         {
-            _currentAmmo.enabled = false;
             _playerShooter = playerShooter;
             _playerShooter.WeaponChanged += OnWeaponChaged;
         }
@@ -39,6 +39,8 @@ namespace Roguelike.UI
             }
             else
             {
+                _rangedWeapon = null;
+                _ammoData = null;
                 _currentAmmo.enabled = false;
             }
         }
