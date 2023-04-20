@@ -44,8 +44,15 @@ namespace Roguelike.Infrastructure.States
                 _saveLoadService.LoadProgress()
                 ?? CreateNewProgress();
 
-        private PlayerProgress CreateNewProgress() => 
-            new PlayerProgress(StartLevel, CreateStartWeapons());
+        private PlayerProgress CreateNewProgress()
+        {
+            PlayerProgress playerProgress = new PlayerProgress(StartLevel, CreateStartWeapons());
+
+            playerProgress.State.MaxHealth = 3;
+            playerProgress.State.ResetHealth();
+
+            return playerProgress;
+        }
 
         private IEnumerable<IWeapon> CreateStartWeapons() => 
             _staticDataService.Player.StartWeapons
