@@ -1,9 +1,11 @@
-using System;
 using Roguelike.Infrastructure.Factory;
+using Roguelike.Infrastructure.Services.Environment;
 using Roguelike.Infrastructure.Services.PersistentData;
 using Roguelike.Infrastructure.Services.SaveLoad;
 using Roguelike.Logic;
 using Roguelike.Logic.Camera;
+using Roguelike.Player;
+using Roguelike.UI;
 using UnityEngine;
 
 namespace Roguelike.Infrastructure.States
@@ -18,8 +20,16 @@ namespace Roguelike.Infrastructure.States
         private readonly IGameFactory _gameFactory;
         private readonly ISaveLoadService _saveLoadService;
         private readonly IPersistentDataService _progressService;
+        private readonly IEnvironmentService _environmentService;
 
-        public LoadLevelState(GameStateMachine stateMachine, SceneLoader sceneLoader, LoadingScreen loadingScreen, IGameFactory gameFactory, ISaveLoadService saveLoadService, IPersistentDataService progressService)
+        public LoadLevelState(
+            GameStateMachine stateMachine, 
+            SceneLoader sceneLoader, 
+            LoadingScreen loadingScreen, 
+            IGameFactory gameFactory, 
+            ISaveLoadService saveLoadService, 
+            IPersistentDataService progressService, 
+            IEnvironmentService environmentService)
         {
             _stateMachine = stateMachine;
             _sceneLoader = sceneLoader;
@@ -27,6 +37,7 @@ namespace Roguelike.Infrastructure.States
             _gameFactory = gameFactory;
             _saveLoadService = saveLoadService;
             _progressService = progressService;
+            _environmentService = environmentService;
         }
 
         public void Enter(string sceneName)
@@ -53,10 +64,30 @@ namespace Roguelike.Infrastructure.States
 
         private void InitGameWorld()
         {
+            GameObject player = InitPlayer();
+            InitHud(player);
+
+            CameraFollow(player);
+        }
+
+        private GameObject InitPlayer()
+        {
             GameObject initialPoint = GameObject.FindWithTag(InitialPointTag);
             GameObject player = _gameFactory.CreatePlayer(initialPoint.transform);
 
-            CameraFollow(player);
+            return player;
+        }
+        
+        private void InitHud(GameObject player)
+        {
+            EnvironmentType deviceType = _environmentService.GetDeviceType();
+            
+            GameObject hud = deviceType == EnvironmentType.Desktop 
+                ? _gameFactory.CreateDesktopHud() 
+                : _gameFactory.CreateMobileHud();
+            
+            hud.GetComponentInChildren<AmmoCounter>()
+                .Construct(player.GetComponent<PlayerShooter>());
         }
 
         private void InformProgressReaders()
