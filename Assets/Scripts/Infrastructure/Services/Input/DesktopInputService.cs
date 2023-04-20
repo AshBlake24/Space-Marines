@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace Roguelike.Infrastructure.Services.Input
 {
@@ -18,13 +19,14 @@ namespace Roguelike.Infrastructure.Services.Input
         private void InitializePlayerInput()
         {
             _playerInput.Enable();
-            _playerInput.Player.Attack.started += (ctx) => OnAttacking(true);
-            _playerInput.Player.Attack.canceled += (ctx) => OnAttacking(false);
             _playerInput.Player.SwitchWeapon.performed += (ctx) =>
             {
                 float value = ctx.ReadValue<float>();
-                OnWeaponChanged(value > 0);
+                ChangeWeapon(value > 0);
             };
         }
+
+        public override bool IsAttackButtonUp() => 
+            _playerInput.Player.Attack.phase == InputActionPhase.Performed;
     }
 }
