@@ -1,8 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Roguelike.Player;
-using System;
 using UnityEngine.Events;
 
 namespace Roguelike.Enemy
@@ -10,7 +7,7 @@ namespace Roguelike.Enemy
     public class EnemyStateMachine : MonoBehaviour
     {
         [SerializeField] private State _startState;
-        [SerializeField] private Enemy _enemy;
+        [SerializeField] private EnemyPresenter _enemy;
 
         private PlayerComponent _player;
         private State _currentState;

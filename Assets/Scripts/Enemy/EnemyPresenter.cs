@@ -7,8 +7,12 @@ using UnityEngine.Events;
 
 namespace Roguelike.Enemy
 {
-    public class Enemy : MonoBehaviour
+    public class EnemyPresenter : MonoBehaviour
     {
+        [SerializeField] private EnemyStat _stat;
+
+        public EnemyStat Stat => _stat;
+
         public event UnityAction EnemyDied;
 
         private void OnTriggerEnter(Collider other)
