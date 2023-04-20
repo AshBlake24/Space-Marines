@@ -117,7 +117,7 @@ namespace Roguelike.Weapons
         private Projectile CreatePoolItem()
         {
             Projectile projectile = GetProjectile();
-            projectile.transform.SetParent(Helpers.GetPoolsContainer(projectile.gameObject.name));
+            projectile.transform.SetParent(Helpers.GetPoolsContainer(gameObject.name));
 
             return projectile;
         }
