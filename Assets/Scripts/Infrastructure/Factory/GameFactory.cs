@@ -35,6 +35,9 @@ namespace Roguelike.Infrastructure.Factory
             GameObject player = InstantiateRegistered(AssetPath.PlayerPath, playerInitialPoint.position);
             
             InitializeShooterComponent(player);
+            
+            player.GetComponent<PlayerHealth>()
+                .Construct(_staticDataService.Player.ImmuneTimeAfterHit);
 
             return player;
         }
