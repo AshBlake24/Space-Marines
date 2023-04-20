@@ -19,7 +19,6 @@ namespace Roguelike.Player
         private float _weaponSwitchCooldown;
         private float _lastWeaponSwitchTime;
         private float _lastShotTime;
-        private bool _isAttacking;
 
         public event Action<IWeapon> WeaponChanged;
         
@@ -40,13 +39,11 @@ namespace Roguelike.Player
 
         private void OnEnable()
         {
-            _inputService.Attacking += OnAttacking;
             _inputService.WeaponChanged += OnWeaponChanged;
         }
 
         private void OnDisable()
         {
-            _inputService.Attacking -= OnAttacking;
             _inputService.WeaponChanged -= OnWeaponChanged;
         }
 
@@ -62,7 +59,7 @@ namespace Roguelike.Player
 
         private void TryAttack()
         {
-            if (_isAttacking == false)
+            if (_inputService.IsAttackButtonUp() == false)
                 return;
 
             if (Time.time < (_currentWeapon.Stats.AttackRate + _lastShotTime))
@@ -105,8 +102,5 @@ namespace Roguelike.Player
                 SetWeapon();
             }
         }
-
-        private void OnAttacking(bool isAtacking) => 
-            _isAttacking = isAtacking;
     }
 }

@@ -10,7 +10,6 @@ namespace Roguelike.Data
         public State State;
         public WorldData WorldData;
         public PlayerWeapons PlayerWeapons;
-        
 
         public PlayerProgress(string initialLevel, IEnumerable<IWeapon> startWeapons)
         {
@@ -18,14 +17,5 @@ namespace Roguelike.Data
             WorldData = new WorldData(initialLevel);
             PlayerWeapons = new PlayerWeapons(startWeapons);
         }
-    }
-
-    [Serializable]
-    public class State
-    {
-        public int CurrentHealth;
-        public int MaxHealth;
-
-        public void ResetHealth() => CurrentHealth = MaxHealth;
     }
 }
