@@ -1,12 +1,13 @@
 using System;
 using Roguelike.Data;
 using Roguelike.Infrastructure.Services.PersistentData;
+using Roguelike.Logic;
 using UnityEngine;
 
 namespace Roguelike.Player
 {
     [RequireComponent(typeof(PlayerAnimator))]
-    public class PlayerHealth : MonoBehaviour, IProgressWriter
+    public class PlayerHealth : MonoBehaviour, IProgressWriter, IHealth
     {
         [SerializeField] private PlayerAnimator _playerAnimator;
         
