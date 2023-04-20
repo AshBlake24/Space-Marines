@@ -9,5 +9,6 @@ namespace Roguelike.StaticData.Player
     {
         public List<WeaponId> StartWeapons;
         public float WeaponSwtichCooldown;
+        public int MaxHealth;
     }
 }
