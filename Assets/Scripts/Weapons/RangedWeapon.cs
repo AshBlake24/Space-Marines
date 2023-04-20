@@ -1,3 +1,4 @@
+using System;
 using Roguelike.Data;
 using Roguelike.Infrastructure.Factory;
 using Roguelike.Infrastructure.Services;
@@ -20,6 +21,8 @@ namespace Roguelike.Weapons
         private IObjectPool<Projectile> _projectilesPool;
         private ParticleSystem _muzzleFlashVFX;
         private RangedWeaponStats _stats;
+        
+        public event Action Fired;
 
         public override WeaponStats Stats => _stats;
         public AmmoData AmmoData { get; private set; }
@@ -33,7 +36,7 @@ namespace Roguelike.Weapons
         public void Construct(RangedWeaponStats stats)
         {
             _stats = stats;
-            AmmoData = new AmmoData(_stats.InfinityAmmo, _stats.MaxAmmo);
+            AmmoData = new AmmoData(_stats.InfinityAmmo, _stats.MaxAmmo, _stats.MaxAmmo);
             
             CreateProjectilesPool();
             CreateMuzzleFlashVFX(stats);
@@ -46,9 +49,8 @@ namespace Roguelike.Weapons
         {
             RangedWeaponData weaponData = progress.PlayerWeapons.RangedWeapons.Find(weapon => weapon.ID == Stats.ID);
 
-            AmmoData = weaponData != null 
-                ? weaponData.AmmoData 
-                : new AmmoData(_stats.InfinityAmmo, _stats.MaxAmmo);
+            if (weaponData != null)
+                AmmoData = weaponData.AmmoData;
         }
 
         public override bool TryAttack()
@@ -79,6 +81,8 @@ namespace Roguelike.Weapons
         {
             _projectilesPool.Get();
             SpawnMuzzleFlashVFX();
+            
+            Fired?.Invoke();
         }
 
         private void SpawnMuzzleFlashVFX() => 
