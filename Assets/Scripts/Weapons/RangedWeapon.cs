@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using Roguelike.Data;
 using Roguelike.Infrastructure.Factory;
 using Roguelike.Infrastructure.Services;
@@ -9,6 +10,7 @@ using Roguelike.Weapons.Projectiles;
 using Roguelike.Weapons.Stats;
 using UnityEngine;
 using UnityEngine.Pool;
+using Random = UnityEngine.Random;
 
 namespace Roguelike.Weapons
 {
@@ -68,20 +70,13 @@ namespace Roguelike.Weapons
         {
             if (AmmoData.InfinityAmmo == false)
                 AmmoData.CurrentAmmo--;
-            
-            _projectilesPool.Get();
+
+            for (int i = 0; i < _stats.BulletsPerShot; i++)
+                _projectilesPool.Get();
+
             SpawnMuzzleFlashVFX();
             Fired?.Invoke();
         }
-
-        private void SpawnMuzzleFlashVFX() => 
-            _muzzleFlashVFX.Play();
-
-        private Vector3 GetSpread() =>
-            new Vector3(_random.Next(-_stats.Spread, _stats.Spread), 0, 0);
-
-        private Projectile GetProjectile() =>
-            _factory.CreateProjectile(_stats.ProjectileData.Id, _projectilesPool);
 
         private void CreateMuzzleFlashVFX(RangedWeaponStats stats)
         {
@@ -102,6 +97,20 @@ namespace Roguelike.Weapons
                 OnDestroyItem,
                 false);
         }
+
+        private Vector3 GetSpread()
+        {
+            return new Vector3(
+                _random.Next(-_stats.Spread, _stats.Spread), 
+                0,
+                _random.Next(-_stats.Spread, _stats.Spread));
+        }
+
+        private void SpawnMuzzleFlashVFX() => 
+            _muzzleFlashVFX.Play();
+
+        private Projectile GetProjectile() =>
+            _factory.CreateProjectile(_stats.ProjectileData.Id, _projectilesPool);
 
         private Projectile CreatePoolItem()
         {
