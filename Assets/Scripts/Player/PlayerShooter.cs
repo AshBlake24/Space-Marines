@@ -24,6 +24,18 @@ namespace Roguelike.Player
         public event Action<IWeapon> WeaponChanged;
 
         public Transform WeaponSpawnPoint => _weaponSpawnPoint;
+        
+        private void OnGUI()
+        {
+            if (GUI.Button(new Rect(30, 150, 100, 35), "Refill ammo"))
+            {
+                foreach (IWeapon weapon in _weapons)
+                {
+                    if (weapon is RangedWeapon rangedWeapon)
+                        rangedWeapon.AmmoData.CurrentAmmo = rangedWeapon.AmmoData.MaxAmmo;
+                }
+            }
+        }
 
         private void Awake() =>
             _inputService = AllServices.Container.Single<IInputService>();
