@@ -9,6 +9,7 @@ namespace Roguelike.Player
 {
     public class PlayerShooter : MonoBehaviour
     {
+        [SerializeField] private PlayerHealth _playerHealth;
         [SerializeField] private PlayerAnimator _playerAnimator;
         [SerializeField] private Transform _weaponSpawnPoint;
 
@@ -24,10 +25,8 @@ namespace Roguelike.Player
         
         public Transform WeaponSpawnPoint => _weaponSpawnPoint;
 
-        private void Awake()
-        {
+        private void Awake() => 
             _inputService = AllServices.Container.Single<IInputService>();
-        }
 
         public void Construct(List<IWeapon> weapons, float weaponSwitchCooldown)
         {
@@ -37,23 +36,20 @@ namespace Roguelike.Player
             SetWeapon();
         }
 
-        private void OnEnable()
-        {
+        private void OnEnable() => 
             _inputService.WeaponChanged += OnWeaponChanged;
-        }
 
-        private void OnDisable()
-        {
+        private void OnDisable() => 
             _inputService.WeaponChanged -= OnWeaponChanged;
-        }
 
-        private void Start()
-        {
+        private void Start() => 
             WeaponChanged?.Invoke(_currentWeapon);
-        }
 
         private void Update()
         {
+            if (_playerHealth.IsAlive == false)
+                return;
+            
             TryAttack();
         }
 
