@@ -32,8 +32,6 @@ namespace Roguelike.Infrastructure.Services.SaveLoad
 
             string dataToStore = _progressService.PlayerProgress.ToJson();
             PlayerPrefs.SetString(PlayerProgressKey, dataToStore);
-            
-            SaveToFile(dataToStore);
         }
 
         public PlayerProgress LoadProgress() => 
@@ -58,19 +56,6 @@ namespace Roguelike.Infrastructure.Services.SaveLoad
                 _progressWriters.Add(progressWriter);
             
             _progressReaders.Add(progressReader);
-        }
-
-        private static void SaveToFile(string dataToStore)
-        {
-            string path = Path.Combine(Application.persistentDataPath, "Data.json");
-
-            using (FileStream fileStream = new FileStream(path, FileMode.Create))
-            {
-                using (StreamWriter streamWriter = new StreamWriter(fileStream))
-                {
-                    streamWriter.Write(dataToStore);
-                }
-            }
         }
     }
 }
