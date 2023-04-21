@@ -13,7 +13,7 @@ namespace Roguelike.Player
         [SerializeField] private float _radius;
 
         private readonly Collider[] _colliders = new Collider[6];
-        private EnemyHealth _closetEnemy = null;
+        private EnemyHealth _closetEnemy;
         
         public event Action<EnemyHealth> TargetChanged;
 
