@@ -82,13 +82,12 @@ namespace Roguelike.Player
             _playerAnimator.Move(_characterController.velocity.magnitude);
         }
 
-        [SuppressMessage("ReSharper", "ConditionIsAlwaysTrueOrFalse")]
         private void OnTargetChanged(EnemyHealth enemy)
         {
             _target = enemy;
             _hasTarget = (_target != null);
 
-            if (_hasTarget == null)
+            if (_hasTarget == false)
                 _playerAimTarget.localPosition = _playerAimTargetDefaultPosition;
         }
     }
