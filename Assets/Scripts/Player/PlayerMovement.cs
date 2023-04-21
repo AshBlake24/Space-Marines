@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Roguelike.Enemies;
 using Roguelike.Infrastructure.Services;
 using Roguelike.Infrastructure.Services.Input;
@@ -81,6 +82,7 @@ namespace Roguelike.Player
             _playerAnimator.Move(_characterController.velocity.magnitude);
         }
 
+        [SuppressMessage("ReSharper", "ConditionIsAlwaysTrueOrFalse")]
         private void OnTargetChanged(EnemyHealth enemy)
         {
             _target = enemy;
