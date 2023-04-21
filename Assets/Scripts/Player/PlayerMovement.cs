@@ -1,3 +1,4 @@
+using System;
 using Roguelike.Enemies;
 using Roguelike.Infrastructure.Services;
 using Roguelike.Infrastructure.Services.Input;
@@ -12,6 +13,7 @@ namespace Roguelike.Player
         
         [SerializeField] private float _moveSpeed;
         [SerializeField] private PlayerAim _playerAim;
+        [SerializeField] private Transform _playerAimTarget;
         [SerializeField] private PlayerHealth _playerHealth;
         [SerializeField] private PlayerAnimator _playerAnimator;
         [SerializeField] private CharacterController _characterController;
@@ -21,6 +23,7 @@ namespace Roguelike.Player
         private EnemyHealth _target;
         private float _currentVelocity;
         private bool _hasTarget;
+        private Vector3 _playerAimTargetDefaultPosition;
 
         private void Awake() => 
             _inputService = AllServices.Container.Single<IInputService>();
@@ -30,6 +33,9 @@ namespace Roguelike.Player
 
         private void OnDisable() => 
             _playerAim.TargetChanged -= OnTargetChanged;
+
+        private void Start() => 
+            _playerAimTargetDefaultPosition = _playerAimTarget.position;
 
         private void Update()
         {
@@ -56,6 +62,7 @@ namespace Roguelike.Player
 
         private void RotateToTarget()
         {
+            _playerAimTarget.position = _target.transform.position;
             Vector3 directionToTarget = _target.transform.position - transform.position;
             Rotate(directionToTarget.normalized);
         }
@@ -78,6 +85,9 @@ namespace Roguelike.Player
         {
             _target = enemy;
             _hasTarget = (_target != null);
+
+            if (_hasTarget == null)
+                _playerAimTarget.localPosition = _playerAimTargetDefaultPosition;
         }
     }
 }
