@@ -1,3 +1,4 @@
+using Roguelike.Utilities;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -6,7 +7,7 @@ namespace Roguelike.Infrastructure.Services.Input
     public class DesktopInputService : InputService
     {
         private readonly PlayerInput _playerInput;
-        
+
         public DesktopInputService()
         {
             _playerInput = new PlayerInput();
@@ -26,7 +27,8 @@ namespace Roguelike.Infrastructure.Services.Input
             };
         }
 
-        public override bool IsAttackButtonUp() => 
-            _playerInput.Player.Attack.phase == InputActionPhase.Performed;
+        public override bool IsAttackButtonUp() =>
+            Helpers.IsOverUI() == false 
+            && _playerInput.Player.Attack.phase == InputActionPhase.Performed;
     }
 }

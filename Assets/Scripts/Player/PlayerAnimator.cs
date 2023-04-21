@@ -8,20 +8,20 @@ namespace Roguelike.Player
         private static readonly int s_speedHash = Animator.StringToHash("Speed");
         private static readonly int s_dieHash = Animator.StringToHash("Die");
         private static readonly int s_shot = Animator.StringToHash("Shot");
+        private static readonly int s_hit = Animator.StringToHash("Hit");
         private static readonly int s_hasOneHanded = Animator.StringToHash("HasOneHandedWeapon");
         private static readonly int s_hasTwoHanded = Animator.StringToHash("HasTwoHandedWeapon");
-
+        
         [SerializeField] private Animator _animator;
 
         public void Move(float speed) =>
             _animator.SetFloat(s_speedHash, speed);
 
-        public void PlayHit() => 
-            throw new System.NotImplementedException();
-
-        public void PlayDeath() => _animator.SetTrigger(s_dieHash);
-
+        public void PlayHit() => _animator.SetTrigger(s_hit);
+        
         public void PlayShot() => _animator.SetTrigger(s_shot);
+        
+        public void PlayDeath() => _animator.SetTrigger(s_dieHash);
 
         public void SetWeapon(WeaponSize weaponSize)
         {

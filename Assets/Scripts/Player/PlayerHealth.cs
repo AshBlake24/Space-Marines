@@ -38,12 +38,18 @@ namespace Roguelike.Player
             private set => _state.MaxHealth = value;
         }
 
+        private void OnGUI()
+        {
+            if (GUI.Button(new Rect(30, 100, 100, 35), "Take Damage"))
+                TakeDamage(1);
+        }
+
         public void Construct(float immuneTimeAfterHit)
         {
             _immuneTimeAfterHit = immuneTimeAfterHit;
             _isImmune = false;
         }
-        
+
         public void ReadProgress(PlayerProgress progress)
         {
             _state = progress.State;
@@ -58,16 +64,23 @@ namespace Roguelike.Player
 
         public void TakeDamage(int damage)
         {
-            if (_isImmune)
+            if (_isImmune || CurrentHealth <= 0)
                 return;
-            
+
             if (damage < 0)
                 throw new ArgumentOutOfRangeException(nameof(damage), "Damage must not be less than 0");
 
-            CurrentHealth -= damage;
-            _playerAnimator.PlayHit();
-            
-            StartCoroutine(ImmuneTimer());
+            CurrentHealth = Mathf.Max(CurrentHealth - damage, 0);
+
+            if (CurrentHealth > 0)
+            {
+                _playerAnimator.PlayHit();
+                StartCoroutine(ImmuneTimer());
+            }
+            else
+            {
+                _playerAnimator.PlayDeath();
+            }
         }
 
         private IEnumerator ImmuneTimer()
