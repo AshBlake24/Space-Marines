@@ -101,9 +101,9 @@ namespace Roguelike.Weapons
         private Vector3 GetSpread()
         {
             return new Vector3(
-                _random.Next(-_stats.Spread, _stats.Spread), 
-                0,
-                _random.Next(-_stats.Spread, _stats.Spread));
+                _random.Next(-_stats.HorizontalSpread, _stats.HorizontalSpread), 
+                _random.Next(-_stats.VerticalSpread, _stats.VerticalSpread),
+                0);
         }
 
         private void SpawnMuzzleFlashVFX() => 

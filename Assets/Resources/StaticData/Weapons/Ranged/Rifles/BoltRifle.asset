@@ -18,7 +18,9 @@ MonoBehaviour:
   WeaponPrefab: {fileID: 1238183744823517713, guid: b1348afc893cb7749ac6bef572b597b2, type: 3}
   Name: Bolt Rifle
   AttackRate: 1
-  Spread: 0.03
-  Projectile: {fileID: 11400000, guid: d07ec922c079113479facb2de120e1b4, type: 2}
+  BulletsPerShot: 1
+  HorizontalSpread: 0.03
+  VerticalSpread: 0.03
   InfinityAmmo: 0
   MaxAmmo: 120
+  Projectile: {fileID: 11400000, guid: d07ec922c079113479facb2de120e1b4, type: 2}
