@@ -28,7 +28,6 @@ namespace Roguelike.Infrastructure.Services.Input
         }
 
         public override bool IsAttackButtonUp() =>
-            Helpers.IsOverUI() == false 
-            && _playerInput.Player.Attack.phase == InputActionPhase.Performed;
+            _playerInput.Player.Attack.phase == InputActionPhase.Performed;
     }
 }
