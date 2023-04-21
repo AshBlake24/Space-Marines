@@ -18,6 +18,9 @@ namespace Roguelike.Player
         private bool _isImmune;
 
         public event Action HealthChanged;
+        public event Action Died;
+
+        public bool IsAlive => CurrentHealth > 0;
 
         public int CurrentHealth
         {
@@ -80,6 +83,7 @@ namespace Roguelike.Player
             else
             {
                 _playerAnimator.PlayDeath();
+                Died?.Invoke();
             }
         }
 

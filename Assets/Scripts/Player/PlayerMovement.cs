@@ -1,3 +1,4 @@
+using System;
 using Roguelike.Infrastructure.Services;
 using Roguelike.Infrastructure.Services.Input;
 using UnityEngine;
@@ -9,6 +10,7 @@ namespace Roguelike.Player
         private const float SmoothTime = 0.1f;
         
         [SerializeField] private float _moveSpeed;
+        [SerializeField] private PlayerHealth _playerHealth;
         [SerializeField] private PlayerAnimator _playerAnimator;
         [SerializeField] private CharacterController _characterController;
 
@@ -16,13 +18,14 @@ namespace Roguelike.Player
         private Vector3 _direction;
         private float _currentVelocity;
 
-        private void Awake()
-        {
+        private void Awake() => 
             _inputService = AllServices.Container.Single<IInputService>();
-        }
 
         private void Update()
         {
+            if (_playerHealth.IsAlive == false)
+                return;
+            
             _direction = GetDirection();
             _direction.Normalize();
 
