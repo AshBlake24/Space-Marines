@@ -26,10 +26,10 @@ namespace Roguelike.Player
             _inputService = AllServices.Container.Single<IInputService>();
 
         private void OnEnable() => 
-            _playerAim.TargetFound += OnTargetFound;
+            _playerAim.TargetChanged += OnTargetChanged;
 
         private void OnDisable() => 
-            _playerAim.TargetFound -= OnTargetFound;
+            _playerAim.TargetChanged -= OnTargetChanged;
 
         private void Update()
         {
@@ -74,10 +74,10 @@ namespace Roguelike.Player
             _playerAnimator.Move(_characterController.velocity.magnitude);
         }
 
-        private void OnTargetFound(EnemyHealth enemy)
+        private void OnTargetChanged(EnemyHealth enemy)
         {
             _target = enemy;
-            _hasTarget = true;
+            _hasTarget = (_target != null);
         }
     }
 }

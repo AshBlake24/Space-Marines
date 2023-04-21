@@ -13,9 +13,9 @@ namespace Roguelike.Player
         [SerializeField] private float _radius;
 
         private readonly Collider[] _colliders = new Collider[6];
-        private EnemyHealth _target;
-
-        public event Action<EnemyHealth> TargetFound;
+        private EnemyHealth _closetEnemy = null;
+        
+        public event Action<EnemyHealth> TargetChanged;
 
         private void Start()
         {
@@ -27,30 +27,37 @@ namespace Roguelike.Player
 
         private void CheckTargets()
         {
-            Physics.OverlapSphereNonAlloc(transform.position, _radius, _colliders, _enemiesLayerMask);
+            _closetEnemy = null;
+            
+            int collidersInArea = Physics.OverlapSphereNonAlloc(
+                transform.position, 
+                _radius, 
+                _colliders, 
+                _enemiesLayerMask);
 
-            EnemyHealth closestEnemy = null;
-            float closestEnemyDistance = float.MaxValue;
-
-            foreach (Collider collider in _colliders)
+            if (collidersInArea > 0)
             {
-                if (collider == null)
-                    continue;
-                
-                if (collider.gameObject.TryGetComponent(out EnemyHealth enemyHealth))
-                {
-                    float distanceToEnemy = Vector3.Distance(transform.position, enemyHealth.transform.position);
+                float closestEnemyDistance = float.MaxValue;
 
-                    if (distanceToEnemy < closestEnemyDistance)
+                foreach (Collider collider in _colliders)
+                {
+                    if (collider == null)
+                        continue;
+                
+                    if (collider.gameObject.TryGetComponent(out EnemyHealth enemyHealth))
                     {
-                        closestEnemyDistance = distanceToEnemy;
-                        closestEnemy = enemyHealth;
+                        float distanceToEnemy = Vector3.Distance(transform.position, enemyHealth.transform.position);
+
+                        if (distanceToEnemy < closestEnemyDistance)
+                        {
+                            closestEnemyDistance = distanceToEnemy;
+                            _closetEnemy = enemyHealth;
+                        }
                     }
                 }
             }
-
-            if (closestEnemy != null && closestEnemy != _target)
-                TargetFound?.Invoke(closestEnemy);
+            
+            TargetChanged?.Invoke(_closetEnemy);
         }
 
         private void OnDrawGizmos()
