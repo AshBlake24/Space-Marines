@@ -7,6 +7,9 @@ namespace Roguelike.StaticData.Projectiles
         RevolverBullet,
         SubmachinePistolBullet,
         BoltRifleBullet,
-        M4A1Bullet
+        M4A1Bullet,
+        DoubleBarrelledShotgunBullet,
+        SawnOffShotgunBullet,
+        WinchesterBullet
     }
 }

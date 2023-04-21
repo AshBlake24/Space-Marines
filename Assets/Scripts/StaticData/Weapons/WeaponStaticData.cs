@@ -11,6 +11,8 @@ namespace Roguelike.StaticData.Weapons
         public WeaponSize Size;
         public GameObject WeaponPrefab;
         public string Name;
-        public float AttackRate;
+        
+        
+        [Range(0.05f, 2f)] public float AttackRate;
     }
 }

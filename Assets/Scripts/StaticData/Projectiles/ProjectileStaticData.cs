@@ -9,8 +9,8 @@ namespace Roguelike.StaticData.Projectiles
         public ProjectileType Type;
         public GameObject Prefab;
         public int Damage;
-        public float Speed;
-        public float Lifetime;
+        [Range(1, 100)]public float Speed;
+        [Range(0.1f, 3f)]public float Lifetime;
         
         [Header("View")]
         public ParticleSystem MuzzleFlashVFX;

@@ -9,11 +9,12 @@ namespace Roguelike.StaticData.Weapons
     [CreateAssetMenu(fileName = "New RangedWeaponData", menuName = "Static Data/Weapons/Ranged Weapon")]
     public class RangedWeaponStaticData : WeaponStaticData
     {
-        public float Spread;
+        [Range(1, 5)] public int BulletsPerShot;
+        [Range(0.01f, 0.2f)] public float Spread;
 
         [Header("Ammo")]
-        public ProjectileStaticData Projectile;
         public bool InfinityAmmo;
-        public int MaxAmmo;
+        [Range(1, 300)] public int MaxAmmo;
+        public ProjectileStaticData Projectile;
     }
 }
