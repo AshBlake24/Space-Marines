@@ -10,7 +10,8 @@ namespace Roguelike.StaticData.Weapons
     public class RangedWeaponStaticData : WeaponStaticData
     {
         [Range(1, 5)] public int BulletsPerShot;
-        [Range(0.01f, 0.2f)] public float Spread;
+        [Range(0.01f, 0.2f)] public float HorizontalSpread;
+        [Range(0.01f, 0.1f)] public float VerticalSpread;
 
         [Header("Ammo")]
         public bool InfinityAmmo;

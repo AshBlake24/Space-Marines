@@ -22,45 +22,52 @@ namespace Roguelike.Player
         private float _lastShotTime;
 
         public event Action<IWeapon> WeaponChanged;
-        
+
         public Transform WeaponSpawnPoint => _weaponSpawnPoint;
 
-        private void Awake() => 
+        private void Awake() =>
             _inputService = AllServices.Container.Single<IInputService>();
 
         public void Construct(List<IWeapon> weapons, float weaponSwitchCooldown)
         {
             _weapons = weapons;
             _weaponSwitchCooldown = weaponSwitchCooldown;
-            _currentWeaponIndex = 0;
-            SetWeapon();
+
+            if (_weapons.Count > 0)
+            {
+                _currentWeaponIndex = 0;
+                SetWeapon();
+            }
         }
 
-        private void OnEnable() => 
+        private void OnEnable() =>
             _inputService.WeaponChanged += OnWeaponChanged;
 
-        private void OnDisable() => 
+        private void OnDisable() =>
             _inputService.WeaponChanged -= OnWeaponChanged;
 
-        private void Start() => 
+        private void Start() =>
             WeaponChanged?.Invoke(_currentWeapon);
 
         private void Update()
         {
             if (_playerHealth.IsAlive == false)
                 return;
-            
+
             TryAttack();
         }
 
         private void TryAttack()
         {
+            if (_currentWeapon == null)
+                return;
+            
             if (_inputService.IsAttackButtonUp() == false)
                 return;
 
             if (Time.time < (_currentWeapon.Stats.AttackRate + _lastShotTime))
                 return;
-            
+
             if (_currentWeapon.TryAttack())
             {
                 _lastShotTime = Time.time;
@@ -74,16 +81,19 @@ namespace Roguelike.Player
             _currentWeapon = _weapons[_currentWeaponIndex];
             _currentWeapon.Show();
             _playerAnimator.SetWeapon(_currentWeapon.Stats.Size);
-            
+
             WeaponChanged?.Invoke(_currentWeapon);
         }
 
         private void OnWeaponChanged(bool switchToNext)
         {
+            if (_weapons.Count <= 0)
+                return;
+
             if (Time.time > _lastWeaponSwitchTime + _weaponSwitchCooldown)
             {
                 _lastWeaponSwitchTime = Time.time;
-                
+
                 if (switchToNext)
                     _currentWeaponIndex++;
                 else

@@ -10,17 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c7aad5e3325f48a1b72e5ee59fd2f45f, type: 3}
-  m_Name: BasicPistol
+  m_Name: SawnOffShotgun
   m_EditorClassIdentifier: 
-  Id: 0
+  Id: 7
   Type: 0
-  Size: 0
-  WeaponPrefab: {fileID: 525978952393591331, guid: 18ec0e25c8946be4d94e28c542eeea3b, type: 3}
-  Name: Basic Pistol
-  AttackRate: 0.25
-  BulletsPerShot: 1
-  HorizontalSpread: 0.08
-  VerticalSpread: 0.03
-  InfinityAmmo: 1
-  MaxAmmo: 1
-  Projectile: {fileID: 11400000, guid: 580204ef72c386241bb80952ed0af2e0, type: 2}
+  Size: 1
+  WeaponPrefab: {fileID: 981207946666648168, guid: e7b6aa09b43be9c489e348314885bf68, type: 3}
+  Name: Sawn-Off Shotgun
+  AttackRate: 0.6
+  BulletsPerShot: 5
+  HorizontalSpread: 0.15
+  VerticalSpread: 0.05
+  InfinityAmmo: 0
+  MaxAmmo: 60
+  Projectile: {fileID: 11400000, guid: 7ccf0fd2a61ba28428f985cb3b28197d, type: 2}

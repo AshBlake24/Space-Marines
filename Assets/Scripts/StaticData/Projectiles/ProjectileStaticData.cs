@@ -8,8 +8,8 @@ namespace Roguelike.StaticData.Projectiles
         public ProjectileId Id;
         public ProjectileType Type;
         public GameObject Prefab;
-        public int Damage;
-        [Range(1, 100)]public float Speed;
+        [Range(1, 1000)] public int Damage;
+        [Range(1, 100)] public float Speed;
         [Range(0.1f, 3f)]public float Lifetime;
         
         [Header("View")]

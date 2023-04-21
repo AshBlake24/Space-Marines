@@ -18,7 +18,9 @@ MonoBehaviour:
   WeaponPrefab: {fileID: 3810806931607102091, guid: add88d0cb1faa0740acb6e83bbd23b5d, type: 3}
   Name: Submachine Pistol
   AttackRate: 0.12
-  Spread: 0.08
-  Projectile: {fileID: 11400000, guid: 5b004ce136d0b8044a335c7f1c71b416, type: 2}
+  BulletsPerShot: 1
+  HorizontalSpread: 0.1
+  VerticalSpread: 0.03
   InfinityAmmo: 0
   MaxAmmo: 200
+  Projectile: {fileID: 11400000, guid: 5b004ce136d0b8044a335c7f1c71b416, type: 2}

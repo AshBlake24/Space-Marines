@@ -18,7 +18,9 @@ MonoBehaviour:
   WeaponPrefab: {fileID: 8676245623536648341, guid: 53f95bfcc9a554b4f8439da9b71bd21f, type: 3}
   Name: Revolver
   AttackRate: 0.35
-  Spread: 0.1
-  Projectile: {fileID: 11400000, guid: d89961e09dca2e7449a35bd6de102d05, type: 2}
+  BulletsPerShot: 1
+  HorizontalSpread: 0.05
+  VerticalSpread: 0.05
   InfinityAmmo: 0
   MaxAmmo: 70
+  Projectile: {fileID: 11400000, guid: d89961e09dca2e7449a35bd6de102d05, type: 2}
