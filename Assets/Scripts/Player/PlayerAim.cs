@@ -14,50 +14,53 @@ namespace Roguelike.Player
 
         private readonly Collider[] _colliders = new Collider[6];
         private EnemyHealth _closetEnemy;
-        
+
         public event Action<EnemyHealth> TargetChanged;
 
         private void Start()
         {
             InvokeRepeating(
-                nameof(CheckTargets), 
-                DelayBeforeFindingTargets, 
+                nameof(CheckTargets),
+                DelayBeforeFindingTargets,
                 (1 / _updateTargetsPerFrame));
         }
 
         private void CheckTargets()
         {
             _closetEnemy = null;
-            
+
             int collidersInArea = Physics.OverlapSphereNonAlloc(
-                transform.position, 
-                _radius, 
-                _colliders, 
+                transform.position,
+                _radius,
+                _colliders,
                 _enemiesLayerMask);
 
             if (collidersInArea > 0)
+                FindClosestTarget();
+
+            TargetChanged?.Invoke(_closetEnemy);
+        }
+
+        private void FindClosestTarget()
+        {
+            float closestEnemyDistance = float.MaxValue;
+
+            foreach (Collider collider in _colliders)
             {
-                float closestEnemyDistance = float.MaxValue;
+                if (collider == null)
+                    continue;
 
-                foreach (Collider collider in _colliders)
+                if (collider.gameObject.TryGetComponent(out EnemyHealth enemyHealth))
                 {
-                    if (collider == null)
-                        continue;
-                
-                    if (collider.gameObject.TryGetComponent(out EnemyHealth enemyHealth))
-                    {
-                        float distanceToEnemy = Vector3.Distance(transform.position, enemyHealth.transform.position);
+                    float distanceToEnemy = Vector3.Distance(transform.position, enemyHealth.transform.position);
 
-                        if (distanceToEnemy < closestEnemyDistance)
-                        {
-                            closestEnemyDistance = distanceToEnemy;
-                            _closetEnemy = enemyHealth;
-                        }
+                    if (distanceToEnemy < closestEnemyDistance)
+                    {
+                        closestEnemyDistance = distanceToEnemy;
+                        _closetEnemy = enemyHealth;
                     }
                 }
             }
-            
-            TargetChanged?.Invoke(_closetEnemy);
         }
 
         private void OnDrawGizmos()

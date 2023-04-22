@@ -1,5 +1,3 @@
-using System;
-using System.Diagnostics.CodeAnalysis;
 using Roguelike.Enemies;
 using Roguelike.Infrastructure.Services;
 using Roguelike.Infrastructure.Services.Input;
@@ -42,7 +40,7 @@ namespace Roguelike.Player
             _direction = GetDirection();
             _direction.Normalize();
 
-            if (_hasTarget)
+            if (_hasTarget && _target != null)
                 RotateToTarget();
             else if (_direction.magnitude >= 0.1f)
                 RotateToMoveDirection();
