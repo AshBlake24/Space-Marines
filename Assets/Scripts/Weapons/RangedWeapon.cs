@@ -103,7 +103,7 @@ namespace Roguelike.Weapons
             return new Vector3(
                 _random.Next(-_stats.HorizontalSpread, _stats.HorizontalSpread), 
                 _random.Next(-_stats.VerticalSpread, _stats.VerticalSpread),
-                0);
+                _random.Next(-_stats.HorizontalSpread, _stats.HorizontalSpread));
         }
 
         private void SpawnMuzzleFlashVFX() => 
