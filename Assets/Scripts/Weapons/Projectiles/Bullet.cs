@@ -1,4 +1,6 @@
 using System;
+using Roguelike.Enemies;
+using Roguelike.Logic;
 using Roguelike.Weapons.Projectiles.Stats;
 using UnityEngine;
 using UnityEngine.Pool;
@@ -19,6 +21,9 @@ namespace Roguelike.Weapons.Projectiles
 
         private void OnCollisionEnter(Collision collision)
         {
+            if (collision.gameObject.TryGetComponent(out IHealth health))
+                health.TakeDamage(_stats.Damage);
+
             SpawnVFX(ImpactVFXKey);
             ReturnToPool();
         }
