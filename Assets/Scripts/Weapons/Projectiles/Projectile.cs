@@ -35,6 +35,7 @@ namespace Roguelike.Weapons.Projectiles
 
         public void Init()
         {
+            Rigidbody.angularVelocity = Vector3.zero;
             Rigidbody.velocity = transform.forward * Stats.Speed;
             _accumulatedTime = 0f;
             _projectileVFX.Play();
