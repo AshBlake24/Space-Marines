@@ -29,7 +29,7 @@ namespace Roguelike.Infrastructure.Factory
             return projectileData.Type switch
             {
                 ProjectileType.Bullet => CreateBullet(projectileData as BulletStaticData, pool),
-                ProjectileType.Exploding => throw new NotImplementedException(),
+                ProjectileType.Exploding => CreateExplodingAmmo(projectileData as ExplodingProjectileStaticData, pool),
                 _ => throw new ArgumentOutOfRangeException()
             };
         }
@@ -42,6 +42,19 @@ namespace Roguelike.Infrastructure.Factory
 
             return bullet;
         }
+        
+        private Projectile CreateExplodingAmmo(ExplodingProjectileStaticData projectileData, IObjectPool<Projectile> pool)
+        {
+            ExplodingProjectile exploding = Object.Instantiate(projectileData.Prefab)
+                .GetComponent<ExplodingProjectile>();
+
+            exploding.Construct(InitializeExplodingProjectileStats(projectileData), pool);
+
+            return exploding;
+        }
+
+        private ExplodingProjectileStats InitializeExplodingProjectileStats(ExplodingProjectileStaticData projectileData) => 
+            new ExplodingProjectileStats(projectileData);
 
         private BulletStats InitializeBulletStats(BulletStaticData projectileData) => 
             new BulletStats(projectileData);

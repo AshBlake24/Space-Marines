@@ -24,7 +24,6 @@ namespace Roguelike.Player
         private EnemyHealth _target;
         private float _currentVelocity;
         private bool _hasTarget;
-        private Vector3 _playerAimTargetDefaultPosition;
 
         private void Awake() => 
             _inputService = AllServices.Container.Single<IInputService>();
@@ -34,9 +33,6 @@ namespace Roguelike.Player
 
         private void OnDisable() => 
             _playerAim.TargetChanged -= OnTargetChanged;
-
-        private void Start() => 
-            _playerAimTargetDefaultPosition = _playerAimTarget.position;
 
         private void Update()
         {
@@ -86,9 +82,6 @@ namespace Roguelike.Player
         {
             _target = enemy;
             _hasTarget = (_target != null);
-
-            if (_hasTarget == false)
-                _playerAimTarget.localPosition = _playerAimTargetDefaultPosition;
         }
     }
 }
