@@ -119,6 +119,7 @@ MonoBehaviour:
   _playerHealth: {fileID: 1331113081620957422}
   _playerAnimator: {fileID: 1225606247818609378}
   _characterController: {fileID: 3094534283775071211}
+  _playerAimTargetDefaultPosition: {x: -0.053621054, y: 0.91999996, z: 15.406005}
 --- !u!114 &2753311284853847007
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -226,6 +227,18 @@ PrefabInstance:
     - target: {fileID: 7070820514890287888, guid: 5749bfc0d6209db4cba4f2575bbdaea2, type: 3}
       propertyPath: m_Layer
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7619775948047789011, guid: 5749bfc0d6209db4cba4f2575bbdaea2, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.053621054
+      objectReference: {fileID: 0}
+    - target: {fileID: 7619775948047789011, guid: 5749bfc0d6209db4cba4f2575bbdaea2, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.91999996
+      objectReference: {fileID: 0}
+    - target: {fileID: 7619775948047789011, guid: 5749bfc0d6209db4cba4f2575bbdaea2, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 15.406005
       objectReference: {fileID: 0}
     - target: {fileID: 7645457072499830794, guid: 5749bfc0d6209db4cba4f2575bbdaea2, type: 3}
       propertyPath: m_Layer

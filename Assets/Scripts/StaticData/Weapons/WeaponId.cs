@@ -10,6 +10,7 @@ namespace Roguelike.StaticData.Weapons
         M4A1,
         DoubleBarrelledShotgun,
         SawnOffShotgun,
-        Winchester
+        Winchester,
+        RocketLauncher
     }
 }

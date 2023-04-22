@@ -5,15 +5,15 @@ using UnityEngine.Pool;
 
 namespace Roguelike.Weapons.Projectiles
 {
-    public class Bullet : Projectile
+    public class ExplodingProjectile : Projectile
     {
-        private BulletStats _stats;
+        private ExplodingProjectileStats _stats;
         private string _impactVFXKey;
         
-        public override void Construct<TStats>(TStats stats, IObjectPool<Projectile> bulletPool)
+        public override void Construct<TStats>(TStats stats, IObjectPool<Projectile> projectilePool)
         {
-            base.Construct(stats, bulletPool);
-            InitializeBulletStats(stats);
+            base.Construct(stats, projectilePool);
+            InitializeExplodingProjectileStats(stats);
             CreateImpactVFXPool();
             CreateProjectileVFX();
         }
@@ -50,13 +50,13 @@ namespace Roguelike.Weapons.Projectiles
             ProjectileVFX = Instantiate(_stats.ProjectileVFX, transform.position, transform.rotation, transform);
             StopProjectileVFX();
         }
-        
-        private void InitializeBulletStats<TStats>(TStats stats)
+
+        private void InitializeExplodingProjectileStats<TStats>(TStats stats)
         {
-            if (stats is BulletStats bulletStats)
-                _stats = bulletStats;
+            if (stats is ExplodingProjectileStats explodingStats)
+                _stats = explodingStats;
             else
-                throw new ArgumentNullException(nameof(stats), $"Expected to get the {typeof(BulletStats)}");
+                throw new ArgumentNullException(nameof(stats), $"Expected to get the {typeof(ExplodingProjectileStats)}");
         }
     }
 }
