@@ -11,6 +11,8 @@ namespace Roguelike.StaticData.Weapons
         DoubleBarrelledShotgun,
         SawnOffShotgun,
         Winchester,
-        RocketLauncher
+        RocketLauncher,
+        SniperRifle,
+        MachineGun
     }
 }
