@@ -46,11 +46,14 @@ namespace Roguelike.Infrastructure.States
 
         private PlayerProgress CreateNewProgress()
         {
-            PlayerProgress playerProgress = new(StartLevel, CreateStartWeapons());
-
-            playerProgress.State.MaxHealth = _staticDataService.Player.MaxHealth;
+            PlayerProgress playerProgress = new(
+                StartLevel, 
+                CreateStartWeapons(),
+                _staticDataService.Player.StartCharacter.Id);
+            
+            playerProgress.State.MaxHealth = _staticDataService.Player.StartCharacter.MaxHealth;
             playerProgress.State.ResetHealth();
-
+            
             return playerProgress;
         }
 

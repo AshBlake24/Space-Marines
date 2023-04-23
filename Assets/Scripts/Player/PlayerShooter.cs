@@ -11,8 +11,8 @@ namespace Roguelike.Player
     {
         [SerializeField] private PlayerHealth _playerHealth;
         [SerializeField] private PlayerAnimator _playerAnimator;
-        [SerializeField] private Transform _weaponSpawnPoint;
 
+        private Transform _weaponSpawnPoint;
         private IInputService _inputService;
         private List<IWeapon> _weapons;
         private IWeapon _currentWeapon;
@@ -22,8 +22,6 @@ namespace Roguelike.Player
         private float _lastShotTime;
 
         public event Action<IWeapon> WeaponChanged;
-
-        public Transform WeaponSpawnPoint => _weaponSpawnPoint;
         
         private void OnGUI()
         {
@@ -40,10 +38,11 @@ namespace Roguelike.Player
         private void Awake() =>
             _inputService = AllServices.Container.Single<IInputService>();
 
-        public void Construct(List<IWeapon> weapons, float weaponSwitchCooldown)
+        public void Construct(List<IWeapon> weapons, float weaponSwitchCooldown, Transform weaponSpawnPoint)
         {
             _weapons = weapons;
             _weaponSwitchCooldown = weaponSwitchCooldown;
+            _weaponSpawnPoint = weaponSpawnPoint;
 
             if (_weapons.Count > 0)
             {

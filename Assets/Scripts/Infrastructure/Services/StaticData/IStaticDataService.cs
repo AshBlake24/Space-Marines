@@ -1,3 +1,4 @@
+using Roguelike.StaticData.Characters;
 using Roguelike.StaticData.Player;
 using Roguelike.StaticData.Projectiles;
 using Roguelike.StaticData.Weapons;
@@ -10,5 +11,6 @@ namespace Roguelike.Infrastructure.Services.StaticData
         void Load();
         WeaponStaticData GetWeaponData(WeaponId id);
         ProjectileStaticData GetProjectileData(ProjectileId id);
+        CharacterStaticData GetCharacterData(CharacterId id);
     }
 }

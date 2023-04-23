@@ -21,7 +21,7 @@ namespace Roguelike.Infrastructure.Services.StaticData
             LoadWeapons();
             LoadProjectiles();
             LoadCharacters();
-            LoadPlayer();;
+            LoadPlayer();
         }
 
         public WeaponStaticData GetWeaponData(WeaponId id) =>
@@ -31,6 +31,11 @@ namespace Roguelike.Infrastructure.Services.StaticData
 
         public ProjectileStaticData GetProjectileData(ProjectileId id) =>
             _projectiles.TryGetValue(id, out ProjectileStaticData staticData)
+                ? staticData
+                : null;
+
+        public CharacterStaticData GetCharacterData(CharacterId id) =>
+            _characters.TryGetValue(id, out CharacterStaticData staticData)
                 ? staticData
                 : null;
 
@@ -46,7 +51,7 @@ namespace Roguelike.Infrastructure.Services.StaticData
             _characters = Resources.LoadAll<CharacterStaticData>("StaticData/Characters")
                 .ToDictionary(character => character.Id);
 
-        private void LoadPlayer() => 
+        private void LoadPlayer() =>
             Player = Resources.Load<PlayerStaticData>("StaticData/Player/PlayerStaticData");
     }
 }

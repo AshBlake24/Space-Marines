@@ -1,15 +1,14 @@
 using System.Collections.Generic;
 using System.Linq;
-using Roguelike.Data;
 using Roguelike.Infrastructure.AssetManagement;
 using Roguelike.Infrastructure.Services.PersistentData;
 using Roguelike.Infrastructure.Services.SaveLoad;
 using Roguelike.Infrastructure.Services.StaticData;
 using Roguelike.Player;
-using Roguelike.StaticData.Weapons;
-using Roguelike.UI;
+using Roguelike.StaticData.Characters;
 using Roguelike.Weapons;
 using UnityEngine;
+using UnityEngine.Animations.Rigging;
 
 namespace Roguelike.Infrastructure.Factory
 {
@@ -20,8 +19,9 @@ namespace Roguelike.Infrastructure.Factory
         private readonly ISaveLoadService _saveLoadService;
         private readonly IPersistentDataService _persistentData;
         private readonly IStaticDataService _staticDataService;
-        
-        public GameFactory(IAssetProvider assetProvider, IPersistentDataService persistentData, IStaticDataService staticDataService, ISaveLoadService saveLoadService, IWeaponFactory weaponFactory)
+
+        public GameFactory(IAssetProvider assetProvider, IPersistentDataService persistentData,
+            IStaticDataService staticDataService, ISaveLoadService saveLoadService, IWeaponFactory weaponFactory)
         {
             _assetProvider = assetProvider;
             _weaponFactory = weaponFactory;
@@ -29,36 +29,61 @@ namespace Roguelike.Infrastructure.Factory
             _saveLoadService = saveLoadService;
             _staticDataService = staticDataService;
         }
-        
+
         public GameObject CreatePlayer(Transform playerInitialPoint)
         {
             GameObject player = InstantiateRegistered(AssetPath.PlayerPath, playerInitialPoint.position);
-            
-            InitializeShooterComponent(player);
-            
+            GameObject character = CreateCharacter(_persistentData.PlayerProgress.Character, player);
+
+            InitializeShooterComponent(player, character.GetComponentInChildren<WeaponSpawnPoint>().transform);
+
             player.GetComponent<PlayerHealth>()
                 .Construct(_staticDataService.Player.ImmuneTimeAfterHit);
 
             return player;
         }
 
-        public GameObject CreateDesktopHud() => 
+        public GameObject CreateDesktopHud() =>
             InstantiateRegistered(AssetPath.DesktopHudPath);
 
-        public GameObject CreateMobileHud()=>
+        public GameObject CreateMobileHud() =>
             InstantiateRegistered(AssetPath.MobileHudPath);
 
-        private void InitializeShooterComponent(GameObject player)
+        private GameObject CreateCharacter(CharacterId id, GameObject player)
+        {
+            CharacterStaticData characterData = _staticDataService.GetCharacterData(id);
+            GameObject character = Object.Instantiate(
+                characterData.Prefab, 
+                player.transform.position, 
+                Quaternion.identity, 
+                player.transform);
+            
+            player.GetComponent<PlayerAnimator>()
+                .Construct(character.GetComponent<Animator>());
+            
+            MultiAimConstraint multiAimConstraint = player.GetComponentInChildren<MultiAimConstraint>();
+            multiAimConstraint.data.sourceObjects = new WeightedTransformArray()
+            {
+                new(player.GetComponentInChildren<AimTarget>().transform, 1)
+            };
+                
+
+            character.GetComponentInChildren<RigBuilder>().Build();
+
+            return character;
+        }
+
+        private void InitializeShooterComponent(GameObject player, Transform weaponSpawnPoint)
         {
             PlayerShooter playerShooter = player.GetComponent<PlayerShooter>();
-            
+
             List<IWeapon> weapons = _persistentData.PlayerProgress.PlayerWeapons.GetWeapons()
-                .Select(weaponId => _weaponFactory.CreateWeapon(weaponId, playerShooter.WeaponSpawnPoint))
+                .Select(weaponId => _weaponFactory.CreateWeapon(weaponId, weaponSpawnPoint))
                 .ToList();
 
-            playerShooter.Construct(weapons, _staticDataService.Player.WeaponSwtichCooldown);
+            playerShooter.Construct(weapons, _staticDataService.Player.WeaponSwtichCooldown, weaponSpawnPoint);
         }
-        
+
         private GameObject InstantiateRegistered(string prefabPath)
         {
             GameObject gameObject = _assetProvider.Instantiate(prefabPath);
