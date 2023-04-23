@@ -46,5 +46,10 @@ namespace Roguelike.Enemies
             if (_currentHealth <= 0)
                 Destroy(gameObject);
         }
+
+        public void Heal(int health)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -70,21 +70,27 @@ namespace Roguelike.Player
             if (_isImmune || CurrentHealth <= 0)
                 return;
 
-            if (damage < 0)
-                throw new ArgumentOutOfRangeException(nameof(damage), "Damage must not be less than 0");
-
-            CurrentHealth = Mathf.Max(CurrentHealth - damage, 0);
-
-            if (CurrentHealth > 0)
+            if (IsPositive(damage))
             {
-                _playerAnimator.PlayHit();
-                StartCoroutine(ImmuneTimer());
+                CurrentHealth = Mathf.Max(CurrentHealth - damage, 0);
+
+                if (CurrentHealth > 0)
+                {
+                    _playerAnimator.PlayHit();
+                    StartCoroutine(ImmuneTimer());
+                }
+                else
+                {
+                    _playerAnimator.PlayDeath();
+                    Died?.Invoke();
+                }
             }
-            else
-            {
-                _playerAnimator.PlayDeath();
-                Died?.Invoke();
-            }
+        }
+
+        public void Heal(int health)
+        {
+            if (IsPositive(health))
+                CurrentHealth = Mathf.Min(CurrentHealth + health, MaxHealth);
         }
 
         private IEnumerator ImmuneTimer()
@@ -94,6 +100,14 @@ namespace Roguelike.Player
             yield return Helpers.GetTime(_immuneTimeAfterHit);
 
             _isImmune = false;
+        }
+
+        private static bool IsPositive(int value)
+        {
+            if (value >= 0)
+                return true;
+
+            throw new ArgumentOutOfRangeException(nameof(value), "Value must not be less than 0");
         }
     }
 }
