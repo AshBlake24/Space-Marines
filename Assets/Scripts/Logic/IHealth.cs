@@ -8,5 +8,6 @@ namespace Roguelike.Logic
         int CurrentHealth { get; }
         int MaxHealth { get; }
         void TakeDamage(int damage);
+        void Heal(int health);
     }
 }
