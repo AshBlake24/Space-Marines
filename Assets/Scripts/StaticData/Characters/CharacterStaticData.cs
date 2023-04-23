@@ -6,7 +6,7 @@ namespace Roguelike.StaticData.Characters
     public class CharacterStaticData : ScriptableObject
     {
         public CharacterId Id;
-        public GameObject CharacterPrefab;
+        public GameObject Prefab;
         [Range(1, 10)] public int MaxHealth;
     }
 }
