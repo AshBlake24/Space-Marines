@@ -7,9 +7,7 @@ namespace Roguelike.Infrastructure.Services.StaticData
     public interface IStaticDataService : IService
     {
         PlayerStaticData Player { get; }
-        void LoadPlayer();
-        void LoadWeapons();
-        void LoadProjectiles();
+        void Load();
         WeaponStaticData GetWeaponData(WeaponId id);
         ProjectileStaticData GetProjectileData(ProjectileId id);
     }

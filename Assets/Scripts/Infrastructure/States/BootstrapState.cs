@@ -59,9 +59,7 @@ namespace Roguelike.Infrastructure.States
         private void RegisterStaticData()
         {
             IStaticDataService staticDataService = new StaticDataService();
-            staticDataService.LoadPlayer();
-            staticDataService.LoadWeapons();
-            staticDataService.LoadProjectiles();
+            staticDataService.Load();
             _services.RegisterSingle<IStaticDataService>(staticDataService);
         }
 
