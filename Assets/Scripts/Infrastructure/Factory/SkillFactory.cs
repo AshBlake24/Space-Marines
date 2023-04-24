@@ -51,7 +51,8 @@ namespace Roguelike.Infrastructure.Factory
                 RegenerationSkillStaticData.HealthPerTick,
                 skillData.TicksCount,
                 skillData.CooldownBetweenTicks,
-                skillData.SkillCooldown);
+                skillData.SkillCooldown,
+                skillData.SkillEffect);
         }
     }
 }

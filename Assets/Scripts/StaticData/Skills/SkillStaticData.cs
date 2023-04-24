@@ -7,5 +7,8 @@ namespace Roguelike.StaticData.Skills
     {
         public SkillId Id;
         [Range(5, 60)] public float SkillCooldown;
+
+        [Header("VFX")] 
+        public ParticleSystem SkillEffect;
     }
 }
