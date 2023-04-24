@@ -15,11 +15,12 @@ namespace Roguelike.Infrastructure.States
         private readonly Dictionary<Type, IExitableState> _states;
         private IExitableState _activeState;
 
-        public GameStateMachine(SceneLoader sceneLoader, LoadingScreen loadingScreen, AllServices services)
+        public GameStateMachine(SceneLoader sceneLoader, LoadingScreen loadingScreen, AllServices services,
+            ICoroutineRunner coroutineRunner)
         {
             _states = new Dictionary<Type, IExitableState>
             {
-                [typeof(BootstrapState)] = new BootstrapState(this, sceneLoader, services),
+                [typeof(BootstrapState)] = new BootstrapState(this, sceneLoader, services, coroutineRunner),
                 [typeof(LoadLevelState)] = new LoadLevelState(this, sceneLoader, loadingScreen, services.Single<IGameFactory>(), services.Single<ISaveLoadService>(), services.Single<IPersistentDataService>(), services.Single<IEnvironmentService>()),
                 [typeof(LoadProgressState)] = new LoadProgressState(this, services.Single<IPersistentDataService>(), services.Single<ISaveLoadService>(), services.Single<IWeaponFactory>(), services.Single<IStaticDataService>()),
                 [typeof(GameLoopState)] = new GameLoopState(this),

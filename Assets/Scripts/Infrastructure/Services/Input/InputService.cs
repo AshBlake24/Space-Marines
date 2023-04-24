@@ -8,8 +8,10 @@ namespace Roguelike.Infrastructure.Services.Input
         public abstract Vector2 Axis { get; }
         
         public event Action<bool> WeaponChanged;
+        public event Action SkillUsed;
 
         public abstract bool IsAttackButtonUp();
         public void ChangeWeapon(bool switchToNext) => WeaponChanged?.Invoke(switchToNext);
+        public void UseSkill() => SkillUsed?.Invoke();
     }
 }

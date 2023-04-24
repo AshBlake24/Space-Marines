@@ -1,4 +1,3 @@
-using Roguelike.Utilities;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -20,12 +19,15 @@ namespace Roguelike.Infrastructure.Services.Input
         private void InitializePlayerInput()
         {
             _playerInput.Enable();
+            _playerInput.Player.UseSkill.performed += (ctx) => OnSkillUsed();
             _playerInput.Player.SwitchWeapon.performed += (ctx) =>
             {
                 float value = ctx.ReadValue<float>();
                 ChangeWeapon(value > 0);
             };
         }
+
+        private void OnSkillUsed() => UseSkill();
 
         public override bool IsAttackButtonUp() =>
             _playerInput.Player.Attack.phase == InputActionPhase.Performed;

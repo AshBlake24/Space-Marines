@@ -8,7 +8,7 @@ namespace Roguelike.Infrastructure
 
         public Game(ICoroutineRunner coroutineRunner, LoadingScreen loadingScreen)
         {
-            StateMachine = new GameStateMachine(new SceneLoader(coroutineRunner), loadingScreen);
+            StateMachine = new GameStateMachine(new SceneLoader(coroutineRunner), loadingScreen, AllServices.Container, coroutineRunner);
         }
     }
 }
