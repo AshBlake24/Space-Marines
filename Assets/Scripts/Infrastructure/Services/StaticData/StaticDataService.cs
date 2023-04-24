@@ -1,8 +1,10 @@
 using System.Collections.Generic;
 using System.Linq;
+using Roguelike.Player.Skills;
 using Roguelike.StaticData.Characters;
 using Roguelike.StaticData.Player;
 using Roguelike.StaticData.Projectiles;
+using Roguelike.StaticData.Skills;
 using Roguelike.StaticData.Weapons;
 using UnityEngine;
 
@@ -13,6 +15,7 @@ namespace Roguelike.Infrastructure.Services.StaticData
         private Dictionary<WeaponId, WeaponStaticData> _weapons;
         private Dictionary<ProjectileId, ProjectileStaticData> _projectiles;
         private Dictionary<CharacterId, CharacterStaticData> _characters;
+        private Dictionary<SkillId, SkillStaticData> _skills;
 
         public PlayerStaticData Player { get; private set; }
 
@@ -21,6 +24,7 @@ namespace Roguelike.Infrastructure.Services.StaticData
             LoadWeapons();
             LoadProjectiles();
             LoadCharacters();
+            LoadSkills();
             LoadPlayer();
         }
 
@@ -50,6 +54,10 @@ namespace Roguelike.Infrastructure.Services.StaticData
         private void LoadCharacters() =>
             _characters = Resources.LoadAll<CharacterStaticData>("StaticData/Characters")
                 .ToDictionary(character => character.Id);
+
+        private void LoadSkills() =>
+            _skills = Resources.LoadAll<SkillStaticData>("StaticData/Skills")
+                .ToDictionary(skill => skill.Id);
 
         private void LoadPlayer() =>
             Player = Resources.Load<PlayerStaticData>("StaticData/Player/PlayerStaticData");

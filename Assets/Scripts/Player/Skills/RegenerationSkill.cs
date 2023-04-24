@@ -31,7 +31,6 @@ namespace Roguelike.Player.Skills
             ReadyToUse = true;
             IsActive = false;
         }
-        
         public bool IsActive { get; private set; }
         public bool ReadyToUse { get; private set; }
         
