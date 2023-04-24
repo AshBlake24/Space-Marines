@@ -17,21 +17,23 @@ namespace Roguelike.Infrastructure.Factory
     {
         private readonly IAssetProvider _assetProvider;
         private readonly IWeaponFactory _weaponFactory;
+        private readonly ISkillFactory _skillFactory;
         private readonly ICoroutineRunner _coroutineRunner;
         private readonly ISaveLoadService _saveLoadService;
         private readonly IPersistentDataService _persistentData;
         private readonly IStaticDataService _staticDataService;
 
-        public GameFactory(
-            IAssetProvider assetProvider, 
+        public GameFactory(IAssetProvider assetProvider,
             IPersistentDataService persistentData,
-            IStaticDataService staticDataService, 
-            ISaveLoadService saveLoadService, 
+            IStaticDataService staticDataService,
+            ISaveLoadService saveLoadService,
             IWeaponFactory weaponFactory,
+            ISkillFactory skillFactory,
             ICoroutineRunner coroutineRunner)
         {
             _assetProvider = assetProvider;
             _weaponFactory = weaponFactory;
+            _skillFactory = skillFactory;
             _coroutineRunner = coroutineRunner;
             _persistentData = persistentData;
             _saveLoadService = saveLoadService;
@@ -47,6 +49,8 @@ namespace Roguelike.Infrastructure.Factory
 
             PlayerHealth playerHealth = player.GetComponent<PlayerHealth>();
             playerHealth.Construct(_staticDataService.Player.ImmuneTimeAfterHit);
+            
+            _skillFactory.CreatePlayerSkill(player);
             
             return player;
         }

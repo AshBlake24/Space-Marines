@@ -1,3 +1,4 @@
+using Roguelike.StaticData.Skills;
 using UnityEngine;
 
 namespace Roguelike.StaticData.Characters
@@ -7,6 +8,7 @@ namespace Roguelike.StaticData.Characters
     {
         public CharacterId Id;
         public GameObject Prefab;
+        public SkillStaticData Skill;
         [Range(1, 10)] public int MaxHealth;
     }
 }

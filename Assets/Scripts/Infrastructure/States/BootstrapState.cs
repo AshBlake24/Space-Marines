@@ -55,6 +55,11 @@ namespace Roguelike.Infrastructure.States
             _services.RegisterSingle<ISaveLoadService>(new SaveLoadService(_services.Single<IPersistentDataService>()));
             _services.RegisterSingle<IProjectileFactory>(new ProjectileFactory(_services.Single<IStaticDataService>()));
             
+            _services.RegisterSingle<ISkillFactory>(new SkillFactory(
+                _coroutineRunner,
+                _services.Single<IStaticDataService>(),
+                _services.Single<IPersistentDataService>()));
+            
             _services.RegisterSingle<IWeaponFactory>(new WeaponFactory(
                 _services.Single<IStaticDataService>(), 
                 _services.Single<ISaveLoadService>()));
@@ -65,6 +70,7 @@ namespace Roguelike.Infrastructure.States
                 _services.Single<IStaticDataService>(), 
                 _services.Single<ISaveLoadService>(), 
                 _services.Single<IWeaponFactory>(),
+                _services.Single<ISkillFactory>(),
                 _coroutineRunner));
         }
 

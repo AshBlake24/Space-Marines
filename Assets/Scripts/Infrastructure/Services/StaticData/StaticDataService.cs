@@ -43,6 +43,11 @@ namespace Roguelike.Infrastructure.Services.StaticData
                 ? staticData
                 : null;
 
+        public SkillStaticData GetSkillStaticData(SkillId id) =>
+            _skills.TryGetValue(id, out SkillStaticData staticData)
+                ? staticData
+                : null;
+
         private void LoadWeapons() =>
             _weapons = Resources.LoadAll<WeaponStaticData>("StaticData/Weapons")
                 .ToDictionary(weapon => weapon.Id);
