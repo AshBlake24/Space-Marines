@@ -28,6 +28,8 @@ namespace Roguelike.Player.Skills
             _ticksCount = ticksCount;
             _cooldownBetweenTicks = cooldownBetweenTicks;
             _cooldown = skillCooldown;
+            ReadyToUse = true;
+            IsActive = false;
         }
         
         public bool IsActive { get; private set; }

@@ -19,12 +19,14 @@ namespace Roguelike.Infrastructure.States
         private readonly GameStateMachine _stateMachine;
         private readonly SceneLoader _sceneLoader;
         private readonly AllServices _services;
+        private readonly ICoroutineRunner _coroutineRunner;
 
-        public BootstrapState(GameStateMachine stateMachine, SceneLoader sceneLoader, AllServices services)
+        public BootstrapState(GameStateMachine stateMachine, SceneLoader sceneLoader, AllServices services, ICoroutineRunner coroutineRunner)
         {
             _stateMachine = stateMachine;
             _sceneLoader = sceneLoader;
             _services = services;
+            _coroutineRunner = coroutineRunner;
             
             RegisterServices();
         }
@@ -52,8 +54,18 @@ namespace Roguelike.Infrastructure.States
             _services.RegisterSingle<IPersistentDataService>(new PersistentDataService());
             _services.RegisterSingle<ISaveLoadService>(new SaveLoadService(_services.Single<IPersistentDataService>()));
             _services.RegisterSingle<IProjectileFactory>(new ProjectileFactory(_services.Single<IStaticDataService>()));
-            _services.RegisterSingle<IWeaponFactory>(new WeaponFactory(_services.Single<IStaticDataService>(), _services.Single<ISaveLoadService>()));
-            _services.RegisterSingle<IGameFactory>(new GameFactory(_services.Single<IAssetProvider>(), _services.Single<IPersistentDataService>(), _services.Single<IStaticDataService>(), _services.Single<ISaveLoadService>(), _services.Single<IWeaponFactory>()));
+            
+            _services.RegisterSingle<IWeaponFactory>(new WeaponFactory(
+                _services.Single<IStaticDataService>(), 
+                _services.Single<ISaveLoadService>()));
+            
+            _services.RegisterSingle<IGameFactory>(new GameFactory(
+                _services.Single<IAssetProvider>(),
+                _services.Single<IPersistentDataService>(),
+                _services.Single<IStaticDataService>(), 
+                _services.Single<ISaveLoadService>(), 
+                _services.Single<IWeaponFactory>(),
+                _coroutineRunner));
         }
 
         private void RegisterStaticData()
