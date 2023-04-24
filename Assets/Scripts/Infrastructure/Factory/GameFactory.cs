@@ -47,19 +47,7 @@ namespace Roguelike.Infrastructure.Factory
 
             PlayerHealth playerHealth = player.GetComponent<PlayerHealth>();
             playerHealth.Construct(_staticDataService.Player.ImmuneTimeAfterHit);
-
-            ISkill skill = new RegenerationSkill(
-                _coroutineRunner,
-                playerHealth,
-                healthPerTick: 1,
-                ticksCount: 3,
-                cooldownBetweenTicks: 3,
-                skillCooldown: 60);
             
-            
-            PlayerSkill playerSkill = player.GetComponent<PlayerSkill>();
-            playerSkill.Construct(skill);
-
             return player;
         }
 
