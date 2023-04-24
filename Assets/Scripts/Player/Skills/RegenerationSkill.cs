@@ -7,50 +7,32 @@ using UnityEngine;
 
 namespace Roguelike.Player.Skills
 {
-    public class RegenerationSkill : ISkill
+    public class RegenerationSkill : Skill
     {
-        private readonly ICoroutineRunner _coroutineRunner;
         private readonly IHealth _targetHealth;
         private readonly int _healthPerTick;
         private readonly int _ticksCount;
         private readonly float _cooldownBetweenTicks;
-        private readonly float _cooldown;
-
-        public event Action Performed;
 
         public RegenerationSkill(
-            ICoroutineRunner coroutineRunner, 
+            ICoroutineRunner coroutineRunner,
             IHealth targetHealth, 
             int healthPerTick, 
             int ticksCount,
             float cooldownBetweenTicks,
             float skillCooldown,
-            ParticleSystem skillEffect)
+            ParticleSystem skillEffect) : base(coroutineRunner, skillCooldown, skillEffect)
         {
-            _coroutineRunner = coroutineRunner;
             _targetHealth = targetHealth;
             _healthPerTick = healthPerTick;
             _ticksCount = ticksCount;
             _cooldownBetweenTicks = cooldownBetweenTicks;
-            _cooldown = skillCooldown;
-            VFX = skillEffect;
-            ReadyToUse = true;
-            IsActive = false;
         }
 
-        public ParticleSystem VFX { get; }
-        public bool IsActive { get; private set; }
-        public bool ReadyToUse { get; private set; }
-        
-        public void UseSkill() => 
-            _coroutineRunner.StartCoroutine(Healing());
+        public override event Action Performed;
 
-        private IEnumerator SkillCooldown()
-        {
-            yield return Helpers.GetTime(_cooldown);
-
-            ReadyToUse = true;
-        }
+        public override void UseSkill() => 
+            CoroutineRunner.StartCoroutine(Healing());
 
         private IEnumerator Healing()
         {
@@ -66,7 +48,7 @@ namespace Roguelike.Player.Skills
 
             IsActive = false;
             Performed?.Invoke();
-            _coroutineRunner.StartCoroutine(SkillCooldown());
+            CoroutineRunner.StartCoroutine(SkillCooldown());
         }
     }
 }
