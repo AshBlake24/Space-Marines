@@ -41,7 +41,7 @@ namespace Roguelike.Weapons
             AmmoData = new AmmoData(_stats.InfinityAmmo, _stats.MaxAmmo, _stats.MaxAmmo);
             
             CreateProjectilesPool();
-            CreateMuzzleFlashVFX(stats);
+            CreateMuzzleFlashVFX();
         }
 
         public void WriteProgress(PlayerProgress progress) => 
@@ -78,10 +78,10 @@ namespace Roguelike.Weapons
             Fired?.Invoke();
         }
 
-        private void CreateMuzzleFlashVFX(RangedWeaponStats stats)
+        private void CreateMuzzleFlashVFX()
         {
             _muzzleFlashVFX = Instantiate(
-                stats.ProjectileData.MuzzleFlashVFX,
+                _stats.ProjectileData.MuzzleFlashVFX,
                 _firePoint.position,
                 _firePoint.rotation,
                 _firePoint);

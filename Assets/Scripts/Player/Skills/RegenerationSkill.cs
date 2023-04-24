@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using Roguelike.Infrastructure;
 using Roguelike.Logic;
 using Roguelike.Utilities;
+using UnityEngine;
 
 namespace Roguelike.Player.Skills
 {
@@ -13,6 +15,9 @@ namespace Roguelike.Player.Skills
         private readonly int _ticksCount;
         private readonly float _cooldownBetweenTicks;
         private readonly float _cooldown;
+        private readonly ParticleSystem _skillEffect;
+
+        public event Action Performed;
 
         public RegenerationSkill(
             ICoroutineRunner coroutineRunner, 
@@ -20,7 +25,8 @@ namespace Roguelike.Player.Skills
             int healthPerTick, 
             int ticksCount,
             float cooldownBetweenTicks,
-            float skillCooldown)
+            float skillCooldown,
+            ParticleSystem skillEffect)
         {
             _coroutineRunner = coroutineRunner;
             _targetHealth = targetHealth;
@@ -28,9 +34,12 @@ namespace Roguelike.Player.Skills
             _ticksCount = ticksCount;
             _cooldownBetweenTicks = cooldownBetweenTicks;
             _cooldown = skillCooldown;
+            _skillEffect = skillEffect;
             ReadyToUse = true;
             IsActive = false;
         }
+
+        public ParticleSystem VFX => _skillEffect;
         public bool IsActive { get; private set; }
         public bool ReadyToUse { get; private set; }
         
@@ -56,6 +65,7 @@ namespace Roguelike.Player.Skills
                 yield return Helpers.GetTime(_cooldownBetweenTicks);
             }
             
+            Performed?.Invoke();
             _coroutineRunner.StartCoroutine(SkillCooldown());
         }
     }
