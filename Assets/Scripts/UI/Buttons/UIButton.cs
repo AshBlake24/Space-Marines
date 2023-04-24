@@ -3,17 +3,17 @@ using Roguelike.Infrastructure.Services.Input;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Roguelike.UI
+namespace Roguelike.UI.Buttons
 {
     [RequireComponent(typeof(Button))]
-    public class ChangeWeaponButton : MonoBehaviour
+    public abstract class UIButton : MonoBehaviour
     {
         [SerializeField] private Button _button;
         
-        private IInputService _inputService;
+        protected IInputService InputService;
 
         private void Awake() => 
-            _inputService = AllServices.Container.Single<IInputService>();
+            InputService = AllServices.Container.Single<IInputService>();
 
         private void OnEnable() => 
             _button.onClick.AddListener(OnButtonClick);
@@ -21,7 +21,6 @@ namespace Roguelike.UI
         private void OnDisable() => 
             _button.onClick.RemoveListener(OnButtonClick);
 
-        private void OnButtonClick() => 
-            _inputService.ChangeWeapon(true);
+        protected abstract void OnButtonClick();
     }
 }

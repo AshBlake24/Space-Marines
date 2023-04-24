@@ -13,7 +13,7 @@ namespace Roguelike.Infrastructure.Services.Environment
                 ? EnvironmentType.Desktop 
                 : EnvironmentType.Mobile;
 #else
-            _environment = EnvironmentType.Desktop;
+            _environment = EnvironmentType.Mobile;
 #endif
         }
 
