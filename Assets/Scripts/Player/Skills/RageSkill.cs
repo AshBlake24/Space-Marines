@@ -1,37 +1,33 @@
 using System;
 using System.Collections;
 using Roguelike.Infrastructure;
-using Roguelike.Logic;
 using Roguelike.Utilities;
 using UnityEngine;
 
 namespace Roguelike.Player.Skills
 {
-    public class RegenerationSkill : ISkill
+    public class RageSkill : ISkill
     {
         private readonly ICoroutineRunner _coroutineRunner;
-        private readonly IHealth _targetHealth;
-        private readonly int _healthPerTick;
-        private readonly int _ticksCount;
-        private readonly float _cooldownBetweenTicks;
+        private readonly PlayerShooter _playerShooter;
+        private readonly float _attackSpeedMultiplier;
+        private readonly float _skillDuration;
         private readonly float _cooldown;
 
         public event Action Performed;
 
-        public RegenerationSkill(
-            ICoroutineRunner coroutineRunner, 
-            IHealth targetHealth, 
-            int healthPerTick, 
-            int ticksCount,
-            float cooldownBetweenTicks,
+        public RageSkill(
+            ICoroutineRunner coroutineRunner,
+            PlayerShooter playerShooter,
+            float attackSpeedMultiplier,
+            float skillDuration,
             float skillCooldown,
             ParticleSystem skillEffect)
         {
             _coroutineRunner = coroutineRunner;
-            _targetHealth = targetHealth;
-            _healthPerTick = healthPerTick;
-            _ticksCount = ticksCount;
-            _cooldownBetweenTicks = cooldownBetweenTicks;
+            _playerShooter = playerShooter;
+            _attackSpeedMultiplier = attackSpeedMultiplier;
+            _skillDuration = skillDuration;
             _cooldown = skillCooldown;
             VFX = skillEffect;
             ReadyToUse = true;
@@ -43,7 +39,7 @@ namespace Roguelike.Player.Skills
         public bool ReadyToUse { get; private set; }
         
         public void UseSkill() => 
-            _coroutineRunner.StartCoroutine(Healing());
+            _coroutineRunner.StartCoroutine(Rage());
 
         private IEnumerator SkillCooldown()
         {
@@ -52,17 +48,16 @@ namespace Roguelike.Player.Skills
             ReadyToUse = true;
         }
 
-        private IEnumerator Healing()
+        private IEnumerator Rage()
         {
             IsActive = true;
             ReadyToUse = false;
 
-            for (int i = 0; i < _ticksCount; i++)
-            {
-                _targetHealth.Heal(_healthPerTick);
+            _playerShooter.SetAttackSpeedMultiplier(_attackSpeedMultiplier);
+            
+            yield return Helpers.GetTime(_skillDuration);
 
-                yield return Helpers.GetTime(_cooldownBetweenTicks);
-            }
+            _playerShooter.ResetAttackSpeedMultiplier();
 
             IsActive = false;
             Performed?.Invoke();

@@ -37,6 +37,7 @@ namespace Roguelike.Infrastructure.Factory
             return skillData.Id switch
             {
                 SkillId.Regeneration => CreateRegenerationSkill(skillData as RegenerationSkillStaticData, player),
+                SkillId.Rage => CreateRageSkill(skillData as RageSkillStaticData, player),
                 _ => throw new ArgumentNullException(nameof(SkillId), "This skill does not exist")
             };
         }
@@ -51,6 +52,19 @@ namespace Roguelike.Infrastructure.Factory
                 RegenerationSkillStaticData.HealthPerTick,
                 skillData.TicksCount,
                 skillData.CooldownBetweenTicks,
+                skillData.SkillCooldown,
+                skillData.SkillEffect);
+        }
+
+        private ISkill CreateRageSkill(RageSkillStaticData skillData, GameObject player)
+        {
+            PlayerShooter playerShooter = player.GetComponent<PlayerShooter>();
+
+            return new RageSkill(
+                _coroutineRunner,
+                playerShooter,
+                skillData.AttackSpeedMultiplier,
+                skillData.SkillDuration,
                 skillData.SkillCooldown,
                 skillData.SkillEffect);
         }

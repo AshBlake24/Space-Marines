@@ -9,6 +9,8 @@ namespace Roguelike.Player
 {
     public class PlayerShooter : MonoBehaviour
     {
+        private const float DefaultAttackSpeedMultiplier = 1f;
+        
         [SerializeField] private PlayerHealth _playerHealth;
         [SerializeField] private PlayerAnimator _playerAnimator;
 
@@ -20,6 +22,7 @@ namespace Roguelike.Player
         private float _weaponSwitchCooldown;
         private float _lastWeaponSwitchTime;
         private float _lastShotTime;
+        private float _attackSpeedMultiplier;
 
         public event Action<IWeapon> WeaponChanged;
         
@@ -43,6 +46,7 @@ namespace Roguelike.Player
             _weapons = weapons;
             _weaponSwitchCooldown = weaponSwitchCooldown;
             _weaponSpawnPoint = weaponSpawnPoint;
+            _attackSpeedMultiplier = DefaultAttackSpeedMultiplier;
 
             if (_weapons.Count > 0)
             {
@@ -76,7 +80,9 @@ namespace Roguelike.Player
             if (_inputService.IsAttackButtonUp() == false)
                 return;
 
-            if (Time.time < (_currentWeapon.Stats.AttackRate + _lastShotTime))
+            float attackRate = _currentWeapon.Stats.AttackRate / _attackSpeedMultiplier;
+            
+            if (Time.time < (attackRate + _lastShotTime))
                 return;
 
             if (_currentWeapon.TryAttack())
@@ -119,5 +125,11 @@ namespace Roguelike.Player
                 SetWeapon();
             }
         }
+
+        public void SetAttackSpeedMultiplier(float attackSpeedMultiplier) => 
+            _attackSpeedMultiplier = attackSpeedMultiplier;
+
+        public void ResetAttackSpeedMultiplier() => 
+            _attackSpeedMultiplier = DefaultAttackSpeedMultiplier;
     }
 }
