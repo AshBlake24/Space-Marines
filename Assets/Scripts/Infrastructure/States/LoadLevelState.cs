@@ -3,7 +3,6 @@ using Roguelike.Infrastructure.Services.Environment;
 using Roguelike.Infrastructure.Services.PersistentData;
 using Roguelike.Infrastructure.Services.SaveLoad;
 using Roguelike.Logic;
-using Roguelike.Logic.Camera;
 using Roguelike.Player;
 using Roguelike.UI;
 using Unity.VisualScripting;
