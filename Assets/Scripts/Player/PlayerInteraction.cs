@@ -44,6 +44,14 @@ namespace Roguelike.Player
                 (1 / _updateTargetsPerFrame));
         }
 
+        public void Cleanup()
+        {
+            if (_currentTargetInteractable != null)
+                _currentTargetInteractable.Outline.enabled = false;
+
+            _currentTargetInteractable = null;
+        }
+
         private void CheckForInteractables()
         {
             int collidersInArea = Physics.OverlapSphereNonAlloc(
@@ -94,7 +102,7 @@ namespace Roguelike.Player
         {
             if (_currentTargetInteractable != null)
                 _currentTargetInteractable.Outline.enabled = false;
-            
+
             _currentTargetInteractable = closestInteractable;
             _currentTargetInteractable.Outline.enabled = true;
         }
