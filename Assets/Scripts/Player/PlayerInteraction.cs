@@ -8,6 +8,7 @@ namespace Roguelike.Player
     public class PlayerInteraction : MonoBehaviour
     {
         private const float DelayBeforeFindingTargets = 1f;
+        private const float OutlineWidth = 5f;
         
         [SerializeField] private LayerMask _interactablesLayerMask;
         [SerializeField] private float _updateTargetsPerFrame;
@@ -15,7 +16,7 @@ namespace Roguelike.Player
         [SerializeField] private bool _drawGizmos;
 
         private readonly Collider[] _colliders = new Collider[3];
-        private IInteractable _closest;
+        private IInteractable _currentTargetInteractable;
         private IInputService _input;
 
         private void OnDrawGizmos()
@@ -46,8 +47,6 @@ namespace Roguelike.Player
 
         private void CheckForInteractables()
         {
-            _closest = null;
-
             int collidersInArea = Physics.OverlapSphereNonAlloc(
                 transform.position,
                 _radius,
@@ -55,11 +54,26 @@ namespace Roguelike.Player
                 _interactablesLayerMask);
 
             if (collidersInArea > 0)
-                FindClosest();
+            {
+                IInteractable closestInteractable = FindClosestInteractable();
+
+                if (closestInteractable != null && closestInteractable != _currentTargetInteractable)
+                {
+                    ClearOutline();
+                    _currentTargetInteractable = closestInteractable;
+                    RenderOutline();
+                }
+            }
+            else
+            {
+                ClearOutline();
+                _currentTargetInteractable = null;
+            }
         }
 
-        private void FindClosest()
+        private IInteractable FindClosestInteractable()
         {
+            IInteractable closestInteractable = null;
             float closestObjectDistance = float.MaxValue;
 
             foreach (Collider collider in _colliders)
@@ -74,13 +88,39 @@ namespace Roguelike.Player
                     if (distanceToObject < closestObjectDistance)
                     {
                         closestObjectDistance = distanceToObject;
-                        _closest = interactable;
+                        closestInteractable = interactable;
                     }
                 }
             }
+
+            return closestInteractable;
+        }
+
+        private void RenderOutline()
+        {
+            if (_currentTargetInteractable.gameObject.TryGetComponent(out Outline outline))
+            {
+                outline.enabled = true;
+            }
+            else
+            {
+                Outline outlineComponent = _currentTargetInteractable.gameObject.AddComponent<Outline>();
+                outlineComponent.OutlineMode = Outline.Mode.OutlineAll;
+                outlineComponent.OutlineColor = Color.white;
+                outlineComponent.OutlineWidth = OutlineWidth;
+            }
+        }
+
+        private void ClearOutline()
+        {
+            if (_currentTargetInteractable == null)
+                return;;
+            
+            if (_currentTargetInteractable.gameObject.TryGetComponent(out Outline outline))
+                outline.enabled = false;
         }
 
         private void OnInteracted() => 
-            _closest?.Interact();
+            _currentTargetInteractable?.Interact();
     }
 }
