@@ -8,8 +8,10 @@ namespace Roguelike.Infrastructure.Services.Input
         Vector2 Axis { get; }
         event Action<bool> WeaponChanged;
         event Action SkillUsed;
+        event Action Interacted;
         bool IsAttackButtonUp();
         void ChangeWeapon(bool switchToNext);
         void UseSkill();
+        void Interact();
     }
 }

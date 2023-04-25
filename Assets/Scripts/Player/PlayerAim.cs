@@ -10,12 +10,22 @@ namespace Roguelike.Player
 
         [SerializeField] private LayerMask _enemiesLayerMask;
         [SerializeField] private float _updateTargetsPerFrame;
-        [SerializeField] private float _radius;
+        [SerializeField, Range(1f, 20f)] private float _radius;
+        [SerializeField] private bool _drawGizmos;
 
         private readonly Collider[] _colliders = new Collider[6];
         private EnemyHealth _closetEnemy;
 
         public event Action<EnemyHealth> TargetChanged;
+
+        private void OnDrawGizmos()
+        {
+            if (_drawGizmos)
+            {
+                Gizmos.color = Color.red;
+                Gizmos.DrawWireSphere(transform.position, _radius);
+            }
+        }
 
         private void Start()
         {
@@ -61,12 +71,6 @@ namespace Roguelike.Player
                     }
                 }
             }
-        }
-
-        private void OnDrawGizmos()
-        {
-            Gizmos.color = Color.red;
-            Gizmos.DrawWireSphere(transform.position, _radius);
         }
     }
 }

@@ -20,6 +20,7 @@ namespace Roguelike.Infrastructure.Services.Input
         {
             _playerInput.Enable();
             _playerInput.Player.UseSkill.performed += (ctx) => OnSkillUsed();
+            _playerInput.Player.Interaction.performed += (ctx) => OnInteracted();
             _playerInput.Player.SwitchWeapon.performed += (ctx) =>
             {
                 float value = ctx.ReadValue<float>();
@@ -28,6 +29,8 @@ namespace Roguelike.Infrastructure.Services.Input
         }
 
         private void OnSkillUsed() => UseSkill();
+
+        private void OnInteracted() => Interact();
 
         public override bool IsAttackButtonUp() =>
             _playerInput.Player.Attack.phase == InputActionPhase.Performed;
