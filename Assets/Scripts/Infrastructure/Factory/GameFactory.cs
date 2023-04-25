@@ -45,7 +45,7 @@ namespace Roguelike.Infrastructure.Factory
             GameObject player = InstantiateRegistered(AssetPath.PlayerPath, playerInitialPoint.position);
             GameObject character = CreateCharacter(_persistentData.PlayerProgress.Character, player);
 
-            InitializeShooterComponent(player, character.GetComponentInChildren<WeaponSpawnPoint>().transform);
+            InitializeShooterComponent(player, character.GetComponentInChildren<WeaponSpawnPoint>());
 
             PlayerHealth playerHealth = player.GetComponent<PlayerHealth>();
             playerHealth.Construct(_staticDataService.Player.ImmuneTimeAfterHit);
@@ -85,15 +85,19 @@ namespace Roguelike.Infrastructure.Factory
             return character;
         }
 
-        private void InitializeShooterComponent(GameObject player, Transform weaponSpawnPoint)
+        private void InitializeShooterComponent(GameObject player, WeaponSpawnPoint weaponSpawnPoint)
         {
             PlayerShooter playerShooter = player.GetComponent<PlayerShooter>();
 
             List<IWeapon> weapons = _persistentData.PlayerProgress.PlayerWeapons.GetWeapons()
-                .Select(weaponId => _weaponFactory.CreateWeapon(weaponId, weaponSpawnPoint))
+                .Select(weaponId => _weaponFactory.CreateWeapon(weaponId, weaponSpawnPoint.transform))
                 .ToList();
 
-            playerShooter.Construct(weapons, _staticDataService.Player.WeaponSwtichCooldown, weaponSpawnPoint);
+            playerShooter.Construct(
+                weapons, 
+                _staticDataService.Player.WeaponSwtichCooldown, 
+                weaponSpawnPoint,
+                _weaponFactory);
         }
 
         private GameObject InstantiateRegistered(string prefabPath)

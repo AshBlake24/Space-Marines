@@ -1,6 +1,6 @@
 using Roguelike.Infrastructure.Services;
 using Roguelike.Infrastructure.Services.Input;
-using Roguelike.Logic;
+using Roguelike.Logic.Interactables;
 using UnityEngine;
 
 namespace Roguelike.Player
@@ -8,8 +8,7 @@ namespace Roguelike.Player
     public class PlayerInteraction : MonoBehaviour
     {
         private const float DelayBeforeFindingTargets = 1f;
-        private const float OutlineWidth = 5f;
-        
+
         [SerializeField] private LayerMask _interactablesLayerMask;
         [SerializeField] private float _updateTargetsPerFrame;
         [SerializeField, Range(0.5f, 5f)] private float _radius;
@@ -27,14 +26,14 @@ namespace Roguelike.Player
                 Gizmos.DrawWireSphere(transform.position, _radius);
             }
         }
-        
-        private void Awake() => 
+
+        private void Awake() =>
             _input = AllServices.Container.Single<IInputService>();
 
-        private void OnEnable() => 
+        private void OnEnable() =>
             _input.Interacted += OnInteracted;
 
-        private void OnDisable() => 
+        private void OnDisable() =>
             _input.Interacted -= OnInteracted;
 
         private void Start()
@@ -58,15 +57,10 @@ namespace Roguelike.Player
                 IInteractable closestInteractable = FindClosestInteractable();
 
                 if (closestInteractable != null && closestInteractable != _currentTargetInteractable)
-                {
-                    ClearOutline();
-                    _currentTargetInteractable = closestInteractable;
-                    RenderOutline();
-                }
+                    ChangeCurrentInteractable(closestInteractable);
             }
             else
             {
-                ClearOutline();
                 _currentTargetInteractable = null;
             }
         }
@@ -96,31 +90,16 @@ namespace Roguelike.Player
             return closestInteractable;
         }
 
-        private void RenderOutline()
+        private void ChangeCurrentInteractable(IInteractable closestInteractable)
         {
-            if (_currentTargetInteractable.gameObject.TryGetComponent(out Outline outline))
-            {
-                outline.enabled = true;
-            }
-            else
-            {
-                Outline outlineComponent = _currentTargetInteractable.gameObject.AddComponent<Outline>();
-                outlineComponent.OutlineMode = Outline.Mode.OutlineAll;
-                outlineComponent.OutlineColor = Color.white;
-                outlineComponent.OutlineWidth = OutlineWidth;
-            }
-        }
-
-        private void ClearOutline()
-        {
-            if (_currentTargetInteractable == null)
-                return;;
+            if (_currentTargetInteractable != null)
+                _currentTargetInteractable.Outline.enabled = false;
             
-            if (_currentTargetInteractable.gameObject.TryGetComponent(out Outline outline))
-                outline.enabled = false;
+            _currentTargetInteractable = closestInteractable;
+            _currentTargetInteractable.Outline.enabled = true;
         }
 
-        private void OnInteracted() => 
-            _currentTargetInteractable?.Interact();
+        private void OnInteracted() =>
+            _currentTargetInteractable?.Interact(gameObject);
     }
 }
