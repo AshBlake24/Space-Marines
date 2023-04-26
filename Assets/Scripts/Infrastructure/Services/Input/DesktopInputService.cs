@@ -1,3 +1,4 @@
+using Roguelike.Utilities;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -33,6 +34,7 @@ namespace Roguelike.Infrastructure.Services.Input
         private void OnInteracted() => Interact();
 
         public override bool IsAttackButtonUp() =>
-            _playerInput.Player.Attack.phase == InputActionPhase.Performed;
+            _playerInput.Player.Attack.phase == InputActionPhase.Performed
+            && Helpers.IsOverUI() == false;
     }
 }
