@@ -19,6 +19,8 @@ namespace Roguelike.Logic.Camera
             
             transform.position = _following.position + _positionOffset;;
             transform.rotation = Quaternion.Euler(_rotationOffset);
+
+            HideWall();
         }
 
         public void Follow(GameObject following)
@@ -28,8 +30,7 @@ namespace Roguelike.Logic.Camera
             
             _following = following.transform;
         }
-        
-        private Vector3 FollowingPointPosition()
+
         public void HideWall()
         {
             if (Physics.Raycast(transform.position, _following.position - transform.position, out RaycastHit hit, 20))
@@ -46,10 +47,7 @@ namespace Roguelike.Logic.Camera
                     }
                 }
                 else
-        {
-            Vector3 followingPosition = _following.position;
-            followingPosition.y += _offsetY;
-            return followingPosition;
+                {
                     _hiddenWall?.Show();
                     _hiddenWall = null;
                 }

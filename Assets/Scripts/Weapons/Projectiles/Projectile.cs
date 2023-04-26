@@ -41,6 +41,14 @@ namespace Roguelike.Weapons.Projectiles
             _projectileVFX.Play();
         }
 
+        public void Init(Vector3 direction)
+        {
+            Rigidbody.angularVelocity = Vector3.zero;
+            Rigidbody.velocity = direction * Stats.Speed;
+            _accumulatedTime = 0f;
+            _projectileVFX.Play();
+        }
+
         protected void SpawnVFX(string key)
         {
             ParticleSystem particles = _particlesPool.GetInstance(key);

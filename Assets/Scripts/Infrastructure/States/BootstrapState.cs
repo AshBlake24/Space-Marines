@@ -1,6 +1,6 @@
 using Agava.YandexGames;
-using Roguelike.Infrastructure.AssetManagement;
 using Roguelike.Infrastructure.Factory;
+using Roguelike.Infrastructure.AssetManagement;
 using Roguelike.Infrastructure.Services;
 using Roguelike.Infrastructure.Services.Environment;
 using Roguelike.Infrastructure.Services.Input;
@@ -63,7 +63,13 @@ namespace Roguelike.Infrastructure.States
             _services.RegisterSingle<IWeaponFactory>(new WeaponFactory(
                 _services.Single<IStaticDataService>(), 
                 _services.Single<ISaveLoadService>()));
-            
+
+            _services.RegisterSingle<IEnemyFactory>(new EnemyFactory(
+                _services.Single<IStaticDataService>()));
+
+            _services.RegisterSingle<IItemFactory>(new ItemFactory(
+                _services.Single<IStaticDataService>()));
+
             _services.RegisterSingle<IGameFactory>(new GameFactory(
                 _services.Single<IAssetProvider>(),
                 _services.Single<IPersistentDataService>(),
@@ -71,6 +77,7 @@ namespace Roguelike.Infrastructure.States
                 _services.Single<ISaveLoadService>(), 
                 _services.Single<IWeaponFactory>(),
                 _services.Single<ISkillFactory>(),
+                _services.Single<IEnemyFactory>(),
                 _coroutineRunner));
         }
 

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Roguelike.Infrastructure.Factory;
 using Roguelike.Infrastructure.AssetManagement;
 using Roguelike.Infrastructure.Services.PersistentData;
 using Roguelike.Infrastructure.Services.SaveLoad;
@@ -10,6 +11,7 @@ using Roguelike.StaticData.Characters;
 using Roguelike.Weapons;
 using UnityEngine;
 using UnityEngine.Animations.Rigging;
+using Roguelike.Level;
 
 namespace Roguelike.Infrastructure.Factory
 {
@@ -18,6 +20,7 @@ namespace Roguelike.Infrastructure.Factory
         private readonly IAssetProvider _assetProvider;
         private readonly IWeaponFactory _weaponFactory;
         private readonly ISkillFactory _skillFactory;
+        private readonly IEnemyFactory _enemyFactory;
         private readonly ICoroutineRunner _coroutineRunner;
         private readonly ISaveLoadService _saveLoadService;
         private readonly IPersistentDataService _persistentData;
@@ -29,11 +32,13 @@ namespace Roguelike.Infrastructure.Factory
             ISaveLoadService saveLoadService,
             IWeaponFactory weaponFactory,
             ISkillFactory skillFactory,
+            IEnemyFactory enemyFactory,
             ICoroutineRunner coroutineRunner)
         {
             _assetProvider = assetProvider;
             _weaponFactory = weaponFactory;
             _skillFactory = skillFactory;
+            _enemyFactory = enemyFactory;
             _coroutineRunner = coroutineRunner;
             _persistentData = persistentData;
             _saveLoadService = saveLoadService;
@@ -110,6 +115,19 @@ namespace Roguelike.Infrastructure.Factory
             _saveLoadService.RegisterProgressWatchers(gameObject);
 
             return gameObject;
+        }
+
+        public GameObject GenerateLevel()
+        {
+            GameObject LevelGenerator = InstantiateRegistered(AssetPath.LevelGeneratorPath);
+            LevelGenerator.GetComponent<LevelGenerator>().BuildLevel(_enemyFactory);
+
+            return LevelGenerator;
+        }
+
+        public void Cleanup()
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

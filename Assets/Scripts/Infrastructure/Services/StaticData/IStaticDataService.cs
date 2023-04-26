@@ -1,5 +1,7 @@
 using Roguelike.Player.Skills;
 using Roguelike.StaticData.Characters;
+using Roguelike.StaticData.Enemies;
+using Roguelike.StaticData.Items;
 using Roguelike.StaticData.Player;
 using Roguelike.StaticData.Projectiles;
 using Roguelike.StaticData.Skills;
@@ -15,5 +17,7 @@ namespace Roguelike.Infrastructure.Services.StaticData
         ProjectileStaticData GetProjectileData(ProjectileId id);
         CharacterStaticData GetCharacterData(CharacterId id);
         SkillStaticData GetSkillStaticData(SkillId id);
+        EnemyStaticData GetEnemyStaticData(EnemyId id);
+        ItemStaticData GetItemStaticData(ItemId id);
     }
 }

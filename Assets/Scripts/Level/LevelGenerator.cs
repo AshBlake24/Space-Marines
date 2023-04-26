@@ -1,4 +1,5 @@
-using System.Collections;
+using Roguelike.Enemies;
+using Roguelike.Infrastructure.Factory;
 using System.Collections.Generic;
 using UnityEditor.AI;
 using UnityEngine;
@@ -15,17 +16,15 @@ namespace Roguelike.Level
         [SerializeField] private List<Room> _areaRooms;
         [SerializeField] private List<Room> _bonusRooms;
 
+        private IEnemyFactory _enemyFactory;
         private Room _currentRoom;
         private Room _currentCorridor;
         private ExitPoint _connectingPoint;
 
-        public void Awake()
+        public void BuildLevel(IEnemyFactory enemyFactory)
         {
-            BuildLevel();
-        }
+            _enemyFactory = enemyFactory;
 
-        public void BuildLevel()
-        {
             _currentRoom = Instantiate(_startRoom, _startPosition, Quaternion.identity);
             _roomsCount--;
 
@@ -59,6 +58,8 @@ namespace Roguelike.Level
         private void ConnectRoom()
         {
             Room areaRoom = CreateRoom(_currentCorridor, _areaRooms);
+
+            areaRoom.gameObject.GetComponent<EnemySpawner>().Init(_enemyFactory);
 
             _currentRoom.HideExit();
 

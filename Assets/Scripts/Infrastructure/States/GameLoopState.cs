@@ -1,3 +1,5 @@
+using Roguelike.Infrastructure.Factory;
+
 namespace Roguelike.Infrastructure.States
 {
     public class GameLoopState : IState

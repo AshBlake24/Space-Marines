@@ -2,6 +2,8 @@ using System.Collections.Generic;
 using System.Linq;
 using Roguelike.Player.Skills;
 using Roguelike.StaticData.Characters;
+using Roguelike.StaticData.Enemies;
+using Roguelike.StaticData.Items;
 using Roguelike.StaticData.Player;
 using Roguelike.StaticData.Projectiles;
 using Roguelike.StaticData.Skills;
@@ -16,6 +18,8 @@ namespace Roguelike.Infrastructure.Services.StaticData
         private Dictionary<ProjectileId, ProjectileStaticData> _projectiles;
         private Dictionary<CharacterId, CharacterStaticData> _characters;
         private Dictionary<SkillId, SkillStaticData> _skills;
+        private Dictionary<EnemyId, EnemyStaticData> _enemies;
+        private Dictionary<ItemId, ItemStaticData> _items;
 
         public PlayerStaticData Player { get; private set; }
 
@@ -26,6 +30,8 @@ namespace Roguelike.Infrastructure.Services.StaticData
             LoadCharacters();
             LoadSkills();
             LoadPlayer();
+            LoadEnemies();
+            LoadItems();
         }
 
         public WeaponStaticData GetWeaponData(WeaponId id) =>
@@ -48,6 +54,16 @@ namespace Roguelike.Infrastructure.Services.StaticData
                 ? staticData
                 : null;
 
+        public EnemyStaticData GetEnemyStaticData(EnemyId id) =>
+            _enemies.TryGetValue(id, out EnemyStaticData staticData)
+                ? staticData
+                : null;
+
+        public ItemStaticData GetItemStaticData(ItemId id) =>
+            _items.TryGetValue(id, out ItemStaticData staticData)
+                ? staticData
+                : null;
+
         private void LoadWeapons() =>
             _weapons = Resources.LoadAll<WeaponStaticData>("StaticData/Weapons")
                 .ToDictionary(weapon => weapon.Id);
@@ -66,5 +82,13 @@ namespace Roguelike.Infrastructure.Services.StaticData
 
         private void LoadPlayer() =>
             Player = Resources.Load<PlayerStaticData>("StaticData/Player/PlayerStaticData");
+
+        private void LoadEnemies() =>
+            _enemies = Resources.LoadAll<EnemyStaticData>("StaticData/Enemies")
+                .ToDictionary(enemy => enemy.Id);
+
+        private void LoadItems() =>
+            _items = Resources.LoadAll<ItemStaticData>("StaticData/Items")
+                .ToDictionary(item => item.Id);
     }
 }

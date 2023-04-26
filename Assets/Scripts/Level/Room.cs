@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -44,7 +43,6 @@ namespace Roguelike.Level
                 exitPoint.Hide();
             }
         }
-
 
         public float GetShiftDistance()
         {

@@ -1,16 +1,19 @@
 using System;
 using Roguelike.Logic;
+using Roguelike.StaticData.Enemies;
 using UnityEngine;
 
 namespace Roguelike.Enemies
 {
     public class EnemyHealth : MonoBehaviour, IHealth
     {
-        [SerializeField] private int _maxHealth;
+        private int _maxHealth;
         
         private int _currentHealth;
 
         public event Action HealthChanged;
+
+        public event Action<EnemyHealth> Died;
 
         public int CurrentHealth
         {
@@ -34,6 +37,12 @@ namespace Roguelike.Enemies
         private void Start() => 
             _currentHealth = _maxHealth;
 
+        public void Init(EnemyStaticData enemyData)
+        {
+            _maxHealth = enemyData.Health;
+            _currentHealth = _maxHealth;
+        }
+
         public void TakeDamage(int damage)
         {
             if (damage < 0)
@@ -44,7 +53,10 @@ namespace Roguelike.Enemies
             Debug.Log($"{gameObject.name} take damage. Current health = {_currentHealth}");
 
             if (_currentHealth <= 0)
+            {
+                Died?.Invoke(this);
                 Destroy(gameObject);
+            }
         }
 
         public void Heal(int health)

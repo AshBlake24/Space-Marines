@@ -55,8 +55,6 @@ namespace Roguelike.Infrastructure.States
 
         private void OnLoaded()
         {
-            _gameFactory.GenerateLevel();
-
             InitGameWorld();
             InformProgressReaders();
 
@@ -65,6 +63,8 @@ namespace Roguelike.Infrastructure.States
 
         private void InitGameWorld()
         {
+            GameObject LevelGenerator = _gameFactory.GenerateLevel();
+
             GameObject player = InitPlayer();
             InitHud(player);
 
@@ -99,13 +99,6 @@ namespace Roguelike.Infrastructure.States
                 progressReader.ReadProgress(_progressService.PlayerProgress);
         }
 
-        private void CameraFollow(GameObject hero)
-        { 
-            Camera.main
-                .GetComponent<CameraFollower>()
-                .Follow(hero);
-        }
-        
         private void CameraFollow(GameObject hero)
         { 
             Camera.main
