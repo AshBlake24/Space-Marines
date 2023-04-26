@@ -50,8 +50,6 @@ namespace Roguelike.Enemies
 
             _currentHealth = Mathf.Max(_currentHealth - damage, 0);
             
-            Debug.Log($"{gameObject.name} take damage. Current health = {_currentHealth}");
-
             if (_currentHealth <= 0)
             {
                 Died?.Invoke(this);

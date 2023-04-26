@@ -14,10 +14,10 @@ namespace Roguelike.Infrastructure.Factory
             _staticDataService = staticDataService;
         }
 
-        public GameObject CreateItem(Vector3 spawnPiont, ItemId id)
+        public GameObject CreateItem(Vector3 spawnPoint, ItemId id)
         {
             ItemStaticData itemData = _staticDataService.GetItemStaticData(id);
-            GameObject enemyPrefab = Object.Instantiate(itemData.Prefab, spawnPiont, itemData.Prefab.transform.rotation);
+            GameObject enemyPrefab = Object.Instantiate(itemData.Prefab, spawnPoint, itemData.Prefab.transform.rotation);
 
             return enemyPrefab;
         }

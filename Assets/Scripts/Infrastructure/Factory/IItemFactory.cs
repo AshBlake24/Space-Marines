@@ -6,6 +6,6 @@ namespace Roguelike.Infrastructure.Factory
 {
     public interface IItemFactory : IService
     {
-        public GameObject CreateItem(Vector3 spawnPiont, ItemId id);
+        public GameObject CreateItem(Vector3 spawnPoint, ItemId id);
     }
 }
