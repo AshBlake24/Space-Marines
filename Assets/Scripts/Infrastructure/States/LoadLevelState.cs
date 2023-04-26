@@ -92,6 +92,7 @@ namespace Roguelike.Infrastructure.States
             
             hud.GetComponentInChildren<AmmoCounter>()
                 .Construct(player.GetComponent<PlayerShooter>());
+            
             hud.GetComponentInChildren<ActorUI>()
                 .Construct(player.GetComponent<PlayerHealth>()); 
         }
