@@ -33,14 +33,14 @@ namespace Roguelike.Enemies.EnemyStates
 
         public virtual void Enter(Enemy curentEnemy)
         {
-            enemy = curentEnemy;
             enabled = true;
+            enemy = curentEnemy;
         }
 
         public virtual void Exit(EnemyState nextState) 
         {
-            StateFinished?.Invoke(nextState);
             enabled = false;
+            StateFinished?.Invoke(nextState);
         }
     }
 }
