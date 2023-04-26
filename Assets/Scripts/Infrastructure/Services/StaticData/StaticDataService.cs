@@ -20,9 +20,9 @@ namespace Roguelike.Infrastructure.Services.StaticData
         private Dictionary<ProjectileId, ProjectileStaticData> _projectiles;
         private Dictionary<CharacterId, CharacterStaticData> _characters;
         private Dictionary<SkillId, SkillStaticData> _skills;
-        private Dictionary<WindowId, WindowConfig> _windows;
         private Dictionary<EnemyId, EnemyStaticData> _enemies;
         private Dictionary<ItemId, ItemStaticData> _items;
+        private Dictionary<WindowId, WindowConfig> _windows;
 
         public PlayerStaticData Player { get; private set; }
 
@@ -57,12 +57,7 @@ namespace Roguelike.Infrastructure.Services.StaticData
             _skills.TryGetValue(id, out SkillStaticData staticData)
                 ? staticData
                 : null;
-        
-        public WindowConfig GetWindowConfig(WindowId id) =>
-            _windows.TryGetValue(id, out WindowConfig windowConfig)
-                ? windowConfig
-                : null;
-        
+
         public EnemyStaticData GetEnemyStaticData(EnemyId id) =>
             _enemies.TryGetValue(id, out EnemyStaticData staticData)
                 ? staticData
@@ -71,6 +66,11 @@ namespace Roguelike.Infrastructure.Services.StaticData
         public ItemStaticData GetItemStaticData(ItemId id) =>
             _items.TryGetValue(id, out ItemStaticData staticData)
                 ? staticData
+                : null;
+
+        public WindowConfig GetWindowConfig(WindowId id) =>
+            _windows.TryGetValue(id, out WindowConfig windowConfig)
+                ? windowConfig
                 : null;
 
         private void LoadWeapons() =>
@@ -88,14 +88,6 @@ namespace Roguelike.Infrastructure.Services.StaticData
         private void LoadSkills() =>
             _skills = Resources.LoadAll<SkillStaticData>(AssetPath.SkillsStaticDataPath)
                 .ToDictionary(skill => skill.Id);
-        
-        private void LoadWindows() =>
-            _windows = Resources.Load<WindowStaticData>(AssetPath.WindowsStaticDataPath)
-                .Configs
-                .ToDictionary(config => config.WindowId, x => x);
-
-        private void LoadPlayer() =>
-            Player = Resources.Load<PlayerStaticData>(AssetPath.PlayerStaticDataPath);
 
         private void LoadEnemies() =>
             _enemies = Resources.LoadAll<EnemyStaticData>("StaticData/Enemies")
@@ -104,5 +96,13 @@ namespace Roguelike.Infrastructure.Services.StaticData
         private void LoadItems() =>
             _items = Resources.LoadAll<ItemStaticData>("StaticData/Items")
                 .ToDictionary(item => item.Id);
+
+        private void LoadWindows() =>
+            _windows = Resources.Load<WindowStaticData>(AssetPath.WindowsStaticDataPath)
+                .Configs
+                .ToDictionary(config => config.WindowId, x => x);
+
+        private void LoadPlayer() =>
+            Player = Resources.Load<PlayerStaticData>(AssetPath.PlayerStaticDataPath);
     }
 }
