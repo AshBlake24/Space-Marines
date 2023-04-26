@@ -1,11 +1,10 @@
-using System;
 using Roguelike.Data;
 using Roguelike.Player;
 using Roguelike.Weapons;
 using TMPro;
 using UnityEngine;
 
-namespace Roguelike.UI
+namespace Roguelike.UI.Elements
 {
     public class AmmoCounter : MonoBehaviour
     {

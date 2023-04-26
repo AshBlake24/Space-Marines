@@ -2,7 +2,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Roguelike.UI
+namespace Roguelike.UI.Elements
 {
     public class HealthBar : MonoBehaviour
     {

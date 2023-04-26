@@ -1,8 +1,7 @@
-using System;
 using Roguelike.Player;
 using UnityEngine;
 
-namespace Roguelike.UI
+namespace Roguelike.UI.Elements
 {
     public class ActorUI : MonoBehaviour
     {
