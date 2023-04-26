@@ -1,5 +1,4 @@
 using Roguelike.Infrastructure.Services.Windows;
-using Roguelike.Player.Skills;
 using Roguelike.StaticData.Characters;
 using Roguelike.StaticData.Player;
 using Roguelike.StaticData.Projectiles;

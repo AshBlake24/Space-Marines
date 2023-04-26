@@ -7,7 +7,7 @@ namespace Roguelike.Infrastructure.AssetManagement
         public const string CharactersStaticDataPath = "StaticData/Characters";
         public const string SkillsStaticDataPath = "StaticData/Skills";
         public const string PlayerStaticDataPath = "StaticData/Player/PlayerStaticData";
-        public const string WindowsStaticDataPath = "StaticData/Windows";
+        public const string WindowsStaticDataPath = "StaticData/UI/WindowStaticData";
         public const string DesktopHudPath = "HUD/DesktopHUDCanvas";
         public const string MobileHudPath = "HUD/MobileHUDCanvas";
         public const string PlayerPath = "Player/Player";

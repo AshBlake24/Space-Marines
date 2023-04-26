@@ -1,6 +1,7 @@
 using Roguelike.Infrastructure.AssetManagement;
 using Roguelike.Infrastructure.Services.StaticData;
 using Roguelike.Infrastructure.Services.Windows;
+using Roguelike.StaticData.Windows;
 using UnityEngine;
 
 namespace Roguelike.Infrastructure.Factory
@@ -20,7 +21,8 @@ namespace Roguelike.Infrastructure.Factory
 
         public void CreatePauseMenu()
         {
-            var config = _staticData.GetWindowConfig(WindowId.PauseMenu);
+            WindowConfig config = _staticData.GetWindowConfig(WindowId.PauseMenu);
+            Object.Instantiate(config.WindowPrefab, _uiRoot);
         }
 
         public void CreateUIRoot() => 
