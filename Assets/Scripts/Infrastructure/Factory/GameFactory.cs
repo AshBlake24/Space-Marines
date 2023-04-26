@@ -12,6 +12,8 @@ using Roguelike.UI.Elements;
 using Roguelike.Weapons;
 using UnityEngine;
 using UnityEngine.Animations.Rigging;
+using Roguelike.Infrastructure.Factory;
+using Roguelike.Level;
 
 namespace Roguelike.Infrastructure.Factory
 {
@@ -24,13 +26,15 @@ namespace Roguelike.Infrastructure.Factory
         private readonly IPersistentDataService _persistentData;
         private readonly IStaticDataService _staticDataService;
         private readonly IWindowService _windowService;
+        private readonly IEnemyFactory _enemyFactory;
 
         public GameFactory(IAssetProvider assetProvider,
             IPersistentDataService persistentData,
             IStaticDataService staticDataService,
             ISaveLoadService saveLoadService,
-            IWeaponFactory weaponFactory,
+            IWeaponFactory weaponFactory,            
             ISkillFactory skillFactory,
+            IEnemyFactory enemyFactory,
             IWindowService windowService)
         {
             _assetProvider = assetProvider;
@@ -40,6 +44,7 @@ namespace Roguelike.Infrastructure.Factory
             _weaponFactory = weaponFactory;
             _skillFactory = skillFactory;
             _windowService = windowService;
+            _enemyFactory = enemyFactory;
         }
 
         public GameObject CreatePlayer(Transform playerInitialPoint)
@@ -122,6 +127,19 @@ namespace Roguelike.Infrastructure.Factory
             _saveLoadService.RegisterProgressWatchers(gameObject);
 
             return gameObject;
+        }
+
+        public GameObject GenerateLevel()
+        {
+            GameObject LevelGenerator = InstantiateRegistered(AssetPath.LevelGeneratorPath);
+            LevelGenerator.GetComponent<LevelGenerator>().BuildLevel(_enemyFactory);
+
+            return LevelGenerator;
+        }
+
+        public void Cleanup()
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

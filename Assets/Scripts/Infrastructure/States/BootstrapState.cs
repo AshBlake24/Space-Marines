@@ -69,6 +69,12 @@ namespace Roguelike.Infrastructure.States
                 _services.Single<IStaticDataService>()));
             _services.RegisterSingle<IWindowService>(new WindowService(_services.Single<IUIFactory>()));
             
+            _services.RegisterSingle<IEnemyFactory>(new EnemyFactory(
+                _services.Single<IStaticDataService>()));
+
+            _services.RegisterSingle<IItemFactory>(new ItemFactory(
+                _services.Single<IStaticDataService>()));
+            
             _services.RegisterSingle<IGameFactory>(new GameFactory(
                 _services.Single<IAssetProvider>(),
                 _services.Single<IPersistentDataService>(),
@@ -76,6 +82,7 @@ namespace Roguelike.Infrastructure.States
                 _services.Single<ISaveLoadService>(),
                 _services.Single<IWeaponFactory>(),
                 _services.Single<ISkillFactory>(),
+                _services.Single<IEnemyFactory>(),
                 _services.Single<IWindowService>()));
         }
 

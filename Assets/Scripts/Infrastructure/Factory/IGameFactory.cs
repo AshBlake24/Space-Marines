@@ -1,7 +1,5 @@
-using System.Collections.Generic;
 using Roguelike.Infrastructure.Services;
 using Roguelike.Infrastructure.Services.Environment;
-using Roguelike.Infrastructure.Services.PersistentData;
 using UnityEngine;
 
 namespace Roguelike.Infrastructure.Factory
@@ -10,5 +8,7 @@ namespace Roguelike.Infrastructure.Factory
     {
         GameObject CreatePlayer(Transform playerInitialPoint);
         GameObject CreateHud(EnvironmentType deviceType);
+        GameObject GenerateLevel();
+        void Cleanup();
     }
 }

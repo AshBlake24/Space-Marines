@@ -13,6 +13,7 @@ namespace Roguelike.StaticData.Projectiles
         WinchesterBullet,
         RocketLauncherAmmo,
         SniperRifleBullet,
-        MachineGunBullet
+        MachineGunBullet,
+        EnemyBullet
     }
 }

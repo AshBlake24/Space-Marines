@@ -65,9 +65,11 @@ namespace Roguelike.Infrastructure.States
 
         private void InitUIRoot() => 
             _uiFactory.CreateUIRoot();
-
+        
         private void InitGameWorld()
         {
+            GameObject LevelGenerator = _gameFactory.GenerateLevel();
+
             GameObject player = InitPlayer();
             InitHud(player);
 
