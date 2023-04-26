@@ -1,9 +1,11 @@
+using Roguelike.Infrastructure.Services.Windows;
 using Roguelike.Player.Skills;
 using Roguelike.StaticData.Characters;
 using Roguelike.StaticData.Player;
 using Roguelike.StaticData.Projectiles;
 using Roguelike.StaticData.Skills;
 using Roguelike.StaticData.Weapons;
+using Roguelike.StaticData.Windows;
 
 namespace Roguelike.Infrastructure.Services.StaticData
 {
@@ -15,5 +17,6 @@ namespace Roguelike.Infrastructure.Services.StaticData
         ProjectileStaticData GetProjectileData(ProjectileId id);
         CharacterStaticData GetCharacterData(CharacterId id);
         SkillStaticData GetSkillStaticData(SkillId id);
+        WindowConfig GetWindowConfig(WindowId pauseMenu);
     }
 }

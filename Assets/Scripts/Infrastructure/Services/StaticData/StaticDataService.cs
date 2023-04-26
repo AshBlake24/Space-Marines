@@ -1,11 +1,13 @@
 using System.Collections.Generic;
 using System.Linq;
-using Roguelike.Player.Skills;
+using Roguelike.Infrastructure.AssetManagement;
+using Roguelike.Infrastructure.Services.Windows;
 using Roguelike.StaticData.Characters;
 using Roguelike.StaticData.Player;
 using Roguelike.StaticData.Projectiles;
 using Roguelike.StaticData.Skills;
 using Roguelike.StaticData.Weapons;
+using Roguelike.StaticData.Windows;
 using UnityEngine;
 
 namespace Roguelike.Infrastructure.Services.StaticData
@@ -16,6 +18,7 @@ namespace Roguelike.Infrastructure.Services.StaticData
         private Dictionary<ProjectileId, ProjectileStaticData> _projectiles;
         private Dictionary<CharacterId, CharacterStaticData> _characters;
         private Dictionary<SkillId, SkillStaticData> _skills;
+        private Dictionary<WindowId, WindowConfig> _windows;
 
         public PlayerStaticData Player { get; private set; }
 
@@ -25,6 +28,7 @@ namespace Roguelike.Infrastructure.Services.StaticData
             LoadProjectiles();
             LoadCharacters();
             LoadSkills();
+            LoadWindows();
             LoadPlayer();
         }
 
@@ -48,23 +52,33 @@ namespace Roguelike.Infrastructure.Services.StaticData
                 ? staticData
                 : null;
 
+        public WindowConfig GetWindowConfig(WindowId id) =>
+            _windows.TryGetValue(id, out WindowConfig windowConfig)
+                ? windowConfig
+                : null;
+
         private void LoadWeapons() =>
-            _weapons = Resources.LoadAll<WeaponStaticData>("StaticData/Weapons")
+            _weapons = Resources.LoadAll<WeaponStaticData>(AssetPath.WeaponsStaticDataPath)
                 .ToDictionary(weapon => weapon.Id);
 
         private void LoadProjectiles() =>
-            _projectiles = Resources.LoadAll<ProjectileStaticData>("StaticData/Projectiles")
+            _projectiles = Resources.LoadAll<ProjectileStaticData>(AssetPath.ProjectilesStaticDataPath)
                 .ToDictionary(projectile => projectile.Id);
 
         private void LoadCharacters() =>
-            _characters = Resources.LoadAll<CharacterStaticData>("StaticData/Characters")
+            _characters = Resources.LoadAll<CharacterStaticData>(AssetPath.CharactersStaticDataPath)
                 .ToDictionary(character => character.Id);
 
         private void LoadSkills() =>
-            _skills = Resources.LoadAll<SkillStaticData>("StaticData/Skills")
+            _skills = Resources.LoadAll<SkillStaticData>(AssetPath.SkillsStaticDataPath)
                 .ToDictionary(skill => skill.Id);
+        
+        private void LoadWindows() =>
+            _windows = Resources.Load<WindowStaticData>(AssetPath.WindowsStaticDataPath)
+                .Configs
+                .ToDictionary(config => config.WindowId, x => x);
 
         private void LoadPlayer() =>
-            Player = Resources.Load<PlayerStaticData>("StaticData/Player/PlayerStaticData");
+            Player = Resources.Load<PlayerStaticData>(AssetPath.PlayerStaticDataPath);
     }
 }
