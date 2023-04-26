@@ -1,12 +1,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using Roguelike.Infrastructure.AssetManagement;
+using Roguelike.Infrastructure.Services.Environment;
 using Roguelike.Infrastructure.Services.PersistentData;
 using Roguelike.Infrastructure.Services.SaveLoad;
 using Roguelike.Infrastructure.Services.StaticData;
+using Roguelike.Infrastructure.Services.Windows;
 using Roguelike.Player;
-using Roguelike.Player.Skills;
 using Roguelike.StaticData.Characters;
+using Roguelike.UI.Elements;
 using Roguelike.Weapons;
 using UnityEngine;
 using UnityEngine.Animations.Rigging;
@@ -18,10 +20,10 @@ namespace Roguelike.Infrastructure.Factory
         private readonly IAssetProvider _assetProvider;
         private readonly IWeaponFactory _weaponFactory;
         private readonly ISkillFactory _skillFactory;
-        private readonly ICoroutineRunner _coroutineRunner;
         private readonly ISaveLoadService _saveLoadService;
         private readonly IPersistentDataService _persistentData;
         private readonly IStaticDataService _staticDataService;
+        private readonly IWindowService _windowService;
 
         public GameFactory(IAssetProvider assetProvider,
             IPersistentDataService persistentData,
@@ -29,15 +31,15 @@ namespace Roguelike.Infrastructure.Factory
             ISaveLoadService saveLoadService,
             IWeaponFactory weaponFactory,
             ISkillFactory skillFactory,
-            ICoroutineRunner coroutineRunner)
+            IWindowService windowService)
         {
             _assetProvider = assetProvider;
+            _persistentData = persistentData;
+            _staticDataService = staticDataService;
+            _saveLoadService = saveLoadService;
             _weaponFactory = weaponFactory;
             _skillFactory = skillFactory;
-            _coroutineRunner = coroutineRunner;
-            _persistentData = persistentData;
-            _saveLoadService = saveLoadService;
-            _staticDataService = staticDataService;
+            _windowService = windowService;
         }
 
         public GameObject CreatePlayer(Transform playerInitialPoint)
@@ -55,11 +57,17 @@ namespace Roguelike.Infrastructure.Factory
             return player;
         }
 
-        public GameObject CreateDesktopHud() =>
-            InstantiateRegistered(AssetPath.DesktopHudPath);
+        public GameObject CreateHud(EnvironmentType deviceType)
+        {
+            GameObject hud = InstantiateRegistered(deviceType == EnvironmentType.Desktop
+                ? AssetPath.DesktopHudPath
+                : AssetPath.MobileHudPath);
 
-        public GameObject CreateMobileHud() =>
-            InstantiateRegistered(AssetPath.MobileHudPath);
+            foreach (OpenWindowButton openWindowButton in hud.GetComponentsInChildren<OpenWindowButton>())
+                openWindowButton.Construct(_windowService);
+
+            return hud;
+        }
 
         private GameObject CreateCharacter(CharacterId id, GameObject player)
         {

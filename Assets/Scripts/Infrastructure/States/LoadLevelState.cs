@@ -4,9 +4,7 @@ using Roguelike.Infrastructure.Services.PersistentData;
 using Roguelike.Infrastructure.Services.SaveLoad;
 using Roguelike.Logic;
 using Roguelike.Player;
-using Roguelike.UI;
 using Roguelike.UI.Elements;
-using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Roguelike.Infrastructure.States
@@ -22,6 +20,7 @@ namespace Roguelike.Infrastructure.States
         private readonly ISaveLoadService _saveLoadService;
         private readonly IPersistentDataService _progressService;
         private readonly IEnvironmentService _environmentService;
+        private readonly IUIFactory _uiFactory;
 
         public LoadLevelState(
             GameStateMachine stateMachine, 
@@ -30,7 +29,8 @@ namespace Roguelike.Infrastructure.States
             IGameFactory gameFactory, 
             ISaveLoadService saveLoadService, 
             IPersistentDataService progressService, 
-            IEnvironmentService environmentService)
+            IEnvironmentService environmentService,
+            IUIFactory uiFactory)
         {
             _stateMachine = stateMachine;
             _sceneLoader = sceneLoader;
@@ -39,6 +39,7 @@ namespace Roguelike.Infrastructure.States
             _saveLoadService = saveLoadService;
             _progressService = progressService;
             _environmentService = environmentService;
+            _uiFactory = uiFactory;
         }
 
         public void Enter(string sceneName)
@@ -55,11 +56,15 @@ namespace Roguelike.Infrastructure.States
 
         private void OnLoaded()
         {
+            InitUIRoot();
             InitGameWorld();
             InformProgressReaders();
 
             _stateMachine.Enter<GameLoopState>();
         }
+
+        private void InitUIRoot() => 
+            _uiFactory.CreateUIRoot();
 
         private void InitGameWorld()
         {
@@ -80,10 +85,8 @@ namespace Roguelike.Infrastructure.States
         private void InitHud(GameObject player)
         {
             EnvironmentType deviceType = _environmentService.GetDeviceType();
-            
-            GameObject hud = deviceType == EnvironmentType.Desktop 
-                ? _gameFactory.CreateDesktopHud() 
-                : _gameFactory.CreateMobileHud();
+
+            GameObject hud = _gameFactory.CreateHud(deviceType);
             
             hud.GetComponentInChildren<AmmoCounter>()
                 .Construct(player.GetComponent<PlayerShooter>());
