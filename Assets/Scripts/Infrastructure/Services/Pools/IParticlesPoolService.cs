@@ -7,5 +7,6 @@ namespace Roguelike.Infrastructure.Services.Pools
         ParticleSystem GetInstance(string key);
         void ReleaseInstance(string key, ParticleSystem particles);
         void CreateNewPool(string key, ParticleSystem particlesPrefab, int defaultSize = 10, int maxSize = 100);
+        void Cleanup();
     }
 }

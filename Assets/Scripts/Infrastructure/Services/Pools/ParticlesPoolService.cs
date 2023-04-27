@@ -31,5 +31,8 @@ namespace Roguelike.Infrastructure.Services.Pools
                 _pools.Add(key, pool);
             }
         }
+
+        public void Cleanup() => 
+            _pools?.Clear();
     }
 }

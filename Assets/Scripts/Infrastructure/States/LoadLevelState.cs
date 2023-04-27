@@ -6,6 +6,7 @@ using Roguelike.Logic;
 using Roguelike.Player;
 using Roguelike.StaticData.Levels;
 using Roguelike.UI.Elements;
+using Roguelike.Utilities;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -47,17 +48,19 @@ namespace Roguelike.Infrastructure.States
         public void Enter(string sceneName)
         {
             _loadingScreen.Show();
-            _saveLoadService.Cleanup();
+            
+            Cleanup();
+            
             _sceneLoader.Load(sceneName, OnLoaded);
         }
 
-        public void Exit()
-        {
+        public void Exit() => 
             _loadingScreen.Hide();
-        }
 
         private void OnLoaded()
         {
+            Helpers.InitializePools();
+            
             InitUIRoot();
             InitGameWorld();
             InformProgressReaders();
@@ -113,6 +116,12 @@ namespace Roguelike.Infrastructure.States
             Camera.main
                 .GetComponent<CameraFollower>()
                 .Follow(hero);
+        }
+
+        private void Cleanup()
+        {
+            _saveLoadService.Cleanup();
+            Helpers.CleanupPools();
         }
     }
 }

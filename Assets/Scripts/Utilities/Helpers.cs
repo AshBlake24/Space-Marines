@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using Roguelike.Infrastructure.Services;
+using Roguelike.Infrastructure.Services.Pools;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -41,8 +43,14 @@ namespace Roguelike.Utilities
 
         #region Pool
 
-        private static readonly Transform s_generalPoolsContainer = new GameObject($"Pools").transform;
-        private static readonly Dictionary<string, Transform> s_pools = new();
+        private static Transform s_generalPoolsContainer;
+        private static Dictionary<string, Transform> s_pools;
+
+        public static void InitializePools()
+        {
+            s_generalPoolsContainer = new GameObject($"Pools").transform;
+            s_pools = new Dictionary<string, Transform>();
+        }
 
         public static Transform GetGeneralPoolsContainer() => 
             s_generalPoolsContainer;
@@ -55,6 +63,14 @@ namespace Roguelike.Utilities
             return s_pools[name];
         }
 
+        public static void CleanupPools()
+        {
+            AllServices.Container.Single<IParticlesPoolService>().Cleanup();
+            
+            s_generalPoolsContainer = null;
+            s_pools?.Clear();
+        }
+
         private static void SetPoolsContainer(string name)
         {
             if (s_pools.ContainsKey(name) == false)
@@ -64,7 +80,7 @@ namespace Roguelike.Utilities
             }
         }
 
-        private static void SetGeneralsPoolContainer(Transform pool) =>
+        private static void SetGeneralsPoolContainer(Transform pool) => 
             pool.SetParent(s_generalPoolsContainer);
 
         #endregion
