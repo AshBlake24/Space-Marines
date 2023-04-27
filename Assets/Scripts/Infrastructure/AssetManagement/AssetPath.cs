@@ -16,5 +16,6 @@ namespace Roguelike.Infrastructure.AssetManagement
         public const string MobileHudPath = "HUD/MobileHUDCanvas";
         public const string PlayerPath = "Player/Player";
         public const string UIRootPath = "UI/UIRoot";
+        public const string GameConfigPath = "StaticData/GameConfig";
     }
 }

@@ -4,6 +4,7 @@ using Roguelike.Infrastructure.Services.PersistentData;
 using Roguelike.Infrastructure.Services.SaveLoad;
 using Roguelike.Logic;
 using Roguelike.Player;
+using Roguelike.StaticData.Levels;
 using Roguelike.UI.Elements;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -13,7 +14,7 @@ namespace Roguelike.Infrastructure.States
     public class LoadLevelState : IPayloadedState<string>
     {
         private const string InitialPointTag = "InitialPoint";
-        
+
         private readonly GameStateMachine _stateMachine;
         private readonly SceneLoader _sceneLoader;
         private readonly LoadingScreen _loadingScreen;
@@ -24,12 +25,12 @@ namespace Roguelike.Infrastructure.States
         private readonly IUIFactory _uiFactory;
 
         public LoadLevelState(
-            GameStateMachine stateMachine, 
-            SceneLoader sceneLoader, 
-            LoadingScreen loadingScreen, 
-            IGameFactory gameFactory, 
-            ISaveLoadService saveLoadService, 
-            IPersistentDataService progressService, 
+            GameStateMachine stateMachine,
+            SceneLoader sceneLoader,
+            LoadingScreen loadingScreen,
+            IGameFactory gameFactory,
+            ISaveLoadService saveLoadService,
+            IPersistentDataService progressService,
             IEnvironmentService environmentService,
             IUIFactory uiFactory)
         {
@@ -64,17 +65,20 @@ namespace Roguelike.Infrastructure.States
             _stateMachine.Enter<GameLoopState>();
         }
 
-        private void InitUIRoot() => 
+        private void InitUIRoot() =>
             _uiFactory.CreateUIRoot();
-        
+
         private void InitGameWorld()
         {
-            GameObject levelGenerator = _gameFactory.GenerateLevel();
-
-            GameObject player = InitPlayer();
-            InitHud(player);
-
-            CameraFollow(player);
+            if (SceneManager.GetActiveScene().name == LevelId.Dungeon.ToString())
+            {
+                _gameFactory.GenerateLevel();
+                
+                GameObject player = InitPlayer();
+                
+                InitHud(player);
+                CameraFollow(player);
+            }
         }
 
         private GameObject InitPlayer()
@@ -84,18 +88,18 @@ namespace Roguelike.Infrastructure.States
 
             return player;
         }
-        
+
         private void InitHud(GameObject player)
         {
             EnvironmentType deviceType = _environmentService.GetDeviceType();
 
             GameObject hud = _gameFactory.CreateHud(deviceType);
-            
+
             hud.GetComponentInChildren<AmmoCounter>()
                 .Construct(player.GetComponent<PlayerShooter>());
-            
+
             hud.GetComponentInChildren<ActorUI>()
-                .Construct(player.GetComponent<PlayerHealth>()); 
+                .Construct(player.GetComponent<PlayerHealth>());
         }
 
         private void InformProgressReaders()
@@ -105,7 +109,7 @@ namespace Roguelike.Infrastructure.States
         }
 
         private void CameraFollow(GameObject hero)
-        { 
+        {
             Camera.main
                 .GetComponent<CameraFollower>()
                 .Follow(hero);

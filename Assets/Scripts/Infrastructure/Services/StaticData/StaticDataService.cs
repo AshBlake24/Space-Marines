@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Roguelike.Infrastructure.AssetManagement;
 using Roguelike.Infrastructure.Services.Windows;
+using Roguelike.StaticData;
 using Roguelike.StaticData.Characters;
 using Roguelike.StaticData.Enemies;
 using Roguelike.StaticData.Items;
@@ -27,6 +28,7 @@ namespace Roguelike.Infrastructure.Services.StaticData
         private Dictionary<StageId, LevelStaticData> _levels;
 
         public PlayerStaticData Player { get; private set; }
+        public GameConfig GameConfig { get; private set; }
 
         public void Load()
         {
@@ -35,10 +37,11 @@ namespace Roguelike.Infrastructure.Services.StaticData
             LoadCharacters();
             LoadSkills();
             LoadWindows();
-            LoadPlayer();
             LoadEnemies();
             LoadItems();
             LoadLevels();
+            LoadPlayer();
+            LoadGameConfig();
         }
 
         public WeaponStaticData GetWeaponData(WeaponId id) =>
@@ -75,7 +78,7 @@ namespace Roguelike.Infrastructure.Services.StaticData
             _windows.TryGetValue(id, out WindowConfig windowConfig)
                 ? windowConfig
                 : null;
-        
+
         public LevelStaticData GetLevelStaticData(StageId id) =>
             _levels.TryGetValue(id, out LevelStaticData staticData)
                 ? staticData
@@ -116,5 +119,8 @@ namespace Roguelike.Infrastructure.Services.StaticData
 
         private void LoadPlayer() =>
             Player = Resources.Load<PlayerStaticData>(AssetPath.PlayerStaticDataPath);
+
+        private void LoadGameConfig() => 
+            GameConfig = Resources.Load<GameConfig>(AssetPath.GameConfigPath);
     }
 }

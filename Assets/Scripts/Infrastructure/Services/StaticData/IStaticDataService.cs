@@ -1,4 +1,5 @@
 using Roguelike.Infrastructure.Services.Windows;
+using Roguelike.StaticData;
 using Roguelike.StaticData.Characters;
 using Roguelike.StaticData.Player;
 using Roguelike.StaticData.Projectiles;
@@ -14,6 +15,7 @@ namespace Roguelike.Infrastructure.Services.StaticData
     public interface IStaticDataService : IService
     {
         PlayerStaticData Player { get; }
+        GameConfig GameConfig { get; }
         void Load();
         WeaponStaticData GetWeaponData(WeaponId id);
         ProjectileStaticData GetProjectileData(ProjectileId id);

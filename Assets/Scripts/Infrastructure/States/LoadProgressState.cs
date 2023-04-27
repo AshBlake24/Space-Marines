@@ -12,9 +12,6 @@ namespace Roguelike.Infrastructure.States
 {
     public class LoadProgressState : IState
     {
-        private const LevelId StartLevel = LevelId.Hub;
-        private const StageId StartStage = StageId.Level11;
-
         private readonly GameStateMachine _stateMachine;
         private readonly IPersistentDataService _progressService;
         private readonly ISaveLoadService _saveLoadService;
@@ -51,8 +48,8 @@ namespace Roguelike.Infrastructure.States
         private PlayerProgress CreateNewProgress()
         {
             PlayerProgress playerProgress = new(
-                StartLevel,
-                StartStage,
+                _staticDataService.GameConfig.StartLevel,
+                _staticDataService.GameConfig.StartStage,
                 CreateStartWeapons(),
                 _staticDataService.Player.StartCharacter.Id);
 
