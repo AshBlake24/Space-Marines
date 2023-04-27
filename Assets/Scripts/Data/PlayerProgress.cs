@@ -14,7 +14,7 @@ namespace Roguelike.Data
         public PlayerWeapons PlayerWeapons;
         public CharacterId Character;
 
-        public PlayerProgress(string startLevel, LevelId startStage, IEnumerable<IWeapon> startWeapons, CharacterId startCharacter)
+        public PlayerProgress(LevelId startLevel, StageId startStage, IEnumerable<IWeapon> startWeapons, CharacterId startCharacter)
         {
             State = new State();
             WorldData = new WorldData(startLevel, startStage);

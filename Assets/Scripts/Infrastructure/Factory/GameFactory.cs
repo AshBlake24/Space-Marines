@@ -134,7 +134,7 @@ namespace Roguelike.Infrastructure.Factory
 
         public GameObject GenerateLevel()
         {
-            LevelId id = _persistentData.PlayerProgress.WorldData.CurrentStage;
+            StageId id = _persistentData.PlayerProgress.WorldData.CurrentStage;
 
             LevelStaticData levelData = _staticDataService.GetLevelStaticData(id);
 

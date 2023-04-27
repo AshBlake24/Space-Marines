@@ -22,6 +22,6 @@ namespace Roguelike.Infrastructure.Services.StaticData
         WindowConfig GetWindowConfig(WindowId id);
         EnemyStaticData GetEnemyStaticData(EnemyId id);
         ItemStaticData GetItemStaticData(ItemId id);
-        LevelStaticData GetLevelStaticData(LevelId id);
+        LevelStaticData GetLevelStaticData(StageId id);
     }
 }

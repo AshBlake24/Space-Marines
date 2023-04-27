@@ -24,7 +24,7 @@ namespace Roguelike.Infrastructure.Services.StaticData
         private Dictionary<WindowId, WindowConfig> _windows;
         private Dictionary<EnemyId, EnemyStaticData> _enemies;
         private Dictionary<ItemId, ItemStaticData> _items;
-        private Dictionary<LevelId, LevelStaticData> _levels;
+        private Dictionary<StageId, LevelStaticData> _levels;
 
         public PlayerStaticData Player { get; private set; }
 
@@ -76,7 +76,7 @@ namespace Roguelike.Infrastructure.Services.StaticData
                 ? windowConfig
                 : null;
         
-        public LevelStaticData GetLevelStaticData(LevelId id) =>
+        public LevelStaticData GetLevelStaticData(StageId id) =>
             _levels.TryGetValue(id, out LevelStaticData staticData)
                 ? staticData
                 : null;

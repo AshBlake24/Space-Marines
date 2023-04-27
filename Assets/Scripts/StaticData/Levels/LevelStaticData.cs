@@ -9,7 +9,7 @@ namespace Roguelike.StaticData.Levels
     public class LevelStaticData : ScriptableObject
     {
         [Header("Stats")]
-        public LevelId Id;
+        public StageId Id;
         public int AreaRoomCount;
         public int BonusRoomCount;
         public GameObject LevelGeneratorPrefab;
