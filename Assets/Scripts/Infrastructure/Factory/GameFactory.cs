@@ -134,7 +134,7 @@ namespace Roguelike.Infrastructure.Factory
 
         public GameObject GenerateLevel()
         {
-            string currentLevel = _persistentData.PlayerProgress.WorldData.CurrentLevel;
+            string currentLevel = _persistentData.PlayerProgress.WorldData.CurrentStage;
 
             LevelId id = (LevelId)Enum.Parse(typeof(LevelId), currentLevel);
 

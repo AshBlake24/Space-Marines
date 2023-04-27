@@ -6,6 +6,7 @@ using Roguelike.Logic;
 using Roguelike.Player;
 using Roguelike.UI.Elements;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Roguelike.Infrastructure.States
 {
