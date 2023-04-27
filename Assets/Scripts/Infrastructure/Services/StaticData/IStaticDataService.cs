@@ -18,8 +18,10 @@ namespace Roguelike.Infrastructure.Services.StaticData
         ProjectileStaticData GetProjectileData(ProjectileId id);
         CharacterStaticData GetCharacterData(CharacterId id);
         SkillStaticData GetSkillStaticData(SkillId id);
+        WindowConfig GetWindowConfig(WindowId pauseMenu);
         EnemyStaticData GetEnemyStaticData(EnemyId id);
         ItemStaticData GetItemStaticData(ItemId id);
+        LevelStaticData GetLevelStaticData(LevelId id);
         WindowConfig GetWindowConfig(WindowId pauseMenu);
     }
 }
