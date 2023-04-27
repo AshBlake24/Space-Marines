@@ -1,30 +1,43 @@
+using Roguelike.Data;
 using Roguelike.Enemies;
 using Roguelike.Infrastructure.Factory;
+using Roguelike.Infrastructure.Services;
+using Roguelike.Infrastructure.Services.PersistentData;
+using Roguelike.Infrastructure.Services.SaveLoad;
+using Roguelike.Infrastructure.States;
+using Roguelike.Player;
 using Roguelike.StaticData.Levels;
 using System.Collections.Generic;
 using UnityEditor.AI;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Roguelike.Level
 {
-    public class LevelGenerator : MonoBehaviour
+    public class LevelGenerator : MonoBehaviour, IProgressWriter
     {
         private const string ContainerName = "Environment";
 
         private int _roomsCount;
         private int _bonusRoomCount;
+        private EnterTriger _enterTriger;
         private LevelStaticData _data;
         private Transform _roomContainer;
         private IEnemyFactory _enemyFactory;
         private Room _currentRoom;
         private Room _currentCorridor;
         private ExitPoint _connectingPoint;
+        private GameStateMachine _stateMachine;
+        private ISaveLoadService _saveLoadService;
 
-        public void Init(LevelStaticData leveData)
+        public void Init(LevelStaticData leveData, GameStateMachine stateMashine)
         {
             _data = leveData;
             _roomsCount = leveData.AreaRoomCount;
             _bonusRoomCount = leveData.BonusRoomCount;
+            _stateMachine= stateMashine;
+
+            _saveLoadService = AllServices.Container.Single<ISaveLoadService>();
         }
 
         public void BuildLevel(IEnemyFactory enemyFactory)
@@ -33,8 +46,6 @@ namespace Roguelike.Level
             _roomContainer = new GameObject(ContainerName).transform;
 
             ConnectStartRoom();
-
-            _roomsCount--;
 
             while (_roomsCount > 0)
             {
@@ -52,7 +63,8 @@ namespace Roguelike.Level
                 _roomsCount--;
             }
 
-            _currentRoom.HideExit();
+            ConnectCorridor();
+            ConnectFinishRoom();
 
             NavMeshBuilder.BuildNavMesh();
         }
@@ -84,6 +96,24 @@ namespace Roguelike.Level
             _currentRoom = Instantiate(_data.StartRoom, _roomContainer);
         }
 
+        private void ConnectFinishRoom()
+        {
+            _currentRoom = CreateRoom(_currentCorridor, _data.FinishRoom);
+
+            _enterTriger = _currentRoom.gameObject.GetComponentInChildren<EnterTriger>();
+
+            _enterTriger.PlayerHasEntered += GenerateNextLevel;
+        }
+
+        private void GenerateNextLevel(PlayerHealth player)
+        {
+            _enterTriger.PlayerHasEntered -= GenerateNextLevel;
+
+            _saveLoadService.SaveProgress();
+
+            _stateMachine.Enter<LoadProgressState>();
+        }
+
         private Room CreateRoom(Room exitRoom, List<Room> roomType, ExitPoint currentExitPoint = null)
         {
             Room nextRoom = roomType[Random.Range(0, roomType.Count)];
@@ -98,6 +128,15 @@ namespace Roguelike.Level
             nextRoom.transform.SetParent(_roomContainer, true);
 
             return nextRoom;
+        }
+
+        public void WriteProgress(PlayerProgress progress)
+        {
+            progress.WorldData.CurrentLevel = _data.NextLevelId.ToString();
+        }
+
+        public void ReadProgress(PlayerProgress progress)
+        {
         }
     }
 }

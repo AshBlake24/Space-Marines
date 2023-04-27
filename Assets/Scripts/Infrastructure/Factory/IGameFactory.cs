@@ -1,5 +1,6 @@
 using Roguelike.Infrastructure.Services;
 using Roguelike.Infrastructure.Services.Environment;
+using Roguelike.Infrastructure.States;
 using UnityEngine;
 
 namespace Roguelike.Infrastructure.Factory
@@ -8,7 +9,7 @@ namespace Roguelike.Infrastructure.Factory
     {
         GameObject CreatePlayer(Transform playerInitialPoint);
         GameObject CreateHud(EnvironmentType deviceType);
-        GameObject GenerateLevel();
+        GameObject GenerateLevel(GameStateMachine stateMachine);
         void Cleanup();
     }
 }

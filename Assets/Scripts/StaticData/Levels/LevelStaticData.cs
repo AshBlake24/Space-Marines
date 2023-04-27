@@ -10,11 +10,13 @@ namespace Roguelike.StaticData.Levels
     {
         [Header("Stats")]
         public StageId Id;
+        public StageId NextLevelId;
         public int AreaRoomCount;
         public int BonusRoomCount;
         public GameObject LevelGeneratorPrefab;
 
         public Room StartRoom;
+        public List<Room> FinishRoom;
         public List<Room> AreaRooms;
         public List<Room> Corridor;
         public List<Room> BonusRoom;

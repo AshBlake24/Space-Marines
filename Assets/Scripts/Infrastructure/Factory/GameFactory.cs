@@ -17,6 +17,7 @@ using Roguelike.Level;
 using Roguelike.StaticData.Levels;
 using System;
 using Object = UnityEngine.Object;
+using Roguelike.Infrastructure.States;
 
 namespace Roguelike.Infrastructure.Factory
 {
@@ -132,7 +133,7 @@ namespace Roguelike.Infrastructure.Factory
             return gameObject;
         }
 
-        public GameObject GenerateLevel()
+        public GameObject GenerateLevel(GameStateMachine stateMachine)
         {
             StageId id = _persistentData.PlayerProgress.WorldData.CurrentStage;
 
@@ -142,7 +143,7 @@ namespace Roguelike.Infrastructure.Factory
 
             LevelGenerator levelGenerator = LevelGeneratorPrefab.GetComponent<LevelGenerator>();
 
-            levelGenerator.Init(levelData);
+            levelGenerator.Init(levelData, stateMachine);
             levelGenerator.BuildLevel(_enemyFactory);
 
             return LevelGeneratorPrefab;
