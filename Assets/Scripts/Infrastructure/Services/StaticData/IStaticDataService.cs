@@ -7,6 +7,7 @@ using Roguelike.StaticData.Weapons;
 using Roguelike.StaticData.Enemies;
 using Roguelike.StaticData.Items;
 using Roguelike.StaticData.Windows;
+using Roguelike.StaticData.Levels;
 
 namespace Roguelike.Infrastructure.Services.StaticData
 {
@@ -20,6 +21,7 @@ namespace Roguelike.Infrastructure.Services.StaticData
         SkillStaticData GetSkillStaticData(SkillId id);
         EnemyStaticData GetEnemyStaticData(EnemyId id);
         ItemStaticData GetItemStaticData(ItemId id);
+        LevelStaticData GetLevelStaticData(LevelId id);
         WindowConfig GetWindowConfig(WindowId pauseMenu);
     }
 }

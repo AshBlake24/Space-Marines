@@ -14,6 +14,9 @@ using UnityEngine;
 using UnityEngine.Animations.Rigging;
 using Roguelike.Infrastructure.Factory;
 using Roguelike.Level;
+using Roguelike.StaticData.Levels;
+using System;
+using Object = UnityEngine.Object;
 
 namespace Roguelike.Infrastructure.Factory
 {
@@ -131,10 +134,20 @@ namespace Roguelike.Infrastructure.Factory
 
         public GameObject GenerateLevel()
         {
-            GameObject LevelGenerator = InstantiateRegistered(AssetPath.LevelGeneratorPath);
-            LevelGenerator.GetComponent<LevelGenerator>().BuildLevel(_enemyFactory);
+            string currentLevel = _persistentData.PlayerProgress.WorldData.CurrentLevel;
 
-            return LevelGenerator;
+            LevelId id = (LevelId)Enum.Parse(typeof(LevelId), currentLevel);
+
+            LevelStaticData levelData = _staticDataService.GetLevelStaticData(id);
+
+            GameObject LevelGeneratorPrefab = InstantiateRegistered(AssetPath.LevelGeneratorPath);
+
+            LevelGenerator levelGenerator = LevelGeneratorPrefab.GetComponent<LevelGenerator>();
+
+            levelGenerator.Init(levelData);
+            levelGenerator.BuildLevel(_enemyFactory);
+
+            return LevelGeneratorPrefab;
         }
 
         public void Cleanup()

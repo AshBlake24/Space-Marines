@@ -5,6 +5,7 @@ using Roguelike.Infrastructure.Services.Windows;
 using Roguelike.StaticData.Characters;
 using Roguelike.StaticData.Enemies;
 using Roguelike.StaticData.Items;
+using Roguelike.StaticData.Levels;
 using Roguelike.StaticData.Player;
 using Roguelike.StaticData.Projectiles;
 using Roguelike.StaticData.Skills;
@@ -22,6 +23,7 @@ namespace Roguelike.Infrastructure.Services.StaticData
         private Dictionary<SkillId, SkillStaticData> _skills;
         private Dictionary<EnemyId, EnemyStaticData> _enemies;
         private Dictionary<ItemId, ItemStaticData> _items;
+        private Dictionary<LevelId, LevelStaticData> _levels;
         private Dictionary<WindowId, WindowConfig> _windows;
 
         public PlayerStaticData Player { get; private set; }
@@ -36,6 +38,7 @@ namespace Roguelike.Infrastructure.Services.StaticData
             LoadPlayer();
             LoadEnemies();
             LoadItems();
+            LoadLevels();
         }
 
         public WeaponStaticData GetWeaponData(WeaponId id) =>
@@ -68,6 +71,11 @@ namespace Roguelike.Infrastructure.Services.StaticData
                 ? staticData
                 : null;
 
+        public LevelStaticData GetLevelStaticData(LevelId id) =>
+            _levels.TryGetValue(id, out LevelStaticData staticData)
+                ? staticData
+                : null;
+
         public WindowConfig GetWindowConfig(WindowId id) =>
             _windows.TryGetValue(id, out WindowConfig windowConfig)
                 ? windowConfig
@@ -90,12 +98,16 @@ namespace Roguelike.Infrastructure.Services.StaticData
                 .ToDictionary(skill => skill.Id);
 
         private void LoadEnemies() =>
-            _enemies = Resources.LoadAll<EnemyStaticData>("StaticData/Enemies")
+            _enemies = Resources.LoadAll<EnemyStaticData>(AssetPath.EnemiesPath)
                 .ToDictionary(enemy => enemy.Id);
 
         private void LoadItems() =>
-            _items = Resources.LoadAll<ItemStaticData>("StaticData/Items")
+            _items = Resources.LoadAll<ItemStaticData>(AssetPath.ItemsPath)
                 .ToDictionary(item => item.Id);
+
+        private void LoadLevels() =>
+            _levels = Resources.LoadAll<LevelStaticData>(AssetPath.LevelsPath)
+                .ToDictionary(level => level.Id);
 
         private void LoadWindows() =>
             _windows = Resources.Load<WindowStaticData>(AssetPath.WindowsStaticDataPath)
