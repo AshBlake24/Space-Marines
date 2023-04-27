@@ -72,7 +72,7 @@ namespace Roguelike.Infrastructure.States
         {
             if (SceneManager.GetActiveScene().name == LevelId.Dungeon.ToString())
             {
-                _gameFactory.GenerateLevel();
+                _gameFactory.GenerateLevel(_stateMachine);
                 
                 GameObject player = InitPlayer();
                 

@@ -10,7 +10,6 @@ using Roguelike.StaticData.Levels;
 using System.Collections.Generic;
 using UnityEditor.AI;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace Roguelike.Level
 {
@@ -132,7 +131,7 @@ namespace Roguelike.Level
 
         public void WriteProgress(PlayerProgress progress)
         {
-            progress.WorldData.CurrentLevel = _data.NextLevelId.ToString();
+            progress.WorldData.CurrentStage = _data.NextLevelId;
         }
 
         public void ReadProgress(PlayerProgress progress)
