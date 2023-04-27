@@ -1,3 +1,4 @@
+using System;
 using Roguelike.Infrastructure.Factory;
 
 namespace Roguelike.Infrastructure.Services.Windows
@@ -11,16 +12,7 @@ namespace Roguelike.Infrastructure.Services.Windows
             _uiFactory = uiFactory;
         }
 
-        public void Open(WindowId windowId)
-        {
-            switch (windowId)
-            {
-                case WindowId.Unknown:
-                    break;
-                case WindowId.PauseMenu:
-                    _uiFactory.CreatePauseMenu();
-                    break;
-            }
-        }
+        public void Open(WindowId windowId) => 
+            _uiFactory.CreateWindow(this, windowId);
     }
 }

@@ -42,7 +42,7 @@ namespace Roguelike.Player
 
             if (_hasTarget && _target != null)
                 RotateToTarget();
-            else if (_direction.magnitude >= 0.1f)
+            else if (_direction.magnitude >= 0.01f)
                 RotateToMoveDirection();
             
             _direction += Physics.gravity;
