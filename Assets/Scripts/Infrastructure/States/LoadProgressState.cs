@@ -5,6 +5,7 @@ using Roguelike.Infrastructure.Factory;
 using Roguelike.Infrastructure.Services.PersistentData;
 using Roguelike.Infrastructure.Services.SaveLoad;
 using Roguelike.Infrastructure.Services.StaticData;
+using Roguelike.StaticData.Levels;
 using Roguelike.Weapons;
 
 namespace Roguelike.Infrastructure.States
@@ -12,6 +13,7 @@ namespace Roguelike.Infrastructure.States
     public class LoadProgressState : IState
     {
         private const string StartLevel = "Hub";
+        private const LevelId StartStage = LevelId.Level11;
         
         private readonly GameStateMachine _stateMachine;
         private readonly IPersistentDataService _progressService;
@@ -48,6 +50,7 @@ namespace Roguelike.Infrastructure.States
         {
             PlayerProgress playerProgress = new(
                 StartLevel, 
+                StartStage, 
                 CreateStartWeapons(),
                 _staticDataService.Player.StartCharacter.Id);
             

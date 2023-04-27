@@ -1,4 +1,5 @@
 using System;
+using Roguelike.StaticData.Levels;
 
 namespace Roguelike.Data
 {
@@ -13,11 +14,12 @@ namespace Roguelike.Data
         /// <summary>
         /// Displays the current stage in the dungeon. E.g. 1-1, 1-2, etc.
         /// </summary>
-        public string CurrentStage;
+        public LevelId CurrentStage;
 
-        public WorldData(string initialLevel)
+        public WorldData(string startLevel, LevelId startStage)
         {
-            CurrentLevel = initialLevel;
+            CurrentLevel = startLevel;
+            CurrentStage = startStage;
         }
     }
 }
