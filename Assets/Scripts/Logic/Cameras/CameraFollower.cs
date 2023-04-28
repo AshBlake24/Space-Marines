@@ -1,8 +1,8 @@
-using Roguelike.Level;
 using System;
+using Roguelike.Level;
 using UnityEngine;
 
-namespace Roguelike.Logic.Camera
+namespace Roguelike.Logic.Cameras
 {
     public class CameraFollower : MonoBehaviour
     {
