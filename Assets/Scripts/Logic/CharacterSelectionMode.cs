@@ -1,13 +1,12 @@
 using Cinemachine;
 using Roguelike.Infrastructure.Factory;
-using Roguelike.Infrastructure.Services.Environment;
 using Roguelike.Infrastructure.Services.SaveLoad;
 using Roguelike.Infrastructure.Services.StaticData;
 using Roguelike.Infrastructure.Services.Windows;
 using Roguelike.UI.Windows;
 using UnityEngine;
 
-namespace Roguelike.Logic.Cameras
+namespace Roguelike.Logic
 {
     public class CharacterSelectionMode : MonoBehaviour
     {
@@ -84,7 +83,7 @@ namespace Roguelike.Logic.Cameras
         {
             if (_characterSelected)
                 return;
-            
+
             _isActive = true;
             _selectionWindow.gameObject.SetActive(true);
             _topDownCamera.enabled = true;

@@ -1,5 +1,4 @@
-using Roguelike.Infrastructure.States;
-using Roguelike.Logic.Cameras;
+using Roguelike.Logic;
 using Roguelike.StaticData.Characters;
 using Roguelike.UI.Buttons;
 using TMPro;
@@ -40,7 +39,7 @@ namespace Roguelike.UI.Windows
             _selectCharacterButton.CharacterSelected += OnCharacterSelected;
         }
 
-        private void OnCharacterSelected() => 
+        private void OnCharacterSelected() =>
             _selectionMode.OnCharacterSelected();
 
         protected override void Cleanup()

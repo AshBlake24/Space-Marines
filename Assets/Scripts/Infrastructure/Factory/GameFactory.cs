@@ -17,7 +17,7 @@ using Roguelike.Level;
 using Roguelike.StaticData.Levels;
 using Object = UnityEngine.Object;
 using Roguelike.Infrastructure.States;
-using Roguelike.Logic.Cameras;
+using Roguelike.Logic;
 using Roguelike.UI.Windows;
 
 namespace Roguelike.Infrastructure.Factory

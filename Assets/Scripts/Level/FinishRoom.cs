@@ -1,9 +1,8 @@
-using Roguelike.Level;
-using Roguelike.Player;
 using System;
+using Roguelike.Player;
 using UnityEngine;
 
-namespace Roguelike
+namespace Roguelike.Level
 {
     public class FinishRoom : Room
     {
