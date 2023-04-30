@@ -1,5 +1,7 @@
 using System;
 using Roguelike.Infrastructure.Factory;
+using Roguelike.UI.Windows;
+using UnityEngine;
 
 namespace Roguelike.Infrastructure.Services.Windows
 {
@@ -12,7 +14,7 @@ namespace Roguelike.Infrastructure.Services.Windows
             _uiFactory = uiFactory;
         }
 
-        public void Open(WindowId windowId) => 
+        public BaseWindow Open(WindowId windowId) => 
             _uiFactory.CreateWindow(this, windowId);
     }
 }

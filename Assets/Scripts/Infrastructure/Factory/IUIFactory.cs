@@ -1,11 +1,13 @@
 using Roguelike.Infrastructure.Services;
 using Roguelike.Infrastructure.Services.Windows;
+using Roguelike.UI.Windows;
+using UnityEngine;
 
 namespace Roguelike.Infrastructure.Factory
 {
     public interface IUIFactory : IService
     {
-        void CreateWindow(IWindowService windowService, WindowId windowId);
+        BaseWindow CreateWindow(IWindowService windowService, WindowId windowId);
         void CreateUIRoot();
     }
 }

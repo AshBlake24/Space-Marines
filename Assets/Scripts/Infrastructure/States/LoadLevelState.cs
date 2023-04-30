@@ -48,19 +48,19 @@ namespace Roguelike.Infrastructure.States
         public void Enter(string sceneName)
         {
             _loadingScreen.Show();
-            
+
             Cleanup();
-            
+
             _sceneLoader.Load(sceneName, OnLoaded);
         }
 
-        public void Exit() => 
+        public void Exit() =>
             _loadingScreen.Hide();
 
         private void OnLoaded()
         {
             Helpers.InitializePools();
-            
+
             InitUIRoot();
             InitGameWorld();
             InformProgressReaders();
@@ -76,11 +76,15 @@ namespace Roguelike.Infrastructure.States
             if (SceneManager.GetActiveScene().name == LevelId.Dungeon.ToString())
             {
                 _gameFactory.GenerateLevel(_stateMachine);
-                
+
                 GameObject player = InitPlayer();
-                
+
                 InitHud(player);
                 CameraFollow(player);
+            }
+            else if (SceneManager.GetActiveScene().name == LevelId.Hub.ToString())
+            {
+                
             }
         }
 

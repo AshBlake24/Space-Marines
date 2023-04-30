@@ -27,7 +27,7 @@ namespace Roguelike.Infrastructure.Factory
             _progressService = progressService;
         }
 
-        public void CreateWindow(IWindowService windowService, WindowId windowId)
+        public BaseWindow CreateWindow(IWindowService windowService, WindowId windowId)
         {
             WindowConfig config = _staticData.GetWindowConfig(windowId);
             BaseWindow window = Object.Instantiate(config.WindowPrefab, _uiRoot);
@@ -35,6 +35,8 @@ namespace Roguelike.Infrastructure.Factory
 
             foreach (OpenWindowButton openWindowButton in window.GetComponentsInChildren<OpenWindowButton>())
                 openWindowButton.Construct(windowService);
+
+            return window;
         }
 
         public void CreateUIRoot() =>
