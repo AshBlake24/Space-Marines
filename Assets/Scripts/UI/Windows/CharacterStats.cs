@@ -36,7 +36,7 @@ namespace Roguelike.UI.Windows
             _health.SetValue(_characterData.MaxHealth, _characterData.MaxHealth);
 
             _selectCharacterButton = GetComponentInChildren<SelectCharacterButton>();
-            _selectCharacterButton.Construct(_characterData.Id, ProgressService);
+            _selectCharacterButton.Construct(_characterData, ProgressService);
             _selectCharacterButton.CharacterSelected += OnCharacterSelected;
         }
 

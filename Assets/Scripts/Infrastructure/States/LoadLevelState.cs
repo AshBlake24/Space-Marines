@@ -1,11 +1,8 @@
 using Roguelike.Infrastructure.Factory;
-using Roguelike.Infrastructure.Services.Environment;
 using Roguelike.Infrastructure.Services.PersistentData;
 using Roguelike.Infrastructure.Services.SaveLoad;
 using Roguelike.Logic;
-using Roguelike.Player;
 using Roguelike.StaticData.Levels;
-using Roguelike.UI.Elements;
 using Roguelike.Utilities;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -23,9 +20,8 @@ namespace Roguelike.Infrastructure.States
         private readonly IGameFactory _gameFactory;
         private readonly ISaveLoadService _saveLoadService;
         private readonly IPersistentDataService _progressService;
-        private readonly IEnvironmentService _environmentService;
         private readonly IUIFactory _uiFactory;
-        
+
         private string _activeSceneName;
 
         public LoadLevelState(
@@ -35,7 +31,6 @@ namespace Roguelike.Infrastructure.States
             IGameFactory gameFactory,
             ISaveLoadService saveLoadService,
             IPersistentDataService progressService,
-            IEnvironmentService environmentService,
             IUIFactory uiFactory)
         {
             _stateMachine = stateMachine;
@@ -44,7 +39,6 @@ namespace Roguelike.Infrastructure.States
             _gameFactory = gameFactory;
             _saveLoadService = saveLoadService;
             _progressService = progressService;
-            _environmentService = environmentService;
             _uiFactory = uiFactory;
         }
 
@@ -71,7 +65,7 @@ namespace Roguelike.Infrastructure.States
                 InitDungeon();
             else if (_activeSceneName == LevelId.Hub.ToString())
                 InitHub();
-            
+
             InformProgressReaders();
 
             _stateMachine.Enter<GameLoopState>();
@@ -90,10 +84,11 @@ namespace Roguelike.Infrastructure.States
             CameraFollow(player);
         }
 
-        private void InitHub()
-        {
+        private void InitHub() =>
             _gameFactory.CreateCharacterSelectionMode();
-        }
+
+        private void InitHud(GameObject player) =>
+            _gameFactory.CreateHud(player);
 
         private GameObject InitPlayer()
         {
@@ -101,25 +96,6 @@ namespace Roguelike.Infrastructure.States
             GameObject player = _gameFactory.CreatePlayer(initialPoint.transform);
 
             return player;
-        }
-
-        private void InitHud(GameObject player)
-        {
-            EnvironmentType deviceType = _environmentService.GetDeviceType();
-
-            GameObject hud = _gameFactory.CreateHud(deviceType);
-
-            hud.GetComponentInChildren<AmmoCounter>()
-                .Construct(player.GetComponent<PlayerShooter>());
-
-            hud.GetComponentInChildren<ActorUI>()
-                .Construct(player.GetComponent<PlayerHealth>());
-        }
-
-        private void InformProgressReaders()
-        {
-            foreach (IProgressReader progressReader in _saveLoadService.ProgressReaders)
-                progressReader.ReadProgress(_progressService.PlayerProgress);
         }
 
         private void CameraFollow(GameObject hero)
@@ -134,5 +110,8 @@ namespace Roguelike.Infrastructure.States
             _saveLoadService.Cleanup();
             Helpers.CleanupPools();
         }
+
+        private void InformProgressReaders() => 
+            _saveLoadService.InformProgressReaders();
     }
 }

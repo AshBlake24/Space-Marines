@@ -22,8 +22,8 @@ namespace Roguelike.Infrastructure.Services.SaveLoad
             _progressWriters = new List<IProgressWriter>();
         }
         
-        public IReadOnlyList<IProgressReader> ProgressReaders => _progressReaders;
-        public IReadOnlyList<IProgressWriter> ProgressWriters => _progressWriters;
+        public IEnumerable<IProgressReader> ProgressReaders => _progressReaders;
+        public IEnumerable<IProgressWriter> ProgressWriters => _progressWriters;
 
         public void SaveProgress()
         {
@@ -32,6 +32,12 @@ namespace Roguelike.Infrastructure.Services.SaveLoad
 
             string dataToStore = _progressService.PlayerProgress.ToJson();
             PlayerPrefs.SetString(PlayerProgressKey, dataToStore);
+        }
+
+        public void InformProgressReaders()
+        {
+            foreach (IProgressReader progressReader in ProgressReaders)
+                progressReader.ReadProgress(_progressService.PlayerProgress);
         }
 
         public PlayerProgress LoadProgress() => 

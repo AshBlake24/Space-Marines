@@ -11,14 +11,14 @@ namespace Roguelike.UI.Buttons
     {
         [SerializeField] private Button _button;
 
-        private CharacterId _characterId;
+        private CharacterStaticData _characterData;
         private IPersistentDataService _progressService;
 
         public event Action CharacterSelected;
 
-        public void Construct(CharacterId characterId, IPersistentDataService progressService)
+        public void Construct(CharacterStaticData characterData, IPersistentDataService progressService)
         {
-            _characterId = characterId;
+            _characterData = characterData;
             _progressService = progressService;
         }
 
@@ -30,7 +30,10 @@ namespace Roguelike.UI.Buttons
 
         private void OnButtonClick()
         {
-            _progressService.PlayerProgress.Character = _characterId;
+            _progressService.PlayerProgress.Character = _characterData.Id;
+            _progressService.PlayerProgress.State.MaxHealth = _characterData.MaxHealth;
+            _progressService.PlayerProgress.State.ResetHealth();
+            
             CharacterSelected?.Invoke();
         }
     }

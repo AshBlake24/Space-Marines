@@ -32,6 +32,7 @@ namespace Roguelike.Infrastructure.Factory
         private readonly IStaticDataService _staticDataService;
         private readonly IEnemyFactory _enemyFactory;
         private readonly IWindowService _windowService;
+        private readonly IEnvironmentService _environmentService;
 
         public GameFactory(IAssetProvider assetProvider,
             IPersistentDataService persistentData,
@@ -40,7 +41,8 @@ namespace Roguelike.Infrastructure.Factory
             IWeaponFactory weaponFactory,
             ISkillFactory skillFactory,
             IEnemyFactory enemyFactory,
-            IWindowService windowService)
+            IWindowService windowService,
+            IEnvironmentService environmentService)
         {
             _assetProvider = assetProvider;
             _persistentData = persistentData;
@@ -49,6 +51,7 @@ namespace Roguelike.Infrastructure.Factory
             _weaponFactory = weaponFactory;
             _skillFactory = skillFactory;
             _windowService = windowService;
+            _environmentService = environmentService;
             _enemyFactory = enemyFactory;
         }
 
@@ -67,11 +70,19 @@ namespace Roguelike.Infrastructure.Factory
             return player;
         }
 
-        public GameObject CreateHud(EnvironmentType deviceType)
+        public GameObject CreateHud(GameObject player)
         {
+            EnvironmentType deviceType = _environmentService.GetDeviceType();
+
             GameObject hud = InstantiateRegistered(deviceType == EnvironmentType.Desktop
                 ? AssetPath.DesktopHudPath
                 : AssetPath.MobileHudPath);
+
+            hud.GetComponentInChildren<AmmoCounter>()
+                .Construct(player.GetComponent<PlayerShooter>());
+
+            hud.GetComponentInChildren<ActorUI>()
+                .Construct(player.GetComponent<PlayerHealth>());
 
             foreach (OpenWindowButton openWindowButton in hud.GetComponentsInChildren<OpenWindowButton>())
                 openWindowButton.Construct(_windowService);
@@ -155,9 +166,11 @@ namespace Roguelike.Infrastructure.Factory
             BaseWindow characterSelectionWindow = _windowService.Open(WindowId.CharacterSelection);
 
             if (Camera.main.TryGetComponent(out CharacterSelectionMode characterSelection))
-                characterSelection.Construct(_staticDataService, _windowService, characterSelectionWindow);
+                characterSelection.Construct(this, _staticDataService, _windowService, _saveLoadService,
+                    characterSelectionWindow);
             else
-                throw new ArgumentNullException(nameof(Camera), "Camera is missing a component of CharacterSelectionMode");
+                throw new ArgumentNullException(nameof(Camera),
+                    "Camera is missing a component of CharacterSelectionMode");
         }
 
         public void Cleanup()
