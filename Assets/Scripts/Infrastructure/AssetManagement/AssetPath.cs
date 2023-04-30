@@ -1,3 +1,5 @@
+using UnityEngine;
+
 namespace Roguelike.Infrastructure.AssetManagement
 {
     public static class AssetPath
@@ -17,5 +19,6 @@ namespace Roguelike.Infrastructure.AssetManagement
         public const string PlayerPath = "Player/Player";
         public const string UIRootPath = "UI/UIRoot";
         public const string GameConfigPath = "StaticData/GameConfig";
+        public const string SelectionWindow = "UI/CharactersSelection";
     }
 }

@@ -1,6 +1,4 @@
 using Cinemachine;
-using Roguelike.Infrastructure.Factory;
-using Roguelike.Infrastructure.Services;
 using Roguelike.Infrastructure.Services.StaticData;
 using Roguelike.Infrastructure.Services.Windows;
 using Roguelike.UI.Windows;
@@ -14,19 +12,22 @@ namespace Roguelike.Logic.Cameras
         
         [SerializeField] private CinemachineVirtualCamera _topDownCamera;
         [SerializeField] private CinemachineVirtualCamera _characterSelectionCamera;
-        [SerializeField] private GameObject _selectionWindow;
 
         private IStaticDataService _staticData;
         private IWindowService _windowService;
         private RaycastHit _raycastHit;
         private Camera _camera;
+        private GameObject _selectionWindow;
 
-        private void Start()
+        public void Construct(IStaticDataService staticData, IWindowService windowService, GameObject selectionWindow)
         {
-            _staticData = AllServices.Container.Single<IStaticDataService>();
-            _windowService = AllServices.Container.Single<IWindowService>();
-            _camera = Camera.main;
+            _staticData = staticData;
+            _windowService = windowService;
+            _selectionWindow = selectionWindow;
         }
+
+        private void Start() => 
+            _camera = Camera.main;
 
         private void Update()
         {
@@ -55,13 +56,13 @@ namespace Roguelike.Logic.Cameras
 
         public void ZoomOut()
         {
-            _selectionWindow.gameObject.SetActive(true);
+            _selectionWindow.SetActive(true);
             _topDownCamera.enabled = true;
         }
 
         private void ZoomIn(Transform character)
         {
-            _selectionWindow.gameObject.SetActive(false);
+            _selectionWindow.SetActive(false);
             _characterSelectionCamera.Follow = character;
             _characterSelectionCamera.LookAt = character;
             _topDownCamera.enabled = false;

@@ -39,6 +39,13 @@ namespace Roguelike.Infrastructure.Factory
             return window;
         }
 
+        public GameObject CreateSelectionModeWindow()
+        {
+            GameObject instantiate = Object.Instantiate(Resources.Load(AssetPath.SelectionWindow), _uiRoot) as GameObject;
+
+            return instantiate;
+        }
+
         public void CreateUIRoot() =>
             _uiRoot = _assetProvider.Instantiate(AssetPath.UIRootPath).transform;
     }

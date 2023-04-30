@@ -18,6 +18,7 @@ using Roguelike.StaticData.Levels;
 using System;
 using Object = UnityEngine.Object;
 using Roguelike.Infrastructure.States;
+using Roguelike.Logic.Cameras;
 
 namespace Roguelike.Infrastructure.Factory
 {
@@ -29,8 +30,9 @@ namespace Roguelike.Infrastructure.Factory
         private readonly ISaveLoadService _saveLoadService;
         private readonly IPersistentDataService _persistentData;
         private readonly IStaticDataService _staticDataService;
-        private readonly IWindowService _windowService;
         private readonly IEnemyFactory _enemyFactory;
+        private readonly IWindowService _windowService;
+        private readonly IUIFactory _uiFactory;
 
         public GameFactory(IAssetProvider assetProvider,
             IPersistentDataService persistentData,
@@ -39,7 +41,8 @@ namespace Roguelike.Infrastructure.Factory
             IWeaponFactory weaponFactory,            
             ISkillFactory skillFactory,
             IEnemyFactory enemyFactory,
-            IWindowService windowService)
+            IWindowService windowService,
+            IUIFactory uiFactory)
         {
             _assetProvider = assetProvider;
             _persistentData = persistentData;
@@ -48,6 +51,7 @@ namespace Roguelike.Infrastructure.Factory
             _weaponFactory = weaponFactory;
             _skillFactory = skillFactory;
             _windowService = windowService;
+            _uiFactory = uiFactory;
             _enemyFactory = enemyFactory;
         }
 
@@ -147,6 +151,15 @@ namespace Roguelike.Infrastructure.Factory
             levelGenerator.BuildLevel(_enemyFactory);
 
             return LevelGeneratorPrefab;
+        }
+
+        public void CreateSelectionMode()
+        {
+            if (Camera.main.gameObject.TryGetComponent(out CharacterSelectionMode selectionMode))
+            {
+                GameObject selectionModeWindow = _uiFactory.CreateSelectionModeWindow();
+                selectionMode.Construct(_staticDataService, _windowService, selectionModeWindow);
+            }
         }
 
         public void Cleanup()
