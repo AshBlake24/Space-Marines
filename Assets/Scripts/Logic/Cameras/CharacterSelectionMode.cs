@@ -19,14 +19,11 @@ namespace Roguelike.Logic.Cameras
         private RaycastHit _raycastHit;
         private Camera _camera;
         private BaseWindow _selectionWindow;
-        private GameStateMachine _gameStateMachine;
 
-        public void Construct(IStaticDataService staticData, IWindowService windowService,
-            GameStateMachine gameStateMachine, BaseWindow selectionWindow)
+        public void Construct(IStaticDataService staticData, IWindowService windowService, BaseWindow selectionWindow)
         {
             _staticData = staticData;
             _windowService = windowService;
-            _gameStateMachine = gameStateMachine;
             _selectionWindow = selectionWindow;
         }
 

@@ -150,12 +150,12 @@ namespace Roguelike.Infrastructure.Factory
             return LevelGeneratorPrefab;
         }
 
-        public void CreateCharacterSelectionMode(GameStateMachine stateMachine)
+        public void CreateCharacterSelectionMode()
         {
             BaseWindow characterSelectionWindow = _windowService.Open(WindowId.CharacterSelection);
 
             if (Camera.main.TryGetComponent(out CharacterSelectionMode characterSelection))
-                characterSelection.Construct(_staticDataService, _windowService, stateMachine, characterSelectionWindow);
+                characterSelection.Construct(_staticDataService, _windowService, characterSelectionWindow);
             else
                 throw new ArgumentNullException(nameof(Camera), "Camera is missing a component of CharacterSelectionMode");
         }

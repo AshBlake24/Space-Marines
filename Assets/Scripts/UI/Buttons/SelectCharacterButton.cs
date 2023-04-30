@@ -1,5 +1,4 @@
 using System;
-using Roguelike.Infrastructure.Services;
 using Roguelike.Infrastructure.Services.PersistentData;
 using Roguelike.StaticData.Characters;
 using UnityEngine;
@@ -17,11 +16,11 @@ namespace Roguelike.UI.Buttons
 
         public event Action CharacterSelected;
 
-        public void Construct(CharacterId characterId) => 
+        public void Construct(CharacterId characterId, IPersistentDataService progressService)
+        {
             _characterId = characterId;
-
-        private void Awake() => 
-            _progressService = AllServices.Container.Single<IPersistentDataService>();
+            _progressService = progressService;
+        }
 
         private void OnEnable() => 
             _button.onClick.AddListener(OnButtonClick);

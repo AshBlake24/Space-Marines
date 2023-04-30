@@ -92,7 +92,7 @@ namespace Roguelike.Infrastructure.States
 
         private void InitHub()
         {
-            _gameFactory.CreateCharacterSelectionMode(_stateMachine);
+            _gameFactory.CreateCharacterSelectionMode();
         }
 
         private GameObject InitPlayer()
