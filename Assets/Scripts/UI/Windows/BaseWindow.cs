@@ -7,11 +7,11 @@ namespace Roguelike.UI.Windows
     public abstract class BaseWindow : MonoBehaviour
     {
         [SerializeField] private Button _closeButton;
-        
-        protected IPersistentDataService ProgressService;
+
+        private IPersistentDataService _progressService;
 
         public void Construct(IPersistentDataService progressService) => 
-            ProgressService = progressService;
+            _progressService = progressService;
 
         private void Awake() => 
             OnAwake();

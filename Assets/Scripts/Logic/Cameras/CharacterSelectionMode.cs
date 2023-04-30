@@ -17,9 +17,9 @@ namespace Roguelike.Logic.Cameras
         private IWindowService _windowService;
         private RaycastHit _raycastHit;
         private Camera _camera;
-        private GameObject _selectionWindow;
+        private BaseWindow _selectionWindow;
 
-        public void Construct(IStaticDataService staticData, IWindowService windowService, GameObject selectionWindow)
+        public void Construct(IStaticDataService staticData, IWindowService windowService, BaseWindow selectionWindow)
         {
             _staticData = staticData;
             _windowService = windowService;
@@ -56,13 +56,13 @@ namespace Roguelike.Logic.Cameras
 
         public void ZoomOut()
         {
-            _selectionWindow.SetActive(true);
+            _selectionWindow.gameObject.SetActive(true);
             _topDownCamera.enabled = true;
         }
 
         private void ZoomIn(Transform character)
         {
-            _selectionWindow.SetActive(false);
+            _selectionWindow.gameObject.SetActive(false);
             _characterSelectionCamera.Follow = character;
             _characterSelectionCamera.LookAt = character;
             _topDownCamera.enabled = false;

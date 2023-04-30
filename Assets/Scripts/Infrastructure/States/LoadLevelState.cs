@@ -87,7 +87,7 @@ namespace Roguelike.Infrastructure.States
             }
             else if (SceneManager.GetActiveScene().name == LevelId.Hub.ToString())
             {
-                _gameFactory.CreateSelectionMode();
+                _gameFactory.CreateCharacterSelectionMode();
             }
         }
 

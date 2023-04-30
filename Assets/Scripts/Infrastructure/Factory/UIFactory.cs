@@ -1,4 +1,3 @@
-using System;
 using Roguelike.Infrastructure.AssetManagement;
 using Roguelike.Infrastructure.Services.PersistentData;
 using Roguelike.Infrastructure.Services.StaticData;
@@ -37,13 +36,6 @@ namespace Roguelike.Infrastructure.Factory
                 openWindowButton.Construct(windowService);
 
             return window;
-        }
-
-        public GameObject CreateSelectionModeWindow()
-        {
-            GameObject instantiate = Object.Instantiate(Resources.Load(AssetPath.SelectionWindow), _uiRoot) as GameObject;
-
-            return instantiate;
         }
 
         public void CreateUIRoot() =>

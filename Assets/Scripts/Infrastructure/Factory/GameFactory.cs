@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Roguelike.Infrastructure.AssetManagement;
@@ -12,13 +13,12 @@ using Roguelike.UI.Elements;
 using Roguelike.Weapons;
 using UnityEngine;
 using UnityEngine.Animations.Rigging;
-using Roguelike.Infrastructure.Factory;
 using Roguelike.Level;
 using Roguelike.StaticData.Levels;
-using System;
 using Object = UnityEngine.Object;
 using Roguelike.Infrastructure.States;
 using Roguelike.Logic.Cameras;
+using Roguelike.UI.Windows;
 
 namespace Roguelike.Infrastructure.Factory
 {
@@ -32,17 +32,15 @@ namespace Roguelike.Infrastructure.Factory
         private readonly IStaticDataService _staticDataService;
         private readonly IEnemyFactory _enemyFactory;
         private readonly IWindowService _windowService;
-        private readonly IUIFactory _uiFactory;
 
         public GameFactory(IAssetProvider assetProvider,
             IPersistentDataService persistentData,
             IStaticDataService staticDataService,
             ISaveLoadService saveLoadService,
-            IWeaponFactory weaponFactory,            
+            IWeaponFactory weaponFactory,
             ISkillFactory skillFactory,
             IEnemyFactory enemyFactory,
-            IWindowService windowService,
-            IUIFactory uiFactory)
+            IWindowService windowService)
         {
             _assetProvider = assetProvider;
             _persistentData = persistentData;
@@ -51,7 +49,6 @@ namespace Roguelike.Infrastructure.Factory
             _weaponFactory = weaponFactory;
             _skillFactory = skillFactory;
             _windowService = windowService;
-            _uiFactory = uiFactory;
             _enemyFactory = enemyFactory;
         }
 
@@ -64,9 +61,9 @@ namespace Roguelike.Infrastructure.Factory
 
             PlayerHealth playerHealth = player.GetComponent<PlayerHealth>();
             playerHealth.Construct(_staticDataService.Player.ImmuneTimeAfterHit);
-            
+
             _skillFactory.CreatePlayerSkill(player);
-            
+
             return player;
         }
 
@@ -86,20 +83,20 @@ namespace Roguelike.Infrastructure.Factory
         {
             CharacterStaticData characterData = _staticDataService.GetCharacterData(id);
             GameObject character = Object.Instantiate(
-                characterData.Prefab, 
-                player.transform.position, 
-                Quaternion.identity, 
+                characterData.Prefab,
+                player.transform.position,
+                Quaternion.identity,
                 player.transform);
-            
+
             player.GetComponent<PlayerAnimator>()
                 .Construct(character.GetComponent<Animator>());
-            
+
             MultiAimConstraint multiAimConstraint = player.GetComponentInChildren<MultiAimConstraint>();
             multiAimConstraint.data.sourceObjects = new WeightedTransformArray()
             {
                 new(player.GetComponentInChildren<AimTarget>().transform, 1)
             };
-                
+
 
             character.GetComponentInChildren<RigBuilder>().Build();
 
@@ -115,8 +112,8 @@ namespace Roguelike.Infrastructure.Factory
                 .ToList();
 
             playerShooter.Construct(
-                weapons, 
-                _staticDataService.Player.WeaponSwtichCooldown, 
+                weapons,
+                _staticDataService.Player.WeaponSwtichCooldown,
                 weaponSpawnPoint,
                 _weaponFactory);
         }
@@ -153,13 +150,14 @@ namespace Roguelike.Infrastructure.Factory
             return LevelGeneratorPrefab;
         }
 
-        public void CreateSelectionMode()
+        public void CreateCharacterSelectionMode()
         {
-            if (Camera.main.gameObject.TryGetComponent(out CharacterSelectionMode selectionMode))
-            {
-                GameObject selectionModeWindow = _uiFactory.CreateSelectionModeWindow();
-                selectionMode.Construct(_staticDataService, _windowService, selectionModeWindow);
-            }
+            BaseWindow characterSelectionWindow = _windowService.Open(WindowId.CharacterSelection);
+
+            if (Camera.main.TryGetComponent(out CharacterSelectionMode characterSelection))
+                characterSelection.Construct(_staticDataService, _windowService, characterSelectionWindow);
+            else
+                throw new ArgumentNullException(nameof(Camera), "Camera is missing a component of CharacterSelectionMode");
         }
 
         public void Cleanup()

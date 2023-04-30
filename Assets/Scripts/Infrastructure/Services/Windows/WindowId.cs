@@ -5,6 +5,7 @@ namespace Roguelike.Infrastructure.Services.Windows
         Unknown = 0,
         PauseMenu = 1,
         OptionsMenu = 2,
-        CharacterStats = 3
+        CharacterStats = 3,
+        CharacterSelection = 4
     }
 }
