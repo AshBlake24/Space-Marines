@@ -1,6 +1,7 @@
 using Cinemachine;
 using Roguelike.Infrastructure.Services.StaticData;
 using Roguelike.Infrastructure.Services.Windows;
+using Roguelike.Infrastructure.States;
 using Roguelike.UI.Windows;
 using UnityEngine;
 
@@ -18,11 +19,14 @@ namespace Roguelike.Logic.Cameras
         private RaycastHit _raycastHit;
         private Camera _camera;
         private BaseWindow _selectionWindow;
+        private GameStateMachine _gameStateMachine;
 
-        public void Construct(IStaticDataService staticData, IWindowService windowService, BaseWindow selectionWindow)
+        public void Construct(IStaticDataService staticData, IWindowService windowService,
+            GameStateMachine gameStateMachine, BaseWindow selectionWindow)
         {
             _staticData = staticData;
             _windowService = windowService;
+            _gameStateMachine = gameStateMachine;
             _selectionWindow = selectionWindow;
         }
 
@@ -42,7 +46,7 @@ namespace Roguelike.Logic.Cameras
                         CharacterStats characterStats = _windowService.Open(WindowId.CharacterStats) as CharacterStats;
                         
                         if (characterStats != null)
-                            characterStats.Construct( _staticData.GetCharacterData(character.Id), this);
+                            characterStats.Construct(_staticData.GetCharacterData(character.Id), this);
                         
                         ZoomIn(_raycastHit.collider.transform);
                     } 
@@ -52,6 +56,11 @@ namespace Roguelike.Logic.Cameras
                     ZoomOut();
                 } 
             }
+        }
+
+        public void OnCharacterSelected()
+        {
+            
         }
 
         public void ZoomOut()

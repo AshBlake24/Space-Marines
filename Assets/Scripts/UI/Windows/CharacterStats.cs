@@ -1,5 +1,7 @@
+using Roguelike.Infrastructure.States;
 using Roguelike.Logic.Cameras;
 using Roguelike.StaticData.Characters;
+using Roguelike.UI.Buttons;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -18,6 +20,7 @@ namespace Roguelike.UI.Windows
 
         private CharacterStaticData _characterData;
         private CharacterSelectionMode _selectionMode;
+        private SelectCharacterButton _selectCharacterButton;
 
         public void Construct(CharacterStaticData characterData, CharacterSelectionMode selectionMode)
         {
@@ -31,11 +34,19 @@ namespace Roguelike.UI.Windows
             _characterIcon.sprite = _characterData.Icon;
             _description = _characterData.Desctription;
             _health.SetValue(_characterData.MaxHealth, _characterData.MaxHealth);
+
+            _selectCharacterButton = GetComponentInChildren<SelectCharacterButton>();
+            _selectCharacterButton.Construct(_characterData.Id);
+            _selectCharacterButton.CharacterSelected += OnCharacterSelected;
         }
+
+        private void OnCharacterSelected() => 
+            _selectionMode.OnCharacterSelected();
 
         protected override void Cleanup()
         {
             base.Cleanup();
+            _selectCharacterButton.CharacterSelected -= OnCharacterSelected;
             _selectionMode.ZoomOut();
         }
     }

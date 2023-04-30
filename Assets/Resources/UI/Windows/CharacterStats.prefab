@@ -223,6 +223,7 @@ GameObject:
   - component: {fileID: 893365839}
   - component: {fileID: 893365838}
   - component: {fileID: 893365837}
+  - component: {fileID: 1941259092}
   m_Layer: 5
   m_Name: Select Button
   m_TagString: Untagged
@@ -333,6 +334,19 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &1941259092
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 893365835}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24f1888f58f24d85a895588ebe7705e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _button: {fileID: 893365837}
 --- !u!1 &1472821824
 GameObject:
   m_ObjectHideFlags: 0
@@ -1218,7 +1232,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 28.55
+  m_fontSize: 25.4
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -1840,7 +1854,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0efc56abd2b84dd6ad9074e7f14564c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _closeButton: {fileID: 1472821826}
+  _closeButtons:
+  - {fileID: 1472821826}
+  - {fileID: 893365837}
   _title: {fileID: 6279451153343535999}
   _characterIcon: {fileID: 6279451152942025109}
   _skillIcon: {fileID: 6279451152246542789}

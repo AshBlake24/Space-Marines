@@ -10,7 +10,7 @@ namespace Roguelike.Infrastructure.Factory
         GameObject CreatePlayer(Transform playerInitialPoint);
         GameObject CreateHud(EnvironmentType deviceType);
         GameObject GenerateLevel(GameStateMachine stateMachine);
-        void CreateCharacterSelectionMode();
+        void CreateCharacterSelectionMode(GameStateMachine stateMachine);
         void Cleanup();
     }
 }

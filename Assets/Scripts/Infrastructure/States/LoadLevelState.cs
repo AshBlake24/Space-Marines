@@ -25,6 +25,8 @@ namespace Roguelike.Infrastructure.States
         private readonly IPersistentDataService _progressService;
         private readonly IEnvironmentService _environmentService;
         private readonly IUIFactory _uiFactory;
+        
+        private string _activeSceneName;
 
         public LoadLevelState(
             GameStateMachine stateMachine,
@@ -60,10 +62,16 @@ namespace Roguelike.Infrastructure.States
 
         private void OnLoaded()
         {
-            Helpers.InitializePools();
+            _activeSceneName = SceneManager.GetActiveScene().name;
 
             InitUIRoot();
-            InitGameWorld();
+            Helpers.InitializePools();
+
+            if (_activeSceneName == LevelId.Dungeon.ToString())
+                InitDungeon();
+            else if (_activeSceneName == LevelId.Hub.ToString())
+                InitHub();
+            
             InformProgressReaders();
 
             _stateMachine.Enter<GameLoopState>();
@@ -72,21 +80,19 @@ namespace Roguelike.Infrastructure.States
         private void InitUIRoot() =>
             _uiFactory.CreateUIRoot();
 
-        private void InitGameWorld()
+        private void InitDungeon()
         {
-            if (SceneManager.GetActiveScene().name == LevelId.Dungeon.ToString())
-            {
-                _gameFactory.GenerateLevel(_stateMachine);
+            _gameFactory.GenerateLevel(_stateMachine);
 
-                GameObject player = InitPlayer();
+            GameObject player = InitPlayer();
 
-                InitHud(player);
-                CameraFollow(player);
-            }
-            else if (SceneManager.GetActiveScene().name == LevelId.Hub.ToString())
-            {
-                _gameFactory.CreateCharacterSelectionMode();
-            }
+            InitHud(player);
+            CameraFollow(player);
+        }
+
+        private void InitHub()
+        {
+            _gameFactory.CreateCharacterSelectionMode(_stateMachine);
         }
 
         private GameObject InitPlayer()
