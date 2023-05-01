@@ -9,7 +9,6 @@ namespace Roguelike.StaticData.Player
     public class PlayerStaticData : ScriptableObject
     {
         public CharacterStaticData StartCharacter;
-        public List<WeaponId> StartWeapons;
         public float WeaponSwtichCooldown;
         public float ImmuneTimeAfterHit;
         public int MaxHealth;

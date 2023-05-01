@@ -166,7 +166,7 @@ namespace Roguelike.Infrastructure.Factory
             BaseWindow characterSelectionWindow = _windowService.Open(WindowId.CharacterSelection);
 
             if (Camera.main.TryGetComponent(out CharacterSelectionMode characterSelection))
-                characterSelection.Construct(this, _staticDataService, _windowService, _saveLoadService,
+                characterSelection.Construct(this, _staticDataService, _windowService, _saveLoadService, _weaponFactory,
                     characterSelectionWindow);
             else
                 throw new ArgumentNullException(nameof(Camera),

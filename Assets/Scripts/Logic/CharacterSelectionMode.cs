@@ -19,6 +19,7 @@ namespace Roguelike.Logic
         private IStaticDataService _staticData;
         private IWindowService _windowService;
         private IGameFactory _gameFactory;
+        private IWeaponFactory _weaponFactory;
         private ISaveLoadService _saveLoadService;
         private RaycastHit _raycastHit;
         private Camera _camera;
@@ -27,11 +28,12 @@ namespace Roguelike.Logic
         private bool _characterSelected;
 
         public void Construct(IGameFactory gameFactory, IStaticDataService staticData, IWindowService windowService,
-            ISaveLoadService saveLoadService, BaseWindow selectionWindow)
+            ISaveLoadService saveLoadService, IWeaponFactory weaponFactory, BaseWindow selectionWindow)
         {
             _staticData = staticData;
             _windowService = windowService;
             _gameFactory = gameFactory;
+            _weaponFactory = weaponFactory;
             _saveLoadService = saveLoadService;
             _selectionWindow = selectionWindow;
             _isActive = true;
@@ -57,7 +59,7 @@ namespace Roguelike.Logic
                         CharacterStats characterStats = _windowService.Open(WindowId.CharacterStats) as CharacterStats;
 
                         if (characterStats != null)
-                            characterStats.Construct(_staticData.GetCharacterData(character.Id), this);
+                            characterStats.Construct(_staticData.GetCharacterData(character.Id), this, _weaponFactory);
 
                         ZoomIn(_raycastHit.collider.transform);
                     }

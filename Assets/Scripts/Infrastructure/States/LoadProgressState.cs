@@ -47,10 +47,12 @@ namespace Roguelike.Infrastructure.States
 
         private PlayerProgress CreateNewProgress()
         {
+            IWeapon startWeapon = _weaponFactory.CreateWeapon(_staticDataService.Player.StartCharacter.StartWeapon);
+
             PlayerProgress playerProgress = new(
                 _staticDataService.GameConfig.StartLevel,
                 _staticDataService.GameConfig.StartStage,
-                CreateStartWeapons(),
+                startWeapon,
                 _staticDataService.Player.StartCharacter.Id);
 
             playerProgress.State.MaxHealth = _staticDataService.Player.StartCharacter.MaxHealth;
@@ -58,10 +60,5 @@ namespace Roguelike.Infrastructure.States
 
             return playerProgress;
         }
-
-        private IEnumerable<IWeapon> CreateStartWeapons() =>
-            _staticDataService.Player.StartWeapons
-                .Select(weaponId => _weaponFactory.CreateWeapon(weaponId))
-                .ToList();
     }
 }

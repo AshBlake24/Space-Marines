@@ -11,16 +11,20 @@ namespace Roguelike.Data
     {
         public List<RangedWeaponData> RangedWeapons;
 
-        public PlayerWeapons(IEnumerable<IWeapon> startWeapons)
+        public PlayerWeapons(IWeapon startWeapon)
         {
             RangedWeapons = new List<RangedWeaponData>();
 
-            InitializeStartWeapons(startWeapons);
+            InitializeStartWeapon(startWeapon);
         }
-        
-        public IEnumerable<WeaponId> GetWeapons() => 
-            RangedWeapons.Select(rangedWeaponData => rangedWeaponData.ID)
-                .ToList();
+
+        public void InitializeStartWeapon(IWeapon startWeapon)
+        {
+            RangedWeapons.Clear();
+            
+            if (startWeapon is RangedWeapon rangedWeapon)
+                SaveRangedWeapon(rangedWeapon.Stats.ID, rangedWeapon.AmmoData);
+        }
 
         public void SaveRangedWeapon(WeaponId id, AmmoData ammoData)
         {
@@ -32,13 +36,8 @@ namespace Roguelike.Data
                 RangedWeapons.Add(new RangedWeaponData(id, ammoData));
         }
 
-        private void InitializeStartWeapons(IEnumerable<IWeapon> startWeapons)
-        {
-            foreach (IWeapon weapon in startWeapons)
-            {
-                if (weapon is RangedWeapon rangedWeapon)
-                    SaveRangedWeapon(rangedWeapon.Stats.ID, rangedWeapon.AmmoData);
-            }
-        }
+        public IEnumerable<WeaponId> GetWeapons() => 
+            RangedWeapons.Select(rangedWeaponData => rangedWeaponData.ID)
+                .ToList();
     }
 }

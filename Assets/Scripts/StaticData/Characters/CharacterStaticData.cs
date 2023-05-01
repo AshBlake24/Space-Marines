@@ -1,4 +1,5 @@
 using Roguelike.StaticData.Skills;
+using Roguelike.StaticData.Weapons;
 using UnityEngine;
 
 namespace Roguelike.StaticData.Characters
@@ -9,6 +10,7 @@ namespace Roguelike.StaticData.Characters
         public CharacterId Id;
         public Sprite Icon;
         public GameObject Prefab;
+        public WeaponId StartWeapon;
         public SkillStaticData Skill;
         [Range(1, 10)] public int MaxHealth;
         [TextArea(2, 3)] public string Desctription;
