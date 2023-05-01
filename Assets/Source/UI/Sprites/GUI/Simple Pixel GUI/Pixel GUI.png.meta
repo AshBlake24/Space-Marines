@@ -494,7 +494,7 @@ TextureImporter:
         width: 8
         height: 7
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -502,6 +502,90 @@ TextureImporter:
       bones: []
       spriteID: e22d2cb090beabb45bdd1ecde4730672
       internalID: 88083424
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Bar_Money
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 244
+        width: 32
+        height: 12
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 2, z: 2, w: 2}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 37234da67e9a34641a80860d1374ac20
+      internalID: -670870100
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Bar_Medium
+      rect:
+        serializedVersion: 2
+        x: 135
+        y: 293
+        width: 45
+        height: 7
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 1, y: 2, z: 4, w: 2}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d0fb725436d19d44cbd0d67eebc90786
+      internalID: -952818472
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Coin
+      rect:
+        serializedVersion: 2
+        x: 123
+        y: 247
+        width: 5
+        height: 6
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1502e0af43c31d640830c859b79d254e
+      internalID: -1265725846
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Bar_Fill_Red
+      rect:
+        serializedVersion: 2
+        x: 72
+        y: 279
+        width: 49
+        height: 3
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 2, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 24b6d64b0537a634b939d0a2f140b11c
+      internalID: 1123268826
       vertices: []
       indices: 
       edges: []
@@ -522,8 +606,11 @@ TextureImporter:
       Background_Frame_04_Paper: -1670458976
       Frame_Blank: -1605457360
       Button_Small_Disabled: -747108540
+      Bar_Medium: -952818472
       Button_Small_Unpressed: 77951601
+      Bar_Money: -670870100
       Icon_Close: 1779776133
+      Coin: -1265725846
       Background_Frame_02_White: -181432282
       Icon_Pause: 919746690
       Label_Dark: -1102630402
@@ -533,6 +620,7 @@ TextureImporter:
       Button_Big_Pressed: 715450763
       Button_Big_Unpressed: -310648107
       Button_Medium_Disabled: 1168565179
+      Bar_Fill_Red: 1123268826
       Background_Frame_01: 1800193526
       Button_Medium_Unpressed: 237973097
   spritePackingTag: 
