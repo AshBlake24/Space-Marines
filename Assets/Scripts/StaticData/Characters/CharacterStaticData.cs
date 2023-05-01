@@ -11,7 +11,7 @@ namespace Roguelike.StaticData.Characters
         public Sprite Icon;
         public GameObject Prefab;
         public WeaponId StartWeapon;
-        public SkillStaticData Skill;
+        public SkillId Skill;
         [Range(1, 10)] public int MaxHealth;
         [TextArea(2, 3)] public string Desctription;
     }

@@ -2,6 +2,7 @@ using Roguelike.Infrastructure.Factory;
 using Roguelike.Infrastructure.Services.StaticData;
 using Roguelike.Logic;
 using Roguelike.StaticData.Characters;
+using Roguelike.StaticData.Skills;
 using Roguelike.StaticData.Weapons;
 using Roguelike.UI.Buttons;
 using Roguelike.Weapons;
@@ -15,11 +16,10 @@ namespace Roguelike.UI.Windows
     {
         [SerializeField] private TextMeshProUGUI _title;
         [SerializeField] private Image _characterIcon;
-        [SerializeField] private Image _skillIcon; // todo
+        [SerializeField] private Image _skillIcon;
         [SerializeField] private Image _startWeaponIcon;
-        [SerializeField] private Button _selectButton;
         [SerializeField] private Elements.HealthBar _health;
-        [SerializeField] private string _description;
+        [SerializeField] private TextMeshProUGUI _description;
 
         private IWeaponFactory _weaponFactory;
         private IStaticDataService _staticData;
@@ -39,11 +39,13 @@ namespace Roguelike.UI.Windows
         protected override void Initialize()
         {
             WeaponStaticData startWeaponData = _staticData.GetWeaponData(_characterData.StartWeapon);
+            SkillStaticData skillData = _staticData.GetSkillStaticData(_characterData.Skill);
 
             _title.text = _characterData.Id.ToString();
             _characterIcon.sprite = _characterData.Icon;
             _startWeaponIcon.sprite = startWeaponData.Icon;
-            _description = _characterData.Desctription;
+            _skillIcon.sprite = skillData.Icon;
+            _description.text = _characterData.Desctription;
             _health.SetValue(_characterData.MaxHealth, _characterData.MaxHealth);
 
             _selectCharacterButton = GetComponentInChildren<SelectCharacterButton>();
