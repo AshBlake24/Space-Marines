@@ -1,4 +1,5 @@
 using Roguelike.StaticData.Weapons;
+using UnityEngine;
 
 namespace Roguelike.Weapons.Stats
 {
@@ -9,6 +10,7 @@ namespace Roguelike.Weapons.Stats
         private readonly WeaponSize _weaponSize;
         private readonly WeaponType _type;
         private readonly WeaponId _id;
+        private readonly Sprite _icon;
 
         protected WeaponStats(WeaponStaticData weaponData)
         {
@@ -17,6 +19,7 @@ namespace Roguelike.Weapons.Stats
             _weaponSize = weaponData.Size;
             _type = weaponData.Type;
             _id = weaponData.Id;
+            _icon = weaponData.Icon;
         }
         
         public string Name => _name;
@@ -24,5 +27,7 @@ namespace Roguelike.Weapons.Stats
         public WeaponSize Size => _weaponSize;
         public WeaponType Type => _type;
         public WeaponId ID => _id;
+        public Sprite Icon => _icon;
+
     }
 }

@@ -29,7 +29,9 @@ namespace Roguelike.Player
         private float _attackSpeedMultiplier;
 
         public event Action<IWeapon> WeaponChanged;
-        
+
+        public int WeaponsCount => _weapons.Count;
+
         private void OnGUI()
         {
             if (GUI.Button(new Rect(30, 150, 100, 35), "Refill ammo"))
@@ -76,6 +78,32 @@ namespace Roguelike.Player
                 return;
 
             TryAttack();
+        }
+
+        public IWeapon TryGetNextWeapon()
+        {
+            if (WeaponsCount <= 1)
+                return null;
+
+            int nextWeaponIndex = _currentWeaponIndex + 1;
+            
+            if (nextWeaponIndex >= WeaponsCount)
+                nextWeaponIndex = 0;
+
+            return _weapons[nextWeaponIndex];
+        }
+        
+        public IWeapon TryGetPreviousWeapon()
+        {
+            if (WeaponsCount <= 1)
+                return null;
+
+            int nextWeaponIndex = _currentWeaponIndex - 1;
+            
+            if (nextWeaponIndex < 0)
+                nextWeaponIndex = WeaponsCount - 1;
+
+            return _weapons[nextWeaponIndex];
         }
 
         public bool TryAddWeapon(WeaponId weaponId)

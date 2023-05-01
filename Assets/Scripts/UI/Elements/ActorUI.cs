@@ -9,15 +9,15 @@ namespace Roguelike.UI.Elements
 
         private PlayerHealth _playerHealth;
 
-        private void OnDestroy() => 
+        private void OnDestroy() =>
             _playerHealth.HealthChanged -= OnHealthChanged;
 
         public void Construct(PlayerHealth playerHealth)
         {
             _playerHealth = playerHealth;
             _playerHealth.HealthChanged += OnHealthChanged;
-            }
-        
+        }
+
         private void OnHealthChanged()
         {
             _healthBar.SetValue(_playerHealth.CurrentHealth, _playerHealth.MaxHealth);
