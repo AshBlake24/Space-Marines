@@ -10,6 +10,7 @@ namespace Roguelike.StaticData.Weapons
         public WeaponType Type;
         public WeaponSize Size;
         public GameObject WeaponPrefab;
+        public Sprite Icon;
         public string Name;
         
         

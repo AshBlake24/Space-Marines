@@ -59,7 +59,8 @@ namespace Roguelike.Logic
                         CharacterStats characterStats = _windowService.Open(WindowId.CharacterStats) as CharacterStats;
 
                         if (characterStats != null)
-                            characterStats.Construct(_staticData.GetCharacterData(character.Id), this, _weaponFactory);
+                            characterStats.Construct(_staticData.GetCharacterData(character.Id), this, _staticData,
+                                _weaponFactory);
 
                         ZoomIn(_raycastHit.collider.transform);
                     }
