@@ -38,7 +38,7 @@ namespace Roguelike.Weapons
         public void Construct(RangedWeaponStats stats)
         {
             _stats = stats;
-            AmmoData = new AmmoData(_stats.InfinityAmmo, _stats.MaxAmmo, _stats.MaxAmmo);
+            AmmoData = new AmmoData(infinityAmmo: false, _stats.MaxAmmo, _stats.MaxAmmo);
             
             CreateProjectilesPool();
             CreateMuzzleFlashVFX();

@@ -23,7 +23,9 @@ namespace Roguelike.Data
             RangedWeapons.Clear();
             
             if (startWeapon is RangedWeapon rangedWeapon)
-                SaveRangedWeapon(rangedWeapon.Stats.ID, rangedWeapon.AmmoData);
+                SaveRangedWeapon(
+                    rangedWeapon.Stats.ID, 
+                    new AmmoData(infinityAmmo: true, currentAmmo: -1, maxAmmo: -1));
         }
 
         public void SaveRangedWeapon(WeaponId id, AmmoData ammoData)

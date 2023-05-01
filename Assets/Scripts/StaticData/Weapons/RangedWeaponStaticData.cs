@@ -11,7 +11,6 @@ namespace Roguelike.StaticData.Weapons
         [Range(0.01f, 0.1f)] public float VerticalSpread;
 
         [Header("Ammo")]
-        public bool InfinityAmmo;
         [Range(1, 300)] public int MaxAmmo;
         public ProjectileStaticData Projectile;
     }
