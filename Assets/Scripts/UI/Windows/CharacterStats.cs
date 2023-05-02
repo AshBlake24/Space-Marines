@@ -2,6 +2,7 @@ using Roguelike.Infrastructure.Factory;
 using Roguelike.Infrastructure.Services.StaticData;
 using Roguelike.Logic;
 using Roguelike.StaticData.Characters;
+using Roguelike.StaticData.Projectiles;
 using Roguelike.StaticData.Skills;
 using Roguelike.StaticData.Weapons;
 using Roguelike.UI.Buttons;
@@ -15,12 +16,24 @@ namespace Roguelike.UI.Windows
 {
     public class CharacterStats : BaseWindow
     {
-        [SerializeField] private TextMeshProUGUI _title;
+        [Header("Character")]
         [SerializeField] private Image _characterIcon;
-        [SerializeField] private Image _skillIcon;
-        [SerializeField] private Image _startWeaponIcon;
         [SerializeField] private HealthBar _health;
+        [SerializeField] private TextMeshProUGUI _characterName;
         [SerializeField] private TextMeshProUGUI _description;
+        
+        [Header("Weapon")] 
+        [SerializeField] private Image _startWeaponIcon;
+        [SerializeField] private TextMeshProUGUI _weaponName;
+        [SerializeField] private TextMeshProUGUI _damage;
+        [SerializeField] private TextMeshProUGUI _attackRate;
+        [SerializeField] private TextMeshProUGUI _ammo;
+        
+        [Header("Skill")]
+        [SerializeField] private Image _skillIcon;
+        [SerializeField] private TextMeshProUGUI _skillName;
+        [SerializeField] private TextMeshProUGUI _cooldown;
+        [SerializeField] private TextMeshProUGUI _skillDescription;
 
         private IWeaponFactory _weaponFactory;
         private IStaticDataService _staticData;
@@ -42,16 +55,44 @@ namespace Roguelike.UI.Windows
             WeaponStaticData startWeaponData = _staticData.GetWeaponData(_characterData.StartWeapon);
             SkillStaticData skillData = _staticData.GetSkillStaticData(_characterData.Skill);
 
-            _title.text = _characterData.Id.ToString();
-            _characterIcon.sprite = _characterData.Icon;
-            _startWeaponIcon.sprite = startWeaponData.Icon;
-            _skillIcon.sprite = skillData.Icon;
-            _description.text = _characterData.Desctription;
-            _health.SetValue(_characterData.MaxHealth, _characterData.MaxHealth);
+            InitCharacter();
+            InitWeapon(startWeaponData);
+            InitSkill(skillData);
 
             _selectCharacterButton = GetComponentInChildren<SelectCharacterButton>();
             _selectCharacterButton.Construct(_characterData, ProgressService);
             _selectCharacterButton.CharacterSelected += OnCharacterSelected;
+        }
+
+        private void InitCharacter()
+        {
+            _characterName.text = _characterData.Id.ToString();
+            _characterIcon.sprite = _characterData.Icon;
+            _health.SetValue(_characterData.MaxHealth, _characterData.MaxHealth);
+            _description.text = _characterData.Desctription;
+        }
+
+        private void InitWeapon(WeaponStaticData startWeaponData)
+        {
+            _startWeaponIcon.sprite = startWeaponData.Icon;
+            _weaponName.text = startWeaponData.Name;
+            _attackRate.text = $"Attack Rate: {startWeaponData.AttackRate}s";
+
+            if (startWeaponData is RangedWeaponStaticData rangedWeaponData)
+            {
+                ProjectileStaticData projectileData = _staticData.GetProjectileData(rangedWeaponData.Projectile.Id);
+                
+                _damage.text = $"Damage: {projectileData.Damage}";
+                _ammo.text = $"Ammo: {rangedWeaponData.MaxAmmo}";
+            }
+        }
+
+        private void InitSkill(SkillStaticData skillData)
+        {
+            _skillIcon.sprite = skillData.Icon;
+            _skillName.text = skillData.Id.ToString();
+            _skillDescription.text = skillData.Description;
+            _cooldown.text = $"Cooldown: {skillData.SkillCooldown}s";
         }
 
         private void OnCharacterSelected()

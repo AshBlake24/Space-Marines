@@ -1,4 +1,3 @@
-using Roguelike.Player.Skills;
 using UnityEngine;
 
 namespace Roguelike.StaticData.Skills
@@ -7,6 +6,7 @@ namespace Roguelike.StaticData.Skills
     {
         public SkillId Id;
         public Sprite Icon;
+        public string Description;
         [Range(5, 60)] public float SkillCooldown;
 
         [Header("VFX")] 
