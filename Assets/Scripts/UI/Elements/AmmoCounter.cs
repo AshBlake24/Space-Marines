@@ -47,8 +47,8 @@ namespace Roguelike.UI.Elements
         private void OnFired()
         {
             _currentAmmo.text = _ammoData.InfinityAmmo 
-                ? "Ammo: infinity" 
-                : $"Ammo: {_ammoData.CurrentAmmo}/{_ammoData.MaxAmmo}";
+                ? "infinity" 
+                : $"{_ammoData.CurrentAmmo}/{_ammoData.MaxAmmo}";
         }
     }
 }

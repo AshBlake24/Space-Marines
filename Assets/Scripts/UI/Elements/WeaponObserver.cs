@@ -10,12 +10,18 @@ namespace Roguelike.UI.Elements
         [SerializeField] private Image _currentWeapon;
         [SerializeField] private Image _nextWeapon;
         [SerializeField] private Image _previousWeapon;
+        [SerializeField] private Sprite _emptyWeaponSprite;
 
         private PlayerShooter _playerShooter;
 
         public void Construct(PlayerShooter playerShooter)
         {
             _playerShooter = playerShooter;
+
+            _previousWeapon.sprite = _emptyWeaponSprite;
+            _currentWeapon.sprite = _emptyWeaponSprite;
+            _nextWeapon.sprite = _emptyWeaponSprite;
+
             playerShooter.WeaponChanged += OnWeaponChanged;
         }
 
@@ -30,8 +36,10 @@ namespace Roguelike.UI.Elements
             }
         }
 
-        private void SetPreviousWeaponSprite() => 
+        private void SetPreviousWeaponSprite()
+        {
             _previousWeapon.sprite = _playerShooter.TryGetPreviousWeapon().Stats.Icon;
+        }
 
         private void SetNextWeaponIcon() => 
             _nextWeapon.sprite = _playerShooter.TryGetNextWeapon().Stats.Icon;
