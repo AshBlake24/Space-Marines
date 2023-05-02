@@ -79,6 +79,8 @@ namespace Roguelike.Infrastructure.Factory
                 : AssetPath.MobileHudPath);
 
             PlayerShooter playerShooter = player.GetComponent<PlayerShooter>();
+            CharacterStaticData characterData = _staticDataService
+                .GetCharacterData(_persistentData.PlayerProgress.Character);
 
             hud.GetComponentInChildren<WeaponObserver>()
                 .Construct(playerShooter);
@@ -88,11 +90,42 @@ namespace Roguelike.Infrastructure.Factory
 
             hud.GetComponentInChildren<ActorUI>()
                 .Construct(player.GetComponent<PlayerHealth>());
+            
+            hud.GetComponentInChildren<CharacterIcon>()
+                .Construct(characterData.Icon);
 
             foreach (OpenWindowButton openWindowButton in hud.GetComponentsInChildren<OpenWindowButton>())
                 openWindowButton.Construct(_windowService);
 
             return hud;
+        }
+
+        public GameObject GenerateLevel(GameStateMachine stateMachine)
+        {
+            StageId id = _persistentData.PlayerProgress.WorldData.CurrentStage;
+
+            LevelStaticData levelData = _staticDataService.GetLevelStaticData(id);
+
+            GameObject LevelGeneratorPrefab = InstantiateRegistered(AssetPath.LevelGeneratorPath);
+
+            LevelGenerator levelGenerator = LevelGeneratorPrefab.GetComponent<LevelGenerator>();
+
+            levelGenerator.Init(levelData, stateMachine);
+            levelGenerator.BuildLevel(_enemyFactory);
+
+            return LevelGeneratorPrefab;
+        }
+
+        public void CreateCharacterSelectionMode()
+        {
+            BaseWindow characterSelectionWindow = _windowService.Open(WindowId.CharacterSelection);
+
+            if (Camera.main.TryGetComponent(out CharacterSelectionMode characterSelection))
+                characterSelection.Construct(this, _staticDataService, _windowService, _saveLoadService, _weaponFactory,
+                    characterSelectionWindow);
+            else
+                throw new ArgumentNullException(nameof(Camera),
+                    "Camera is missing a component of CharacterSelectionMode");
         }
 
         private GameObject CreateCharacter(CharacterId id, GameObject player)
@@ -112,7 +145,6 @@ namespace Roguelike.Infrastructure.Factory
             {
                 new(player.GetComponentInChildren<AimTarget>().transform, 1)
             };
-
 
             character.GetComponentInChildren<RigBuilder>().Build();
 
@@ -148,39 +180,6 @@ namespace Roguelike.Infrastructure.Factory
             _saveLoadService.RegisterProgressWatchers(gameObject);
 
             return gameObject;
-        }
-
-        public GameObject GenerateLevel(GameStateMachine stateMachine)
-        {
-            StageId id = _persistentData.PlayerProgress.WorldData.CurrentStage;
-
-            LevelStaticData levelData = _staticDataService.GetLevelStaticData(id);
-
-            GameObject LevelGeneratorPrefab = InstantiateRegistered(AssetPath.LevelGeneratorPath);
-
-            LevelGenerator levelGenerator = LevelGeneratorPrefab.GetComponent<LevelGenerator>();
-
-            levelGenerator.Init(levelData, stateMachine);
-            levelGenerator.BuildLevel(_enemyFactory);
-
-            return LevelGeneratorPrefab;
-        }
-
-        public void CreateCharacterSelectionMode()
-        {
-            BaseWindow characterSelectionWindow = _windowService.Open(WindowId.CharacterSelection);
-
-            if (Camera.main.TryGetComponent(out CharacterSelectionMode characterSelection))
-                characterSelection.Construct(this, _staticDataService, _windowService, _saveLoadService, _weaponFactory,
-                    characterSelectionWindow);
-            else
-                throw new ArgumentNullException(nameof(Camera),
-                    "Camera is missing a component of CharacterSelectionMode");
-        }
-
-        public void Cleanup()
-        {
-            throw new System.NotImplementedException();
         }
     }
 }

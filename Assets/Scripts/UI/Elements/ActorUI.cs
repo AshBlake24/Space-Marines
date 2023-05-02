@@ -1,4 +1,4 @@
-using Roguelike.Player;
+using Roguelike.Logic;
 using UnityEngine;
 
 namespace Roguelike.UI.Elements
@@ -7,20 +7,20 @@ namespace Roguelike.UI.Elements
     {
         [SerializeField] private HealthBar _healthBar;
 
-        private PlayerHealth _playerHealth;
+        private IHealth _health;
 
         private void OnDestroy() =>
-            _playerHealth.HealthChanged -= OnHealthChanged;
+            _health.HealthChanged -= OnHealthChanged;
 
-        public void Construct(PlayerHealth playerHealth)
+        public void Construct(IHealth health)
         {
-            _playerHealth = playerHealth;
-            _playerHealth.HealthChanged += OnHealthChanged;
+            _health = health;
+            _health.HealthChanged += OnHealthChanged;
         }
 
         private void OnHealthChanged()
         {
-            _healthBar.SetValue(_playerHealth.CurrentHealth, _playerHealth.MaxHealth);
+            _healthBar.SetValue(_health.CurrentHealth, _health.MaxHealth);
         }
     }
 }
