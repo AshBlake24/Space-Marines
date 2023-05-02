@@ -34,7 +34,7 @@ namespace Roguelike.Player
 
         private void OnGUI()
         {
-            if (GUI.Button(new Rect(30, 150, 100, 35), "Refill ammo"))
+            if (GUI.Button(new Rect(30, 300, 100, 35), "Refill ammo"))
             {
                 foreach (IWeapon weapon in _weapons)
                 {

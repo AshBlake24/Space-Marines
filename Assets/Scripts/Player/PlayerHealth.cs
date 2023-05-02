@@ -43,7 +43,7 @@ namespace Roguelike.Player
 
         private void OnGUI()
         {
-            if (GUI.Button(new Rect(30, 100, 100, 35), "Take Damage"))
+            if (GUI.Button(new Rect(30, 250, 100, 35), "Take Damage"))
                 TakeDamage(1);
         }
 
