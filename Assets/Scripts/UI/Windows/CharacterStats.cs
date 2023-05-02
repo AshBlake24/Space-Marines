@@ -5,6 +5,7 @@ using Roguelike.StaticData.Characters;
 using Roguelike.StaticData.Skills;
 using Roguelike.StaticData.Weapons;
 using Roguelike.UI.Buttons;
+using Roguelike.UI.Elements;
 using Roguelike.Weapons;
 using TMPro;
 using UnityEngine;
@@ -18,7 +19,7 @@ namespace Roguelike.UI.Windows
         [SerializeField] private Image _characterIcon;
         [SerializeField] private Image _skillIcon;
         [SerializeField] private Image _startWeaponIcon;
-        [SerializeField] private Elements.HealthBar _health;
+        [SerializeField] private HealthBar _health;
         [SerializeField] private TextMeshProUGUI _description;
 
         private IWeaponFactory _weaponFactory;

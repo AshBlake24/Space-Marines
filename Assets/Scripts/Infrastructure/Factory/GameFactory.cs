@@ -78,8 +78,13 @@ namespace Roguelike.Infrastructure.Factory
                 ? AssetPath.DesktopHudPath
                 : AssetPath.MobileHudPath);
 
+            PlayerShooter playerShooter = player.GetComponent<PlayerShooter>();
+
+            hud.GetComponentInChildren<WeaponObserver>()
+                .Construct(playerShooter);
+
             hud.GetComponentInChildren<AmmoCounter>()
-                .Construct(player.GetComponent<PlayerShooter>());
+                .Construct(playerShooter);
 
             hud.GetComponentInChildren<ActorUI>()
                 .Construct(player.GetComponent<PlayerHealth>());
