@@ -69,7 +69,7 @@ namespace Roguelike.Player
             }
             else
             {
-                _currentTargetInteractable = null;
+                ClearCurrentInteractable();
             }
         }
 
@@ -100,11 +100,18 @@ namespace Roguelike.Player
 
         private void ChangeCurrentInteractable(IInteractable closestInteractable)
         {
-            if (_currentTargetInteractable != null)
-                _currentTargetInteractable.Outline.enabled = false;
-
+            ClearCurrentInteractable();
             _currentTargetInteractable = closestInteractable;
             _currentTargetInteractable.Outline.enabled = true;
+        }
+
+        private void ClearCurrentInteractable()
+        {
+            if (_currentTargetInteractable != null)
+            {
+                _currentTargetInteractable.Outline.enabled = false;
+                _currentTargetInteractable = null;
+            }
         }
 
         private void OnInteracted() =>
