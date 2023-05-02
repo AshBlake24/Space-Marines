@@ -90,7 +90,7 @@ namespace Roguelike.Infrastructure.Factory
 
             hud.GetComponentInChildren<ActorUI>()
                 .Construct(player.GetComponent<PlayerHealth>());
-            
+
             hud.GetComponentInChildren<CharacterIcon>()
                 .Construct(characterData.Icon);
 
