@@ -128,8 +128,15 @@ namespace Roguelike.Infrastructure.Factory
                     "Camera is missing a component of CharacterSelectionMode");
         }
 
-        public void CreateMainMenu() => 
-            _windowService.Open(WindowId.MainMenu);
+        public void CreateMainMenu(GameStateMachine gameStateMachine)
+        {
+            BaseWindow window = _windowService.Open(WindowId.MainMenu);
+
+            if (window is MainMenu mainMenu)
+                mainMenu.Construct(gameStateMachine, _staticDataService);
+            else
+                throw new ArgumentNullException(nameof(window), "The window has no MainWindow component");
+        }
 
         private GameObject CreateCharacter(CharacterId id, GameObject player)
         {

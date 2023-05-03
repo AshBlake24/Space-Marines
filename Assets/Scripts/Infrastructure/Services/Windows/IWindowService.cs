@@ -1,3 +1,4 @@
+using Roguelike.Infrastructure.Services.StaticData;
 using Roguelike.UI.Windows;
 using UnityEngine;
 

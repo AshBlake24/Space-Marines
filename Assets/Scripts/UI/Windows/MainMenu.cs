@@ -1,4 +1,11 @@
+using System;
+using System.Linq;
+using System.Text;
+using Roguelike.Data;
+using Roguelike.Infrastructure.Services.StaticData;
+using Roguelike.Infrastructure.States;
 using Roguelike.StaticData.Levels;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,7 +15,16 @@ namespace Roguelike.UI.Windows
     {
         [SerializeField] private Button _newGameButton;
         [SerializeField] private Button _continueButton;
+        
+        private GameStateMachine _stateMachine;
+        private IStaticDataService _staticData;
 
+        public void Construct(GameStateMachine stateMachine, IStaticDataService staticData)
+        {
+            _stateMachine = stateMachine;
+            _staticData = staticData;
+        }
+        
         protected override void Initialize()
         {
             InitNewGameButton();
@@ -24,15 +40,34 @@ namespace Roguelike.UI.Windows
 
         private void InitContinueButton()
         {
+            TextMeshProUGUI continueButtonText = _continueButton.GetComponentInChildren<TextMeshProUGUI>();
+
             if (ProgressService.PlayerProgress.WorldData.CurrentLevel == LevelId.Dungeon)
             {
+                string currentStage = ParseCurrentStage();
+                continueButtonText.text = $"Continue\n({currentStage})";
                 _continueButton.interactable = true;
                 _continueButton.onClick.AddListener(OnContinueGame);
             }
             else
             {
+                continueButtonText.text = "Continue";
                 _continueButton.interactable = false;
             }
+        }
+
+        private string ParseCurrentStage()
+        {
+            StringBuilder stringBuilder = new();
+            
+            string stage = ProgressService.PlayerProgress.WorldData.CurrentStage.ToString();
+            
+            foreach (char symb in stage.Where(char.IsDigit))
+                stringBuilder.Append(symb);
+
+            stringBuilder.Insert(1, '-');
+
+            return stringBuilder.ToString();
         }
 
         private void InitNewGameButton() => 
@@ -40,12 +75,18 @@ namespace Roguelike.UI.Windows
 
         private void OnNewGame()
         {
-            throw new System.NotImplementedException();
+            ProgressService.PlayerProgress.WorldData = new WorldData(
+                _staticData.GameConfig.StartLevel,
+                _staticData.GameConfig.StartStage);
+            
+            _stateMachine.Enter<LoadLevelState, string>(
+                ProgressService.PlayerProgress.WorldData.CurrentLevel.ToString());
         }
 
         private void OnContinueGame()
         {
-            throw new System.NotImplementedException();
+            _stateMachine.Enter<LoadLevelState, string>(
+                ProgressService.PlayerProgress.WorldData.CurrentLevel.ToString());
         }
     }
 }

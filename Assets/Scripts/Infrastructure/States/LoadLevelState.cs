@@ -94,7 +94,7 @@ namespace Roguelike.Infrastructure.States
             _uiFactory.CreateUIRoot();
 
         private void InitMainMenu() =>
-            _gameFactory.CreateMainMenu();
+            _gameFactory.CreateMainMenu(_stateMachine);
 
         private void InitHub() =>
             _gameFactory.CreateCharacterSelectionMode();

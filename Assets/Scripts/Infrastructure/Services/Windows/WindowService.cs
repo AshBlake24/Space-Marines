@@ -1,5 +1,6 @@
 using System;
 using Roguelike.Infrastructure.Factory;
+using Roguelike.Infrastructure.Services.StaticData;
 using Roguelike.UI.Windows;
 using UnityEngine;
 
