@@ -55,7 +55,7 @@ namespace Roguelike.Infrastructure.States
                 _staticDataService.Player.StartCharacter.Id);
 
             playerProgress.State.MaxHealth = _staticDataService.Player.StartCharacter.MaxHealth;
-            playerProgress.State.ResetHealth();
+            playerProgress.State.ResetState();
 
             return playerProgress;
         }
