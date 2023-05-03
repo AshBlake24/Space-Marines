@@ -88,7 +88,8 @@ namespace Roguelike.Infrastructure.States
                 _services.Single<ISkillFactory>(),
                 _services.Single<IEnemyFactory>(),
                 _services.Single<IWindowService>(),
-                _services.Single<IEnvironmentService>()));
+                _services.Single<IEnvironmentService>(),
+                _services.Single<ISceneLoadingService>()));
         }
 
         private void RegisterStaticData()

@@ -8,7 +8,7 @@ namespace Roguelike.Infrastructure.Factory
     {
         GameObject CreatePlayer(Transform playerInitialPoint);
         GameObject CreateHud(GameObject player);
-        GameObject GenerateLevel(GameStateMachine stateMachine);
+        GameObject GenerateLevel();
         void CreateCharacterSelectionMode();
     }
 }

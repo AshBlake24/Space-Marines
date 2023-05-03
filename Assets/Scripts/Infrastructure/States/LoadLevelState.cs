@@ -100,7 +100,7 @@ namespace Roguelike.Infrastructure.States
 
         private void InitDungeon()
         {
-            _gameFactory.GenerateLevel(_stateMachine);
+            _gameFactory.GenerateLevel();
 
             GameObject player = InitPlayer();
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Roguelike.Infrastructure.AssetManagement;
 using Roguelike.Infrastructure.Services.Environment;
+using Roguelike.Infrastructure.Services.Loading;
 using Roguelike.Infrastructure.Services.PersistentData;
 using Roguelike.Infrastructure.Services.SaveLoad;
 using Roguelike.Infrastructure.Services.StaticData;
@@ -34,6 +35,7 @@ namespace Roguelike.Infrastructure.Factory
         private readonly IEnemyFactory _enemyFactory;
         private readonly IWindowService _windowService;
         private readonly IEnvironmentService _environmentService;
+        private readonly ISceneLoadingService _sceneLoadingService;
 
         public GameFactory(IAssetProvider assetProvider,
             IPersistentDataService persistentData,
@@ -43,7 +45,8 @@ namespace Roguelike.Infrastructure.Factory
             ISkillFactory skillFactory,
             IEnemyFactory enemyFactory,
             IWindowService windowService,
-            IEnvironmentService environmentService)
+            IEnvironmentService environmentService,
+            ISceneLoadingService sceneLoadingService)
         {
             _assetProvider = assetProvider;
             _persistentData = persistentData;
@@ -53,6 +56,7 @@ namespace Roguelike.Infrastructure.Factory
             _skillFactory = skillFactory;
             _windowService = windowService;
             _environmentService = environmentService;
+            _sceneLoadingService = sceneLoadingService;
             _enemyFactory = enemyFactory;
         }
 
@@ -101,7 +105,7 @@ namespace Roguelike.Infrastructure.Factory
             return hud;
         }
 
-        public GameObject GenerateLevel(GameStateMachine stateMachine)
+        public GameObject GenerateLevel()
         {
             StageId id = _persistentData.PlayerProgress.WorldData.CurrentStage;
 
@@ -109,7 +113,7 @@ namespace Roguelike.Infrastructure.Factory
             LevelGenerator levelGenerator = LevelGeneratorPrefab.GetComponent<LevelGenerator>();
             LevelStaticData levelData = _staticDataService.GetLevelStaticData(id);
 
-            levelGenerator.Init(levelData, stateMachine);
+            levelGenerator.Init(levelData, _persistentData, _sceneLoadingService);
             levelGenerator.BuildLevel(_enemyFactory);
 
             return LevelGeneratorPrefab;

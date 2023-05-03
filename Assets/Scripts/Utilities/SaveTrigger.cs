@@ -7,7 +7,7 @@ namespace Roguelike.Utilities
     public class SaveTrigger : MonoBehaviour
     {
         [SerializeField] private BoxCollider Collider;
-        [SerializeField] private  Color Color;
+        [SerializeField] private Color Color;
         
         private ISaveLoadService _saveLoadService;
 

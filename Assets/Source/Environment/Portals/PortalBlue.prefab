@@ -44212,6 +44212,7 @@ GameObject:
   - component: {fileID: 198004938229659266}
   - component: {fileID: 199729590967692660}
   - component: {fileID: 1769356024199409171}
+  - component: {fileID: 6101076998136149922}
   m_Layer: 15
   m_Name: PortalBlue
   m_TagString: Untagged
@@ -49109,8 +49110,20 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1920877173111918}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1.0003173, y: 0.9931955, z: 0.057969227}
   m_Center: {x: 0, y: 0, z: 0.009725477}
+--- !u!114 &6101076998136149922
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1920877173111918}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ef3567b6dbe4ea0bd4b377636c43d47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

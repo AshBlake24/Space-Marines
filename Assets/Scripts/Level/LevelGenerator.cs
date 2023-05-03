@@ -8,6 +8,7 @@ using Roguelike.Infrastructure.States;
 using Roguelike.Player;
 using Roguelike.StaticData.Levels;
 using System.Collections.Generic;
+using Roguelike.Infrastructure.Services.Loading;
 using UnityEngine;
 
 namespace Roguelike.Level
@@ -25,15 +26,18 @@ namespace Roguelike.Level
         private Room _currentRoom;
         private Room _currentCorridor;
         private ExitPoint _connectingPoint;
-        private GameStateMachine _stateMachine;
         private ISaveLoadService _saveLoadService;
+        private ISceneLoadingService _sceneLoadingService;
+        private IPersistentDataService _persistentDataService;
 
-        public void Init(LevelStaticData levelData, GameStateMachine stateMashine)
+        public void Init(LevelStaticData levelData, IPersistentDataService persistentDataService,
+            ISceneLoadingService sceneLoadingService)
         {
             _data = levelData;
             _roomsCount = levelData.AreaRoomCount;
             _bonusRoomCount = levelData.BonusRoomCount;
-            _stateMachine= stateMashine;
+            _sceneLoadingService = sceneLoadingService;
+            _persistentDataService = persistentDataService;
 
             _saveLoadService = AllServices.Container.Single<ISaveLoadService>();
         }
@@ -110,7 +114,7 @@ namespace Roguelike.Level
 
             _saveLoadService.SaveProgress();
 
-            _stateMachine.Enter<LoadProgressState>();
+            _sceneLoadingService.Load(_persistentDataService.PlayerProgress.WorldData.CurrentLevel);
         }
 
         private Room CreateRoom(Room exitRoom, List<Room> roomType, ExitPoint currentExitPoint = null)
