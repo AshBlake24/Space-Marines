@@ -10,7 +10,6 @@ using Roguelike.StaticData.Levels;
 using Roguelike.Utilities;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using CameraFollower = Roguelike.Logic.CameraFollower;
 
 namespace Roguelike.Infrastructure.States
 {
