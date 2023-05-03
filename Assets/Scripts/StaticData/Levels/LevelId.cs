@@ -2,7 +2,8 @@ namespace Roguelike.StaticData.Levels
 {
     public enum LevelId
     {
-        Hub,
-        Dungeon
+        MainMenu = 0,
+        Hub = 1,
+        Dungeon = 2
     }
 }
