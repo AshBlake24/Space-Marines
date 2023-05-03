@@ -104,11 +104,9 @@ namespace Roguelike.Infrastructure.Factory
         {
             StageId id = _persistentData.PlayerProgress.WorldData.CurrentStage;
 
-            LevelStaticData levelData = _staticDataService.GetLevelStaticData(id);
-
             GameObject LevelGeneratorPrefab = InstantiateRegistered(AssetPath.LevelGeneratorPath);
-
             LevelGenerator levelGenerator = LevelGeneratorPrefab.GetComponent<LevelGenerator>();
+            LevelStaticData levelData = _staticDataService.GetLevelStaticData(id);
 
             levelGenerator.Init(levelData, stateMachine);
             levelGenerator.BuildLevel(_enemyFactory);

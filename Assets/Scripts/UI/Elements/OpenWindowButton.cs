@@ -1,4 +1,3 @@
-using System;
 using Roguelike.Infrastructure.Services.Windows;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,6 +8,7 @@ namespace Roguelike.UI.Elements
     {
         [SerializeField] private Button _button;
         [SerializeField] private WindowId _windowId;
+        
         private IWindowService _windowService;
 
         public void Construct(IWindowService windowService) => 
@@ -16,6 +16,9 @@ namespace Roguelike.UI.Elements
 
         private void Awake() => 
             _button.onClick.AddListener(Open);
+
+        private void OnDestroy() => 
+            _button.onClick.RemoveAllListeners();
 
         private void Open() => 
             _windowService.Open(_windowId);
