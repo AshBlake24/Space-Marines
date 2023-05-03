@@ -10,6 +10,7 @@ namespace Roguelike.StaticData.Enemies
         public EnemyId Id;
         public EnemyType EnemyType;
         public GameObject Prefab;
+        [Range(0.01f, 1f)] public float Danger;
         public int Health;
         public int Damage;
         public float Speed;

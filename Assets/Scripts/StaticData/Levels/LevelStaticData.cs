@@ -12,6 +12,8 @@ namespace Roguelike.StaticData.Levels
         public StageId Id;
         public StageId NextLevelId;
         public int AreaRoomCount;
+        public float MinEncounterComplexity;
+        public float MaxEncounterComplexity;
         public int BonusRoomCount;
         public GameObject LevelGeneratorPrefab;
 

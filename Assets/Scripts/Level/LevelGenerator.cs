@@ -10,6 +10,7 @@ using Roguelike.StaticData.Levels;
 using System.Collections.Generic;
 using UnityEditor.AI;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace Roguelike.Level
 {
@@ -29,11 +30,11 @@ namespace Roguelike.Level
         private GameStateMachine _stateMachine;
         private ISaveLoadService _saveLoadService;
 
-        public void Init(LevelStaticData leveData, GameStateMachine stateMashine)
+        public void Init(LevelStaticData levelData, GameStateMachine stateMashine)
         {
-            _data = leveData;
-            _roomsCount = leveData.AreaRoomCount;
-            _bonusRoomCount = leveData.BonusRoomCount;
+            _data = levelData;
+            _roomsCount = levelData.AreaRoomCount;
+            _bonusRoomCount = levelData.BonusRoomCount;
             _stateMachine= stateMashine;
 
             _saveLoadService = AllServices.Container.Single<ISaveLoadService>();
@@ -64,8 +65,6 @@ namespace Roguelike.Level
 
             ConnectCorridor();
             ConnectFinishRoom();
-
-            NavMeshBuilder.BuildNavMesh();
         }
 
         private void ConnectCorridor()
@@ -78,7 +77,8 @@ namespace Roguelike.Level
         {
             Room areaRoom = CreateRoom(_currentCorridor, _data.AreaRooms);
 
-            areaRoom.gameObject.GetComponent<EnemySpawner>().Init(_enemyFactory);
+            if (areaRoom.gameObject.TryGetComponent<EnemySpawner>(out EnemySpawner enemySpawner))
+                enemySpawner.Init(_enemyFactory,_data.MinEncounterComplexity, _data.MaxEncounterComplexity);
 
             _currentRoom.HideExit();
 
@@ -97,6 +97,8 @@ namespace Roguelike.Level
 
         private void ConnectFinishRoom()
         {
+            _currentRoom.HideExit();
+
             _currentRoom = CreateRoom(_currentCorridor, _data.FinishRoom);
 
             _enterTriger = _currentRoom.gameObject.GetComponentInChildren<EnterTriger>();

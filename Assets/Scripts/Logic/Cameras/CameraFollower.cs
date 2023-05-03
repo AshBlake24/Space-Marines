@@ -7,10 +7,12 @@ namespace Roguelike.Logic.Cameras
     public class CameraFollower : MonoBehaviour
     {
         [SerializeField] private Transform _following;
+        [SerializeField] private Transform _miniMapCamera;
         [SerializeField] private Vector3 _positionOffset;
         [SerializeField] private Vector3 _rotationOffset;
 
         private Wall _hiddenWall;
+        private Vector3 _currentPosition;
 
         private void LateUpdate()
         {
@@ -19,6 +21,10 @@ namespace Roguelike.Logic.Cameras
             
             transform.position = _following.position + _positionOffset;;
             transform.rotation = Quaternion.Euler(_rotationOffset);
+
+            _currentPosition = _following.position;
+            _currentPosition.y = _miniMapCamera.position.y;
+            _miniMapCamera.position = _currentPosition;
 
             HideWall();
         }

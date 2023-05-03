@@ -7,10 +7,13 @@ namespace Roguelike.Level
     {
         [SerializeField] private List<ExitPoint> _exitPoints;
         [SerializeField] private GameObject _entryPoint;
+        [SerializeField] private Transform _miniMapIcon;
 
         public void Init(ExitPoint connectingPoint)
         {
             transform.rotation = Quaternion.Euler(0, transform.rotation.y + connectingPoint.Rotation, 0);
+
+            _miniMapIcon.rotation = Quaternion.Euler(90, -transform.rotation.y, 0);
 
             transform.position = Vector3.MoveTowards(transform.position, _entryPoint.transform.position, -GetShiftDistance());
         }

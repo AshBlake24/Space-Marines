@@ -18,6 +18,7 @@ namespace Roguelike.Enemies.EnemyStates
         private IProjectileFactory _factory;
         private IObjectPool<Projectile> _projectilesPool;
 
+
         protected override void OnDisable()
         {
             StopCoroutine(Attack());
