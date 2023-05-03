@@ -21,8 +21,8 @@ namespace Roguelike.Infrastructure.States
         private readonly LoadingScreen _loadingScreen;
         private readonly IGameFactory _gameFactory;
         private readonly ISaveLoadService _saveLoadService;
-        private readonly IPersistentDataService _progressService;
         private readonly IUIFactory _uiFactory;
+        private readonly IWindowService _windowService;
 
         private LevelId _activeScene;
 
@@ -32,16 +32,16 @@ namespace Roguelike.Infrastructure.States
             LoadingScreen loadingScreen,
             IGameFactory gameFactory,
             ISaveLoadService saveLoadService,
-            IPersistentDataService progressService,
-            IUIFactory uiFactory)
+            IUIFactory uiFactory,
+            IWindowService windowService)
         {
             _stateMachine = stateMachine;
             _sceneLoader = sceneLoader;
             _loadingScreen = loadingScreen;
             _gameFactory = gameFactory;
             _saveLoadService = saveLoadService;
-            _progressService = progressService;
             _uiFactory = uiFactory;
+            _windowService = windowService;
         }
 
         public void Enter(LevelId level)
@@ -94,7 +94,7 @@ namespace Roguelike.Infrastructure.States
             _uiFactory.CreateUIRoot();
 
         private void InitMainMenu() =>
-            _gameFactory.CreateMainMenu(_stateMachine);
+            _windowService.Open(WindowId.MainMenu);
 
         private void InitHub() =>
             _gameFactory.CreateCharacterSelectionMode();

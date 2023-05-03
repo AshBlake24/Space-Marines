@@ -1,9 +1,8 @@
-using System;
 using System.Linq;
 using System.Text;
 using Roguelike.Data;
+using Roguelike.Infrastructure.Services.Loading;
 using Roguelike.Infrastructure.Services.StaticData;
-using Roguelike.Infrastructure.States;
 using Roguelike.StaticData.Levels;
 using TMPro;
 using UnityEngine;
@@ -16,13 +15,13 @@ namespace Roguelike.UI.Windows
         [SerializeField] private Button _newGameButton;
         [SerializeField] private Button _continueButton;
         
-        private GameStateMachine _stateMachine;
         private IStaticDataService _staticData;
+        private ISceneLoadingService _sceneLoadingService;
 
-        public void Construct(GameStateMachine stateMachine, IStaticDataService staticData)
+        public void Construct(IStaticDataService staticDataService, ISceneLoadingService sceneLoadingService)
         {
-            _stateMachine = stateMachine;
-            _staticData = staticData;
+            _staticData = staticDataService;
+            _sceneLoadingService = sceneLoadingService;
         }
         
         protected override void Initialize()
@@ -79,14 +78,13 @@ namespace Roguelike.UI.Windows
                 _staticData.GameConfig.StartLevel,
                 _staticData.GameConfig.StartStage);
             
-            _stateMachine.Enter<LoadLevelState, LevelId>(
-                ProgressService.PlayerProgress.WorldData.CurrentLevel);
+            LoadLevel();
         }
 
-        private void OnContinueGame()
-        {
-            _stateMachine.Enter<LoadLevelState, LevelId>(
-                ProgressService.PlayerProgress.WorldData.CurrentLevel);
-        }
+        private void OnContinueGame() => 
+            LoadLevel();
+
+        private void LoadLevel() => 
+            _sceneLoadingService.Load(ProgressService.PlayerProgress.WorldData.CurrentLevel);
     }
 }

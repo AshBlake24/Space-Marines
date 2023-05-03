@@ -1,3 +1,4 @@
+using System;
 using Roguelike.Infrastructure.Factory;
 using Roguelike.UI.Windows;
 
@@ -12,7 +13,15 @@ namespace Roguelike.Infrastructure.Services.Windows
             _uiFactory = uiFactory;
         }
 
-        public BaseWindow Open(WindowId windowId) => 
-            _uiFactory.CreateWindow(this, windowId);
+        public BaseWindow Open(WindowId windowId)
+        {
+            return windowId switch
+            {
+                WindowId.Unknown => throw new NotImplementedException(),
+                WindowId.MainMenu => _uiFactory.CreateMainMenu(this, windowId),
+                WindowId.ReturnHome => _uiFactory.CreateConfirmationWindow(this, windowId),
+                _ => _uiFactory.CreateWindow(this, windowId)
+            };
+        }
     }
 }

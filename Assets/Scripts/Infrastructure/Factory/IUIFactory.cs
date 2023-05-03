@@ -8,6 +8,8 @@ namespace Roguelike.Infrastructure.Factory
     public interface IUIFactory : IService
     {
         BaseWindow CreateWindow(IWindowService windowService, WindowId windowId);
+        BaseWindow CreateConfirmationWindow(IWindowService windowService, WindowId windowId);
+        BaseWindow CreateMainMenu(IWindowService windowService, WindowId windowId);
         void CreateUIRoot();
     }
 }

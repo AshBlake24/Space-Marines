@@ -68,7 +68,8 @@ namespace Roguelike.Infrastructure.States
                 _services.Single<ISaveLoadService>()));
 
             _services.RegisterSingle<IUIFactory>(new UIFactory(_services.Single<IAssetProvider>(),
-                _services.Single<IStaticDataService>(), _services.Single<IPersistentDataService>()));
+                _services.Single<IStaticDataService>(), _services.Single<IPersistentDataService>(),
+                _services.Single<ISceneLoadingService>()));
 
             _services.RegisterSingle<IWindowService>(new WindowService(_services.Single<IUIFactory>()));
 

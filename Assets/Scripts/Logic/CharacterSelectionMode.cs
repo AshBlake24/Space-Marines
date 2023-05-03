@@ -1,3 +1,4 @@
+using System;
 using Cinemachine;
 using Roguelike.Infrastructure.Factory;
 using Roguelike.Infrastructure.Services.SaveLoad;
@@ -40,7 +41,7 @@ namespace Roguelike.Logic
             _isActive = true;
             _characterSelected = false;
         }
-        
+
         private void Start() =>
             _camera = Camera.main;
 
@@ -57,11 +58,16 @@ namespace Roguelike.Logic
                 {
                     if (_raycastHit.collider.TryGetComponent(out SelectableCharacter character))
                     {
-                        CharacterStats characterStats = _windowService.Open(WindowId.CharacterStats) as CharacterStats;
+                        BaseWindow window = _windowService.Open(WindowId.CharacterStats);
 
-                        if (characterStats != null)
-                            characterStats.Construct(_staticData.GetCharacterData(character.Id), this, _staticData,
+                        if (window is CharacterStats characterStats)
+                            characterStats.Construct(
+                                character.Id,
+                                this,
+                                _staticData,
                                 _weaponFactory);
+                        else
+                            throw new ArgumentNullException(nameof(window), "The necessary component is missing");
 
                         ZoomIn(_raycastHit.collider.transform);
                     }

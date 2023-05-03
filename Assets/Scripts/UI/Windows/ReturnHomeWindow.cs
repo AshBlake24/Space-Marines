@@ -1,24 +1,20 @@
+using Roguelike.Infrastructure.Services.Loading;
 using Roguelike.Infrastructure.Services.StaticData;
-using Roguelike.Infrastructure.States;
-using Roguelike.StaticData.Levels;
 
 namespace Roguelike.UI.Windows
 {
     public class ReturnHomeWindow : ConfirmationWindow
     {
-        private GameStateMachine _stateMachine;
         private IStaticDataService _staticData;
+        private ISceneLoadingService _sceneLoadingService;
 
-        public void Construct(GameStateMachine stateMachine, IStaticDataService staticData)
+        public void Construct(IStaticDataService staticData, ISceneLoadingService sceneLoadingService)
         {
-            _stateMachine = stateMachine;
             _staticData = staticData;
+            _sceneLoadingService = sceneLoadingService;
         }
-        
-        protected override void OnConfirm()
-        {
-            _stateMachine.Enter<LoadLevelState, LevelId>(
-                _staticData.GameConfig.MainMenuScene);
-        }
+
+        protected override void OnConfirm() =>
+            _sceneLoadingService.Load(_staticData.GameConfig.MainMenuScene);
     }
 }

@@ -354,6 +354,7 @@ GameObject:
   - component: {fileID: 4908110001108381665}
   - component: {fileID: 4908110001108381664}
   - component: {fileID: 4908110001108381599}
+  - component: {fileID: 8777457135778524779}
   m_Layer: 5
   m_Name: Home Button
   m_TagString: Untagged
@@ -464,6 +465,20 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &8777457135778524779
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4908110001108381597}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d754e7b1f85a4a8e94d0f6cf76c05f72, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _button: {fileID: 4908110001108381599}
+  _windowId: 0
 --- !u!1 &4908110001282980315
 GameObject:
   m_ObjectHideFlags: 0

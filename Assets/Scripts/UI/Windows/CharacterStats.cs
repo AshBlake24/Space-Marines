@@ -41,10 +41,10 @@ namespace Roguelike.UI.Windows
         private CharacterSelectionMode _selectionMode;
         private SelectCharacterButton _selectCharacterButton;
 
-        public void Construct(CharacterStaticData characterData, CharacterSelectionMode selectionMode,
+        public void Construct(CharacterId characterId, CharacterSelectionMode selectionMode,
             IStaticDataService staticDataService, IWeaponFactory weaponFactory)
         {
-            _characterData = characterData;
+            _characterData = staticDataService.GetCharacterData(characterId);
             _selectionMode = selectionMode;
             _weaponFactory = weaponFactory;
             _staticData = staticDataService;

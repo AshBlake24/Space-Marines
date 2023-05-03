@@ -5,6 +5,7 @@ using Roguelike.Infrastructure.Services;
 using Roguelike.Infrastructure.Services.PersistentData;
 using Roguelike.Infrastructure.Services.SaveLoad;
 using Roguelike.Infrastructure.Services.StaticData;
+using Roguelike.Infrastructure.Services.Windows;
 using Roguelike.Logic;
 
 namespace Roguelike.Infrastructure.States
@@ -22,7 +23,7 @@ namespace Roguelike.Infrastructure.States
                 [typeof(BootstrapState)] = new BootstrapState(this, sceneLoader, services, coroutineRunner),
                 [typeof(LoadLevelState)] = new LoadLevelState(this, sceneLoader, loadingScreen,
                     services.Single<IGameFactory>(), services.Single<ISaveLoadService>(),
-                    services.Single<IPersistentDataService>(), services.Single<IUIFactory>()),
+                    services.Single<IUIFactory>(), services.Single<IWindowService>()),
 
                 [typeof(LoadProgressState)] = new LoadProgressState(this, services.Single<IPersistentDataService>(),
                     services.Single<ISaveLoadService>(), services.Single<IWeaponFactory>(),
