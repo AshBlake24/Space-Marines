@@ -32,7 +32,7 @@ namespace Roguelike.Infrastructure.States
         {
             LoadProgress();
 
-            _stateMachine.Enter<LoadLevelState, LevelId>(_staticDataService.GameConfig.MainMenuScene);
+            _stateMachine.Enter<LoadLevelState, LevelId>(_staticDataService.GameConfig.StartScene);
         }
 
         public void Exit()
@@ -49,8 +49,8 @@ namespace Roguelike.Infrastructure.States
             IWeapon startWeapon = _weaponFactory.CreateWeapon(_staticDataService.Player.StartCharacter.StartWeapon);
 
             PlayerProgress playerProgress = new(
-                _staticDataService.GameConfig.StartLevel,
-                _staticDataService.GameConfig.StartStage,
+                _staticDataService.GameConfig.StartPlayerLevel,
+                _staticDataService.GameConfig.StartPlayerStage,
                 startWeapon,
                 _staticDataService.Player.StartCharacter.Id);
 

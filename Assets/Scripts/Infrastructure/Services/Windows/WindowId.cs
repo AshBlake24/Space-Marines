@@ -8,6 +8,7 @@ namespace Roguelike.Infrastructure.Services.Windows
         CharacterStats = 3,
         CharacterSelection = 4,
         MainMenu = 5,
-        ReturnHome = 6
+        ReturnHome = 6,
+        ReturnCharacterSelection = 7
     }
 }

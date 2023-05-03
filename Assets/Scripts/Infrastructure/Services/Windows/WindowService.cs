@@ -20,6 +20,7 @@ namespace Roguelike.Infrastructure.Services.Windows
                 WindowId.Unknown => throw new NotImplementedException(),
                 WindowId.MainMenu => _uiFactory.CreateMainMenu(this, windowId),
                 WindowId.ReturnHome => _uiFactory.CreateConfirmationWindow(this, windowId),
+                WindowId.ReturnCharacterSelection => _uiFactory.CreateConfirmationWindow(this, windowId),
                 _ => _uiFactory.CreateWindow(this, windowId)
             };
         }

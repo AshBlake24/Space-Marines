@@ -34,8 +34,8 @@ namespace Roguelike.Infrastructure.Factory
         {
             BaseWindow window = CreateWindow(windowService, windowId);
             
-            if (window is ReturnHomeWindow returnHome)
-                returnHome.Construct(_staticData, _sceneLoadingService);
+            if (window is ConfirmationWindow confirmationWindow)
+                confirmationWindow.Construct(_staticData, _sceneLoadingService);
             else
                 throw new ArgumentNullException(nameof(window), "The necessary component is missing");
 
