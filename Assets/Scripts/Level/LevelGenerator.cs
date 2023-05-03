@@ -8,9 +8,7 @@ using Roguelike.Infrastructure.States;
 using Roguelike.Player;
 using Roguelike.StaticData.Levels;
 using System.Collections.Generic;
-using UnityEditor.AI;
 using UnityEngine;
-using UnityEngine.AI;
 
 namespace Roguelike.Level
 {

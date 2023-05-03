@@ -18,7 +18,7 @@ namespace Roguelike.Enemies
 
         private PlayerHealth _player;
         private IEnemyFactory _enemyFactory;
-        private float _encounter—omplexity;
+        private float _encounterComplexity;
 
         private void OnEnable()
         {
@@ -38,14 +38,14 @@ namespace Roguelike.Enemies
         public void Init(IEnemyFactory enemyFactory, float minEncounterComplexity, float maxEncounerComplexity)
         {
             _enemyFactory = enemyFactory;
-            _encounter—omplexity = Random.Range(minEncounterComplexity, maxEncounerComplexity);
+            _encounterComplexity = Random.Range(minEncounterComplexity, maxEncounerComplexity);
         }
 
         private void Spawn(Transform spawnPosition, PlayerHealth target)
         {
             GameObject enemy = _enemyFactory.CreateEnemy(spawnPosition, _enemies[Random.Range(0, _enemies.Count)], target);
 
-            _encounter—omplexity -= enemy.GetComponentInChildren<EnemyStateMachine>().Enemy.Danger;
+            _encounterComplexity -= enemy.GetComponentInChildren<EnemyStateMachine>().Enemy.Danger;
 
             _enemiesInRoom.Add(enemy.GetComponentInChildren<EnemyHealth>());
         }
@@ -58,7 +58,7 @@ namespace Roguelike.Enemies
             {
                 Spawn(position.transform, player);
 
-                if (_encounter—omplexity <= 0)
+                if (_encounterComplexity <= 0)
                     break;
             }
 
@@ -81,7 +81,7 @@ namespace Roguelike.Enemies
 
             if (_enemiesInRoom.Count == 0)
             {
-                if (_encounter—omplexity > 0)
+                if (_encounterComplexity > 0)
                 {
                     OnPlayerHasEntered(_player);
                     return;
