@@ -32,8 +32,7 @@ namespace Roguelike.Infrastructure.States
         {
             LoadProgress();
 
-            _stateMachine.Enter<LoadLevelState, string>(
-                _staticDataService.GameConfig.MainMenuScene.ToString());
+            _stateMachine.Enter<LoadLevelState, LevelId>(_staticDataService.GameConfig.MainMenuScene);
         }
 
         public void Exit()

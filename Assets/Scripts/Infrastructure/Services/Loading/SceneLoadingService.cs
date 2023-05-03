@@ -13,6 +13,6 @@ namespace Roguelike.Infrastructure.Services.Loading
         }
 
         public void Load(LevelId level) => 
-            _gameStateMachine.Enter<LoadLevelState, string>(level.ToString());
+            _gameStateMachine.Enter<LoadLevelState, LevelId>(level);
     }
 }

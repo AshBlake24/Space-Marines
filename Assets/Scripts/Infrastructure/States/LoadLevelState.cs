@@ -12,7 +12,7 @@ using CameraFollower = Roguelike.Logic.CameraFollower;
 
 namespace Roguelike.Infrastructure.States
 {
-    public class LoadLevelState : IPayloadedState<string>
+    public class LoadLevelState : IPayloadedState<LevelId>
     {
         private const string InitialPointTag = "InitialPoint";
 
@@ -44,13 +44,13 @@ namespace Roguelike.Infrastructure.States
             _uiFactory = uiFactory;
         }
 
-        public void Enter(string sceneName)
+        public void Enter(LevelId level)
         {
             _loadingScreen.Show();
 
             Cleanup();
 
-            _sceneLoader.Load(sceneName, OnLoaded);
+            _sceneLoader.Load(level.ToString(), OnLoaded);
         }
 
         public void Exit() =>

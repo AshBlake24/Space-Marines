@@ -1,5 +1,6 @@
 using Roguelike.Infrastructure.Services.StaticData;
 using Roguelike.Infrastructure.States;
+using Roguelike.StaticData.Levels;
 
 namespace Roguelike.UI.Windows
 {
@@ -16,8 +17,8 @@ namespace Roguelike.UI.Windows
         
         protected override void OnConfirm()
         {
-            _stateMachine.Enter<LoadLevelState, string>(
-                _staticData.GameConfig.MainMenuScene.ToString());
+            _stateMachine.Enter<LoadLevelState, LevelId>(
+                _staticData.GameConfig.MainMenuScene);
         }
     }
 }

@@ -79,14 +79,14 @@ namespace Roguelike.UI.Windows
                 _staticData.GameConfig.StartLevel,
                 _staticData.GameConfig.StartStage);
             
-            _stateMachine.Enter<LoadLevelState, string>(
-                ProgressService.PlayerProgress.WorldData.CurrentLevel.ToString());
+            _stateMachine.Enter<LoadLevelState, LevelId>(
+                ProgressService.PlayerProgress.WorldData.CurrentLevel);
         }
 
         private void OnContinueGame()
         {
-            _stateMachine.Enter<LoadLevelState, string>(
-                ProgressService.PlayerProgress.WorldData.CurrentLevel.ToString());
+            _stateMachine.Enter<LoadLevelState, LevelId>(
+                ProgressService.PlayerProgress.WorldData.CurrentLevel);
         }
     }
 }
