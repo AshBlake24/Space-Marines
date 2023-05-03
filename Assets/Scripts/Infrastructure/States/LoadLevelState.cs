@@ -1,11 +1,9 @@
 using System;
 using Roguelike.Infrastructure.Factory;
-using Roguelike.Infrastructure.Services.PersistentData;
 using Roguelike.Infrastructure.Services.SaveLoad;
 using Roguelike.Infrastructure.Services.Windows;
 using Roguelike.Logic;
 using Roguelike.Logic.Cameras;
-using Roguelike.Player;
 using Roguelike.StaticData.Levels;
 using Roguelike.Utilities;
 using UnityEngine;

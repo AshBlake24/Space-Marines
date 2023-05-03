@@ -1,7 +1,7 @@
 using Roguelike.StaticData.Characters;
 using UnityEngine;
 
-namespace Roguelike.Logic
+namespace Roguelike.Logic.Interactables
 {
     public class SelectableCharacter : MonoBehaviour
     {

@@ -5,10 +5,9 @@ using Roguelike.Infrastructure.Services.SaveLoad;
 using Roguelike.Infrastructure.Services.StaticData;
 using Roguelike.Infrastructure.Services.Windows;
 using Roguelike.UI.Windows;
-using Unity.VisualScripting;
 using UnityEngine;
 
-namespace Roguelike.Logic
+namespace Roguelike.Logic.Interactables
 {
     public class CharacterSelectionMode : MonoBehaviour
     {
