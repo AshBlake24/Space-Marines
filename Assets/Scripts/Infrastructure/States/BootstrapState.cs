@@ -3,6 +3,7 @@ using Roguelike.Infrastructure.Factory;
 using Roguelike.Infrastructure.Services;
 using Roguelike.Infrastructure.Services.Environment;
 using Roguelike.Infrastructure.Services.Input;
+using Roguelike.Infrastructure.Services.Loading;
 using Roguelike.Infrastructure.Services.PersistentData;
 using Roguelike.Infrastructure.Services.Pools;
 using Roguelike.Infrastructure.Services.Random;
@@ -55,6 +56,7 @@ namespace Roguelike.Infrastructure.States
             _services.RegisterSingle<IPersistentDataService>(new PersistentDataService());
             _services.RegisterSingle<ISaveLoadService>(new SaveLoadService(_services.Single<IPersistentDataService>()));
             _services.RegisterSingle<IProjectileFactory>(new ProjectileFactory(_services.Single<IStaticDataService>()));
+            _services.RegisterSingle<ISceneLoadingService>(new SceneLoadingService(_stateMachine));
 
             _services.RegisterSingle<ISkillFactory>(new SkillFactory(
                 _coroutineRunner,
@@ -67,15 +69,15 @@ namespace Roguelike.Infrastructure.States
 
             _services.RegisterSingle<IUIFactory>(new UIFactory(_services.Single<IAssetProvider>(),
                 _services.Single<IStaticDataService>(), _services.Single<IPersistentDataService>()));
-            
+
             _services.RegisterSingle<IWindowService>(new WindowService(_services.Single<IUIFactory>()));
-            
+
             _services.RegisterSingle<IEnemyFactory>(new EnemyFactory(
                 _services.Single<IStaticDataService>()));
 
             _services.RegisterSingle<IItemFactory>(new ItemFactory(
                 _services.Single<IStaticDataService>()));
-            
+
             _services.RegisterSingle<IGameFactory>(new GameFactory(
                 _services.Single<IAssetProvider>(),
                 _services.Single<IPersistentDataService>(),
