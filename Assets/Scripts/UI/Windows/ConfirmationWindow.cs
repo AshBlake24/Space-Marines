@@ -12,7 +12,7 @@ namespace Roguelike.UI.Windows
 
         protected override void Initialize()
         {
-            _description.text = $"Are you sure you want to {_context}?";
+            _description.text = _context;
             _confirmButton.onClick.AddListener(OnConfirm);
         }
 
