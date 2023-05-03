@@ -4,8 +4,11 @@ using Roguelike.Infrastructure.Factory;
 using Roguelike.Infrastructure.Services.SaveLoad;
 using Roguelike.Infrastructure.Services.StaticData;
 using Roguelike.Infrastructure.Services.Windows;
+using Roguelike.UI.Elements;
 using Roguelike.UI.Windows;
 using UnityEngine;
+using UnityEngine.UI;
+using Object = System.Object;
 
 namespace Roguelike.Logic.Interactables
 {
@@ -16,6 +19,7 @@ namespace Roguelike.Logic.Interactables
         [SerializeField] private CinemachineVirtualCamera _topDownCamera;
         [SerializeField] private CinemachineVirtualCamera _characterSelectionCamera;
         [SerializeField] private CinemachineVirtualCamera _playerCamera;
+        [SerializeField] private Button _CharacterSelectionButton;
 
         private IStaticDataService _staticData;
         private IWindowService _windowService;
@@ -119,7 +123,13 @@ namespace Roguelike.Logic.Interactables
         private GameObject InitPlayer(Transform spawnPoint) =>
             _gameFactory.CreatePlayer(spawnPoint);
 
-        private void InitHud(GameObject player) =>
-            _gameFactory.CreateHud(player);
+        private void InitHud(GameObject player)
+        {
+            GameObject hud = _gameFactory.CreateHud(player);
+            Button button = Instantiate(_CharacterSelectionButton, hud.transform);
+            
+            if (button.TryGetComponent(out OpenWindowButton openWindowButton))
+                openWindowButton.Construct(_windowService);
+        }
     }
 }

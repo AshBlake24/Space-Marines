@@ -154,7 +154,7 @@ Transform:
   - {fileID: 1292940969}
   - {fileID: 2051893483}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &544544716
 GameObject:
@@ -333,7 +333,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 1308848866}
     m_Modifications:
     - target: {fileID: 1920877173111918, guid: 05837f223c7075c43a50c1236354e2c5, type: 3}
       propertyPath: m_Name
@@ -361,7 +361,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4608346278582932, guid: 05837f223c7075c43a50c1236354e2c5, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 4608346278582932, guid: 05837f223c7075c43a50c1236354e2c5, type: 3}
       propertyPath: m_LocalRotation.y
@@ -369,7 +369,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4608346278582932, guid: 05837f223c7075c43a50c1236354e2c5, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 4608346278582932, guid: 05837f223c7075c43a50c1236354e2c5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -513,6 +513,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7123106718344097067, guid: 5046e3bfd79843f4e883b9414bce7013, type: 3}
   m_PrefabInstance: {fileID: 1303336210}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &1306628050 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4608346278582932, guid: 05837f223c7075c43a50c1236354e2c5, type: 3}
+  m_PrefabInstance: {fileID: 1091561152}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1308848865
 GameObject:
   m_ObjectHideFlags: 0
@@ -542,8 +547,9 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1454701966}
+  - {fileID: 1306628050}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1335886311
 GameObject:
@@ -886,6 +892,7 @@ MonoBehaviour:
   _topDownCamera: {fileID: 1335886313}
   _characterSelectionCamera: {fileID: 1741314882}
   _playerCamera: {fileID: 1740568182}
+  _CharacterSelectionButton: {fileID: 65164109171992554, guid: 91b82cd9e7a67754a991ff5fa3476ea9, type: 3}
 --- !u!1 &1556473178
 GameObject:
   m_ObjectHideFlags: 3
