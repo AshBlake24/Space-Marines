@@ -1,9 +1,8 @@
-using System.Linq;
-using System.Text;
 using Roguelike.Data;
 using Roguelike.Infrastructure.Services.Loading;
 using Roguelike.Infrastructure.Services.StaticData;
 using Roguelike.StaticData.Levels;
+using Roguelike.Utilities;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -43,7 +42,7 @@ namespace Roguelike.UI.Windows
 
             if (ProgressService.PlayerProgress.WorldData.CurrentLevel == LevelId.Dungeon)
             {
-                string currentStage = ParseCurrentStage();
+                string currentStage = ProgressService.PlayerProgress.WorldData.CurrentStage.ToLabel();
                 continueButtonText.text = $"Continue\n({currentStage})";
                 _continueButton.interactable = true;
                 _continueButton.onClick.AddListener(OnContinueGame);
@@ -55,19 +54,7 @@ namespace Roguelike.UI.Windows
             }
         }
 
-        private string ParseCurrentStage()
-        {
-            StringBuilder stringBuilder = new();
-            
-            string stage = ProgressService.PlayerProgress.WorldData.CurrentStage.ToString();
-            
-            foreach (char symb in stage.Where(char.IsDigit))
-                stringBuilder.Append(symb);
-
-            stringBuilder.Insert(1, '-');
-
-            return stringBuilder.ToString();
-        }
+        
 
         private void InitNewGameButton() => 
             _newGameButton.onClick.AddListener(OnNewGame);
