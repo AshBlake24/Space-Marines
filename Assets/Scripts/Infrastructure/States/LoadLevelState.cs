@@ -107,12 +107,12 @@ namespace Roguelike.Infrastructure.States
 
             GameObject player = InitPlayer();
 
-            InitHud(player);
+            InitHud(player, createMiniMap: true);
             CameraFollow(player);
         }
 
-        private void InitHud(GameObject player) =>
-            _gameFactory.CreateHud(player);
+        private void InitHud(GameObject player, bool createMiniMap) =>
+            _gameFactory.CreateHud(player, createMiniMap);
 
         private GameObject InitPlayer()
         {
