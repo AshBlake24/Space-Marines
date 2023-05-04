@@ -1,10 +1,6 @@
-using Roguelike.Data;
 using Roguelike.Enemies;
 using Roguelike.Infrastructure.Factory;
-using Roguelike.Infrastructure.Services;
 using Roguelike.Infrastructure.Services.PersistentData;
-using Roguelike.Infrastructure.Services.SaveLoad;
-using Roguelike.Infrastructure.States;
 using Roguelike.Player;
 using Roguelike.StaticData.Levels;
 using System.Collections.Generic;
@@ -26,7 +22,6 @@ namespace Roguelike.Level
         private Room _currentRoom;
         private Room _currentCorridor;
         private ExitPoint _connectingPoint;
-        private ISaveLoadService _saveLoadService;
         private ISceneLoadingService _sceneLoadingService;
         private IPersistentDataService _persistentDataService;
 
@@ -38,8 +33,6 @@ namespace Roguelike.Level
             _bonusRoomCount = levelData.BonusRoomCount;
             _sceneLoadingService = sceneLoadingService;
             _persistentDataService = persistentDataService;
-
-            _saveLoadService = AllServices.Container.Single<ISaveLoadService>();
         }
 
         public void BuildLevel(IEnemyFactory enemyFactory)
@@ -112,7 +105,6 @@ namespace Roguelike.Level
         private void GenerateNextLevel(PlayerHealth player)
         {
             _enterTriger.PlayerHasEntered -= GenerateNextLevel;
-            _saveLoadService.SaveProgress();
             _sceneLoadingService.Load(_persistentDataService.PlayerProgress.WorldData.CurrentLevel);
         }
 
