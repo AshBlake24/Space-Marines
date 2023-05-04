@@ -29,7 +29,8 @@ namespace Roguelike.Infrastructure.States
                     services.Single<ISaveLoadService>(), services.Single<IWeaponFactory>(),
                     services.Single<IStaticDataService>()),
 
-                [typeof(GameLoopState)] = new GameLoopState(this),
+                [typeof(GameLoopState)] = new GameLoopState(this, services.Single<ISaveLoadService>()),
+                [typeof(ExitGameState)] = new ExitGameState(this)
             };
         }
 

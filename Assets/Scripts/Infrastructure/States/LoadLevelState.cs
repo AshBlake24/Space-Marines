@@ -87,6 +87,9 @@ namespace Roguelike.Infrastructure.States
                 default:
                     throw new ArgumentOutOfRangeException();
             }
+
+            new GameObject("AppCloser").AddComponent<AppCloser>()
+                .Construct(_stateMachine);
         }
 
         private void InitUIRoot() =>

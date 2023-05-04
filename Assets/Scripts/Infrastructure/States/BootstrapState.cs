@@ -53,7 +53,7 @@ namespace Roguelike.Infrastructure.States
             _services.RegisterSingle<IAssetProvider>(new AssetProvider());
             _services.RegisterSingle<IInputService>(GetInputService());
             _services.RegisterSingle<IParticlesPoolService>(new ParticlesPoolService());
-            _services.RegisterSingle<IPersistentDataService>(new PersistentDataService());
+            _services.RegisterSingle<IPersistentDataService>(new PersistentDataService(_services.Single<IStaticDataService>()));
             _services.RegisterSingle<ISaveLoadService>(new SaveLoadService(_services.Single<IPersistentDataService>()));
             _services.RegisterSingle<IProjectileFactory>(new ProjectileFactory(_services.Single<IStaticDataService>()));
             _services.RegisterSingle<ISceneLoadingService>(new SceneLoadingService(_stateMachine));
