@@ -13,7 +13,7 @@ using UnityEngine;
 
 namespace Roguelike.Level
 {
-    public class LevelGenerator : MonoBehaviour, IProgressWriter
+    public class LevelGenerator : MonoBehaviour
     {
         private const string ContainerName = "Environment";
 
@@ -104,6 +104,7 @@ namespace Roguelike.Level
             _currentRoom = CreateRoom(_currentCorridor, _data.FinishRoom);
 
             _enterTriger = _currentRoom.gameObject.GetComponentInChildren<EnterTriger>();
+            _enterTriger.Counstruct(_data.NextStageId);
 
             _enterTriger.PlayerHasEntered += GenerateNextLevel;
         }
@@ -111,9 +112,7 @@ namespace Roguelike.Level
         private void GenerateNextLevel(PlayerHealth player)
         {
             _enterTriger.PlayerHasEntered -= GenerateNextLevel;
-
             _saveLoadService.SaveProgress();
-
             _sceneLoadingService.Load(_persistentDataService.PlayerProgress.WorldData.CurrentLevel);
         }
 
@@ -131,15 +130,6 @@ namespace Roguelike.Level
             nextRoom.transform.SetParent(_roomContainer, true);
 
             return nextRoom;
-        }
-
-        public void WriteProgress(PlayerProgress progress)
-        {
-            progress.WorldData.CurrentStage = _data.NextLevelId;
-        }
-
-        public void ReadProgress(PlayerProgress progress)
-        {
         }
     }
 }

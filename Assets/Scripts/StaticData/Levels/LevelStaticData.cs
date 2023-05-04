@@ -10,7 +10,7 @@ namespace Roguelike.StaticData.Levels
     {
         [Header("Stats")]
         public StageId Id;
-        public StageId NextLevelId;
+        public StageId NextStageId;
         public int AreaRoomCount;
         public float MinEncounterComplexity;
         public float MaxEncounterComplexity;
