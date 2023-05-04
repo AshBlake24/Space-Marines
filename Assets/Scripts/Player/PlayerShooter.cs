@@ -74,9 +74,6 @@ namespace Roguelike.Player
 
         private void Update()
         {
-            if (_playerHealth.IsAlive == false)
-                return;
-
             TryAttack();
         }
 

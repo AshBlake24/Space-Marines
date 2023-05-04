@@ -101,6 +101,7 @@ GameObject:
   - component: {fileID: 4082149494198673327}
   - component: {fileID: 3023580893681268667}
   - component: {fileID: 3013432722044181812}
+  - component: {fileID: 1584298645333498346}
   m_Layer: 10
   m_Name: Player
   m_TagString: Untagged
@@ -248,6 +249,24 @@ MonoBehaviour:
   _updateTargetsPerFrame: 4
   _radius: 3
   _drawGizmos: 1
+--- !u!114 &1584298645333498346
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5183326114531077828}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0f7f30079724d37842bf414326528e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _health: {fileID: 1331113081620957422}
+  _aim: {fileID: 4082149494198673327}
+  _shooter: {fileID: 2753311284853847007}
+  _movement: {fileID: 3613895008707275181}
+  _interaction: {fileID: 3013432722044181812}
+  _animator: {fileID: 1225606247818609378}
 --- !u!1 &6396496712223034230
 GameObject:
   m_ObjectHideFlags: 0

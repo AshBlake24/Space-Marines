@@ -18,9 +18,6 @@ namespace Roguelike.Player
         private bool _isImmune;
 
         public event Action HealthChanged;
-        public event Action Died;
-
-        public bool IsAlive => CurrentHealth > 0;
 
         public int CurrentHealth
         {
@@ -45,6 +42,9 @@ namespace Roguelike.Player
         {
             if (GUI.Button(new Rect(30, 250, 100, 35), "Take Damage"))
                 TakeDamage(1);
+            
+            if (GUI.Button(new Rect(30, 350, 100, 35), "Heal"))
+                Heal(100);
         }
 
         public void Construct(float immuneTimeAfterHit)
@@ -72,18 +72,9 @@ namespace Roguelike.Player
 
             if (IsPositive(damage))
             {
+                _playerAnimator.PlayHit();
                 CurrentHealth = Mathf.Max(CurrentHealth - damage, 0);
-
-                if (CurrentHealth > 0)
-                {
-                    _playerAnimator.PlayHit();
-                    StartCoroutine(ImmuneTimer());
-                }
-                else
-                {
-                    _playerAnimator.PlayDeath();
-                    Died?.Invoke();
-                }
+                StartCoroutine(ImmuneTimer());
             }
         }
 
