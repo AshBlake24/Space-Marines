@@ -16,6 +16,7 @@ namespace Roguelike.Player
         
         private State _state;
         private float _immuneTimeAfterHit;
+        private float _immuneTimeAfterResurrect;
         private bool _isImmune;
 
         public event Action HealthChanged;
@@ -54,9 +55,10 @@ namespace Roguelike.Player
         private void OnDisable() => 
             _playerDeath.Resurrected -= OnResurrected;
 
-        public void Construct(float immuneTimeAfterHit)
+        public void Construct(float immuneTimeAfterHit, float immuneTimeAfterResurrect)
         {
             _immuneTimeAfterHit = immuneTimeAfterHit;
+            _immuneTimeAfterResurrect = immuneTimeAfterResurrect;
             _isImmune = false;
         }
 
@@ -81,7 +83,7 @@ namespace Roguelike.Player
             {
                 _playerAnimator.PlayHit();
                 CurrentHealth = Mathf.Max(CurrentHealth - damage, 0);
-                StartCoroutine(ImmuneTimer());
+                StartCoroutine(ImmuneTimer(_immuneTimeAfterHit));
             }
         }
 
@@ -91,11 +93,11 @@ namespace Roguelike.Player
                 CurrentHealth = Mathf.Min(CurrentHealth + health, MaxHealth);
         }
 
-        private IEnumerator ImmuneTimer()
+        private IEnumerator ImmuneTimer(float time)
         {
             _isImmune = true;
 
-            yield return Helpers.GetTime(_immuneTimeAfterHit);
+            yield return Helpers.GetTime(time);
 
             _isImmune = false;
         }
@@ -111,6 +113,7 @@ namespace Roguelike.Player
         private void OnResurrected()
         {
             _state.Resurrect();
+            StartCoroutine(ImmuneTimer(_immuneTimeAfterResurrect));
             HealthChanged?.Invoke();
         }
     }

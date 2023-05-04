@@ -68,7 +68,8 @@ namespace Roguelike.Infrastructure.Factory
             InitShooterComponent(player, character.GetComponentInChildren<WeaponSpawnPoint>());
 
             player.GetComponent<PlayerHealth>()
-                .Construct(_staticDataService.Player.ImmuneTimeAfterHit);
+                .Construct(_staticDataService.Player.ImmuneTimeAfterHit,
+                    _staticDataService.Player.ImmuneTimeAfterResurrect);
 
             player.GetComponent<PlayerDeath>()
                 .Construct(_windowService, _saveLoadService);

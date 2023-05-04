@@ -948,7 +948,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Handle_Vertical_Square_Gloss
+      name: Handle_Vertical_Square_Highlighted
       rect:
         serializedVersion: 2
         x: 28
@@ -998,7 +998,7 @@ TextureImporter:
         width: 7
         height: 6
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -1006,6 +1006,48 @@ TextureImporter:
       bones: []
       spriteID: c32eb000d8478d34e8a3d8bc6bc9e05b
       internalID: -1519460207
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Handle_Vertical_Square_Flat
+      rect:
+        serializedVersion: 2
+        x: 28
+        y: 88
+        width: 6
+        height: 10
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bd647e42e9500cd41a84f79be787d2ff
+      internalID: 773424450
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Handle_Vertical_Square
+      rect:
+        serializedVersion: 2
+        x: 28
+        y: 112
+        width: 6
+        height: 10
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2b8bd5668627a5749a39d9097b7d8d83
+      internalID: 109404416
       vertices: []
       indices: 
       edges: []
@@ -1030,6 +1072,7 @@ TextureImporter:
       Frame_SquareSoft_01: -1551462217
       Button_Empty_Dark_Unpressed: 1516584049
       Frame_Round_03: 772105922
+      Toggle_On_Flat: 775269241
       Border_01: 1840537375
       Frame_Round_Alpha_01: -1421138500
       Toggle_Off: -1685908699
@@ -1046,12 +1089,16 @@ TextureImporter:
       Button_Alpha: -1415463433
       test: -1476790675
       Button_Empty_White_Flat: 617489431
+      Handle_Vertical_Square: 109404416
+      Handle_Vertical_Square_Highlighted: -823554274
       Bar_Empty: 2072711612
+      Toggle_Off_Pressed: 473738111
       Bar_Horizontal_Flat: 788297478
       Bookmark_Vertical_Flat: 1525169483
+      Handle_Vertical_Square_Flat: 773424450
+      Toggle_On_Pressed: -1112760713
       Bar_Horizontal_Green: -1525026318
       Edging_01: 1916278823
-      Handle_Vertical_Square_Gloss: -823554274
       Toggle_On: -1636068546
       Handle_Big_Glossy_Top: 917366844
       Button_Circle_Pressed: -1912956701
@@ -1061,8 +1108,8 @@ TextureImporter:
       Frame_BevelSoft_02: -1174069238
       Bar_Horizontal_White: -459663239
       Fill_Red: 862182094
-      Frame_Round_04: -61965704
       Button_Circle_Unpressed: -195435620
+      Frame_Round_04: -61965704
       Button_Close_Unpressed: 100789491
       Pointer_Vertical_Gloss: -1519460207
   spritePackingTag: 
