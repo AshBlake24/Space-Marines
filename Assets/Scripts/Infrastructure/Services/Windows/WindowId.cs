@@ -9,6 +9,8 @@ namespace Roguelike.Infrastructure.Services.Windows
         CharacterSelection = 4,
         MainMenu = 5,
         ReturnHome = 6,
-        ReturnCharacterSelection = 7
+        ReturnCharacterSelection = 7,
+        Resurrection = 8,
+        GameOver = 9
     }
 }

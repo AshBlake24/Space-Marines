@@ -30,30 +30,6 @@ namespace Roguelike.Infrastructure.Factory
             _sceneLoadingService = sceneLoadingService;
         }
 
-        public BaseWindow CreateConfirmationWindow(IWindowService windowService, WindowId windowId)
-        {
-            BaseWindow window = CreateWindow(windowService, windowId);
-            
-            if (window is ConfirmationWindow confirmationWindow)
-                confirmationWindow.Construct(_staticData, _sceneLoadingService);
-            else
-                throw new ArgumentNullException(nameof(window), "The necessary component is missing");
-
-            return window;
-        }
-
-        public BaseWindow CreateMainMenu(IWindowService windowService, WindowId windowId)
-        {
-            BaseWindow window = CreateWindow(windowService, windowId);
-
-            if (window is MainMenu mainMenu)
-                mainMenu.Construct(_staticData, _sceneLoadingService);
-            else
-                throw new ArgumentNullException(nameof(window), "The window has no MainWindow component");
-
-            return window;
-        }
-
         public BaseWindow CreateWindow(IWindowService windowService, WindowId windowId)
         {
             WindowConfig config = _staticData.GetWindowConfig(windowId);
@@ -62,7 +38,21 @@ namespace Roguelike.Infrastructure.Factory
             
             foreach (OpenWindowButton openWindowButton in window.GetComponentsInChildren<OpenWindowButton>())
                 openWindowButton.Construct(windowService);
-
+            
+            
+            switch (window)
+            {
+                case MainMenu mainMenu:
+                    mainMenu.Construct(_staticData, _sceneLoadingService);
+                    break;
+                case ConfirmationWindow confirmationWindow:
+                    confirmationWindow.Construct(_staticData, _sceneLoadingService);
+                    break;
+                case GameOverWindow gameOverWindow:
+                    gameOverWindow.Construct(_staticData);
+                    break;
+            }
+            
             return window;
         }
 

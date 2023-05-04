@@ -1,5 +1,6 @@
 using Roguelike.Infrastructure.Services.StaticData;
 using Roguelike.UI.Elements;
+using Roguelike.Utilities;
 using UnityEngine;
 
 namespace Roguelike.UI.Windows
@@ -18,9 +19,10 @@ namespace Roguelike.UI.Windows
         {
             Sprite characterIcon = _staticData.GetCharacterData(ProgressService.PlayerProgress.Character).Icon;
             int currentStage = (int) ProgressService.PlayerProgress.WorldData.CurrentStage;
+            string stageLabel = ProgressService.PlayerProgress.WorldData.CurrentStage.ToLabel();
 
             GetComponentInChildren<GameOverStageViewer>()
-                .Construct(currentStage, characterIcon);
+                .Construct(currentStage, characterIcon, stageLabel);
         }
     }
 }
