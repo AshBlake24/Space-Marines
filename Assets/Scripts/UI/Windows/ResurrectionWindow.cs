@@ -1,3 +1,4 @@
+using Roguelike.Data;
 using Roguelike.Player;
 using UnityEngine;
 using UnityEngine.UI;

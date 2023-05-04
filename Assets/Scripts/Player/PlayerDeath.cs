@@ -31,7 +31,7 @@ namespace Roguelike.Player
             _saveLoadService = saveLoadService;
         }
 
-        public void WriteProgress(PlayerProgress progress) =>
+        public void WriteProgress(PlayerProgress progress) => 
             progress.State.Dead = _isDead;
 
         public void ReadProgress(PlayerProgress progress) =>

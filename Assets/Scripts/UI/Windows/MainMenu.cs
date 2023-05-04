@@ -39,6 +39,9 @@ namespace Roguelike.UI.Windows
         private void InitContinueButton()
         {
             TextMeshProUGUI continueButtonText = _continueButton.GetComponentInChildren<TextMeshProUGUI>();
+            
+            if (ProgressService.PlayerProgress.State.Dead)
+                ProgressService.Reset();
 
             if (ProgressService.PlayerProgress.WorldData.CurrentLevel == LevelId.Dungeon)
             {
