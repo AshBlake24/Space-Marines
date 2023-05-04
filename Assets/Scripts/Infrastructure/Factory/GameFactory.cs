@@ -65,11 +65,14 @@ namespace Roguelike.Infrastructure.Factory
             GameObject player = InstantiateRegistered(AssetPath.PlayerPath, playerInitialPoint.position);
             GameObject character = CreateCharacter(_persistentData.PlayerProgress.Character, player);
 
-            InitializeShooterComponent(player, character.GetComponentInChildren<WeaponSpawnPoint>());
+            InitShooterComponent(player, character.GetComponentInChildren<WeaponSpawnPoint>());
 
-            PlayerHealth playerHealth = player.GetComponent<PlayerHealth>();
-            playerHealth.Construct(_staticDataService.Player.ImmuneTimeAfterHit);
+            player.GetComponent<PlayerHealth>()
+                .Construct(_staticDataService.Player.ImmuneTimeAfterHit);
 
+            player.GetComponent<PlayerDeath>()
+                .Construct(_windowService, _saveLoadService);
+            
             _skillFactory.CreatePlayerSkill(player);
 
             return player;
@@ -154,7 +157,7 @@ namespace Roguelike.Infrastructure.Factory
             return character;
         }
 
-        private void InitializeShooterComponent(GameObject player, WeaponSpawnPoint weaponSpawnPoint)
+        private void InitShooterComponent(GameObject player, WeaponSpawnPoint weaponSpawnPoint)
         {
             PlayerShooter playerShooter = player.GetComponent<PlayerShooter>();
 

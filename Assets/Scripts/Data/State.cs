@@ -8,11 +8,13 @@ namespace Roguelike.Data
         public int CurrentHealth;
         public int MaxHealth;
         public bool HasResurrected;
+        public bool Dead;
 
         public void ResetState()
         {
             CurrentHealth = MaxHealth;
             HasResurrected = false;
+            Dead = false;
         }
     }
 }

@@ -13,7 +13,7 @@ namespace Roguelike.Level
         
         public event UnityAction<PlayerHealth> PlayerHasEntered;
 
-        public void Counstruct(StageId nextStageId)
+        public void Construct(StageId nextStageId)
         {
             _nextStageId = nextStageId;
         }

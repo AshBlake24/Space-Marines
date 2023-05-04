@@ -104,7 +104,7 @@ namespace Roguelike.Level
             _currentRoom = CreateRoom(_currentCorridor, _data.FinishRoom);
 
             _enterTriger = _currentRoom.gameObject.GetComponentInChildren<EnterTriger>();
-            _enterTriger.Counstruct(_data.NextStageId);
+            _enterTriger.Construct(_data.NextStageId);
 
             _enterTriger.PlayerHasEntered += GenerateNextLevel;
         }
