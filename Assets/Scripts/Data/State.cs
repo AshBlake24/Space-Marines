@@ -16,5 +16,11 @@ namespace Roguelike.Data
             HasResurrected = false;
             Dead = false;
         }
+
+        public void Resurrect()
+        {
+            CurrentHealth = MaxHealth;
+            HasResurrected = true;
+        }
     }
 }

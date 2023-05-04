@@ -1,3 +1,4 @@
+using Roguelike.Player;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,7 +11,11 @@ namespace Roguelike.UI.Windows
         [SerializeField] private Button _ressurectButton;
         
         private Image[] _ressurectButtonImages;
-        
+        private PlayerDeath _playerDeath;
+
+        public void Construct(PlayerDeath playerDeath) => 
+            _playerDeath = playerDeath;
+
         protected override void Initialize()
         {
             InitResurrect();
@@ -41,15 +46,17 @@ namespace Roguelike.UI.Windows
             }
             else
             {
+                _ressurectButton.interactable = true;
                 _ressurectButton.onClick.AddListener(OnResurrect);
             }
         }
 
         private void OnResurrect()
         {
-            // todo show ad & resurrect player
-            
-            throw new System.NotImplementedException();
+            // todo show ad
+
+            ProgressService.PlayerProgress.State.HasResurrected = true;
+            _playerDeath.Resurrect();
         }
     }
 }

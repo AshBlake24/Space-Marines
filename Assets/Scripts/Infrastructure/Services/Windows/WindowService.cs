@@ -1,5 +1,6 @@
 using System;
 using Roguelike.Infrastructure.Factory;
+using Roguelike.Player;
 using Roguelike.UI.Windows;
 
 namespace Roguelike.Infrastructure.Services.Windows
@@ -12,6 +13,9 @@ namespace Roguelike.Infrastructure.Services.Windows
         {
             _uiFactory = uiFactory;
         }
+
+        public void OpenResurrectionWindow(PlayerDeath playerDeath) => 
+            _uiFactory.CreateResurrectionWindow(this, playerDeath);
 
         public BaseWindow Open(WindowId windowId)
         {

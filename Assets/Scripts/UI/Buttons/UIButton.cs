@@ -10,11 +10,6 @@ namespace Roguelike.UI.Buttons
     {
         [SerializeField] private Button _button;
         
-        protected IInputService InputService;
-
-        private void Awake() => 
-            InputService = AllServices.Container.Single<IInputService>();
-
         private void OnEnable() => 
             _button.onClick.AddListener(OnButtonClick);
 

@@ -1,9 +1,9 @@
-using System;
 using Roguelike.Infrastructure.AssetManagement;
 using Roguelike.Infrastructure.Services.Loading;
 using Roguelike.Infrastructure.Services.PersistentData;
 using Roguelike.Infrastructure.Services.StaticData;
 using Roguelike.Infrastructure.Services.Windows;
+using Roguelike.Player;
 using Roguelike.StaticData.Windows;
 using Roguelike.UI.Elements;
 using Roguelike.UI.Windows;
@@ -39,7 +39,6 @@ namespace Roguelike.Infrastructure.Factory
             foreach (OpenWindowButton openWindowButton in window.GetComponentsInChildren<OpenWindowButton>())
                 openWindowButton.Construct(windowService);
             
-            
             switch (window)
             {
                 case MainMenu mainMenu:
@@ -54,6 +53,14 @@ namespace Roguelike.Infrastructure.Factory
             }
             
             return window;
+        }
+
+        public void CreateResurrectionWindow(IWindowService windowService, PlayerDeath playerDeath)
+        {
+            BaseWindow window = CreateWindow(windowService, WindowId.Resurrection);
+            
+            if (window is ResurrectionWindow resurrectionWindow)
+                resurrectionWindow.Construct(playerDeath);
         }
 
         public void CreateUIRoot() =>

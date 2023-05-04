@@ -1,3 +1,4 @@
+using System;
 using Roguelike.StaticData.Weapons;
 using UnityEngine;
 
@@ -13,6 +14,8 @@ namespace Roguelike.Player
         private static readonly int s_hasTwoHanded = Animator.StringToHash("HasTwoHandedWeapon");
         
         private Animator _animator;
+
+        public event Action Restarted;
 
         public void Construct(Animator animator) => 
             _animator = animator;
@@ -46,6 +49,13 @@ namespace Roguelike.Player
         {
             _animator.SetBool(s_hasOneHanded, hasOneHanded);
             _animator.SetBool(s_hasTwoHanded, hasTwoHanded);
+        }
+
+        public void Restart()
+        {
+            _animator.Rebind();
+            _animator.Update(0f);
+            Restarted?.Invoke();
         }
     }
 }

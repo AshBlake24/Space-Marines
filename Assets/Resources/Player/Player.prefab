@@ -201,6 +201,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playerAnimator: {fileID: 1225606247818609378}
+  _playerDeath: {fileID: 1584298645333498346}
 --- !u!114 &4082149494198673327
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -263,11 +264,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _delayBeforeResurrectionScreen: 1.5
   _health: {fileID: 1331113081620957422}
-  _aim: {fileID: 4082149494198673327}
-  _shooter: {fileID: 2753311284853847007}
-  _movement: {fileID: 3613895008707275181}
-  _interaction: {fileID: 3013432722044181812}
   _animator: {fileID: 1225606247818609378}
+  _componentsToDeactivate:
+  - {fileID: 3613895008707275181}
+  - {fileID: 2753311284853847007}
+  - {fileID: 4082149494198673327}
+  - {fileID: 3023580893681268667}
+  - {fileID: 3013432722044181812}
 --- !u!1 &6396496712223034230
 GameObject:
   m_ObjectHideFlags: 0

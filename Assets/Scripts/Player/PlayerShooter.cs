@@ -63,11 +63,17 @@ namespace Roguelike.Player
             }
         }
 
-        private void OnEnable() =>
+        private void OnEnable()
+        {
             _inputService.WeaponChanged += OnWeaponChanged;
+            _playerAnimator.Restarted += OnAnimatorRestarted;
+        }
 
-        private void OnDisable() =>
+        private void OnDisable()
+        {
             _inputService.WeaponChanged -= OnWeaponChanged;
+            _playerAnimator.Restarted -= OnAnimatorRestarted;
+        }
 
         private void Start() =>
             WeaponChanged?.Invoke(_currentWeapon);
@@ -89,7 +95,7 @@ namespace Roguelike.Player
 
             return _weapons[nextWeaponIndex];
         }
-        
+
         public IWeapon TryGetPreviousWeapon()
         {
             if (WeaponsCount <= 1)
@@ -182,5 +188,8 @@ namespace Roguelike.Player
 
         public void ResetAttackSpeedMultiplier() => 
             _attackSpeedMultiplier = DefaultAttackSpeedMultiplier;
+
+        private void OnAnimatorRestarted() => 
+            _playerAnimator.SetWeapon(_currentWeapon.Stats.Size);
     }
 }

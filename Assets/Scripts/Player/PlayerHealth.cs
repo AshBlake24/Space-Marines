@@ -12,6 +12,7 @@ namespace Roguelike.Player
     public class PlayerHealth : MonoBehaviour, IProgressWriter, IHealth
     {
         [SerializeField] private PlayerAnimator _playerAnimator;
+        [SerializeField] private PlayerDeath _playerDeath;
         
         private State _state;
         private float _immuneTimeAfterHit;
@@ -46,6 +47,12 @@ namespace Roguelike.Player
             if (GUI.Button(new Rect(30, 350, 100, 35), "Heal"))
                 Heal(100);
         }
+
+        private void OnEnable() => 
+            _playerDeath.Resurrected += OnResurrected;
+
+        private void OnDisable() => 
+            _playerDeath.Resurrected -= OnResurrected;
 
         public void Construct(float immuneTimeAfterHit)
         {
@@ -99,6 +106,12 @@ namespace Roguelike.Player
                 return true;
 
             throw new ArgumentOutOfRangeException(nameof(value), "Value must not be less than 0");
+        }
+
+        private void OnResurrected()
+        {
+            _state.Resurrect();
+            HealthChanged?.Invoke();
         }
     }
 }

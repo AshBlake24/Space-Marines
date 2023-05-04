@@ -1,4 +1,7 @@
+using System;
 using System.Collections;
+using System.Collections.Generic;
+using JetBrains.Annotations;
 using Roguelike.Data;
 using Roguelike.Infrastructure.Services.PersistentData;
 using Roguelike.Infrastructure.Services.SaveLoad;
@@ -8,19 +11,19 @@ using UnityEngine;
 
 namespace Roguelike.Player
 {
+    [RequireComponent(typeof(PlayerAnimator), typeof(PlayerHealth))]
     public class PlayerDeath : MonoBehaviour, IProgressWriter
     {
         [SerializeField] private float _delayBeforeResurrectionScreen = 1.5f;
         [SerializeField] private PlayerHealth _health;
-        [SerializeField] private PlayerAim _aim;
-        [SerializeField] private PlayerShooter _shooter;
-        [SerializeField] private PlayerMovement _movement;
-        [SerializeField] private PlayerInteraction _interaction;
         [SerializeField] private PlayerAnimator _animator;
+        [SerializeField] private List<MonoBehaviour> _componentsToDeactivate;
 
         private IWindowService _windowService;
         private ISaveLoadService _saveLoadService;
         private bool _isDead;
+
+        public event Action Resurrected;
 
         public void Construct(IWindowService windowService, ISaveLoadService saveLoadService)
         {
@@ -46,24 +49,40 @@ namespace Roguelike.Player
                 Die();
         }
 
+        public void Resurrect()
+        {
+            SwitchComponents(isOn: true);
+            
+            _isDead = false;
+            _animator.Restart();
+            
+            Resurrected?.Invoke();
+            
+            _saveLoadService.SaveProgress();
+        }
+
         private void Die()
         {
+            SwitchComponents(isOn: false);
+            
             _isDead = true;
-            _aim.enabled = false;
-            _shooter.enabled = false;
-            _movement.enabled = false;
-            _interaction.enabled = false;
             _animator.PlayDeath();
-
             _saveLoadService.SaveProgress();
+            
             StartCoroutine(OpenRessurectionWindowAfterDelay());
+        }
+
+        private void SwitchComponents(bool isOn)
+        {
+            foreach (MonoBehaviour component in _componentsToDeactivate)
+                component.enabled = isOn;
         }
 
         private IEnumerator OpenRessurectionWindowAfterDelay()
         {
             yield return Helpers.GetTime(_delayBeforeResurrectionScreen);
 
-            _windowService.Open(WindowId.Resurrection);
+            _windowService.OpenResurrectionWindow(this);
         }
     }
 }
