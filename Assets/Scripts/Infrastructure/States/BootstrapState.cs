@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using Agava.YandexGames;
 using Roguelike.Infrastructure.AssetManagement;
 using Roguelike.Infrastructure.Factory;
 using Roguelike.Infrastructure.Services;
@@ -32,10 +29,6 @@ namespace Roguelike.Infrastructure.States
             _sceneLoader = sceneLoader;
             _services = services;
             _coroutineRunner = coroutineRunner;
-            
-#if UNITY_WEBGL && !UNITY_EDITOR
-            _coroutineRunner.StartCoroutine(InitializeYandexSDK());
-#endif
 
             RegisterServices();
         }
@@ -113,14 +106,6 @@ namespace Roguelike.Infrastructure.States
             return deviceType == EnvironmentType.Desktop
                 ? new DesktopInputService()
                 : new MobileInputService();
-        }
-
-        private IEnumerator InitializeYandexSDK()
-        {
-            yield return YandexGamesSdk.Initialize();
-
-            if (YandexGamesSdk.IsInitialized == false)
-                throw new ArgumentNullException(nameof(YandexGamesSdk), "Yandex SDK didn't initialize correctly");
         }
     }
 }
