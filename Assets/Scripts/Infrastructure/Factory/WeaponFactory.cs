@@ -20,8 +20,11 @@ namespace Roguelike.Infrastructure.Factory
             _saveLoadService = saveLoadService;
         }
 
-        public IWeapon CreateWeapon(WeaponId id)
+        public IWeapon CreateWeapon(WeaponId id) // todo refactor
         {
+            if (id == WeaponId.Unknow)
+                return null;
+            
             WeaponStaticData weaponData = _staticDataService.GetWeaponData(id);
 
             return ConstructWeapon(weaponData);
@@ -29,6 +32,9 @@ namespace Roguelike.Infrastructure.Factory
         
         public IWeapon CreateWeapon(WeaponId id, Transform parent)
         {
+            if (id == WeaponId.Unknow)
+                return null;
+            
             WeaponStaticData weaponData = _staticDataService.GetWeaponData(id);
 
             return ConstructWeapon(weaponData, parent);

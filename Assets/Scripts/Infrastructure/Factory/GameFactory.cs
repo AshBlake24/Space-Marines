@@ -172,14 +172,13 @@ namespace Roguelike.Infrastructure.Factory
         {
             PlayerShooter playerShooter = player.GetComponent<PlayerShooter>();
 
-            List<IWeapon> weapons = _persistentData.PlayerProgress.PlayerWeapons.GetWeapons()
-                .Where(weaponId => weaponId != WeaponId.Unknow)
+            IWeapon[] weapons = _persistentData.PlayerProgress.PlayerWeapons.Weapons
                 .Select(weaponId => _weaponFactory.CreateWeapon(weaponId, weaponSpawnPoint.transform))
-                .ToList();
+                .ToArray();
 
             playerShooter.Construct(
-                _weaponFactory,
                 weapons,
+                _weaponFactory,
                 _staticDataService.Player.WeaponSwtichCooldown,
                 weaponSpawnPoint);
         }

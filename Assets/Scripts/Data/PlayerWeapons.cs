@@ -20,8 +20,6 @@ namespace Roguelike.Data
             InitStartWeapon(startWeapon);
         }
 
-        public IEnumerable<WeaponId> GetWeapons() => Weapons;
-
         public void SaveRangedWeapon(WeaponId id, AmmoData ammoData)
         {
             RangedWeaponData weaponData = RangedWeaponsData.Find(x => x.ID == id);

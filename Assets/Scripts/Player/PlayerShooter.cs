@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using Roguelike.Infrastructure.Factory;
 using Roguelike.Infrastructure.Services;
@@ -16,13 +15,11 @@ namespace Roguelike.Player
         
         [SerializeField] private PlayerAnimator _playerAnimator;
 
+        private WeaponSpawnPoint _weaponSpawnPoint;
         private IInputService _inputService;
         private IWeaponFactory _weaponFactory;
-        
+        private IWeapon[] _weapons;
         private IWeapon _currentWeapon;
-        private List<IWeapon> _weapons;
-
-        private WeaponSpawnPoint _weaponSpawnPoint;
         private int _currentWeaponIndex;
         private float _weaponSwitchCooldown;
         private float _lastWeaponSwitchTime;
@@ -31,7 +28,7 @@ namespace Roguelike.Player
 
         public event Action<IWeapon> WeaponChanged;
 
-        public int WeaponsCount => _weapons.Count;
+        public int WeaponsCount => _weapons.Length;
 
         private void OnGUI()
         {
@@ -48,7 +45,7 @@ namespace Roguelike.Player
         private void Awake() =>
             _inputService = AllServices.Container.Single<IInputService>();
 
-        public void Construct(IWeaponFactory weaponFactory, List<IWeapon> weapons, 
+        public void Construct(IWeapon[] weapons, IWeaponFactory weaponFactory, 
             float weaponSwitchCooldown, WeaponSpawnPoint weaponSpawnPoint)
         {
             _weapons = weapons;
@@ -56,15 +53,8 @@ namespace Roguelike.Player
             _weaponSwitchCooldown = weaponSwitchCooldown;
             _weaponSpawnPoint = weaponSpawnPoint;
             _attackSpeedMultiplier = DefaultAttackSpeedMultiplier;
-            
-            Debug.Log(_weapons.Count);
-            Debug.Log(_weapons.Capacity);
-
-            if (_weapons.Count > 0)
-            {
-                _currentWeaponIndex = 0;
-                SetWeapon();
-            }
+            _currentWeaponIndex = 0;
+            SetWeapon();
         }
 
         private void OnEnable()
@@ -95,9 +85,6 @@ namespace Roguelike.Player
 
         public IWeapon TryGetNextWeapon()
         {
-            if (WeaponsCount <= 1)
-                return null;
-
             int nextWeaponIndex = _currentWeaponIndex + 1;
             
             if (nextWeaponIndex >= WeaponsCount)
@@ -121,10 +108,12 @@ namespace Roguelike.Player
 
         public bool TryAddWeapon(WeaponId weaponId)
         {
+            // todo new add logic
+            
             if (_weapons.SingleOrDefault(x => x.Stats.ID == weaponId) == null)
             {
                 IWeapon weapon = _weaponFactory.CreateWeapon(weaponId, _weaponSpawnPoint.transform);
-                _weapons.Add(weapon);
+                //_weapons.Add(weapon);
                 SwitchTo(weapon);
 
                 return true;
@@ -135,10 +124,10 @@ namespace Roguelike.Player
 
         private void TryAttack()
         {
-            if (_currentWeapon == null)
+            if (_inputService.IsAttackButtonUp() == false)
                 return;
             
-            if (_inputService.IsAttackButtonUp() == false)
+            if (_currentWeapon == null)
                 return;
 
             float attackRate = _currentWeapon.Stats.AttackRate / _attackSpeedMultiplier;
@@ -155,7 +144,7 @@ namespace Roguelike.Player
 
         private void SwitchTo(IWeapon weapon)
         {
-            _currentWeaponIndex = _weapons.IndexOf(weapon);
+            _currentWeaponIndex = Array.IndexOf(_weapons, weapon);
             SetWeapon();
         }
 
@@ -163,17 +152,18 @@ namespace Roguelike.Player
         {
             _currentWeapon?.Hide();
             _currentWeapon = _weapons[_currentWeaponIndex];
-            _currentWeapon.Show();
-            _playerAnimator.SetWeapon(_currentWeapon.Stats.Size);
+            _currentWeapon?.Show();
+
+            _playerAnimator.SetWeapon(
+                _currentWeapon != null 
+                    ? _currentWeapon.Stats.Size 
+                    : WeaponSize.Unknown);
 
             WeaponChanged?.Invoke(_currentWeapon);
         }
 
         private void OnWeaponChanged(bool switchToNext)
         {
-            if (_weapons.Count <= 0)
-                return;
-
             if (Time.time > _lastWeaponSwitchTime + _weaponSwitchCooldown)
             {
                 _lastWeaponSwitchTime = Time.time;
@@ -183,11 +173,11 @@ namespace Roguelike.Player
                 else
                     _currentWeaponIndex--;
 
-                if (_currentWeaponIndex >= _weapons.Count)
+                if (_currentWeaponIndex >= _weapons.Length)
                     _currentWeaponIndex = 0;
 
                 if (_currentWeaponIndex < 0)
-                    _currentWeaponIndex = _weapons.Count - 1;
+                    _currentWeaponIndex = _weapons.Length - 1;
 
                 SetWeapon();
             }

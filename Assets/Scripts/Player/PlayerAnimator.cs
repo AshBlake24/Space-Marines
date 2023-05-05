@@ -39,6 +39,7 @@ namespace Roguelike.Player
                 case WeaponSize.TwoHanded:
                     SetWeapon(false, true);
                     break;
+                case WeaponSize.Unknown:
                 default:
                     SetWeapon(false, false);
                     break;

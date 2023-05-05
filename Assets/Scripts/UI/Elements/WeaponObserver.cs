@@ -18,30 +18,38 @@ namespace Roguelike.UI.Elements
         {
             _playerShooter = playerShooter;
 
-            _previousWeapon.sprite = _emptyWeaponSprite;
-            _currentWeapon.sprite = _emptyWeaponSprite;
-            _nextWeapon.sprite = _emptyWeaponSprite;
-
-            playerShooter.WeaponChanged += OnWeaponChanged;
+            _playerShooter.WeaponChanged += OnWeaponChanged;
         }
+
+        private void OnDestroy() => 
+            _playerShooter.WeaponChanged -= OnWeaponChanged;
 
         private void OnWeaponChanged(IWeapon weapon)
         {
-            _currentWeapon.sprite = weapon.Stats.Icon;
+            _currentWeapon.sprite = weapon == null
+                ? _emptyWeaponSprite
+                : weapon.Stats.Icon;
 
-            if (_playerShooter.WeaponsCount > 1)
-            {
-                SetNextWeaponIcon();
-                SetPreviousWeaponSprite();
-            }
+            SetNextWeaponIcon();
+            SetPreviousWeaponSprite();
         }
 
         private void SetPreviousWeaponSprite()
         {
-            _previousWeapon.sprite = _playerShooter.TryGetPreviousWeapon().Stats.Icon;
+            IWeapon weapon = _playerShooter.TryGetPreviousWeapon();
+
+            _previousWeapon.sprite = weapon != null 
+                ? weapon.Stats.Icon 
+                : _emptyWeaponSprite;
         }
 
-        private void SetNextWeaponIcon() => 
-            _nextWeapon.sprite = _playerShooter.TryGetNextWeapon().Stats.Icon;
+        private void SetNextWeaponIcon()
+        {
+            IWeapon weapon = _playerShooter.TryGetNextWeapon();
+            
+            _nextWeapon.sprite = weapon != null 
+                ? weapon.Stats.Icon 
+                : _emptyWeaponSprite;
+        }
     }
 }
