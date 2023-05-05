@@ -49,7 +49,7 @@ namespace Roguelike.Weapons
 
         public void ReadProgress(PlayerProgress progress)
         {
-            RangedWeaponData weaponData = progress.PlayerWeapons.RangedWeapons.Find(weapon => weapon.ID == Stats.ID);
+            RangedWeaponData weaponData = progress.PlayerWeapons.RangedWeaponsData.Find(weapon => weapon.ID == Stats.ID);
 
             if (weaponData != null)
                 AmmoData = weaponData.AmmoData;

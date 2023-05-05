@@ -14,14 +14,15 @@ namespace Roguelike.Player
     {
         private const float DefaultAttackSpeedMultiplier = 1f;
         
-        [SerializeField] private PlayerHealth _playerHealth;
         [SerializeField] private PlayerAnimator _playerAnimator;
 
-        private WeaponSpawnPoint _weaponSpawnPoint;
         private IInputService _inputService;
         private IWeaponFactory _weaponFactory;
-        private List<IWeapon> _weapons;
+        
         private IWeapon _currentWeapon;
+        private List<IWeapon> _weapons;
+
+        private WeaponSpawnPoint _weaponSpawnPoint;
         private int _currentWeaponIndex;
         private float _weaponSwitchCooldown;
         private float _lastWeaponSwitchTime;
@@ -47,14 +48,17 @@ namespace Roguelike.Player
         private void Awake() =>
             _inputService = AllServices.Container.Single<IInputService>();
 
-        public void Construct(List<IWeapon> weapons, float weaponSwitchCooldown, 
-            WeaponSpawnPoint weaponSpawnPoint, IWeaponFactory weaponFactory)
+        public void Construct(IWeaponFactory weaponFactory, List<IWeapon> weapons, 
+            float weaponSwitchCooldown, WeaponSpawnPoint weaponSpawnPoint)
         {
             _weapons = weapons;
             _weaponFactory = weaponFactory;
             _weaponSwitchCooldown = weaponSwitchCooldown;
             _weaponSpawnPoint = weaponSpawnPoint;
             _attackSpeedMultiplier = DefaultAttackSpeedMultiplier;
+            
+            Debug.Log(_weapons.Count);
+            Debug.Log(_weapons.Capacity);
 
             if (_weapons.Count > 0)
             {
@@ -82,6 +86,12 @@ namespace Roguelike.Player
         {
             TryAttack();
         }
+
+        public void SetAttackSpeedMultiplier(float attackSpeedMultiplier) => 
+            _attackSpeedMultiplier = attackSpeedMultiplier;
+
+        public void ResetAttackSpeedMultiplier() => 
+            _attackSpeedMultiplier = DefaultAttackSpeedMultiplier;
 
         public IWeapon TryGetNextWeapon()
         {
@@ -182,12 +192,6 @@ namespace Roguelike.Player
                 SetWeapon();
             }
         }
-
-        public void SetAttackSpeedMultiplier(float attackSpeedMultiplier) => 
-            _attackSpeedMultiplier = attackSpeedMultiplier;
-
-        public void ResetAttackSpeedMultiplier() => 
-            _attackSpeedMultiplier = DefaultAttackSpeedMultiplier;
 
         private void OnAnimatorRestarted() => 
             _playerAnimator.SetWeapon(_currentWeapon.Stats.Size);

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using JetBrains.Annotations;
 using Roguelike.StaticData.Weapons;
 using Roguelike.Weapons;
 
@@ -9,37 +10,44 @@ namespace Roguelike.Data
     [Serializable]
     public class PlayerWeapons
     {
-        public List<RangedWeaponData> RangedWeapons;
+        public WeaponId[] Weapons;
+        public List<RangedWeaponData> RangedWeaponsData;
 
-        public PlayerWeapons(IWeapon startWeapon)
+        public PlayerWeapons(IWeapon startWeapon, int maxWeaponsCount)
         {
-            RangedWeapons = new List<RangedWeaponData>();
-
-            InitializeStartWeapon(startWeapon);
+            RangedWeaponsData = new List<RangedWeaponData>();
+            InitPlayerWeapons(maxWeaponsCount);
+            InitStartWeapon(startWeapon);
         }
 
-        public void InitializeStartWeapon(IWeapon startWeapon)
+        public IEnumerable<WeaponId> GetWeapons() => Weapons;
+
+        public void SaveRangedWeapon(WeaponId id, AmmoData ammoData)
         {
-            RangedWeapons.Clear();
+            RangedWeaponData weaponData = RangedWeaponsData.Find(x => x.ID == id);
+
+            if (weaponData != null)
+                weaponData.AmmoData = ammoData;
+            else
+                RangedWeaponsData.Add(new RangedWeaponData(id, ammoData));
+        }
+
+        private void InitPlayerWeapons(int maxWeaponsCount)
+        {
+            Weapons = new WeaponId[maxWeaponsCount];
+
+            for (int i = 0; i < Weapons.Length; i++)
+                Weapons[i] = WeaponId.Unknow;
+        }
+
+        private void InitStartWeapon(IWeapon startWeapon)
+        {
+            Weapons[0] = startWeapon.Stats.ID;
             
             if (startWeapon is RangedWeapon rangedWeapon)
                 SaveRangedWeapon(
                     rangedWeapon.Stats.ID, 
                     new AmmoData(infinityAmmo: true, currentAmmo: -1, maxAmmo: -1));
         }
-
-        public void SaveRangedWeapon(WeaponId id, AmmoData ammoData)
-        {
-            RangedWeaponData weaponData = RangedWeapons.Find(x => x.ID == id);
-
-            if (weaponData != null)
-                weaponData.AmmoData = ammoData;
-            else
-                RangedWeapons.Add(new RangedWeaponData(id, ammoData));
-        }
-
-        public IEnumerable<WeaponId> GetWeapons() => 
-            RangedWeapons.Select(rangedWeaponData => rangedWeaponData.ID)
-                .ToList();
     }
 }

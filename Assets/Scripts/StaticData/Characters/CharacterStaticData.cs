@@ -13,6 +13,7 @@ namespace Roguelike.StaticData.Characters
         public WeaponId StartWeapon;
         public SkillId Skill;
         [Range(1, 10)] public int MaxHealth;
+        [Range(1, 5)] public int MaxWeaponsCount;
         [TextArea(2, 3)] public string Desctription;
     }
 }

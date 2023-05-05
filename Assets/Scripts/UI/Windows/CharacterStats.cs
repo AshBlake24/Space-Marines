@@ -1,3 +1,4 @@
+using Roguelike.Data;
 using Roguelike.Infrastructure.Factory;
 using Roguelike.Infrastructure.Services.StaticData;
 using Roguelike.Logic;
@@ -99,7 +100,9 @@ namespace Roguelike.UI.Windows
         private void OnCharacterSelected()
         {
             IWeapon startWeapon = _weaponFactory.CreateWeapon(_characterData.StartWeapon);
-            ProgressService.PlayerProgress.PlayerWeapons.InitializeStartWeapon(startWeapon);
+            ProgressService.PlayerProgress.PlayerWeapons = new PlayerWeapons(
+                startWeapon,
+                _characterData.MaxWeaponsCount);
             _selectionMode.OnCharacterSelected();
         }
 

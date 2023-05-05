@@ -21,6 +21,7 @@ using Roguelike.Infrastructure.States;
 using Roguelike.Logic;
 using Roguelike.Logic.Interactables;
 using Roguelike.StaticData.Skills;
+using Roguelike.StaticData.Weapons;
 using Roguelike.UI.Windows;
 
 namespace Roguelike.Infrastructure.Factory
@@ -172,14 +173,15 @@ namespace Roguelike.Infrastructure.Factory
             PlayerShooter playerShooter = player.GetComponent<PlayerShooter>();
 
             List<IWeapon> weapons = _persistentData.PlayerProgress.PlayerWeapons.GetWeapons()
+                .Where(weaponId => weaponId != WeaponId.Unknow)
                 .Select(weaponId => _weaponFactory.CreateWeapon(weaponId, weaponSpawnPoint.transform))
                 .ToList();
 
             playerShooter.Construct(
+                _weaponFactory,
                 weapons,
                 _staticDataService.Player.WeaponSwtichCooldown,
-                weaponSpawnPoint,
-                _weaponFactory);
+                weaponSpawnPoint);
         }
 
         private GameObject InstantiateRegistered(string prefabPath)
