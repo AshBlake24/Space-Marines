@@ -19,5 +19,6 @@ namespace Roguelike.Infrastructure.AssetManagement
         public const string GameConfigPath = "StaticData/GameConfig";
         public const string SelectionWindow = "UI/CharactersSelection";
         public const string MiniMap = "UI/Elements/MiniMap";
+        public const string PickupableWeaponStaticDataPath = "StaticData/Weapons/PickupableWeaponsStaticData";
     }
 }

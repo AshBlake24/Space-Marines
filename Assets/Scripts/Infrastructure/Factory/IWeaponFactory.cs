@@ -9,5 +9,6 @@ namespace Roguelike.Infrastructure.Factory
     {
         IWeapon CreateWeapon(WeaponId id);
         IWeapon CreateWeapon(WeaponId id, Transform parent);
+        void CreatePickupableWeapon(WeaponId weaponId, Transform at);
     }
 }

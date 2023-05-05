@@ -12,7 +12,7 @@ namespace Roguelike.Player
     public class PlayerShooter : MonoBehaviour
     {
         private const float DefaultAttackSpeedMultiplier = 1f;
-        
+
         [SerializeField] private PlayerAnimator _playerAnimator;
 
         private WeaponSpawnPoint _weaponSpawnPoint;
@@ -45,7 +45,7 @@ namespace Roguelike.Player
         private void Awake() =>
             _inputService = AllServices.Container.Single<IInputService>();
 
-        public void Construct(IWeapon[] weapons, IWeaponFactory weaponFactory, 
+        public void Construct(IWeapon[] weapons, IWeaponFactory weaponFactory,
             float weaponSwitchCooldown, WeaponSpawnPoint weaponSpawnPoint)
         {
             _weapons = weapons;
@@ -77,16 +77,16 @@ namespace Roguelike.Player
             TryAttack();
         }
 
-        public void SetAttackSpeedMultiplier(float attackSpeedMultiplier) => 
+        public void SetAttackSpeedMultiplier(float attackSpeedMultiplier) =>
             _attackSpeedMultiplier = attackSpeedMultiplier;
 
-        public void ResetAttackSpeedMultiplier() => 
+        public void ResetAttackSpeedMultiplier() =>
             _attackSpeedMultiplier = DefaultAttackSpeedMultiplier;
 
         public IWeapon TryGetNextWeapon()
         {
             int nextWeaponIndex = _currentWeaponIndex + 1;
-            
+
             if (nextWeaponIndex >= WeaponsCount)
                 nextWeaponIndex = 0;
 
@@ -99,39 +99,56 @@ namespace Roguelike.Player
                 return null;
 
             int nextWeaponIndex = _currentWeaponIndex - 1;
-            
+
             if (nextWeaponIndex < 0)
                 nextWeaponIndex = WeaponsCount - 1;
 
             return _weapons[nextWeaponIndex];
         }
 
-        public bool TryAddWeapon(WeaponId weaponId)
+        public bool TryAddWeapon(WeaponId weaponId, Transform weaponPosition)
         {
-            // todo new add logic
-            
-            if (_weapons.SingleOrDefault(x => x.Stats.ID == weaponId) == null)
+            if (WeaponExists(weaponId))
+                return false;
+
+            if (HasEmptySlots(out int emptySlot) == false)
+                emptySlot = DropWeapon(weaponPosition);
+
+            IWeapon weapon = _weaponFactory.CreateWeapon(weaponId, _weaponSpawnPoint.transform);
+            _weapons[emptySlot] = weapon;
+            SwitchTo(weapon);
+
+            return true;
+        }
+
+        private int DropWeapon(Transform weaponPosition)
+        {
+            if (_currentWeaponIndex == 0)
             {
-                IWeapon weapon = _weaponFactory.CreateWeapon(weaponId, _weaponSpawnPoint.transform);
-                //_weapons.Add(weapon);
-                SwitchTo(weapon);
+                _weaponFactory.CreatePickupableWeapon(_weapons[^1].Stats.ID, weaponPosition);
+                _weapons[^1] = null;
 
-                return true;
+                return _weapons.Length - 1;
             }
+            else
+            {
+                _weaponFactory.CreatePickupableWeapon(_weapons[_currentWeaponIndex].Stats.ID, weaponPosition);
+                _weapons[_currentWeaponIndex] = null;
 
-            return false;
+                return _currentWeaponIndex;
+            }
         }
 
         private void TryAttack()
         {
             if (_inputService.IsAttackButtonUp() == false)
                 return;
-            
+
             if (_currentWeapon == null)
                 return;
 
             float attackRate = _currentWeapon.Stats.AttackRate / _attackSpeedMultiplier;
-            
+
             if (Time.time < (attackRate + _lastShotTime))
                 return;
 
@@ -155,8 +172,8 @@ namespace Roguelike.Player
             _currentWeapon?.Show();
 
             _playerAnimator.SetWeapon(
-                _currentWeapon != null 
-                    ? _currentWeapon.Stats.Size 
+                _currentWeapon != null
+                    ? _currentWeapon.Stats.Size
                     : WeaponSize.Unknown);
 
             WeaponChanged?.Invoke(_currentWeapon);
@@ -183,7 +200,22 @@ namespace Roguelike.Player
             }
         }
 
-        private void OnAnimatorRestarted() => 
+        private bool WeaponExists(WeaponId weaponId)
+        {
+            IWeapon weapon = _weapons.Where(weapon => weapon != null)
+                .SingleOrDefault(weapon => weapon.Stats.ID == weaponId);
+
+            return weapon != null;
+        }
+
+        private bool HasEmptySlots(out int emptySlot)
+        {
+            emptySlot = Array.IndexOf(_weapons, null);
+
+            return emptySlot != -1;
+        }
+
+        private void OnAnimatorRestarted() =>
             _playerAnimator.SetWeapon(_currentWeapon.Stats.Size);
     }
 }

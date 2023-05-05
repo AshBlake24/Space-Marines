@@ -11,6 +11,7 @@ using Roguelike.StaticData.Player;
 using Roguelike.StaticData.Projectiles;
 using Roguelike.StaticData.Skills;
 using Roguelike.StaticData.Weapons;
+using Roguelike.StaticData.Weapons.PickupableWeapons;
 using Roguelike.StaticData.Windows;
 using UnityEngine;
 
@@ -26,6 +27,7 @@ namespace Roguelike.Infrastructure.Services.StaticData
         private Dictionary<EnemyId, EnemyStaticData> _enemies;
         private Dictionary<ItemId, ItemStaticData> _items;
         private Dictionary<StageId, LevelStaticData> _levels;
+        private Dictionary<WeaponId, PickupableWeaponsConfig> _pickupableWeapons;
 
         public PlayerStaticData Player { get; private set; }
         public GameConfig GameConfig { get; private set; }
@@ -41,6 +43,7 @@ namespace Roguelike.Infrastructure.Services.StaticData
             LoadItems();
             LoadLevels();
             LoadPlayer();
+            LoadPickupableWeapons();
             LoadGameConfig();
         }
 
@@ -83,6 +86,11 @@ namespace Roguelike.Infrastructure.Services.StaticData
             _levels.TryGetValue(id, out LevelStaticData staticData)
                 ? staticData
                 : null;
+        
+        public PickupableWeaponsConfig GetPickupableWeaponConfig(WeaponId id) =>
+            _pickupableWeapons.TryGetValue(id, out PickupableWeaponsConfig pickupableWeaponsConfig)
+                ? pickupableWeaponsConfig
+                : null;
 
         private void LoadWeapons() =>
             _weapons = Resources.LoadAll<WeaponStaticData>(AssetPath.WeaponsStaticDataPath)
@@ -116,6 +124,11 @@ namespace Roguelike.Infrastructure.Services.StaticData
             _windows = Resources.Load<WindowStaticData>(AssetPath.WindowsStaticDataPath)
                 .Configs
                 .ToDictionary(config => config.WindowId, x => x);
+        
+        private void LoadPickupableWeapons() =>
+            _pickupableWeapons = Resources.Load<PickupableWeaponsStaticData>(AssetPath.PickupableWeaponStaticDataPath)
+                .Configs
+                .ToDictionary(config => config.Id, x => x);
 
         private void LoadPlayer() =>
             Player = Resources.Load<PlayerStaticData>(AssetPath.PlayerStaticDataPath);

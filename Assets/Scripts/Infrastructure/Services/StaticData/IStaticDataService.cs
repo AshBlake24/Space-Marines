@@ -8,6 +8,7 @@ using Roguelike.StaticData.Weapons;
 using Roguelike.StaticData.Enemies;
 using Roguelike.StaticData.Items;
 using Roguelike.StaticData.Levels;
+using Roguelike.StaticData.Weapons.PickupableWeapons;
 using Roguelike.StaticData.Windows;
 
 namespace Roguelike.Infrastructure.Services.StaticData
@@ -25,5 +26,6 @@ namespace Roguelike.Infrastructure.Services.StaticData
         EnemyStaticData GetEnemyStaticData(EnemyId id);
         ItemStaticData GetItemStaticData(ItemId id);
         LevelStaticData GetLevelStaticData(StageId id);
+        PickupableWeaponsConfig GetPickupableWeaponConfig(WeaponId id);
     }
 }

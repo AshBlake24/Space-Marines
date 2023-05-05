@@ -1,7 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using JetBrains.Annotations;
 using Roguelike.StaticData.Weapons;
 using Roguelike.Weapons;
 
@@ -11,7 +9,7 @@ namespace Roguelike.Data
     public class PlayerWeapons
     {
         public WeaponId[] Weapons;
-        public List<RangedWeaponData> RangedWeaponsData;
+        public List<RangedWeaponData> RangedWeaponsData; // todo Reset all data with new progress
 
         public PlayerWeapons(IWeapon startWeapon, int maxWeaponsCount)
         {

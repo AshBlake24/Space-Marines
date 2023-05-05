@@ -19,7 +19,7 @@ namespace Roguelike.Logic.Interactables
         {
             if (interactor.TryGetComponent(out PlayerShooter playerShooter))
             {
-                if (playerShooter.TryAddWeapon(_weaponId))
+                if (playerShooter.TryAddWeapon(_weaponId, transform))
                 {
                     interactor.GetComponent<PlayerInteraction>().Cleanup();
                     Destroy(gameObject);

@@ -1,7 +1,9 @@
 using System;
 using Roguelike.Infrastructure.Services.SaveLoad;
 using Roguelike.Infrastructure.Services.StaticData;
+using Roguelike.Logic.Interactables;
 using Roguelike.StaticData.Weapons;
+using Roguelike.StaticData.Weapons.PickupableWeapons;
 using Roguelike.Weapons;
 using Roguelike.Weapons.Stats;
 using UnityEngine;
@@ -38,6 +40,15 @@ namespace Roguelike.Infrastructure.Factory
             WeaponStaticData weaponData = _staticDataService.GetWeaponData(id);
 
             return ConstructWeapon(weaponData, parent);
+        }
+
+        public void CreatePickupableWeapon(WeaponId weaponId, Transform at)
+        {
+            if (weaponId == WeaponId.Unknow)
+                return;
+
+            PickupableWeaponsConfig weaponConfig = _staticDataService.GetPickupableWeaponConfig(weaponId);
+            Object.Instantiate(weaponConfig.Prefab, at.position, at.rotation);
         }
 
         private IWeapon ConstructWeapon(WeaponStaticData weaponData, Transform parent = null)

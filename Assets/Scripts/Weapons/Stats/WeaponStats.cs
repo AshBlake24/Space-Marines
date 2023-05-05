@@ -11,6 +11,7 @@ namespace Roguelike.Weapons.Stats
         private readonly WeaponType _type;
         private readonly WeaponId _id;
         private readonly Sprite _icon;
+        private readonly GameObject _prefab;
 
         protected WeaponStats(WeaponStaticData weaponData)
         {
@@ -20,6 +21,7 @@ namespace Roguelike.Weapons.Stats
             _type = weaponData.Type;
             _id = weaponData.Id;
             _icon = weaponData.Icon;
+            _prefab = weaponData.WeaponPrefab;
         }
         
         public string Name => _name;
@@ -28,6 +30,7 @@ namespace Roguelike.Weapons.Stats
         public WeaponType Type => _type;
         public WeaponId ID => _id;
         public Sprite Icon => _icon;
+        public GameObject Prefab => _prefab;
 
     }
 }
