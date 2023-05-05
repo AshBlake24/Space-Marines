@@ -1,15 +1,17 @@
 using System;
 using System.Linq;
+using Roguelike.Data;
 using Roguelike.Infrastructure.Factory;
 using Roguelike.Infrastructure.Services;
 using Roguelike.Infrastructure.Services.Input;
+using Roguelike.Infrastructure.Services.PersistentData;
 using Roguelike.StaticData.Weapons;
 using Roguelike.Weapons;
 using UnityEngine;
 
 namespace Roguelike.Player
 {
-    public class PlayerShooter : MonoBehaviour
+    public class PlayerShooter : MonoBehaviour, IProgressWriter
     {
         private const float DefaultAttackSpeedMultiplier = 1f;
 
@@ -27,8 +29,6 @@ namespace Roguelike.Player
         private float _attackSpeedMultiplier;
 
         public event Action<IWeapon> WeaponChanged;
-
-        public int WeaponsCount => _weapons.Length;
 
         private void OnGUI()
         {
@@ -76,6 +76,21 @@ namespace Roguelike.Player
         {
             TryAttack();
         }
+        
+        public void WriteProgress(PlayerProgress progress)
+        {
+            WeaponId[] weaponsId = _weapons
+                .Select(weapon => weapon == null 
+                    ? WeaponId.Unknow 
+                    : weapon.Stats.ID)
+                .ToArray();
+
+            progress.PlayerWeapons.Weapons = weaponsId;
+        }
+
+        public void ReadProgress(PlayerProgress progress)
+        {
+        }
 
         public void SetAttackSpeedMultiplier(float attackSpeedMultiplier) =>
             _attackSpeedMultiplier = attackSpeedMultiplier;
@@ -87,7 +102,7 @@ namespace Roguelike.Player
         {
             int nextWeaponIndex = _currentWeaponIndex + 1;
 
-            if (nextWeaponIndex >= WeaponsCount)
+            if (nextWeaponIndex >= _weapons.Length)
                 nextWeaponIndex = 0;
 
             return _weapons[nextWeaponIndex];
@@ -95,13 +110,13 @@ namespace Roguelike.Player
 
         public IWeapon TryGetPreviousWeapon()
         {
-            if (WeaponsCount <= 1)
+            if (_weapons.Length <= 1)
                 return null;
 
             int nextWeaponIndex = _currentWeaponIndex - 1;
 
             if (nextWeaponIndex < 0)
-                nextWeaponIndex = WeaponsCount - 1;
+                nextWeaponIndex = _weapons.Length - 1;
 
             return _weapons[nextWeaponIndex];
         }
@@ -112,7 +127,7 @@ namespace Roguelike.Player
                 return false;
 
             if (HasEmptySlots(out int emptySlot) == false)
-                emptySlot = DropWeapon(weaponPosition);
+                emptySlot = DropWeapon(to: weaponPosition);
 
             IWeapon weapon = _weaponFactory.CreateWeapon(weaponId, _weaponSpawnPoint.transform);
             _weapons[emptySlot] = weapon;
@@ -121,22 +136,16 @@ namespace Roguelike.Player
             return true;
         }
 
-        private int DropWeapon(Transform weaponPosition)
+        private int DropWeapon(Transform to)
         {
-            if (_currentWeaponIndex == 0)
-            {
-                _weaponFactory.CreatePickupableWeapon(_weapons[^1].Stats.ID, weaponPosition);
-                _weapons[^1] = null;
+            int weaponIndexToDrop = _currentWeaponIndex == 0
+                ? _weapons.Length - 1
+                : _currentWeaponIndex;
 
-                return _weapons.Length - 1;
-            }
-            else
-            {
-                _weaponFactory.CreatePickupableWeapon(_weapons[_currentWeaponIndex].Stats.ID, weaponPosition);
-                _weapons[_currentWeaponIndex] = null;
+            _weaponFactory.CreatePickupableWeapon(_weapons[weaponIndexToDrop].Stats.ID, at: to);
+            _weapons[weaponIndexToDrop] = null;
 
-                return _currentWeaponIndex;
-            }
+            return weaponIndexToDrop;
         }
 
         private void TryAttack()

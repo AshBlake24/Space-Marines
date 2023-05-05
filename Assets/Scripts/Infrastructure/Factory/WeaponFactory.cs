@@ -22,7 +22,7 @@ namespace Roguelike.Infrastructure.Factory
             _saveLoadService = saveLoadService;
         }
 
-        public IWeapon CreateWeapon(WeaponId id) // todo refactor
+        public IWeapon CreateWeapon(WeaponId id) // todo refactor fabric
         {
             if (id == WeaponId.Unknow)
                 return null;
