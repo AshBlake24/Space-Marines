@@ -1,6 +1,5 @@
 using Roguelike.Infrastructure.Services.Loading;
 using Roguelike.Infrastructure.Services.StaticData;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,8 +8,6 @@ namespace Roguelike.UI.Windows
     public abstract class ConfirmationWindow : BaseWindow
     {
         [SerializeField] protected Button _confirmButton;
-        [SerializeField] private TextMeshProUGUI _description;
-        [SerializeField, TextArea(minLines: 1,maxLines: 3)] private string _context;
 
         protected IStaticDataService StaticData;
         protected ISceneLoadingService SceneLoadingService;
@@ -21,11 +18,8 @@ namespace Roguelike.UI.Windows
             SceneLoadingService = sceneLoadingService;
         }
         
-        protected override void Initialize()
-        {
-            _description.text = _context;
+        protected override void Initialize() => 
             _confirmButton.onClick.AddListener(OnConfirm);
-        }
 
         protected override void Cleanup()
         {
