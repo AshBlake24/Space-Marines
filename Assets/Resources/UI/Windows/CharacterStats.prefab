@@ -1149,10 +1149,10 @@ RectTransform:
   m_Father: {fileID: 3222153440167531954}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.2, y: 0.2}
-  m_AnchorMax: {x: 0.8, y: 0.8}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: -19.9553, y: -19.7111}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3222153439439129271
 CanvasRenderer:
@@ -1182,7 +1182,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 2073554454, guid: cbf55fd9e2febaf42bd5c16f2815bf87, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 74e5054c15abba14c80687d52b0bcea1, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -1411,7 +1411,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -61965704, guid: cbf55fd9e2febaf42bd5c16f2815bf87, type: 3}
+  m_Sprite: {fileID: -80419457, guid: cbf55fd9e2febaf42bd5c16f2815bf87, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -3795,6 +3795,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3222153440392426426}
     m_Modifications:
+    - target: {fileID: 1350090814571471648, guid: 65f6e762c5b82d64c957de3d52f929ac, type: 3}
+      propertyPath: m_fontSize
+      value: 22.3
+      objectReference: {fileID: 0}
     - target: {fileID: 4915823534109093916, guid: 65f6e762c5b82d64c957de3d52f929ac, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5

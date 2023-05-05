@@ -20,6 +20,7 @@ using Object = UnityEngine.Object;
 using Roguelike.Infrastructure.States;
 using Roguelike.Logic;
 using Roguelike.Logic.Interactables;
+using Roguelike.StaticData.Skills;
 using Roguelike.UI.Windows;
 
 namespace Roguelike.Infrastructure.Factory
@@ -93,6 +94,8 @@ namespace Roguelike.Infrastructure.Factory
             PlayerShooter playerShooter = player.GetComponent<PlayerShooter>();
             CharacterStaticData characterData = _staticDataService
                 .GetCharacterData(_persistentData.PlayerProgress.Character);
+            SkillStaticData skillData = _staticDataService
+                .GetSkillStaticData(characterData.Skill);
 
             hud.GetComponentInChildren<WeaponObserver>()
                 .Construct(playerShooter);
@@ -105,6 +108,9 @@ namespace Roguelike.Infrastructure.Factory
 
             hud.GetComponentInChildren<CharacterIcon>()
                 .Construct(characterData.Icon);
+            
+            hud.GetComponentInChildren<ActiveSkillObserver>()
+                .Construct(player.GetComponent<PlayerSkill>(), skillData.Icon);
 
             foreach (OpenWindowButton openWindowButton in hud.GetComponentsInChildren<OpenWindowButton>())
                 openWindowButton.Construct(_windowService);

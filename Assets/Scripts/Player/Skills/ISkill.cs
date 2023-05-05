@@ -7,6 +7,7 @@ namespace Roguelike.Player.Skills
     {
         event Action Performed;
         ParticleSystem VFX { get; }
+        float Cooldown { get; }
         bool IsActive { get; }
         bool ReadyToUse { get; }
         void UseSkill();

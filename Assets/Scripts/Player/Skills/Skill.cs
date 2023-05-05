@@ -22,12 +22,13 @@ namespace Roguelike.Player.Skills
             ReadyToUse = true;
             IsActive = false;
         }
-        
+
         public abstract event Action Performed;
-        
+
         public ParticleSystem VFX { get; }
         public bool IsActive { get; protected set; }
         public bool ReadyToUse { get; protected set; }
+        public float Cooldown => _cooldown;
 
         public abstract void UseSkill();
         

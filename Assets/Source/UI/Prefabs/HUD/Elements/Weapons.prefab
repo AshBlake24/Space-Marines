@@ -161,6 +161,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7203980993530724909}
+  - component: {fileID: 1046250007811928403}
   - component: {fileID: 507835641412640818}
   m_Layer: 5
   m_Name: Weapons
@@ -193,6 +194,27 @@ RectTransform:
   m_AnchoredPosition: {x: -80.401, y: -30}
   m_SizeDelta: {x: 379.84, y: 212.2}
   m_Pivot: {x: 1, y: 1}
+--- !u!223 &1046250007811928403
+Canvas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4869409252695874869}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_RenderMode: 2
+  m_Camera: {fileID: 0}
+  m_PlaneDistance: 100
+  m_PixelPerfect: 0
+  m_ReceivesEvents: 1
+  m_OverrideSorting: 0
+  m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
+  m_AdditionalShaderChannelsFlag: 0
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+  m_TargetDisplay: 0
 --- !u!114 &507835641412640818
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -638,46 +660,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Ammo Counter
       objectReference: {fileID: 0}
-    - target: {fileID: 1090305257406159998, guid: 1c86e60f2f5c6ad43b4d30cf5d6de95a, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3549743660510730374, guid: 1c86e60f2f5c6ad43b4d30cf5d6de95a, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0.9333056
-      objectReference: {fileID: 0}
-    - target: {fileID: 3549743660510730374, guid: 1c86e60f2f5c6ad43b4d30cf5d6de95a, type: 3}
-      propertyPath: m_AnchorMin.x
-      value: 0.26661113
-      objectReference: {fileID: 0}
-    - target: {fileID: 3549743660510730374, guid: 1c86e60f2f5c6ad43b4d30cf5d6de95a, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3549743660510730374, guid: 1c86e60f2f5c6ad43b4d30cf5d6de95a, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4399006419533948400, guid: 1c86e60f2f5c6ad43b4d30cf5d6de95a, type: 3}
-      propertyPath: m_enableWordWrapping
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4399006419533948400, guid: 1c86e60f2f5c6ad43b4d30cf5d6de95a, type: 3}
-      propertyPath: m_HorizontalAlignment
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 8141757884988429699, guid: 1c86e60f2f5c6ad43b4d30cf5d6de95a, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0.26661113
-      objectReference: {fileID: 0}
-    - target: {fileID: 8141757884988429699, guid: 1c86e60f2f5c6ad43b4d30cf5d6de95a, type: 3}
-      propertyPath: m_AnchorMin.x
-      value: 0.040000003
-      objectReference: {fileID: 0}
-    - target: {fileID: 8141757884988429699, guid: 1c86e60f2f5c6ad43b4d30cf5d6de95a, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 8546527572211745060, guid: 1c86e60f2f5c6ad43b4d30cf5d6de95a, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -761,10 +743,6 @@ PrefabInstance:
     - target: {fileID: 8546527572211745060, guid: 1c86e60f2f5c6ad43b4d30cf5d6de95a, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8546527572211745060, guid: 1c86e60f2f5c6ad43b4d30cf5d6de95a, type: 3}
-      propertyPath: m_ConstrainProportionsScale
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1c86e60f2f5c6ad43b4d30cf5d6de95a, type: 3}
