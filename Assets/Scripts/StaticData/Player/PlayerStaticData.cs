@@ -1,6 +1,4 @@
-using System.Collections.Generic;
 using Roguelike.StaticData.Characters;
-using Roguelike.StaticData.Weapons;
 using UnityEngine;
 
 namespace Roguelike.StaticData.Player
@@ -12,6 +10,5 @@ namespace Roguelike.StaticData.Player
         public float WeaponSwtichCooldown;
         public float ImmuneTimeAfterHit;
         public float ImmuneTimeAfterResurrect;
-        public int MaxHealth;
     }
 }
