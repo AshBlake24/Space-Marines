@@ -9,7 +9,7 @@ namespace Roguelike.Data
     public class PlayerWeapons
     {
         public WeaponId[] Weapons;
-        public List<RangedWeaponData> RangedWeaponsData; // todo Reset all data with new progress
+        public List<RangedWeaponData> RangedWeaponsData;
 
         public PlayerWeapons(IWeapon startWeapon, int maxWeaponsCount)
         {

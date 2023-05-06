@@ -1,4 +1,4 @@
-using Roguelike.Data;
+using Agava.YandexGames;
 using Roguelike.Player;
 using UnityEngine;
 using UnityEngine.UI;
@@ -54,8 +54,10 @@ namespace Roguelike.UI.Windows
 
         private void OnResurrect()
         {
-            // todo show ad
-
+#if UNITY_WEBGL && !UNITY_EDITOR
+            if (YandexGamesSdk.IsInitialized)
+                VideoAd.Show();
+#endif
             ProgressService.PlayerProgress.State.HasResurrected = true;
             _playerDeath.Resurrect();
         }
