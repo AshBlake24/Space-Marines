@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Roguelike.Infrastructure.Services;
 using Roguelike.Infrastructure.Services.Input;
@@ -19,6 +20,9 @@ namespace Roguelike.Player
         private readonly Collider[] _colliders = new Collider[3];
         private IInteractable _currentTargetInteractable;
         private IInputService _input;
+
+        public event Action GotInteractable;
+        public event Action LostInteractable;
 
         private void OnDrawGizmos()
         {
@@ -70,11 +74,13 @@ namespace Roguelike.Player
                     ChangeCurrentInteractable(closestInteractable);
 
                 DisableComponents();
+                GotInteractable?.Invoke();
             }
             else
             {
                 ClearCurrentInteractable();
                 EnableComponents();
+                LostInteractable?.Invoke();
             }
         }
         

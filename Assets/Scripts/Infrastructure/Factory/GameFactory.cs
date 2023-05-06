@@ -22,6 +22,7 @@ using Roguelike.Logic;
 using Roguelike.Logic.Interactables;
 using Roguelike.StaticData.Skills;
 using Roguelike.StaticData.Weapons;
+using Roguelike.UI.Buttons;
 using Roguelike.UI.Windows;
 
 namespace Roguelike.Infrastructure.Factory
@@ -109,9 +110,14 @@ namespace Roguelike.Infrastructure.Factory
 
             hud.GetComponentInChildren<CharacterIcon>()
                 .Construct(characterData.Icon);
-            
+
             hud.GetComponentInChildren<ActiveSkillObserver>()
                 .Construct(player.GetComponent<PlayerSkill>(), skillData.Icon);
+
+            MobileActionButton mobileActionButton = hud.GetComponentInChildren<MobileActionButton>();
+
+            if (mobileActionButton != null)
+                mobileActionButton.Construct(player.GetComponent<PlayerInteraction>());
 
             foreach (OpenWindowButton openWindowButton in hud.GetComponentsInChildren<OpenWindowButton>())
                 openWindowButton.Construct(_windowService);
