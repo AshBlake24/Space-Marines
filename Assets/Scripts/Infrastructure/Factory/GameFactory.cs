@@ -24,6 +24,8 @@ using Roguelike.StaticData.Skills;
 using Roguelike.StaticData.Weapons;
 using Roguelike.UI.Buttons;
 using Roguelike.UI.Windows;
+using Roguelike.Weapons.Logic;
+using Unity.VisualScripting;
 
 namespace Roguelike.Infrastructure.Factory
 {
@@ -99,7 +101,7 @@ namespace Roguelike.Infrastructure.Factory
             SkillStaticData skillData = _staticDataService
                 .GetSkillStaticData(characterData.Skill);
 
-            hud.GetComponentInChildren<WeaponObserver>()
+            hud.GetComponentInChildren<PlayerWeaponsViewer>()
                 .Construct(playerShooter);
 
             hud.GetComponentInChildren<AmmoCounter>()
@@ -177,6 +179,9 @@ namespace Roguelike.Infrastructure.Factory
         private void InitShooterComponent(GameObject player, WeaponSpawnPoint weaponSpawnPoint)
         {
             PlayerShooter playerShooter = player.GetComponent<PlayerShooter>();
+            
+            player.AddComponent<WeaponsObserver>()
+                .Construct(_persistentData, playerShooter);
 
             IWeapon[] weapons = _persistentData.PlayerProgress.PlayerWeapons.Weapons
                 .Select(weaponId => _weaponFactory.CreateWeapon(weaponId, weaponSpawnPoint.transform))

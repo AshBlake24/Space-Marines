@@ -29,6 +29,7 @@ namespace Roguelike.Player
         private float _attackSpeedMultiplier;
 
         public event Action<IWeapon> WeaponChanged;
+        public event Action<IWeapon> DroppingWeapon;
 
         private void OnGUI()
         {
@@ -141,6 +142,8 @@ namespace Roguelike.Player
             int weaponIndexToDrop = _currentWeaponIndex == 0
                 ? _weapons.Length - 1
                 : _currentWeaponIndex;
+            
+            DroppingWeapon?.Invoke(_weapons[weaponIndexToDrop]);
 
             _weaponFactory.CreatePickupableWeapon(_weapons[weaponIndexToDrop].Stats.ID, at: to);
             _weapons[weaponIndexToDrop] = null;

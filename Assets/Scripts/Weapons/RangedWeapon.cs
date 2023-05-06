@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using Roguelike.Data;
 using Roguelike.Infrastructure.Factory;
 using Roguelike.Infrastructure.Services;
@@ -10,7 +9,6 @@ using Roguelike.Weapons.Projectiles;
 using Roguelike.Weapons.Stats;
 using UnityEngine;
 using UnityEngine.Pool;
-using Random = UnityEngine.Random;
 
 namespace Roguelike.Weapons
 {
@@ -38,22 +36,17 @@ namespace Roguelike.Weapons
         public void Construct(RangedWeaponStats stats)
         {
             _stats = stats;
-            AmmoData = new AmmoData(infinityAmmo: false, _stats.MaxAmmo, _stats.MaxAmmo);
             
             CreateProjectilesPool();
             CreateMuzzleFlashVFX();
         }
 
-        public void WriteProgress(PlayerProgress progress) => 
+        public override void WriteProgress(PlayerProgress progress) => 
             progress.PlayerWeapons.SaveRangedWeapon(_stats.ID, AmmoData);
 
-        public void ReadProgress(PlayerProgress progress)
-        {
-            RangedWeaponData weaponData = progress.PlayerWeapons.RangedWeaponsData.Find(weapon => weapon.ID == Stats.ID);
-
-            if (weaponData != null)
-                AmmoData = weaponData.AmmoData;
-        }
+        public override void ReadProgress(PlayerProgress progress) =>
+            AmmoData = GetAmmoData(progress) 
+                       ?? new AmmoData(infinityAmmo: false, _stats.MaxAmmo, _stats.MaxAmmo);
 
         public override bool TryAttack()
         {
@@ -133,5 +126,8 @@ namespace Roguelike.Weapons
 
         private void OnDestroyItem(Projectile projectile) => 
             Destroy(projectile.gameObject);
+
+        private AmmoData GetAmmoData(PlayerProgress progress) => 
+            progress.PlayerWeapons.RangedWeaponsData.Find(weapon => weapon.ID == Stats.ID)?.AmmoData;
     }
 }

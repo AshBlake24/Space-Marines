@@ -5,19 +5,19 @@ using UnityEngine.UI;
 
 namespace Roguelike.UI.Elements
 {
-    public class WeaponObserver : MonoBehaviour
+    public class PlayerWeaponsViewer : MonoBehaviour
     {
         [SerializeField] private Image _currentWeapon;
         [SerializeField] private Image _nextWeapon;
         [SerializeField] private Image _previousWeapon;
         [SerializeField] private Sprite _emptyWeaponSprite;
-
+        
         private PlayerShooter _playerShooter;
 
         public void Construct(PlayerShooter playerShooter)
         {
             _playerShooter = playerShooter;
-
+            
             _playerShooter.WeaponChanged += OnWeaponChanged;
         }
 
