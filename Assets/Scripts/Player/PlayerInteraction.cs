@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Roguelike.Infrastructure.Services;
 using Roguelike.Infrastructure.Services.Input;
 using Roguelike.Logic.Interactables;
@@ -12,6 +13,7 @@ namespace Roguelike.Player
         [SerializeField] private LayerMask _interactablesLayerMask;
         [SerializeField] private float _updateTargetsPerFrame;
         [SerializeField, Range(0.5f, 5f)] private float _radius;
+        [SerializeField] private List<MonoBehaviour> _componentsToDeactivateWhileInteraction;
         [SerializeField] private bool _drawGizmos;
 
         private readonly Collider[] _colliders = new Collider[3];
@@ -66,13 +68,16 @@ namespace Roguelike.Player
 
                 if (closestInteractable != null && closestInteractable != _currentTargetInteractable)
                     ChangeCurrentInteractable(closestInteractable);
+
+                DisableComponents();
             }
             else
             {
                 ClearCurrentInteractable();
+                EnableComponents();
             }
         }
-
+        
         private IInteractable FindClosestInteractable()
         {
             IInteractable closestInteractable = null;
@@ -112,6 +117,18 @@ namespace Roguelike.Player
                 _currentTargetInteractable.Outline.enabled = false;
                 _currentTargetInteractable = null;
             }
+        }
+        
+        private void DisableComponents()
+        {
+            foreach (MonoBehaviour component in _componentsToDeactivateWhileInteraction)
+                component.enabled = false;
+        }
+        
+        private void EnableComponents()
+        {
+            foreach (MonoBehaviour component in _componentsToDeactivateWhileInteraction)
+                component.enabled = true;
         }
 
         private void OnInteracted() =>

@@ -186,7 +186,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e0e9e5eee2f42efb593e3e5c85a5dda, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerHealth: {fileID: 1331113081620957422}
   _playerAnimator: {fileID: 1225606247818609378}
 --- !u!114 &1331113081620957422
 MonoBehaviour:
@@ -249,6 +248,8 @@ MonoBehaviour:
     m_Bits: 8192
   _updateTargetsPerFrame: 4
   _radius: 3
+  _componentsToDeactivateWhileInteraction:
+  - {fileID: 2753311284853847007}
   _drawGizmos: 1
 --- !u!114 &1584298645333498346
 MonoBehaviour:

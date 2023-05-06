@@ -20,8 +20,8 @@ namespace Roguelike.Infrastructure.Services.Input
         private void InitializePlayerInput()
         {
             _playerInput.Enable();
+            _playerInput.Player.Attack.performed += (ctx) => OnInteracted();
             _playerInput.Player.UseSkill.performed += (ctx) => OnSkillUsed();
-            _playerInput.Player.Interaction.performed += (ctx) => OnInteracted();
             _playerInput.Player.SwitchWeapon.performed += (ctx) =>
             {
                 float value = ctx.ReadValue<float>();
