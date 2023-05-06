@@ -198,9 +198,9 @@ namespace Roguelike.Player
                 _lastWeaponSwitchTime = Time.time;
 
                 if (switchToNext)
-                    _currentWeaponIndex++;
-                else
                     _currentWeaponIndex--;
+                else
+                    _currentWeaponIndex++;
 
                 if (_currentWeaponIndex >= _weapons.Length)
                     _currentWeaponIndex = 0;
