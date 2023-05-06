@@ -15,7 +15,7 @@ namespace Roguelike.Infrastructure
 
         private void Awake()
         {
-#if !UNITY_WEBGL || UNITY_EDITOR
+#if UNITY_EDITOR
             InitGame();
 #else
             StartCoroutine(InitYandexSDK());
