@@ -8,9 +8,8 @@ using Roguelike.UI.Elements;
 using Roguelike.UI.Windows;
 using UnityEngine;
 using UnityEngine.UI;
-using Object = System.Object;
 
-namespace Roguelike.Logic.Interactables
+namespace Roguelike.Logic.CharacterSelection
 {
     public class CharacterSelectionMode : MonoBehaviour
     {
