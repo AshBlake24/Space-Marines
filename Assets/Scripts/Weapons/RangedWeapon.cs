@@ -128,6 +128,6 @@ namespace Roguelike.Weapons
             Destroy(projectile.gameObject);
 
         private AmmoData GetAmmoData(PlayerProgress progress) => 
-            progress.PlayerWeapons.RangedWeaponsData.Find(weapon => weapon.ID == Stats.ID)?.AmmoData;
+            progress?.PlayerWeapons.RangedWeaponsData.Find(weapon => weapon.ID == Stats.ID)?.AmmoData;
     }
 }

@@ -33,10 +33,8 @@ namespace Roguelike.Infrastructure.States
             RegisterServices();
         }
 
-        public void Enter()
-        {
+        public void Enter() => 
             _sceneLoader.Load(InitialScene, onLoaded: EnterLoadLevel);
-        }
 
         public void Exit()
         {
@@ -53,10 +51,22 @@ namespace Roguelike.Infrastructure.States
             _services.RegisterSingle<IAssetProvider>(new AssetProvider());
             _services.RegisterSingle<IInputService>(GetInputService());
             _services.RegisterSingle<IParticlesPoolService>(new ParticlesPoolService());
-            _services.RegisterSingle<IPersistentDataService>(new PersistentDataService(_services.Single<IStaticDataService>()));
-            _services.RegisterSingle<ISaveLoadService>(new SaveLoadService(_services.Single<IPersistentDataService>()));
-            _services.RegisterSingle<IProjectileFactory>(new ProjectileFactory(_services.Single<IStaticDataService>()));
             _services.RegisterSingle<ISceneLoadingService>(new SceneLoadingService(_stateMachine));
+            _services.RegisterSingle<IPersistentDataService>(new PersistentDataService(
+                _services.Single<IStaticDataService>()));
+
+            _services.RegisterSingle<ISaveLoadService>(new SaveLoadService(
+                _services.Single<IPersistentDataService>()));
+
+            _services.RegisterSingle<IProjectileFactory>(new ProjectileFactory(
+                _services.Single<IStaticDataService>()));
+
+            _services.RegisterSingle<IItemFactory>(new ItemFactory(
+                _services.Single<IStaticDataService>()));
+
+            _services.RegisterSingle<IEnemyFactory>(new EnemyFactory(
+                _services.Single<IStaticDataService>(),
+                _services.Single<IItemFactory>()));
 
             _services.RegisterSingle<ISkillFactory>(new SkillFactory(
                 _coroutineRunner,
@@ -68,17 +78,14 @@ namespace Roguelike.Infrastructure.States
                 _services.Single<ISaveLoadService>(),
                 _services.Single<IPersistentDataService>()));
 
-            _services.RegisterSingle<IUIFactory>(new UIFactory(_services.Single<IAssetProvider>(),
-                _services.Single<IStaticDataService>(), _services.Single<IPersistentDataService>(),
+            _services.RegisterSingle<IUIFactory>(new UIFactory(
+                _services.Single<IAssetProvider>(),
+                _services.Single<IStaticDataService>(),
+                _services.Single<IPersistentDataService>(),
                 _services.Single<ISceneLoadingService>()));
 
-            _services.RegisterSingle<IWindowService>(new WindowService(_services.Single<IUIFactory>()));
-
-            _services.RegisterSingle<IEnemyFactory>(new EnemyFactory(
-                _services.Single<IStaticDataService>()));
-
-            _services.RegisterSingle<IItemFactory>(new ItemFactory(
-                _services.Single<IStaticDataService>()));
+            _services.RegisterSingle<IWindowService>(new WindowService(
+                _services.Single<IUIFactory>()));
 
             _services.RegisterSingle<IGameFactory>(new GameFactory(
                 _services.Single<IAssetProvider>(),

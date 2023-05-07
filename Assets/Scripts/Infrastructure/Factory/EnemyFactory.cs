@@ -11,10 +11,12 @@ namespace Roguelike.Infrastructure.Factory
     public class EnemyFactory : IEnemyFactory
     {
         private readonly IStaticDataService _staticDataService;
+        private readonly IItemFactory _itemFactory;
 
-        public EnemyFactory(IStaticDataService staticDataService)
+        public EnemyFactory(IStaticDataService staticDataService, IItemFactory itemFactory)
         {
             _staticDataService = staticDataService;
+            _itemFactory = itemFactory;
         }
 
         public GameObject CreateEnemy(Transform spawnPoint, EnemyId id, PlayerHealth target)
@@ -27,7 +29,8 @@ namespace Roguelike.Infrastructure.Factory
             enemy.Health.Init(enemyData);
 
             enemyPrefab.GetComponent<EnemyStateMachine>().Init(enemy);
-            enemyPrefab.GetComponent<EnemyItemSpawner>().Init(enemy);
+            enemyPrefab.GetComponent<EnemyItemSpawner>()
+                .Construct(_itemFactory, enemy);
 
             return enemyPrefab;
         }
