@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Roguelike.StaticData.Characters
 {
-    [CreateAssetMenu(fileName = "New CharacterStaticData", menuName = "Static Data/Character")]
+    [CreateAssetMenu(fileName = "New Character", menuName = "Static Data/Player/Character")]
     public class CharacterStaticData : ScriptableObject
     {
         public CharacterId Id;

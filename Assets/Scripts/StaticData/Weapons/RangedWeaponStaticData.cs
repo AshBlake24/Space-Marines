@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Roguelike.StaticData.Weapons
 {
-    [CreateAssetMenu(fileName = "New RangedWeaponData", menuName = "Static Data/Weapons/Ranged Weapon")]
+    [CreateAssetMenu(fileName = "New Ranged Weapon", menuName = "Static Data/Weapons/Ranged Weapon")]
     public class RangedWeaponStaticData : WeaponStaticData
     {
         [Range(1, 5)] public int BulletsPerShot;

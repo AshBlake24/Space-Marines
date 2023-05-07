@@ -5,7 +5,6 @@ using Roguelike.Infrastructure.Services.Windows;
 using Roguelike.StaticData;
 using Roguelike.StaticData.Characters;
 using Roguelike.StaticData.Enemies;
-using Roguelike.StaticData.Items;
 using Roguelike.StaticData.Levels;
 using Roguelike.StaticData.Player;
 using Roguelike.StaticData.Projectiles;
@@ -25,7 +24,6 @@ namespace Roguelike.Infrastructure.Services.StaticData
         private Dictionary<SkillId, SkillStaticData> _skills;
         private Dictionary<WindowId, WindowConfig> _windows;
         private Dictionary<EnemyId, EnemyStaticData> _enemies;
-        private Dictionary<ItemId, ItemStaticData> _items;
         private Dictionary<StageId, LevelStaticData> _levels;
         private Dictionary<WeaponId, PickupableWeaponsConfig> _pickupableWeapons;
 
@@ -40,7 +38,6 @@ namespace Roguelike.Infrastructure.Services.StaticData
             LoadSkills();
             LoadWindows();
             LoadEnemies();
-            LoadItems();
             LoadLevels();
             LoadPlayer();
             LoadPickupableWeapons();
@@ -69,11 +66,6 @@ namespace Roguelike.Infrastructure.Services.StaticData
 
         public EnemyStaticData GetEnemyStaticData(EnemyId id) =>
             _enemies.TryGetValue(id, out EnemyStaticData staticData)
-                ? staticData
-                : null;
-
-        public ItemStaticData GetItemStaticData(ItemId id) =>
-            _items.TryGetValue(id, out ItemStaticData staticData)
                 ? staticData
                 : null;
 
@@ -111,10 +103,6 @@ namespace Roguelike.Infrastructure.Services.StaticData
         private void LoadEnemies() =>
             _enemies = Resources.LoadAll<EnemyStaticData>(AssetPath.EnemiesPath)
                 .ToDictionary(enemy => enemy.Id);
-
-        private void LoadItems() =>
-            _items = Resources.LoadAll<ItemStaticData>(AssetPath.ItemsPath)
-                .ToDictionary(item => item.Id);
 
         private void LoadLevels() =>
             _levels = Resources.LoadAll<LevelStaticData>(AssetPath.LevelsPath)

@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Roguelike.StaticData.Player
 {
-    [CreateAssetMenu(fileName = "PlayerStaticData", menuName = "Static Data/Player")]
+    [CreateAssetMenu(fileName = "New Player", menuName = "Static Data/Player/Player")]
     public class PlayerStaticData : ScriptableObject
     {
         public CharacterStaticData StartCharacter;
