@@ -13,6 +13,8 @@ GameObject:
   - component: {fileID: 175128781569080278}
   - component: {fileID: 3307268492497142323}
   - component: {fileID: 722555847985165406}
+  - component: {fileID: 7820948870194980961}
+  - component: {fileID: 2694645744187318354}
   m_Layer: 5
   m_Name: Attack Button
   m_TagString: Untagged
@@ -68,7 +70,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 4293e00fdaa888549a0776b16927984f, type: 3}
+  m_Sprite: {fileID: 21300000, guid: da0d5d3b56f8a2a46a4b80347cd52956, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -137,3 +139,31 @@ MonoBehaviour:
   button:
     m_key: Fire
     value: 0
+--- !u!114 &7820948870194980961
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5280092715009938303}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9ce765d9c1041198e20eef3126cb707, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _button: {fileID: 3307268492497142323}
+--- !u!114 &2694645744187318354
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5280092715009938303}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebcbf89bb7594ddca5bb8c387b0ba7b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _buttonImage: {fileID: 175128781569080278}
+  _fireIcon: {fileID: 21300000, guid: da0d5d3b56f8a2a46a4b80347cd52956, type: 3}
+  _interactionIcon: {fileID: 21300000, guid: 4293e00fdaa888549a0776b16927984f, type: 3}
