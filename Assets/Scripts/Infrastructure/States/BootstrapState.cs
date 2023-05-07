@@ -33,7 +33,7 @@ namespace Roguelike.Infrastructure.States
             RegisterServices();
         }
 
-        public void Enter() => 
+        public void Enter() =>
             _sceneLoader.Load(InitialScene, onLoaded: EnterLoadLevel);
 
         public void Exit()
@@ -48,7 +48,6 @@ namespace Roguelike.Infrastructure.States
             RegisterStaticData();
             _services.RegisterSingle<IEnvironmentService>(new EnvironmentService());
             _services.RegisterSingle<IRandomService>(new UnityRandomService());
-            _services.RegisterSingle<IAssetProvider>(new AssetProvider());
             _services.RegisterSingle<IInputService>(GetInputService());
             _services.RegisterSingle<IParticlesPoolService>(new ParticlesPoolService());
             _services.RegisterSingle<ISceneLoadingService>(new SceneLoadingService(_stateMachine));
@@ -58,15 +57,19 @@ namespace Roguelike.Infrastructure.States
             _services.RegisterSingle<ISaveLoadService>(new SaveLoadService(
                 _services.Single<IPersistentDataService>()));
 
+            _services.RegisterSingle<IAssetProvider>(new AssetProvider(
+                _services.Single<ISaveLoadService>()));
+
             _services.RegisterSingle<IProjectileFactory>(new ProjectileFactory(
                 _services.Single<IStaticDataService>()));
 
-            _services.RegisterSingle<IItemFactory>(new ItemFactory(
-                _services.Single<IStaticDataService>()));
+            _services.RegisterSingle<ILootFactory>(new LootFactory(
+                _services.Single<IAssetProvider>(),
+                _services.Single<ISaveLoadService>()));
 
             _services.RegisterSingle<IEnemyFactory>(new EnemyFactory(
                 _services.Single<IStaticDataService>(),
-                _services.Single<IItemFactory>()));
+                _services.Single<ILootFactory>()));
 
             _services.RegisterSingle<ISkillFactory>(new SkillFactory(
                 _coroutineRunner,

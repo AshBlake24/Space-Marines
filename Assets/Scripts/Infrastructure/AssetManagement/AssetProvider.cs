@@ -1,9 +1,17 @@
+using Roguelike.Infrastructure.Services.SaveLoad;
 using UnityEngine;
 
 namespace Roguelike.Infrastructure.AssetManagement
 {
     public class AssetProvider : IAssetProvider
     {
+        private readonly ISaveLoadService _saveLoadService;
+
+        public AssetProvider(ISaveLoadService saveLoadService)
+        {
+            _saveLoadService = saveLoadService;
+        }
+
         public GameObject Instantiate(string path)
         {
             GameObject prefab = Resources.Load<GameObject>(path);
@@ -18,6 +26,22 @@ namespace Roguelike.Infrastructure.AssetManagement
             CheckGameObject(path, prefab);
             
             return Object.Instantiate(prefab, postition, Quaternion.identity);
+        }
+
+        public GameObject InstantiateRegistered(string prefabPath)
+        {
+            GameObject gameObject = Instantiate(prefabPath);
+            _saveLoadService.RegisterProgressWatchers(gameObject);
+
+            return gameObject;
+        }
+
+        public GameObject InstantiateRegistered(string prefabPath, Vector3 postition)
+        {
+            GameObject gameObject = Instantiate(prefabPath, postition);
+            _saveLoadService.RegisterProgressWatchers(gameObject);
+
+            return gameObject;
         }
 
         private static void CheckGameObject(string path, Object prefab)
