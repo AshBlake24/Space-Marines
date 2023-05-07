@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace Roguelike.Infrastructure.AssetManagement
 {
     public static class AssetPath

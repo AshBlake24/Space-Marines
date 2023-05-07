@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Roguelike.Infrastructure.AssetManagement;
@@ -7,6 +8,7 @@ using Roguelike.StaticData.Loot;
 using Roguelike.Utilities;
 using UnityEngine;
 using UnityEngine.Pool;
+using Object = UnityEngine.Object;
 
 namespace Roguelike.Infrastructure.Factory
 {
@@ -30,10 +32,21 @@ namespace Roguelike.Infrastructure.Factory
 
         public void CreateLoot(IEnumerable<LootStaticData> loot, Vector3 position)
         {
-            GameObject droppedItem = GetDroppedItem(loot);
+            LootStaticData droppedItem = GetDroppedItem(loot);
 
             if (droppedItem != null)
             {
+                // switch (droppedItem.Id)
+                // {
+                //     case LootId.FirstAidKit:
+                //         break;
+                //     case LootId.Ammo:
+                //         break;
+                //     case LootId.Unknown:
+                //         default:
+                //         throw new ArgumentOutOfRangeException(nameof(droppedItem), "This item doesn't exist");
+                // }
+                
                 LootView lootView = _lootViews.Get();
                 lootView.transform.position = position;
 
@@ -43,7 +56,7 @@ namespace Roguelike.Infrastructure.Factory
             }
         }
 
-        private GameObject GetDroppedItem(IEnumerable<LootStaticData> loot)
+        private LootStaticData GetDroppedItem(IEnumerable<LootStaticData> loot)
         {
             int randomNumber = _randomService.Next(1, 100);
 
@@ -52,7 +65,7 @@ namespace Roguelike.Infrastructure.Factory
                 .ToList();
 
             return possibleLoot.Count > 0
-                ? possibleLoot[_randomService.Next(0, possibleLoot.Count - 1)].LootPrefab
+                ? possibleLoot[_randomService.Next(0, possibleLoot.Count - 1)]
                 : null;
         }
 
