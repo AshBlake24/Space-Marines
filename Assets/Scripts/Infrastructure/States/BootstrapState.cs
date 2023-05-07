@@ -64,8 +64,8 @@ namespace Roguelike.Infrastructure.States
                 _services.Single<IStaticDataService>()));
 
             _services.RegisterSingle<ILootFactory>(new LootFactory(
-                _services.Single<IAssetProvider>(),
-                _services.Single<ISaveLoadService>()));
+                _services.Single<IRandomService>(), 
+                _services.Single<IAssetProvider>()));
 
             _services.RegisterSingle<IEnemyFactory>(new EnemyFactory(
                 _services.Single<IStaticDataService>(),

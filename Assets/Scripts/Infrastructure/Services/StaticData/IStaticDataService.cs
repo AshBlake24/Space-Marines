@@ -7,6 +7,7 @@ using Roguelike.StaticData.Skills;
 using Roguelike.StaticData.Weapons;
 using Roguelike.StaticData.Enemies;
 using Roguelike.StaticData.Levels;
+using Roguelike.StaticData.Loot;
 using Roguelike.StaticData.Weapons.PickupableWeapons;
 using Roguelike.StaticData.Windows;
 
@@ -16,7 +17,6 @@ namespace Roguelike.Infrastructure.Services.StaticData
     {
         PlayerStaticData Player { get; }
         GameConfig GameConfig { get; }
-        void Load();
         WeaponStaticData GetWeaponData(WeaponId id);
         ProjectileStaticData GetProjectileData(ProjectileId id);
         CharacterStaticData GetCharacterData(CharacterId id);
@@ -25,5 +25,7 @@ namespace Roguelike.Infrastructure.Services.StaticData
         EnemyStaticData GetEnemyStaticData(EnemyId id);
         LevelStaticData GetLevelStaticData(StageId id);
         PickupableWeaponsConfig GetPickupableWeaponConfig(WeaponId id);
+        LootStaticData GetLootStaticData(LootId id);
+        void Load();
     }
 }

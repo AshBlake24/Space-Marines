@@ -1,3 +1,5 @@
+using UnityEngine;
+
 namespace Roguelike.Infrastructure.AssetManagement
 {
     public static class AssetPath
@@ -19,6 +21,6 @@ namespace Roguelike.Infrastructure.AssetManagement
         public const string SelectionWindow = "UI/CharactersSelection";
         public const string MiniMap = "UI/Elements/MiniMap";
         public const string PickupableWeaponStaticDataPath = "StaticData/Weapons/PickupableWeaponsStaticData";
-        public const string Loot = "Loot/TestLoot";
+        public const string LootPath = "Loot/Loot";
     }
 }

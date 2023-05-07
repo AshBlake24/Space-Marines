@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4045253172050132}
   - component: {fileID: 198584495659940978}
   - component: {fileID: 199173364776528780}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Sparkle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -444,7 +444,7 @@ ParticleSystem:
     startRotationX:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 1.5707963
+      scalar: -1.5707963
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -604,7 +604,7 @@ ParticleSystem:
     maxNumParticles: 1000
     customEmitterVelocity: {x: 0, y: 0, z: 0}
     size3D: 0
-    rotation3D: 1
+    rotation3D: 0
     gravityModifier:
       serializedVersion: 2
       minMaxState: 0
@@ -1628,7 +1628,7 @@ ParticleSystem:
     y:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0
+      scalar: 0.2
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -1681,7 +1681,7 @@ ParticleSystem:
     z:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.2
+      scalar: 0
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -4920,7 +4920,7 @@ GameObject:
   - component: {fileID: 4662002504935334}
   - component: {fileID: 198675757261859562}
   - component: {fileID: 199466310307460190}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Glow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5353,7 +5353,7 @@ ParticleSystem:
     startRotationX:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0
+      scalar: -1.5707963
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -9811,7 +9811,7 @@ GameObject:
   - component: {fileID: 4065046794975290}
   - component: {fileID: 198170455957649804}
   - component: {fileID: 199365359979401652}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Ray
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10244,7 +10244,7 @@ ParticleSystem:
     startRotationX:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0
+      scalar: -1.5707963
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -14693,7 +14693,7 @@ GameObject:
   - component: {fileID: 4096256242859716}
   - component: {fileID: 198335993060229444}
   - component: {fileID: 199440954317720702}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Ammo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14707,7 +14707,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1873392800473706}
-  m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -14717,7 +14717,7 @@ Transform:
   - {fileID: 4065046794975290}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!198 &198335993060229444
 ParticleSystem:
   m_ObjectHideFlags: 0
@@ -15129,7 +15129,7 @@ ParticleSystem:
     startRotationX:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0
+      scalar: -1.5707963
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -15289,7 +15289,7 @@ ParticleSystem:
     maxNumParticles: 1000
     customEmitterVelocity: {x: 0, y: 0, z: 0}
     size3D: 1
-    rotation3D: 0
+    rotation3D: 1
     gravityModifier:
       serializedVersion: 2
       minMaxState: 0

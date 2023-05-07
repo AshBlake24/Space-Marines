@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4535360903354688}
   - component: {fileID: 198666297106053570}
   - component: {fileID: 199390404641870216}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Sparkle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -604,7 +604,7 @@ ParticleSystem:
     maxNumParticles: 1000
     customEmitterVelocity: {x: 0, y: 0, z: 0}
     size3D: 0
-    rotation3D: 1
+    rotation3D: 0
     gravityModifier:
       serializedVersion: 2
       minMaxState: 0
@@ -1628,7 +1628,7 @@ ParticleSystem:
     y:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0
+      scalar: 0.2
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -1681,7 +1681,7 @@ ParticleSystem:
     z:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.2
+      scalar: 0
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -4920,7 +4920,7 @@ GameObject:
   - component: {fileID: 4603557176344194}
   - component: {fileID: 198228786680676458}
   - component: {fileID: 199932331300857604}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Ray
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5353,7 +5353,7 @@ ParticleSystem:
     startRotationX:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0
+      scalar: -1.5707963
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -9802,7 +9802,7 @@ GameObject:
   - component: {fileID: 4919090403375850}
   - component: {fileID: 198719537841304800}
   - component: {fileID: 199667673283835334}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Star
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9816,7 +9816,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1500389745501392}
-  m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -10238,7 +10238,7 @@ ParticleSystem:
     startRotationX:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0
+      scalar: -1.5707963
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -10398,7 +10398,7 @@ ParticleSystem:
     maxNumParticles: 1000
     customEmitterVelocity: {x: 0, y: 0, z: 0}
     size3D: 1
-    rotation3D: 0
+    rotation3D: 1
     gravityModifier:
       serializedVersion: 2
       minMaxState: 0
@@ -14723,7 +14723,7 @@ GameObject:
   - component: {fileID: 4173934614719074}
   - component: {fileID: 198283738096780786}
   - component: {fileID: 199332267843985948}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Glow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
