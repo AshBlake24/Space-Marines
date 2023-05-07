@@ -2,6 +2,7 @@ using Roguelike.Data;
 using Roguelike.Infrastructure.Factory;
 using Roguelike.Infrastructure.Services.StaticData;
 using Roguelike.Logic;
+using Roguelike.Logic.CharacterSelection;
 using Roguelike.Logic.Interactables;
 using Roguelike.StaticData.Characters;
 using Roguelike.StaticData.Projectiles;
