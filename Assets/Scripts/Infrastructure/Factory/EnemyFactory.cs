@@ -1,6 +1,5 @@
 ﻿using Roguelike.Enemies;
 using Roguelike.Infrastructure.Services.StaticData;
-using Roguelike.Items;
 using Roguelike.Player;
 using Roguelike.StaticData.Enemies;
 using UnityEngine;
@@ -11,12 +10,12 @@ namespace Roguelike.Infrastructure.Factory
     public class EnemyFactory : IEnemyFactory
     {
         private readonly IStaticDataService _staticDataService;
-        private readonly IItemFactory _itemFactory;
+        private readonly ILootFactory _lootFactory;
 
-        public EnemyFactory(IStaticDataService staticDataService, IItemFactory itemFactory)
+        public EnemyFactory(IStaticDataService staticDataService, ILootFactory lootFactory)
         {
             _staticDataService = staticDataService;
-            _itemFactory = itemFactory;
+            _lootFactory = lootFactory;
         }
 
         public GameObject CreateEnemy(Transform spawnPoint, EnemyId id, PlayerHealth target)
@@ -29,8 +28,8 @@ namespace Roguelike.Infrastructure.Factory
             enemy.Health.Init(enemyData);
 
             enemyPrefab.GetComponent<EnemyStateMachine>().Init(enemy);
-            enemyPrefab.GetComponent<EnemyItemSpawner>()
-                .Construct(_itemFactory, enemy);
+            enemyPrefab.GetComponentInChildren<EnemyLootSpawner>()
+                .Construct(_lootFactory);
 
             return enemyPrefab;
         }

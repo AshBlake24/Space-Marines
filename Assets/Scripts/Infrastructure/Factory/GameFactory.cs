@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using Roguelike.Infrastructure.AssetManagement;
 using Roguelike.Infrastructure.Services.Environment;
@@ -17,15 +16,11 @@ using UnityEngine.Animations.Rigging;
 using Roguelike.Level;
 using Roguelike.StaticData.Levels;
 using Object = UnityEngine.Object;
-using Roguelike.Infrastructure.States;
-using Roguelike.Logic;
-using Roguelike.Logic.Interactables;
+using Roguelike.Logic.CharacterSelection;
 using Roguelike.StaticData.Skills;
-using Roguelike.StaticData.Weapons;
 using Roguelike.UI.Buttons;
 using Roguelike.UI.Windows;
 using Roguelike.Weapons.Logic;
-using Unity.VisualScripting;
 
 namespace Roguelike.Infrastructure.Factory
 {
@@ -67,7 +62,7 @@ namespace Roguelike.Infrastructure.Factory
 
         public GameObject CreatePlayer(Transform playerInitialPoint)
         {
-            GameObject player = InstantiateRegistered(AssetPath.PlayerPath, playerInitialPoint.position);
+            GameObject player = _assetProvider.InstantiateRegistered(AssetPath.PlayerPath, playerInitialPoint.position);
             GameObject character = CreateCharacter(_persistentData.PlayerProgress.Character, player);
 
             InitShooterComponent(player, character.GetComponentInChildren<WeaponSpawnPoint>());
@@ -88,7 +83,7 @@ namespace Roguelike.Infrastructure.Factory
         {
             EnvironmentType deviceType = _environmentService.GetDeviceType();
 
-            GameObject hud = InstantiateRegistered(deviceType == EnvironmentType.Desktop
+            GameObject hud = _assetProvider.InstantiateRegistered(deviceType == EnvironmentType.Desktop
                 ? AssetPath.DesktopHudPath
                 : AssetPath.MobileHudPath);
 
@@ -126,12 +121,12 @@ namespace Roguelike.Infrastructure.Factory
 
             return hud;
         }
-
+        
         public GameObject GenerateLevel()
         {
             StageId id = _persistentData.PlayerProgress.WorldData.CurrentStage;
 
-            GameObject LevelGeneratorPrefab = InstantiateRegistered(AssetPath.LevelGeneratorPath);
+            GameObject LevelGeneratorPrefab = _assetProvider.InstantiateRegistered(AssetPath.LevelGeneratorPath);
             LevelGenerator levelGenerator = LevelGeneratorPrefab.GetComponent<LevelGenerator>();
             LevelStaticData levelData = _staticDataService.GetLevelStaticData(id);
 
@@ -192,22 +187,6 @@ namespace Roguelike.Infrastructure.Factory
                 _weaponFactory,
                 _staticDataService.Player.WeaponSwtichCooldown,
                 weaponSpawnPoint);
-        }
-
-        private GameObject InstantiateRegistered(string prefabPath)
-        {
-            GameObject gameObject = _assetProvider.Instantiate(prefabPath);
-            _saveLoadService.RegisterProgressWatchers(gameObject);
-
-            return gameObject;
-        }
-
-        private GameObject InstantiateRegistered(string prefabPath, Vector3 postition)
-        {
-            GameObject gameObject = _assetProvider.Instantiate(prefabPath, postition);
-            _saveLoadService.RegisterProgressWatchers(gameObject);
-
-            return gameObject;
         }
     }
 }

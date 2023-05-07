@@ -1,5 +1,4 @@
 using Roguelike.Infrastructure.Services;
-using Roguelike.Infrastructure.States;
 using UnityEngine;
 
 namespace Roguelike.Infrastructure.Factory

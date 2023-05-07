@@ -1,7 +1,7 @@
 using Roguelike.Player;
 using UnityEngine;
 
-namespace Roguelike.Items
+namespace Roguelike.Logic.Interactables
 {
     public class ItemPickUper : MonoBehaviour
     {
