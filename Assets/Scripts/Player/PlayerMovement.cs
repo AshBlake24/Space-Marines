@@ -21,10 +21,17 @@ namespace Roguelike.Player
         private Vector3 _direction;
         private EnemyHealth _target;
         private float _currentVelocity;
+        private float _defaultMoveSpeed;
         private bool _hasTarget;
+        
+        public bool Boosted { get; private set; }
 
-        private void Awake() => 
+        private void Awake()
+        {
             _inputService = AllServices.Container.Single<IInputService>();
+            _defaultMoveSpeed = _moveSpeed;
+            Boosted = false;
+        }
 
         private void OnEnable() => 
             _playerAim.TargetChanged += OnTargetChanged;
@@ -44,6 +51,18 @@ namespace Roguelike.Player
             
             _direction += Physics.gravity;
             Move();
+        }
+
+        public void BoostSpeed(float speedMultiplier)
+        {
+            _moveSpeed *= speedMultiplier;
+            Boosted = true;
+        }
+
+        public void ResetSpeed()
+        {
+            _moveSpeed = _defaultMoveSpeed;
+            Boosted = false;
         }
 
         private Vector3 GetDirection() =>
