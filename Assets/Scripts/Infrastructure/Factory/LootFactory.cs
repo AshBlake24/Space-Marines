@@ -36,17 +36,6 @@ namespace Roguelike.Infrastructure.Factory
 
             if (droppedItem != null)
             {
-                // switch (droppedItem.Id)
-                // {
-                //     case LootId.FirstAidKit:
-                //         break;
-                //     case LootId.Ammo:
-                //         break;
-                //     case LootId.Unknown:
-                //         default:
-                //         throw new ArgumentOutOfRangeException(nameof(droppedItem), "This item doesn't exist");
-                // }
-                
                 LootView lootView = _lootViews.Get();
                 lootView.transform.position = position;
 

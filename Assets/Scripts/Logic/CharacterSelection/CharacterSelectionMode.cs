@@ -18,7 +18,7 @@ namespace Roguelike.Logic.CharacterSelection
         [SerializeField] private CinemachineVirtualCamera _topDownCamera;
         [SerializeField] private CinemachineVirtualCamera _characterSelectionCamera;
         [SerializeField] private CinemachineVirtualCamera _playerCamera;
-        [SerializeField] private Button _CharacterSelectionButton;
+        [SerializeField] private Button _characterSelectionButton;
 
         private IStaticDataService _staticData;
         private IWindowService _windowService;
@@ -60,17 +60,7 @@ namespace Roguelike.Logic.CharacterSelection
                 {
                     if (_raycastHit.collider.TryGetComponent(out SelectableCharacter character))
                     {
-                        BaseWindow window = _windowService.Open(WindowId.CharacterStats);
-
-                        if (window is CharacterStats characterStats)
-                            characterStats.Construct(
-                                character.Id,
-                                this,
-                                _staticData,
-                                _weaponFactory);
-                        else
-                            throw new ArgumentNullException(nameof(window), "The necessary component is missing");
-
+                        CreateCharacterStatsWindow(character);
                         ZoomIn(_raycastHit.collider.transform);
                     }
                 }
@@ -110,6 +100,20 @@ namespace Roguelike.Logic.CharacterSelection
             _topDownCamera.enabled = false;
         }
 
+        private void CreateCharacterStatsWindow(SelectableCharacter character)
+        {
+            BaseWindow window = _windowService.Open(WindowId.CharacterStats);
+
+            if (window is CharacterStats characterStats)
+                characterStats.Construct(
+                    character.Id,
+                    this,
+                    _staticData,
+                    _weaponFactory);
+            else
+                throw new ArgumentNullException(nameof(window), "The necessary component is missing");
+        }
+
         private void SetPlayerCamera(GameObject player)
         {
             _topDownCamera.enabled = false;
@@ -125,7 +129,7 @@ namespace Roguelike.Logic.CharacterSelection
         private void InitHud(GameObject player)
         {
             GameObject hud = _gameFactory.CreateHud(player, createMiniMap: false);
-            Button button = Instantiate(_CharacterSelectionButton, hud.transform);
+            Button button = Instantiate(_characterSelectionButton, hud.transform);
             
             if (button.TryGetComponent(out OpenWindowButton openWindowButton))
                 openWindowButton.Construct(_windowService);
