@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Roguelike.Infrastructure.AssetManagement;
 using Roguelike.Infrastructure.Services.Random;
+using Roguelike.Logic;
 using Roguelike.Powerups.Logic;
 using UnityEngine;
 using Object = UnityEngine.Object;
@@ -12,19 +13,27 @@ namespace Roguelike.Infrastructure.Factory
     {
         private readonly IRandomService _randomService;
         private readonly IAssetProvider _assetProvider;
+        private readonly ICoroutineRunner _coroutineRunner;
 
-        public LootFactory(IRandomService randomService, IAssetProvider assetProvider)
+        public LootFactory(IRandomService randomService, IAssetProvider assetProvider, ICoroutineRunner coroutineRunner)
         {
             _randomService = randomService;
             _assetProvider = assetProvider;
+            _coroutineRunner = coroutineRunner;
         }
 
         public void CreatePowerup(IEnumerable<PowerupEffect> loot, Vector3 position)
         {
             PowerupEffect droppedItem = GetDroppedItem(loot);
-            
+
             if (droppedItem != null)
-                Object.Instantiate(droppedItem.Prefab, position, Quaternion.identity);
+            {
+                GameObject item = Object.Instantiate(droppedItem.Prefab, position, Quaternion.identity);
+                
+                if (droppedItem is ILastingEffect lastingEffect)
+                    lastingEffect.Construct(_coroutineRunner);
+            }
+                
         }
 
         private PowerupEffect GetDroppedItem(IEnumerable<PowerupEffect> loot)
