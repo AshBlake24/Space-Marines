@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Roguelike.Infrastructure.AssetManagement;
@@ -33,22 +32,19 @@ namespace Roguelike.Infrastructure.Factory
         public void CreateLoot(IEnumerable<LootStaticData> loot, Vector3 position)
         {
             LootStaticData droppedItem = GetDroppedItem(loot);
-
+            Debug.Log(droppedItem);
             if (droppedItem != null)
             {
                 LootView lootView = _lootViews.Get();
+                Object.Instantiate(droppedItem.LootPrefab, lootView.Container);
                 lootView.transform.position = position;
-
-                Object.Instantiate(
-                    droppedItem,
-                    lootView.Container);
             }
         }
 
         private LootStaticData GetDroppedItem(IEnumerable<LootStaticData> loot)
         {
             int randomNumber = _randomService.Next(1, 100);
-
+            
             List<LootStaticData> possibleLoot = loot
                 .Where(lootData => randomNumber <= lootData.DropChance)
                 .ToList();
