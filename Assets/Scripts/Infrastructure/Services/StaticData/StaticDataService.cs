@@ -6,7 +6,6 @@ using Roguelike.StaticData;
 using Roguelike.StaticData.Characters;
 using Roguelike.StaticData.Enemies;
 using Roguelike.StaticData.Levels;
-using Roguelike.StaticData.Loot;
 using Roguelike.StaticData.Player;
 using Roguelike.StaticData.Projectiles;
 using Roguelike.StaticData.Skills;

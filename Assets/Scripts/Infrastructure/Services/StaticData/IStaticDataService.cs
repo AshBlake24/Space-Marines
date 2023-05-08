@@ -7,7 +7,6 @@ using Roguelike.StaticData.Skills;
 using Roguelike.StaticData.Weapons;
 using Roguelike.StaticData.Enemies;
 using Roguelike.StaticData.Levels;
-using Roguelike.StaticData.Loot;
 using Roguelike.StaticData.Weapons.PickupableWeapons;
 using Roguelike.StaticData.Windows;
 

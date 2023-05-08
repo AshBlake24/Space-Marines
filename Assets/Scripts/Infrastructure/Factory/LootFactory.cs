@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Roguelike.Infrastructure.AssetManagement;
 using Roguelike.Infrastructure.Services.Random;
-using Roguelike.StaticData.Loot;
+using Roguelike.Powerups.Data;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
@@ -19,20 +19,20 @@ namespace Roguelike.Infrastructure.Factory
             _assetProvider = assetProvider;
         }
 
-        public void CreateLoot(IEnumerable<LootStaticData> loot, Vector3 position)
+        public void CreatePowerup(IEnumerable<PowerupEffect> loot, Vector3 position)
         {
-            LootStaticData droppedItem = GetDroppedItem(loot);
+            PowerupEffect droppedItem = GetDroppedItem(loot);
             
             if (droppedItem != null)
-                Object.Instantiate(droppedItem.LootPrefab, position, Quaternion.identity);
+                Object.Instantiate(droppedItem.Prefab, position, Quaternion.identity);
         }
 
-        private LootStaticData GetDroppedItem(IEnumerable<LootStaticData> loot)
+        private PowerupEffect GetDroppedItem(IEnumerable<PowerupEffect> loot)
         {
             int randomNumber = _randomService.Next(1, 100);
             
-            List<LootStaticData> possibleLoot = loot
-                .Where(lootData => randomNumber <= lootData.DropChance)
+            List<PowerupEffect> possibleLoot = loot
+                .Where(item => randomNumber <= item.DropChance)
                 .ToList();
 
             return possibleLoot.Count > 0

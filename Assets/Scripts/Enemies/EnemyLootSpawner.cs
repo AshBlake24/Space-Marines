@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using Roguelike.Infrastructure.Factory;
-using Roguelike.StaticData.Loot;
+using Roguelike.Powerups.Data;
 using UnityEngine;
 
 namespace Roguelike.Enemies
@@ -8,7 +8,7 @@ namespace Roguelike.Enemies
     public class EnemyLootSpawner : MonoBehaviour
     {
         [SerializeField] private EnemyHealth _health;
-        [SerializeField] private List<LootStaticData> _loot;
+        [SerializeField] private List<PowerupEffect> _loot;
         
         private ILootFactory _lootFactory;
 
@@ -24,6 +24,6 @@ namespace Roguelike.Enemies
             SpawnLoot();
 
         private void SpawnLoot() => 
-            _lootFactory.CreateLoot(_loot, transform.position);
+            _lootFactory.CreatePowerup(_loot, transform.position);
     }
 }
