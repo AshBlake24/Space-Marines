@@ -1,4 +1,5 @@
 using System;
+using UnityEngine;
 
 namespace Roguelike.Data
 {
@@ -14,6 +15,20 @@ namespace Roguelike.Data
             InfinityAmmo = infinityAmmo;
             CurrentAmmo = currentAmmo;
             MaxAmmo = maxAmmo;
+        }
+
+        public event Action AmmoChanged;
+        
+        public bool Reload(float ammoAmountMultiplier)
+        {
+            if (InfinityAmmo || CurrentAmmo == MaxAmmo)
+                return false;
+
+            int reloadAmount = (int)(MaxAmmo * ammoAmountMultiplier);
+            CurrentAmmo = Mathf.Min(CurrentAmmo + reloadAmount, MaxAmmo);
+            AmmoChanged?.Invoke();
+
+            return true;
         }
     }
 }

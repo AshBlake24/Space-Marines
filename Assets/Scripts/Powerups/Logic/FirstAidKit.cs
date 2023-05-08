@@ -1,9 +1,9 @@
 using Roguelike.Player;
 using UnityEngine;
 
-namespace Roguelike.StaticData.Powerups
+namespace Roguelike.Powerups.Logic
 {
-    [CreateAssetMenu(fileName = "First Aid Kit", menuName = "Static Data/Powerups/First Aid Kit", order = 5)]
+    [CreateAssetMenu(fileName = "First Aid Kit", menuName = "Static Data/Powerups/First Aid Kit", order = 2)]
     public class FirstAidKit : PowerupEffect
     {
         [SerializeField, Range(1, 5)] private int _healthAmount;

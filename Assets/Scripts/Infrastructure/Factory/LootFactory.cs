@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Roguelike.Infrastructure.AssetManagement;
 using Roguelike.Infrastructure.Services.Random;
-using Roguelike.Powerups.Data;
+using Roguelike.Powerups.Logic;
 using UnityEngine;
 using Object = UnityEngine.Object;
 

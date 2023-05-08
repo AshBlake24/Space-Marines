@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using Roguelike.Infrastructure.Factory;
-using Roguelike.Powerups.Data;
+using Roguelike.Powerups.Logic;
 using UnityEngine;
 
 namespace Roguelike.Enemies

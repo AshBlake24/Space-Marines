@@ -24,11 +24,11 @@ namespace Roguelike.UI.Elements
         private void OnDestroy() => 
             _playerShooter.WeaponChanged -= OnWeaponChanged;
 
-        private void OnWeaponChanged(IWeapon weapon)
+        private void OnWeaponChanged()
         {
-            _currentWeapon.sprite = weapon == null
-                ? _emptyWeaponSprite
-                : weapon.Stats.Icon;
+            _currentWeapon.sprite = _playerShooter.CurrentWeapon != null
+                ? _playerShooter.CurrentWeapon.Stats.Icon
+                : _emptyWeaponSprite;
 
             SetNextWeaponIcon();
             SetPreviousWeaponSprite();

@@ -23,28 +23,44 @@ namespace Roguelike.UI.Elements
         private void OnDestroy() => 
             _playerShooter.WeaponChanged -= OnWeaponChaged;
 
-        private void OnWeaponChaged(IWeapon weapon)
+        private void OnWeaponChaged()
         {
-            if (weapon is RangedWeapon rangedWeapon)
+            if (_playerShooter.CurrentWeapon is RangedWeapon rangedWeapon)
             {
-                if (_rangedWeapon != null)
-                    _rangedWeapon.Fired -= OnFired;
-
+                UnsubscribeWeapon();
+                
                 _currentAmmo.enabled = true;
                 _ammoData = rangedWeapon.AmmoData;
                 _rangedWeapon = rangedWeapon;
-                _rangedWeapon.Fired += OnFired;
-                OnFired();
+                
+                SubscribeWeapon();
+                ChangeAmmo();
             }
             else
             {
+                UnsubscribeWeapon();
+                
                 _rangedWeapon = null;
                 _ammoData = null;
                 _currentAmmo.enabled = false;
             }
         }
 
-        private void OnFired()
+        private void SubscribeWeapon()
+        {
+            _rangedWeapon.Fired += ChangeAmmo;
+            _ammoData.AmmoChanged += ChangeAmmo;
+        }
+
+        private void UnsubscribeWeapon()
+        {
+            if (_rangedWeapon != null)
+                _rangedWeapon.Fired -= ChangeAmmo;
+            if (_ammoData != null)
+                _ammoData.AmmoChanged -= ChangeAmmo;
+        }
+
+        private void ChangeAmmo()
         {
             _currentAmmo.text = _ammoData.InfinityAmmo 
                 ? "infinity" 

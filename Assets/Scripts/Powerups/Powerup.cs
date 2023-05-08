@@ -1,4 +1,4 @@
-using Roguelike.StaticData.Powerups;
+using Roguelike.Powerups.Logic;
 using UnityEngine;
 
 namespace Roguelike.Powerups

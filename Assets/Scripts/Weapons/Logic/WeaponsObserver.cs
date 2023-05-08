@@ -14,13 +14,13 @@ namespace Roguelike.Weapons.Logic
             _persistentData = persistentData;
             _playerShooter = playerShooter;
             
-            _playerShooter.DroppingWeapon += OnDroppingWeapon;
+            _playerShooter.DroppedWeapon += OnDroppedWeapon;
         }
         
         private void OnDestroy() => 
-            _playerShooter.DroppingWeapon -= OnDroppingWeapon;
+            _playerShooter.DroppedWeapon -= OnDroppedWeapon;
 
-        private void OnDroppingWeapon(IWeapon weapon) => 
+        private void OnDroppedWeapon(IWeapon weapon) => 
             weapon.WriteProgress(_persistentData.PlayerProgress);
     }
 }

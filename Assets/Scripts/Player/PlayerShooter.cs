@@ -21,15 +21,16 @@ namespace Roguelike.Player
         private IInputService _inputService;
         private IWeaponFactory _weaponFactory;
         private IWeapon[] _weapons;
-        private IWeapon _currentWeapon;
         private int _currentWeaponIndex;
         private float _weaponSwitchCooldown;
         private float _lastWeaponSwitchTime;
         private float _lastShotTime;
         private float _attackSpeedMultiplier;
 
-        public event Action<IWeapon> WeaponChanged;
-        public event Action<IWeapon> DroppingWeapon;
+        public event Action WeaponChanged;
+        public event Action<IWeapon> DroppedWeapon;
+
+        public IWeapon CurrentWeapon { get; private set; }
 
         private void OnGUI()
         {
@@ -71,7 +72,7 @@ namespace Roguelike.Player
         }
 
         private void Start() =>
-            WeaponChanged?.Invoke(_currentWeapon);
+            WeaponChanged?.Invoke();
 
         private void Update()
         {
@@ -143,7 +144,7 @@ namespace Roguelike.Player
                 ? _weapons.Length - 1
                 : _currentWeaponIndex;
             
-            DroppingWeapon?.Invoke(_weapons[weaponIndexToDrop]);
+            DroppedWeapon?.Invoke(_weapons[weaponIndexToDrop]);
 
             _weaponFactory.CreatePickupableWeapon(_weapons[weaponIndexToDrop].Stats.ID, at: to);
             _weapons[weaponIndexToDrop] = null;
@@ -156,15 +157,15 @@ namespace Roguelike.Player
             if (_inputService.IsAttackButtonUp() == false)
                 return;
 
-            if (_currentWeapon == null)
+            if (CurrentWeapon == null)
                 return;
 
-            float attackRate = _currentWeapon.Stats.AttackRate / _attackSpeedMultiplier;
+            float attackRate = CurrentWeapon.Stats.AttackRate / _attackSpeedMultiplier;
 
             if (Time.time < (attackRate + _lastShotTime))
                 return;
 
-            if (_currentWeapon.TryAttack())
+            if (CurrentWeapon.TryAttack())
             {
                 _lastShotTime = Time.time;
                 _playerAnimator.PlayShot();
@@ -179,16 +180,16 @@ namespace Roguelike.Player
 
         private void SetWeapon()
         {
-            _currentWeapon?.Hide();
-            _currentWeapon = _weapons[_currentWeaponIndex];
-            _currentWeapon?.Show();
+            CurrentWeapon?.Hide();
+            CurrentWeapon = _weapons[_currentWeaponIndex];
+            CurrentWeapon?.Show();
 
             _playerAnimator.SetWeapon(
-                _currentWeapon != null
-                    ? _currentWeapon.Stats.Size
+                CurrentWeapon != null
+                    ? CurrentWeapon.Stats.Size
                     : WeaponSize.Unknown);
 
-            WeaponChanged?.Invoke(_currentWeapon);
+            WeaponChanged?.Invoke();
         }
 
         private void OnWeaponChanged(bool switchToNext)
@@ -228,6 +229,6 @@ namespace Roguelike.Player
         }
 
         private void OnAnimatorRestarted() =>
-            _playerAnimator.SetWeapon(_currentWeapon.Stats.Size);
+            _playerAnimator.SetWeapon(CurrentWeapon.Stats.Size);
     }
 }

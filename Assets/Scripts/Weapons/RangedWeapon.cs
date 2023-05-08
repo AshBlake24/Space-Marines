@@ -48,6 +48,9 @@ namespace Roguelike.Weapons
             AmmoData = GetAmmoData(progress) 
                        ?? new AmmoData(infinityAmmo: false, _stats.MaxAmmo, _stats.MaxAmmo);
 
+        public bool TryReload(float ammoAmountMultiplier) => 
+            AmmoData.Reload(ammoAmountMultiplier);
+
         public override bool TryAttack()
         {
             if (AmmoData.CurrentAmmo > 0 || AmmoData.InfinityAmmo)
