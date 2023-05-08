@@ -2,11 +2,8 @@ using System.Collections.Generic;
 using System.Linq;
 using Roguelike.Infrastructure.AssetManagement;
 using Roguelike.Infrastructure.Services.Random;
-using Roguelike.Loot;
 using Roguelike.StaticData.Loot;
-using Roguelike.Utilities;
 using UnityEngine;
-using UnityEngine.Pool;
 using Object = UnityEngine.Object;
 
 namespace Roguelike.Infrastructure.Factory
@@ -15,30 +12,19 @@ namespace Roguelike.Infrastructure.Factory
     {
         private readonly IRandomService _randomService;
         private readonly IAssetProvider _assetProvider;
-        private readonly ObjectPool<LootView> _lootViews;
 
         public LootFactory(IRandomService randomService, IAssetProvider assetProvider)
         {
             _randomService = randomService;
             _assetProvider = assetProvider;
-            _lootViews = new ObjectPool<LootView>(
-                CreatePoolItem,
-                OnTakeFromPool,
-                OnReleaseToPool,
-                OnDestroyItem,
-                false);
         }
 
         public void CreateLoot(IEnumerable<LootStaticData> loot, Vector3 position)
         {
             LootStaticData droppedItem = GetDroppedItem(loot);
-            Debug.Log(droppedItem);
+            
             if (droppedItem != null)
-            {
-                LootView lootView = _lootViews.Get();
-                Object.Instantiate(droppedItem.LootPrefab, lootView.Container);
-                lootView.transform.position = position;
-            }
+                Object.Instantiate(droppedItem.LootPrefab, position, Quaternion.identity);
         }
 
         private LootStaticData GetDroppedItem(IEnumerable<LootStaticData> loot)
@@ -53,27 +39,5 @@ namespace Roguelike.Infrastructure.Factory
                 ? possibleLoot[_randomService.Next(0, possibleLoot.Count - 1)]
                 : null;
         }
-
-        private LootView CreatePoolItem()
-        {
-            LootView lootView = _assetProvider.Instantiate(AssetPath.LootPath)
-                .GetComponent<LootView>();
-
-            lootView.transform.SetParent(Helpers.GetPoolsContainer(lootView.name));
-
-            return lootView;
-        }
-
-        private void OnTakeFromPool(LootView lootView) =>
-            lootView.gameObject.SetActive(true);
-
-        private void OnReleaseToPool(LootView lootView)
-        {
-            lootView.ClearContainer();
-            lootView.gameObject.SetActive(false);
-        }
-
-        private void OnDestroyItem(LootView lootView) =>
-            Object.Destroy(lootView.gameObject);
     }
 }

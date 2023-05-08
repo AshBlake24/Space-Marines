@@ -25,7 +25,6 @@ namespace Roguelike.Infrastructure.Services.StaticData
         EnemyStaticData GetEnemyStaticData(EnemyId id);
         LevelStaticData GetLevelStaticData(StageId id);
         PickupableWeaponsConfig GetPickupableWeaponConfig(WeaponId id);
-        LootStaticData GetLootStaticData(LootId id);
         void Load();
     }
 }

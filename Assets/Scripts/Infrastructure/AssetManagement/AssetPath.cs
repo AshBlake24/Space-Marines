@@ -16,9 +16,7 @@ namespace Roguelike.Infrastructure.AssetManagement
         public const string PlayerPath = "Player/Player";
         public const string UIRootPath = "UI/UIRoot";
         public const string GameConfigPath = "StaticData/GameConfig";
-        public const string SelectionWindow = "UI/CharactersSelection";
         public const string MiniMap = "UI/Elements/MiniMap";
         public const string PickupableWeaponStaticDataPath = "StaticData/Weapons/PickupableWeaponsStaticData";
-        public const string LootPath = "Loot/Loot";
     }
 }
