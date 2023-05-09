@@ -3,6 +3,7 @@ using System.Linq;
 using Roguelike.Infrastructure.AssetManagement;
 using Roguelike.Infrastructure.Services.Random;
 using Roguelike.Logic;
+using Roguelike.Powerups;
 using Roguelike.Powerups.Logic;
 using UnityEngine;
 using Object = UnityEngine.Object;
@@ -28,7 +29,10 @@ namespace Roguelike.Infrastructure.Factory
 
             if (droppedItem != null)
             {
-                GameObject item = Object.Instantiate(droppedItem.Prefab, position, Quaternion.identity);
+                Powerup powerup = Object.Instantiate(droppedItem.Prefab, position, Quaternion.identity)
+                    .GetComponent<Powerup>();
+                
+                powerup.Init(droppedItem.VFX);
                 
                 if (droppedItem is ILastingEffect lastingEffect)
                     lastingEffect.Construct(_coroutineRunner);

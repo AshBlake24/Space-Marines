@@ -17,9 +17,10 @@ namespace Roguelike.Player
         private State _state;
         private float _immuneTimeAfterHit;
         private float _immuneTimeAfterResurrect;
-        private bool _isImmune;
 
         public event Action HealthChanged;
+
+        public bool IsImmune { get; private set; }
 
         public int CurrentHealth
         {
@@ -59,7 +60,7 @@ namespace Roguelike.Player
         {
             _immuneTimeAfterHit = immuneTimeAfterHit;
             _immuneTimeAfterResurrect = immuneTimeAfterResurrect;
-            _isImmune = false;
+            IsImmune = false;
         }
 
         public void ReadProgress(PlayerProgress progress)
@@ -76,7 +77,7 @@ namespace Roguelike.Player
 
         public void TakeDamage(int damage)
         {
-            if (_isImmune || CurrentHealth <= 0)
+            if (IsImmune || CurrentHealth <= 0)
                 return;
 
             if (IsPositive(damage))
@@ -93,13 +94,13 @@ namespace Roguelike.Player
                 CurrentHealth = Mathf.Min(CurrentHealth + health, MaxHealth);
         }
 
-        private IEnumerator ImmuneTimer(float time)
+        public IEnumerator ImmuneTimer(float time)
         {
-            _isImmune = true;
+            IsImmune = true;
 
             yield return Helpers.GetTime(time);
 
-            _isImmune = false;
+            IsImmune = false;
         }
 
         private static bool IsPositive(int value)

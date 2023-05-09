@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using Roguelike.Infrastructure;
 using Roguelike.Logic;
@@ -18,13 +19,13 @@ namespace Roguelike.Powerups.Logic
         public void Construct(ICoroutineRunner coroutineRunner) => 
             _coroutineRunner = coroutineRunner;
 
-        public override bool TryApply(GameObject target)
+        public override bool TryApply(GameObject target, Action onComplete)
         {
             if (target.TryGetComponent(out PlayerMovement playerMovement))
             {
                 if (playerMovement.Boosted == false)
                 {
-                    _coroutineRunner.StartCoroutine(EffectDuration(playerMovement));
+                    _coroutineRunner.StartCoroutine(EffectDuration(playerMovement, onComplete));
                     return true;
                 }
             }
@@ -32,13 +33,14 @@ namespace Roguelike.Powerups.Logic
             return false;
         }
 
-        private IEnumerator EffectDuration(PlayerMovement playerMovement)
+        private IEnumerator EffectDuration(PlayerMovement playerMovement, Action onComplete)
         {
             playerMovement.BoostSpeed(_speedMultiplier);
 
             yield return Helpers.GetTime(_duration);
             
             playerMovement.ResetSpeed();
+            onComplete?.Invoke();
         }
     }
 }

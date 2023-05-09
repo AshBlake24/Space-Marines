@@ -1,3 +1,4 @@
+using System;
 using Roguelike.Player;
 using Roguelike.Weapons;
 using UnityEngine;
@@ -9,14 +10,17 @@ namespace Roguelike.Powerups.Logic
     {
         [SerializeField, Range(0.01f, 1f)] private float _ammoAmountMultiplier;
 
-        public override bool TryApply(GameObject target)
+        public override bool TryApply(GameObject target, Action onComplete)
         {
             if (target.TryGetComponent(out PlayerShooter playerShooter))
             {
                 if (playerShooter.CurrentWeapon is RangedWeapon rangedWeapon)
                 {
                     if (rangedWeapon.TryReload(_ammoAmountMultiplier))
+                    {
+                        onComplete?.Invoke();
                         return true;
+                    }
                 }
             }
 
