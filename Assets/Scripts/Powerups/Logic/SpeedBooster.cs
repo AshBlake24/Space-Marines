@@ -16,6 +16,8 @@ namespace Roguelike.Powerups.Logic
         
         private ICoroutineRunner _coroutineRunner;
 
+        public float Duration => _duration;
+
         public void Construct(ICoroutineRunner coroutineRunner) => 
             _coroutineRunner = coroutineRunner;
 

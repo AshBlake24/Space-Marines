@@ -94,13 +94,16 @@ namespace Roguelike.Player
                 CurrentHealth = Mathf.Min(CurrentHealth + health, MaxHealth);
         }
 
-        public IEnumerator ImmuneTimer(float time)
+        public void SetImmune(bool isImmune) => 
+            IsImmune = isImmune;
+
+        private IEnumerator ImmuneTimer(float time)
         {
-            IsImmune = true;
+            SetImmune(true);
 
             yield return Helpers.GetTime(time);
 
-            IsImmune = false;
+            SetImmune(false);
         }
 
         private static bool IsPositive(int value)

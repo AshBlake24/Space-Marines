@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Roguelike.Infrastructure.AssetManagement;
+using Roguelike.Infrastructure.Services.Pools;
 using Roguelike.Infrastructure.Services.Random;
 using Roguelike.Logic;
 using Roguelike.Powerups;
@@ -13,14 +14,15 @@ namespace Roguelike.Infrastructure.Factory
     public class LootFactory : ILootFactory
     {
         private readonly IRandomService _randomService;
-        private readonly IAssetProvider _assetProvider;
         private readonly ICoroutineRunner _coroutineRunner;
+        private readonly IParticlesPoolService _particlesPoolService;
 
-        public LootFactory(IRandomService randomService, IAssetProvider assetProvider, ICoroutineRunner coroutineRunner)
+        public LootFactory(IRandomService randomService, IParticlesPoolService particlesPoolService,
+            ICoroutineRunner coroutineRunner)
         {
             _randomService = randomService;
-            _assetProvider = assetProvider;
             _coroutineRunner = coroutineRunner;
+            _particlesPoolService = particlesPoolService;
         }
 
         public void CreatePowerup(IEnumerable<PowerupEffect> loot, Vector3 position)
@@ -31,19 +33,18 @@ namespace Roguelike.Infrastructure.Factory
             {
                 Powerup powerup = Object.Instantiate(droppedItem.Prefab, position, Quaternion.identity)
                     .GetComponent<Powerup>();
-                
-                powerup.Init(droppedItem.VFX);
-                
+
+                powerup.Construct(_particlesPoolService, droppedItem.VFX);
+
                 if (droppedItem is ILastingEffect lastingEffect)
                     lastingEffect.Construct(_coroutineRunner);
             }
-                
         }
 
         private PowerupEffect GetDroppedItem(IEnumerable<PowerupEffect> loot)
         {
             int randomNumber = _randomService.Next(1, 100);
-            
+
             List<PowerupEffect> possibleLoot = loot
                 .Where(item => randomNumber <= item.DropChance)
                 .ToList();

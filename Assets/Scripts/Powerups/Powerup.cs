@@ -1,6 +1,7 @@
 using Roguelike.Infrastructure.Services.Pools;
+using Roguelike.Logic;
 using Roguelike.Powerups.Logic;
-using Unity.Mathematics;
+using Roguelike.Weapons;
 using UnityEngine;
 
 namespace Roguelike.Powerups
@@ -10,13 +11,17 @@ namespace Roguelike.Powerups
         [SerializeField] private PowerupEffect _powerupEffect;
         [SerializeField] private GameObject _model;
 
-        private readonly ParticlesPool _particlesPool;
+        private IParticlesPoolService _particlesPool;
         private ParticleSystem _vfx;
         private GameObject _target;
         private bool _collected;
+        private string _vfxKey;
 
-        public void Init(ParticleSystem vfx) => 
-            _vfx = vfx;
+        public void Construct(IParticlesPoolService particlesPool, ParticleSystem vfx)
+        {
+            _vfxKey = vfx.gameObject.name;
+            CreateVFXPool(particlesPool, vfx);
+        }
 
         private void OnTriggerEnter(Collider other)
         {
@@ -47,10 +52,24 @@ namespace Roguelike.Powerups
             }
         }
 
+        private void SpawnVFX()
+        {
+            _vfx = _particlesPool.GetInstance(_vfxKey);
+            _vfx.transform.position = _target.transform.position;
+
+            if (_powerupEffect is ILastingEffect lastingEffect)
+                _vfx.GetComponent<ReturnToPool>().StartLastingEffect(lastingEffect.Duration);
+            
+            _vfx.Play();
+        }
+
+        private void CreateVFXPool(IParticlesPoolService particlesPool, ParticleSystem vfx)
+        {
+            _particlesPool = particlesPool;
+            _particlesPool.CreateNewPool(_vfxKey, vfx, 3, 10);
+        }
+
         private void HideModel() => 
             _model.SetActive(false);
-
-        private void SpawnVFX() =>
-            _vfx = Instantiate(_vfx, _target.transform.position, Quaternion.identity, transform);
     }
 }

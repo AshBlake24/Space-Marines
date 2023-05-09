@@ -1,4 +1,5 @@
-using System;
+using System.Collections;
+using Roguelike.Utilities;
 using UnityEngine;
 using UnityEngine.Pool;
 
@@ -15,14 +16,20 @@ namespace Roguelike.Weapons
             _particleSystem = particles;
         }
 
-        private void OnParticleSystemStopped()
-        {
+        private void OnParticleSystemStopped() => 
             _pool.Release(_particleSystem);
-        }
 
-        private void OnDisable()
-        {
+        private void OnDisable() => 
             _pool.Release(_particleSystem);
+
+        public void StartLastingEffect(float duration) => 
+            StartCoroutine(EffectDuration(duration));
+
+        private IEnumerator EffectDuration(float duration)
+        {
+            yield return Helpers.GetTime(duration);
+
+            OnParticleSystemStopped();
         }
     }
 }
