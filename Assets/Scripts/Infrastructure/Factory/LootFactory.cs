@@ -1,11 +1,9 @@
 using System.Collections.Generic;
 using System.Linq;
-using Roguelike.Infrastructure.AssetManagement;
 using Roguelike.Infrastructure.Services.Pools;
 using Roguelike.Infrastructure.Services.Random;
 using Roguelike.Logic;
-using Roguelike.Powerups;
-using Roguelike.Powerups.Logic;
+using Roguelike.Loot.Powerups;
 using UnityEngine;
 using Object = UnityEngine.Object;
 

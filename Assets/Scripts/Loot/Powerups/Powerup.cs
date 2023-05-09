@@ -1,10 +1,9 @@
 using Roguelike.Infrastructure.Services.Pools;
 using Roguelike.Logic;
-using Roguelike.Powerups.Logic;
 using Roguelike.Weapons;
 using UnityEngine;
 
-namespace Roguelike.Powerups
+namespace Roguelike.Loot.Powerups
 {
     public class Powerup : MonoBehaviour
     {

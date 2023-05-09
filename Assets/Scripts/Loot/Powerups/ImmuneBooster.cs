@@ -6,7 +6,7 @@ using Roguelike.Player;
 using Roguelike.Utilities;
 using UnityEngine;
 
-namespace Roguelike.Powerups.Logic
+namespace Roguelike.Loot.Powerups
 {
     [CreateAssetMenu(fileName = "Immune Booster", menuName = "Static Data/Powerups/Immune Booster", order = 2)]
     public class ImmuneBooster : PowerupEffect, ILastingEffect

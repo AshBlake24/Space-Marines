@@ -2,7 +2,7 @@ using System;
 using Roguelike.Player;
 using UnityEngine;
 
-namespace Roguelike.Powerups.Logic
+namespace Roguelike.Loot.Powerups
 {
     [CreateAssetMenu(fileName = "First Aid Kit", menuName = "Static Data/Powerups/First Aid Kit", order = 2)]
     public class FirstAidKit : PowerupEffect

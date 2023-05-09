@@ -3,7 +3,7 @@ using Roguelike.Player;
 using Roguelike.Weapons;
 using UnityEngine;
 
-namespace Roguelike.Powerups.Logic
+namespace Roguelike.Loot.Powerups
 {
     [CreateAssetMenu(fileName = "AmmoBox", menuName = "Static Data/Powerups/AmmoBox", order = 2)]
     public class AmmoBox : PowerupEffect

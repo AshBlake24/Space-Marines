@@ -6,7 +6,7 @@ using Roguelike.Player;
 using Roguelike.Utilities;
 using UnityEngine;
 
-namespace Roguelike.Powerups.Logic
+namespace Roguelike.Loot.Powerups
 {
     [CreateAssetMenu(fileName = "Speed Booster", menuName = "Static Data/Powerups/Speed Booster", order = 2)]
     public class SpeedBooster : PowerupEffect, ILastingEffect

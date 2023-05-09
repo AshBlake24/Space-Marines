@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace Roguelike.Powerups.Logic
+namespace Roguelike.Loot.Powerups
 {
     public abstract class PowerupEffect : ScriptableObject
     {

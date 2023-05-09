@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using Roguelike.Infrastructure.Services;
-using Roguelike.Powerups.Logic;
+using Roguelike.Loot.Powerups;
 using UnityEngine;
 
 namespace Roguelike.Infrastructure.Factory
