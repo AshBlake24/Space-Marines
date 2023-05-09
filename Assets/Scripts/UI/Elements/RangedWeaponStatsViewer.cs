@@ -7,7 +7,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Roguelike.UI.Windows
+namespace Roguelike.UI.Elements
 {
     public class RangedWeaponStatsViewer : MonoBehaviour
     {
@@ -37,7 +37,7 @@ namespace Roguelike.UI.Windows
 
         private void InitWeaponStats()
         {
-            _damage.text = $"{_weaponData.Projectile.Damage}";
+            _damage.text = $"{_weaponData.Projectile.Damage}x{_weaponData.BulletsPerShot}";
             _attackRate.text = $"{_weaponData.AttackRate}";
 
             AmmoData ammoData = _progressData.PlayerProgress.PlayerWeapons.RangedWeaponsData
