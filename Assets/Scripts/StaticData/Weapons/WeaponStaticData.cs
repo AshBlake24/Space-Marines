@@ -1,3 +1,4 @@
+using Roguelike.StaticData.Loot;
 using UnityEngine;
 
 namespace Roguelike.StaticData.Weapons

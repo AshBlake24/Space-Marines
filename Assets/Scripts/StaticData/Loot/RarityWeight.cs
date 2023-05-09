@@ -1,4 +1,4 @@
-namespace Roguelike.StaticData
+namespace Roguelike.StaticData.Loot
 {
     public enum RarityWeight
     {
