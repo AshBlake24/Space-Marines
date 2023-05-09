@@ -1,4 +1,3 @@
-using Roguelike.Weapons.Stats;
 using UnityEngine;
 
 namespace Roguelike.StaticData.Weapons
@@ -9,6 +8,7 @@ namespace Roguelike.StaticData.Weapons
         public WeaponId Id;
         public WeaponType Type;
         public WeaponSize Size;
+        public RarityWeight Rarity;
         public GameObject WeaponPrefab;
         public Sprite Icon;
         public string Name;
