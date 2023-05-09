@@ -10,6 +10,7 @@ namespace Roguelike.Logic.Interactables
         [SerializeField] private WeaponId _weaponId;
         [SerializeField] private Outline _outline;
 
+        public WeaponId Id => _weaponId;
         public Outline Outline => _outline;
 
         private void Start() =>

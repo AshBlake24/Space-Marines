@@ -4,6 +4,7 @@ using Roguelike.Infrastructure.Services.PersistentData;
 using Roguelike.Infrastructure.Services.StaticData;
 using Roguelike.Infrastructure.Services.Windows;
 using Roguelike.Player;
+using Roguelike.StaticData.Weapons;
 using Roguelike.StaticData.Windows;
 using Roguelike.UI.Elements;
 using Roguelike.UI.Windows;
@@ -53,6 +54,20 @@ namespace Roguelike.Infrastructure.Factory
             }
             
             return window;
+        }
+
+        public GameObject CreateWeaponStatsViewer(WindowService windowService, WeaponId weaponId)
+        {
+            GameObject weaponStatsViewer = _assetProvider.Instantiate(AssetPath.WeaponStatsViewer, _uiRoot);
+            WeaponStaticData weaponData = _staticData.GetWeaponData(weaponId);
+
+            if (weaponData is RangedWeaponStaticData rangedWeaponData)
+            {
+                if (weaponStatsViewer.TryGetComponent(out RangedWeaponStatsViewer rangedWeaponStatsViewer))
+                    rangedWeaponStatsViewer.Construct(_progressService, rangedWeaponData);
+            }
+
+            return weaponStatsViewer;
         }
 
         public void CreateResurrectionWindow(IWindowService windowService, PlayerDeath playerDeath)

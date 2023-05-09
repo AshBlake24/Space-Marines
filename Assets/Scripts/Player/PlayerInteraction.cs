@@ -2,7 +2,10 @@ using System;
 using System.Collections.Generic;
 using Roguelike.Infrastructure.Services;
 using Roguelike.Infrastructure.Services.Input;
+using Roguelike.Infrastructure.Services.Windows;
 using Roguelike.Logic.Interactables;
+using Roguelike.StaticData.Weapons;
+using Roguelike.UI.Windows;
 using UnityEngine;
 
 namespace Roguelike.Player
@@ -20,6 +23,8 @@ namespace Roguelike.Player
         private readonly Collider[] _colliders = new Collider[3];
         private IInteractable _currentTargetInteractable;
         private IInputService _input;
+        private IWindowService _windowService;
+        private GameObject _weaponStatsViewer;
 
         public event Action GotInteractable;
         public event Action LostInteractable;
@@ -32,6 +37,9 @@ namespace Roguelike.Player
                 Gizmos.DrawWireSphere(transform.position, _radius);
             }
         }
+
+        public void Construct(IWindowService windowService) =>
+            _windowService = windowService;
 
         private void Awake() =>
             _input = AllServices.Container.Single<IInputService>();
@@ -83,7 +91,7 @@ namespace Roguelike.Player
                 LostInteractable?.Invoke();
             }
         }
-        
+
         private IInteractable FindClosestInteractable()
         {
             IInteractable closestInteractable = null;
@@ -114,23 +122,29 @@ namespace Roguelike.Player
             ClearCurrentInteractable();
             _currentTargetInteractable = closestInteractable;
             _currentTargetInteractable.Outline.enabled = true;
+
+            if (_currentTargetInteractable is WeaponToPickUp weapon)
+                _weaponStatsViewer = _windowService.OpenWeaponStatsViewer(weapon.Id);
         }
 
         private void ClearCurrentInteractable()
         {
+            if (_weaponStatsViewer != null)
+                Destroy(_weaponStatsViewer);
+            
             if (_currentTargetInteractable != null)
             {
                 _currentTargetInteractable.Outline.enabled = false;
                 _currentTargetInteractable = null;
             }
         }
-        
+
         private void DisableComponents()
         {
             foreach (MonoBehaviour component in _componentsToDeactivateWhileInteraction)
                 component.enabled = false;
         }
-        
+
         private void EnableComponents()
         {
             foreach (MonoBehaviour component in _componentsToDeactivateWhileInteraction)

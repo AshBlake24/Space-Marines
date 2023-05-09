@@ -27,6 +27,14 @@ namespace Roguelike.Infrastructure.AssetManagement
             
             return Object.Instantiate(prefab, postition, Quaternion.identity);
         }
+        
+        public GameObject Instantiate(string path, Transform parent)
+        {
+            GameObject prefab = Resources.Load<GameObject>(path);
+            CheckGameObject(path, prefab);
+            
+            return Object.Instantiate(prefab, parent);
+        }
 
         public GameObject InstantiateRegistered(string prefabPath)
         {

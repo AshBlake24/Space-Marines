@@ -73,6 +73,9 @@ namespace Roguelike.Infrastructure.Factory
 
             player.GetComponent<PlayerDeath>()
                 .Construct(_windowService, _saveLoadService);
+            
+            player.GetComponent<PlayerInteraction>()
+                .Construct(_windowService);
 
             _skillFactory.CreatePlayerSkill(player);
 

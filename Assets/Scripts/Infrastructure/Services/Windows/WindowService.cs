@@ -1,7 +1,9 @@
 using System;
 using Roguelike.Infrastructure.Factory;
 using Roguelike.Player;
+using Roguelike.StaticData.Weapons;
 using Roguelike.UI.Windows;
+using UnityEngine;
 
 namespace Roguelike.Infrastructure.Services.Windows
 {
@@ -13,6 +15,9 @@ namespace Roguelike.Infrastructure.Services.Windows
         {
             _uiFactory = uiFactory;
         }
+
+        public GameObject OpenWeaponStatsViewer(WeaponId weaponId) => 
+            _uiFactory.CreateWeaponStatsViewer(this, weaponId);
 
         public void OpenResurrectionWindow(PlayerDeath playerDeath) => 
             _uiFactory.CreateResurrectionWindow(this, playerDeath);
