@@ -2,6 +2,7 @@ using System;
 using Roguelike.Infrastructure.Services;
 using Roguelike.Infrastructure.Services.Input;
 using Roguelike.Player.Skills;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Roguelike.Player
@@ -39,12 +40,26 @@ namespace Roguelike.Player
 
         private void OnUseSkill()
         {
-            if (_skill.ReadyToUse && _skill.IsActive == false)
+            if (SkillIsReady())
             {
                 _skill.UseSkill();
                 _skillEffect.Play();
                 SkillUsed?.Invoke();
             }
+        }
+
+        private bool SkillIsReady()
+        {
+            if (_skill.ReadyToUse == false)
+                return false;
+
+            if (_skill.IsActive)
+                return false;
+
+            if (_skill.Boosted)
+                return false;
+
+            return true;
         }
 
         private void OnSkillPerformed() => 

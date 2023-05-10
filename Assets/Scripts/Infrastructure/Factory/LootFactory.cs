@@ -47,7 +47,7 @@ namespace Roguelike.Infrastructure.Factory
 
             Object.Instantiate(powerupData.Prefab, position, Quaternion.identity)
                 .GetComponent<Powerup>()
-                .Construct(_particlesPoolService, powerupData.Effect, powerupData.VFX);
+                .Construct(_particlesPoolService, powerupData.Effect, powerupData.ActiveVFX);
 
             if (powerupData.Effect is ILastingEffect lastingEffect)
                 lastingEffect.Construct(_coroutineRunner);

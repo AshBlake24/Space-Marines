@@ -10,6 +10,7 @@ namespace Roguelike.Player.Skills
         float Cooldown { get; }
         bool IsActive { get; }
         bool ReadyToUse { get; }
+        bool Boosted { get; }
         void UseSkill();
     }
 }

@@ -5,8 +5,8 @@ using UnityEngine;
 namespace Roguelike.Loot.Powerups
 {
     [CreateAssetMenu(
-        fileName = "First Aid Kit", 
-        menuName = "Static Data/Loot/Powerups/Effects/First Aid Kit", 
+        fileName = "Heal", 
+        menuName = "Static Data/Powerups/Effects/First Aid Kit", 
         order = 1)]
     public class FirstAidKit : PowerupEffect
     {

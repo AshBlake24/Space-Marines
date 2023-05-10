@@ -25,6 +25,8 @@ namespace Roguelike.Player.Skills
             _skillDuration = skillDuration;
         }
 
+        public override bool Boosted => _playerShooter.Boosted;
+        
         public override event Action Performed;
 
         public override void UseSkill() => 

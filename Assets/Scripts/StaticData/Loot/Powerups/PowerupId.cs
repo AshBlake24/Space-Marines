@@ -5,6 +5,7 @@ namespace Roguelike.StaticData.Loot.Powerups
         FirstAidKit,
         AmmoBox,
         ImmuneBosster,
-        SpeedBooster
+        SpeedBooster,
+        AttackSpeedBooster
     }
 }

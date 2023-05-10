@@ -32,6 +32,7 @@ namespace Roguelike.Player
         public event Action<IWeapon> DroppedWeapon;
 
         public IWeapon CurrentWeapon { get; private set; }
+        public bool Boosted { get; private set; }
 
         private void OnGUI()
         {
@@ -58,6 +59,7 @@ namespace Roguelike.Player
             _weaponSpawnPoint = weaponSpawnPoint;
             _attackSpeedMultiplier = DefaultAttackSpeedMultiplier;
             _currentWeaponIndex = 0;
+            Boosted = false;
             SetWeapon();
         }
 
@@ -96,11 +98,17 @@ namespace Roguelike.Player
         {
         }
 
-        public void SetAttackSpeedMultiplier(float attackSpeedMultiplier) =>
+        public void SetAttackSpeedMultiplier(float attackSpeedMultiplier)
+        {
             _attackSpeedMultiplier = attackSpeedMultiplier;
+            Boosted = true;
+        }
 
-        public void ResetAttackSpeedMultiplier() =>
+        public void ResetAttackSpeedMultiplier()
+        {
             _attackSpeedMultiplier = DefaultAttackSpeedMultiplier;
+            Boosted = false;
+        }
 
         public IWeapon TryGetNextWeapon()
         {

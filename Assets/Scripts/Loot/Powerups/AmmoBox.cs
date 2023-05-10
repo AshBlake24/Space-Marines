@@ -6,8 +6,8 @@ using UnityEngine;
 namespace Roguelike.Loot.Powerups
 {
     [CreateAssetMenu(
-        fileName = "AmmoBox", 
-        menuName = "Static Data/Loot/Powerups/Effects/AmmoBox", 
+        fileName = "Ammo", 
+        menuName = "Static Data/Powerups/Effects/AmmoBox", 
         order = 1)]
     public class AmmoBox : PowerupEffect
     {

@@ -28,6 +28,7 @@ namespace Roguelike.Player.Skills
         public ParticleSystem VFX { get; }
         public bool IsActive { get; protected set; }
         public bool ReadyToUse { get; protected set; }
+        public virtual bool Boosted { get; protected set; }
         public float Cooldown => _cooldown;
 
         public abstract void UseSkill();
