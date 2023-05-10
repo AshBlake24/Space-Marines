@@ -29,7 +29,7 @@ namespace Roguelike.Loot
 
         public void Interact(GameObject interactor)
         {
-            _lootFactory.CreateWeapon(transform.position + transform.forward);
+            _lootFactory.CreateRandomWeapon(transform.position + transform.forward);
             IsActive = false;
         }
     }

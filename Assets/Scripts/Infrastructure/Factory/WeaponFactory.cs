@@ -15,13 +15,15 @@ namespace Roguelike.Infrastructure.Factory
         private readonly IStaticDataService _staticDataService;
         private readonly ISaveLoadService _saveLoadService;
         private readonly IPersistentDataService _progressData;
+        private readonly ILootFactory _lootFactory;
 
         public WeaponFactory(IStaticDataService staticDataService, ISaveLoadService saveLoadService,
-            IPersistentDataService progressData)
+            IPersistentDataService progressData, ILootFactory lootFactory)
         {
             _staticDataService = staticDataService;
             _saveLoadService = saveLoadService;
             _progressData = progressData;
+            _lootFactory = lootFactory;
         }
 
         public IWeapon CreateWeapon(WeaponId id) // todo refactor fabric
@@ -42,11 +44,6 @@ namespace Roguelike.Infrastructure.Factory
             WeaponStaticData weaponData = _staticDataService.GetWeaponData(id);
 
             return ConstructWeapon(weaponData, parent);
-        }
-
-        public void CreateInteractableWeapon(WeaponId weaponId, Transform at)
-        {
-            // todo player dropped weapon
         }
 
         private IWeapon ConstructWeapon(WeaponStaticData weaponData, Transform parent = null)

@@ -5,10 +5,8 @@ using Roguelike.Infrastructure.AssetManagement;
 using Roguelike.Infrastructure.Services.Pools;
 using Roguelike.Infrastructure.Services.Random;
 using Roguelike.Infrastructure.Services.StaticData;
-using Roguelike.Logic;
 using Roguelike.Logic.Interactables;
 using Roguelike.Loot.Powerups;
-using Roguelike.StaticData.Loot;
 using Roguelike.StaticData.Loot.Powerups;
 using Roguelike.StaticData.Loot.Rarity;
 using Roguelike.StaticData.Weapons;
@@ -55,19 +53,24 @@ namespace Roguelike.Infrastructure.Factory
                 lastingEffect.Construct(_coroutineRunner);
         }
 
-        public void CreateWeapon(Vector3 position)
+        public void CreateRandomWeapon(Vector3 position) => 
+            CreateWeapon(GetDroppedWeapon(), position);
+
+        public void CreateConcreteWeapon(WeaponId weaponId, Vector3 position) => 
+            CreateWeapon(weaponId, position);
+
+        private void CreateWeapon(WeaponId weaponId, Vector3 position)
         {
-            WeaponId weaponId = GetDroppedWeapon();
             WeaponStaticData weaponData = _staticData.GetWeaponData(weaponId);
             RarityStaticData rarityData = _staticData.GetRarityData(weaponData.Rarity);
 
             InteractableWeapon interactableWeapon = _assetProvider
                 .Instantiate(AssetPath.InteractableWeaponPath, position)
                 .GetComponent<InteractableWeapon>();
-            
-            interactableWeapon.Construct(weaponId, weaponData.InteractableWeaponPrefab.GetComponent<Outline>());
-            Object.Instantiate(weaponData.InteractableWeaponPrefab, interactableWeapon.ModelContainer);
+
             Object.Instantiate(rarityData.VFX, interactableWeapon.transform);
+            GameObject model = Object.Instantiate(weaponData.InteractableWeaponPrefab, interactableWeapon.ModelContainer);
+            interactableWeapon.Construct(weaponId, model.GetComponent<Outline>());
         }
 
         private PowerupId GetDroppedPowerup()
@@ -88,7 +91,7 @@ namespace Roguelike.Infrastructure.Factory
         private WeaponId GetDroppedWeapon()
         {
             int roll = _randomService.Next(0, _weaponsTotalWeight);
-
+            
             foreach ((WeaponId weaponId, int weight) in _staticData.WeaponsDropWeights)
             {
                 roll -= weight;

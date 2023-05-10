@@ -20,6 +20,7 @@ namespace Roguelike.Player
         private WeaponSpawnPoint _weaponSpawnPoint;
         private IInputService _inputService;
         private IWeaponFactory _weaponFactory;
+        private ILootFactory _lootFactory;
         private IWeapon[] _weapons;
         private int _currentWeaponIndex;
         private float _weaponSwitchCooldown;
@@ -47,11 +48,12 @@ namespace Roguelike.Player
         private void Awake() =>
             _inputService = AllServices.Container.Single<IInputService>();
 
-        public void Construct(IWeapon[] weapons, IWeaponFactory weaponFactory,
+        public void Construct(IWeapon[] weapons, IWeaponFactory weaponFactory, ILootFactory lootFactory,
             float weaponSwitchCooldown, WeaponSpawnPoint weaponSpawnPoint)
         {
             _weapons = weapons;
             _weaponFactory = weaponFactory;
+            _lootFactory = lootFactory;
             _weaponSwitchCooldown = weaponSwitchCooldown;
             _weaponSpawnPoint = weaponSpawnPoint;
             _attackSpeedMultiplier = DefaultAttackSpeedMultiplier;
@@ -129,7 +131,7 @@ namespace Roguelike.Player
                 return false;
 
             if (HasEmptySlots(out int emptySlot) == false)
-                emptySlot = DropWeapon(to: weaponPosition);
+                emptySlot = DropWeapon();
 
             IWeapon weapon = _weaponFactory.CreateWeapon(weaponId, _weaponSpawnPoint.transform);
             _weapons[emptySlot] = weapon;
@@ -138,7 +140,7 @@ namespace Roguelike.Player
             return true;
         }
 
-        private int DropWeapon(Transform to)
+        private int DropWeapon()
         {
             int weaponIndexToDrop = _currentWeaponIndex == 0
                 ? _weapons.Length - 1
@@ -146,7 +148,7 @@ namespace Roguelike.Player
 
             DroppedWeapon?.Invoke(_weapons[weaponIndexToDrop]);
 
-            _weaponFactory.CreateInteractableWeapon(_weapons[weaponIndexToDrop].Stats.ID, at: to);
+            _lootFactory.CreateConcreteWeapon(_weapons[weaponIndexToDrop].Stats.ID, transform.position + transform.forward);
             _weapons[weaponIndexToDrop] = null;
 
             return weaponIndexToDrop;

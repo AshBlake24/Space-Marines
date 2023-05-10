@@ -36,6 +36,7 @@ namespace Roguelike.Infrastructure.Factory
         private readonly IWindowService _windowService;
         private readonly IEnvironmentService _environmentService;
         private readonly ISceneLoadingService _sceneLoadingService;
+        private readonly ILootFactory _lootFactory;
 
         public GameFactory(IAssetProvider assetProvider,
             IPersistentDataService persistentData,
@@ -46,7 +47,8 @@ namespace Roguelike.Infrastructure.Factory
             IEnemyFactory enemyFactory,
             IWindowService windowService,
             IEnvironmentService environmentService,
-            ISceneLoadingService sceneLoadingService)
+            ISceneLoadingService sceneLoadingService,
+            ILootFactory lootFactory)
         {
             _assetProvider = assetProvider;
             _persistentData = persistentData;
@@ -57,6 +59,7 @@ namespace Roguelike.Infrastructure.Factory
             _windowService = windowService;
             _environmentService = environmentService;
             _sceneLoadingService = sceneLoadingService;
+            _lootFactory = lootFactory;
             _enemyFactory = enemyFactory;
         }
 
@@ -188,6 +191,7 @@ namespace Roguelike.Infrastructure.Factory
             playerShooter.Construct(
                 weapons,
                 _weaponFactory,
+                _lootFactory,
                 _staticDataService.Player.WeaponSwtichCooldown,
                 weaponSpawnPoint);
         }

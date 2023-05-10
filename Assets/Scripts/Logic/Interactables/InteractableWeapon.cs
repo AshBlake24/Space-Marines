@@ -1,4 +1,3 @@
-using System;
 using Roguelike.Player;
 using Roguelike.StaticData.Weapons;
 using UnityEngine;
