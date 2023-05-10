@@ -37,7 +37,7 @@ namespace Roguelike.Infrastructure.Factory
             _staticData = staticData;
             _powerupDropTable = _staticData.PowerupDropTable.PowerupConfigs;
             _powerupsTotalWeight = _powerupDropTable.Sum(x => x.Weight);
-            _weaponsTotalWeight = _staticData.WeaponsRarityWeights.Sum(x => (int)x.Value);
+            _weaponsTotalWeight = _staticData.WeaponsDropWeights.Sum(x => x.Value);
         }
 
         public void CreatePowerup(Vector3 position)
@@ -84,15 +84,15 @@ namespace Roguelike.Infrastructure.Factory
         {
             int roll = _randomService.Next(0, _weaponsTotalWeight);
 
-            foreach ((WeaponId weaponId, RarityWeight rarity) in _staticData.WeaponsRarityWeights)
+            foreach ((WeaponId weaponId, int weight) in _staticData.WeaponsDropWeights)
             {
-                roll -= (int)rarity;
+                roll -= weight;
 
                 if (roll < 0)
                     return weaponId;
             }
 
-            throw new ArgumentOutOfRangeException(nameof(_staticData.WeaponsRarityWeights), "Incorrectly placed weights");
+            throw new ArgumentOutOfRangeException(nameof(_staticData.WeaponsDropWeights), "Incorrectly placed weights");
         }
     }
 }

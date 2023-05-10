@@ -20,7 +20,7 @@ namespace Roguelike.Infrastructure.Services.StaticData
     public class StaticDataService : IStaticDataService
     {
         private Dictionary<WeaponId, WeaponStaticData> _weapons;
-        private Dictionary<WeaponId, RarityWeight> _weaponsRarityWeights;
+        private Dictionary<WeaponId, int> _weaponsDropWeights;
         private Dictionary<ProjectileId, ProjectileStaticData> _projectiles;
         private Dictionary<CharacterId, CharacterStaticData> _characters;
         private Dictionary<SkillId, SkillStaticData> _skills;
@@ -28,11 +28,12 @@ namespace Roguelike.Infrastructure.Services.StaticData
         private Dictionary<EnemyId, EnemyStaticData> _enemies;
         private Dictionary<StageId, LevelStaticData> _levels;
         private Dictionary<PowerupId, PowerupStaticData> _powerups;
+        private Dictionary<RarityId, RarityStaticData> _rarity;
 
         public PlayerStaticData Player { get; private set; }
         public GameConfig GameConfig { get; private set; }
         public PowerupDropTable PowerupDropTable { get; private set; }
-        public IReadOnlyDictionary<WeaponId, RarityWeight> WeaponsRarityWeights => _weaponsRarityWeights;
+        public IReadOnlyDictionary<WeaponId, int> WeaponsDropWeights => _weaponsDropWeights;
 
         public void Load()
         {
@@ -44,18 +45,22 @@ namespace Roguelike.Infrastructure.Services.StaticData
             LoadEnemies();
             LoadLevels();
             LoadPlayer();
+            LoadRarity();
             LoadPowerups();
             LoadGameConfig();
             LoadPowerupDropTable();
-            LoadWeaponsRarityWeights();
+            LoadWeaponsDropWeights();
         }
 
-        private void LoadWeaponsRarityWeights()
+        private void LoadWeaponsDropWeights()
         {
-            _weaponsRarityWeights = new Dictionary<WeaponId, RarityWeight>();
-            
+            _weaponsDropWeights = new Dictionary<WeaponId, int>();
+
             foreach (WeaponStaticData weaponData in _weapons.Values)
-                _weaponsRarityWeights.Add(weaponData.Id, weaponData.Rarity);
+            {
+                RarityStaticData rarityData = GetRarityStaticData(weaponData.Rarity);
+                _weaponsDropWeights.Add(weaponData.Id, rarityData.Weight);
+            }
         }
 
         public WeaponStaticData GetWeaponData(WeaponId id) =>
@@ -98,6 +103,11 @@ namespace Roguelike.Infrastructure.Services.StaticData
                 ? staticData
                 : null;
 
+        public RarityStaticData GetRarityStaticData(RarityId id) =>
+            _rarity.TryGetValue(id, out RarityStaticData staticData)
+                ? staticData
+                : null;
+
         private void LoadWeapons() =>
             _weapons = Resources.LoadAll<WeaponStaticData>(AssetPath.WeaponsStaticDataPath)
                 .ToDictionary(weapon => weapon.Id);
@@ -130,6 +140,10 @@ namespace Roguelike.Infrastructure.Services.StaticData
             _windows = Resources.Load<WindowStaticData>(AssetPath.WindowsStaticDataPath)
                 .Configs
                 .ToDictionary(config => config.WindowId, x => x);
+
+        private void LoadRarity() =>
+            _rarity = Resources.LoadAll<RarityStaticData>(AssetPath.RarityStaticDataPath)
+                .ToDictionary(rarity => rarity.Id);
 
         private void LoadPlayer() =>
             Player = Resources.Load<PlayerStaticData>(AssetPath.PlayerStaticDataPath);

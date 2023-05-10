@@ -19,7 +19,7 @@ namespace Roguelike.Infrastructure.Services.StaticData
         PlayerStaticData Player { get; }
         GameConfig GameConfig { get; }
         PowerupDropTable PowerupDropTable { get; }
-        IReadOnlyDictionary<WeaponId, RarityWeight> WeaponsRarityWeights { get; }
+        IReadOnlyDictionary<WeaponId, int> WeaponsDropWeights { get; }
         WeaponStaticData GetWeaponData(WeaponId id);
         ProjectileStaticData GetProjectileData(ProjectileId id);
         CharacterStaticData GetCharacterData(CharacterId id);
@@ -28,6 +28,7 @@ namespace Roguelike.Infrastructure.Services.StaticData
         EnemyStaticData GetEnemyStaticData(EnemyId id);
         LevelStaticData GetLevelStaticData(StageId id);
         PowerupStaticData GetPowerupStaticData(PowerupId id);
+        RarityStaticData GetRarityStaticData(RarityId id);
         void Load();
     }
 }

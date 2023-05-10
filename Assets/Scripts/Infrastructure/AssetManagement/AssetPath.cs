@@ -21,5 +21,6 @@ namespace Roguelike.Infrastructure.AssetManagement
         public const string PowerupStaticDataPath = "StaticData/Loot/Powerups";
         public const string PowerupDropTablePath = "StaticData/Loot/Drop Tables/Powerup Drop Table";
         public const string InteractableWeaponPath = "Interactables/InteractableWeapon";
+        public const string RarityStaticDataPath = "StaticData/Loot/Rarity";
     }
 }

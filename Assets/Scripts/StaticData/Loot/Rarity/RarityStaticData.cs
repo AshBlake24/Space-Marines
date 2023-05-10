@@ -1,0 +1,13 @@
+using UnityEngine;
+
+namespace Roguelike.StaticData.Loot
+{
+    [CreateAssetMenu(fileName = "New Rarity", menuName = "Static Data/Loot/New Rarity", order = 0)]
+    public class RarityStaticData : ScriptableObject
+    {
+        public RarityId Id;
+        public int Weight;
+        public Color Color;
+        public ParticleSystem VFX;
+    }
+}
