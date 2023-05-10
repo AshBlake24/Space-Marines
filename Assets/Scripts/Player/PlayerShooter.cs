@@ -156,7 +156,11 @@ namespace Roguelike.Player
 
             DroppedWeapon?.Invoke(_weapons[weaponIndexToDrop]);
 
-            _lootFactory.CreateConcreteWeapon(_weapons[weaponIndexToDrop].Stats.ID, transform.position + transform.forward);
+            GameObject droppedWeapon = _lootFactory.CreateConcreteWeapon(
+                _weapons[weaponIndexToDrop].Stats.ID,
+                transform.position + transform.forward);
+            droppedWeapon.transform.rotation = transform.rotation;
+
             _weapons[weaponIndexToDrop] = null;
 
             return weaponIndexToDrop;
@@ -207,16 +211,16 @@ namespace Roguelike.Player
             if (Time.time > _lastWeaponSwitchTime + _weaponSwitchCooldown)
             {
                 int weaponsCount = _weapons.Count(weapon => weapon != null);
-            
+
                 if (weaponsCount <= 1)
                     return;
-                
+
                 do
                     SwitchWeaponIndex(switchToNext);
                 while (_weapons[_currentWeaponIndex] == null);
 
                 SetWeapon();
-                
+
                 _lastWeaponSwitchTime = Time.time;
             }
         }

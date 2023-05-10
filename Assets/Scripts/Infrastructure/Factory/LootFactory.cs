@@ -53,24 +53,26 @@ namespace Roguelike.Infrastructure.Factory
                 lastingEffect.Construct(_coroutineRunner);
         }
 
-        public void CreateRandomWeapon(Transform at) => 
-            CreateWeapon(GetDroppedWeapon(), at);
+        public GameObject CreateRandomWeapon(Vector3 position) => 
+            CreateWeapon(GetDroppedWeapon(), position);
 
-        public void CreateConcreteWeapon(WeaponId weaponId, Vector3 position) => 
-            CreateWeapon(weaponId, null);
+        public GameObject CreateConcreteWeapon(WeaponId weaponId, Vector3 position) => 
+            CreateWeapon(weaponId, position);
 
-        private void CreateWeapon(WeaponId weaponId, Transform at)
+        private GameObject CreateWeapon(WeaponId weaponId, Vector3 position)
         {
             WeaponStaticData weaponData = _staticData.GetWeaponData(weaponId);
             RarityStaticData rarityData = _staticData.GetRarityData(weaponData.Rarity);
 
             InteractableWeapon interactableWeapon = _assetProvider
-                .Instantiate(AssetPath.InteractableWeaponPath, at.position, at.rotation)
+                .Instantiate(AssetPath.InteractableWeaponPath, position)
                 .GetComponent<InteractableWeapon>();
 
             Object.Instantiate(rarityData.VFX, interactableWeapon.transform);
             GameObject model = Object.Instantiate(weaponData.InteractableWeaponPrefab, interactableWeapon.ModelContainer);
             interactableWeapon.Construct(weaponId, model.GetComponent<Outline>());
+
+            return interactableWeapon.gameObject;
         }
 
         private PowerupId GetDroppedPowerup()

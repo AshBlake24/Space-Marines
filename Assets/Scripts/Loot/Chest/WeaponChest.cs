@@ -34,7 +34,8 @@ namespace Roguelike.Loot.Chest
         {
             IsActive = false;
             Interacted?.Invoke();
-            _lootFactory.CreateRandomWeapon(transform);
+            GameObject weapon = _lootFactory.CreateRandomWeapon(transform.position);
+            weapon.transform.rotation = transform.rotation;
         }
     }
 }

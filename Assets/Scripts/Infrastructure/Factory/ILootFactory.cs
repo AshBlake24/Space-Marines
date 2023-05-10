@@ -7,7 +7,7 @@ namespace Roguelike.Infrastructure.Factory
     public interface ILootFactory : IService
     {
         void CreatePowerup(Vector3 position);
-        void CreateRandomWeapon(Transform at);
-        void CreateConcreteWeapon(WeaponId weaponId, Vector3 position);
+        GameObject CreateRandomWeapon(Vector3 position);
+        GameObject CreateConcreteWeapon(WeaponId weaponId, Vector3 position);
     }
 }
