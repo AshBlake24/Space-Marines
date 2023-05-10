@@ -7,7 +7,10 @@ namespace Roguelike.Loot
 {
     public class WeaponChest : MonoBehaviour, IInteractable
     {
+        private static readonly int s_open = Animator.StringToHash("Open");
+        
         [SerializeField] private Outline _outline;
+        [SerializeField] private Animator _animator;
         
         private ILootFactory _lootFactory;
 
@@ -29,8 +32,14 @@ namespace Roguelike.Loot
 
         public void Interact(GameObject interactor)
         {
-            _lootFactory.CreateRandomWeapon(transform.position + transform.forward);
+            PlayOpen();
             IsActive = false;
         }
+
+        private void PlayOpen() => 
+            _animator.SetTrigger(s_open);
+
+        private void OnOpened() => 
+            _lootFactory.CreateRandomWeapon(transform.position + transform.forward);
     }
 }
