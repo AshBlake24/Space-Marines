@@ -1,4 +1,5 @@
 using Roguelike.Infrastructure.Services.StaticData;
+using Roguelike.StaticData.Levels;
 using Roguelike.UI.Elements;
 using Roguelike.Utilities;
 using UnityEngine;
@@ -18,8 +19,19 @@ namespace Roguelike.UI.Windows
         private void InitStageViewer()
         {
             Sprite characterIcon = _staticData.GetCharacterData(ProgressService.PlayerProgress.Character).Icon;
-            int currentStage = (int) ProgressService.PlayerProgress.WorldData.CurrentStage;
-            string stageLabel = ProgressService.PlayerProgress.WorldData.CurrentStage.ToLabel();
+            string stageLabel;
+            int currentStage;
+
+            if (ProgressService.PlayerProgress.WorldData.CurrentLevel == LevelId.Hub)
+            {
+                stageLabel = "Hub";
+                currentStage = 0;
+            }
+            else
+            {
+                currentStage = (int) ProgressService.PlayerProgress.WorldData.CurrentStage;
+                stageLabel = ProgressService.PlayerProgress.WorldData.CurrentStage.ToLabel();
+            }
 
             GetComponentInChildren<GameOverStageViewer>()
                 .Construct(currentStage, characterIcon, stageLabel);
