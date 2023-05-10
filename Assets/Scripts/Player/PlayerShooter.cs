@@ -78,12 +78,12 @@ namespace Roguelike.Player
         {
             TryAttack();
         }
-        
+
         public void WriteProgress(PlayerProgress progress)
         {
             WeaponId[] weaponsId = _weapons
-                .Select(weapon => weapon == null 
-                    ? WeaponId.Unknow 
+                .Select(weapon => weapon == null
+                    ? WeaponId.Unknow
                     : weapon.Stats.ID)
                 .ToArray();
 
@@ -143,7 +143,7 @@ namespace Roguelike.Player
             int weaponIndexToDrop = _currentWeaponIndex == 0
                 ? _weapons.Length - 1
                 : _currentWeaponIndex;
-            
+
             DroppedWeapon?.Invoke(_weapons[weaponIndexToDrop]);
 
             _weaponFactory.CreatePickupableWeapon(_weapons[weaponIndexToDrop].Stats.ID, at: to);
@@ -196,21 +196,33 @@ namespace Roguelike.Player
         {
             if (Time.time > _lastWeaponSwitchTime + _weaponSwitchCooldown)
             {
-                _lastWeaponSwitchTime = Time.time;
-
-                if (switchToNext)
-                    _currentWeaponIndex--;
-                else
-                    _currentWeaponIndex++;
-
-                if (_currentWeaponIndex >= _weapons.Length)
-                    _currentWeaponIndex = 0;
-
-                if (_currentWeaponIndex < 0)
-                    _currentWeaponIndex = _weapons.Length - 1;
+                int weaponsCount = _weapons.Count(weapon => weapon != null);
+            
+                if (weaponsCount <= 1)
+                    return;
+                
+                do
+                    SwitchWeaponIndex(switchToNext);
+                while (_weapons[_currentWeaponIndex] == null);
 
                 SetWeapon();
+                
+                _lastWeaponSwitchTime = Time.time;
             }
+        }
+
+        private void SwitchWeaponIndex(bool switchToNext)
+        {
+            if (switchToNext)
+                _currentWeaponIndex--;
+            else
+                _currentWeaponIndex++;
+
+            if (_currentWeaponIndex >= _weapons.Length)
+                _currentWeaponIndex = 0;
+
+            if (_currentWeaponIndex < 0)
+                _currentWeaponIndex = _weapons.Length - 1;
         }
 
         private bool WeaponExists(WeaponId weaponId)
