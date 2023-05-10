@@ -24,7 +24,7 @@ namespace Roguelike.Infrastructure.Factory
 
         public GameObject CreateEnemy(Transform spawnPoint, EnemyId id, PlayerHealth target)
         {
-            EnemyStaticData enemyData = _staticDataService.GetEnemyStaticData(id);
+            EnemyStaticData enemyData = _staticDataService.GetEnemyData(id);
             GameObject enemyPrefab = Object.Instantiate(enemyData.Prefab, spawnPoint);
 
             Enemy enemy = new Enemy(enemyData, enemyPrefab.GetComponentInChildren<EnemyHealth>(), target);

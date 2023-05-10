@@ -1,4 +1,5 @@
 using Roguelike.StaticData.Loot;
+using Roguelike.StaticData.Loot.Rarity;
 using UnityEngine;
 
 namespace Roguelike.StaticData.Weapons

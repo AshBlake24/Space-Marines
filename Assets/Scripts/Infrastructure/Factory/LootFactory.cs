@@ -10,6 +10,7 @@ using Roguelike.Logic.Interactables;
 using Roguelike.Loot.Powerups;
 using Roguelike.StaticData.Loot;
 using Roguelike.StaticData.Loot.Powerups;
+using Roguelike.StaticData.Loot.Rarity;
 using Roguelike.StaticData.Weapons;
 using UnityEngine;
 using Object = UnityEngine.Object;
@@ -27,7 +28,8 @@ namespace Roguelike.Infrastructure.Factory
         private readonly int _powerupsTotalWeight;
         private readonly int _weaponsTotalWeight;
 
-        public LootFactory(IAssetProvider assetProvider, IRandomService randomService, IParticlesPoolService particlesPoolService,
+        public LootFactory(IAssetProvider assetProvider, IRandomService randomService,
+            IParticlesPoolService particlesPoolService,
             IStaticDataService staticData, ICoroutineRunner coroutineRunner)
         {
             _assetProvider = assetProvider;
@@ -43,12 +45,12 @@ namespace Roguelike.Infrastructure.Factory
         public void CreatePowerup(Vector3 position)
         {
             PowerupId droppedPowerup = GetDroppedPowerup();
-            PowerupStaticData powerupData = _staticData.GetPowerupStaticData(droppedPowerup);
+            PowerupStaticData powerupData = _staticData.GetPowerupData(droppedPowerup);
 
             Object.Instantiate(powerupData.Prefab, position, Quaternion.identity)
                 .GetComponent<Powerup>()
                 .Construct(_particlesPoolService, powerupData.Effect, powerupData.VFX);
-            
+
             if (powerupData.Effect is ILastingEffect lastingEffect)
                 lastingEffect.Construct(_coroutineRunner);
         }
@@ -56,15 +58,18 @@ namespace Roguelike.Infrastructure.Factory
         public void CreateWeapon(Vector3 position)
         {
             WeaponId weaponId = GetDroppedWeapon();
-            WeaponStaticData interactableWeaponData = _staticData.GetWeaponData(weaponId);
+            WeaponStaticData weaponData = _staticData.GetWeaponData(weaponId);
+            RarityStaticData rarityData = _staticData.GetRarityData(weaponData.Rarity);
 
-            //todo weapon prefab
+            InteractableWeapon interactableWeapon = _assetProvider
+                .Instantiate(AssetPath.InteractableWeaponPath, position)
+                .GetComponent<InteractableWeapon>();
             
-            _assetProvider.Instantiate(AssetPath.InteractableWeaponPath, position)
-                .GetComponent<InteractableWeapon>()
-                .Construct(weaponId, interactableWeaponData.InteractableWeaponPrefab.GetComponent<Outline>());
+            interactableWeapon.Construct(weaponId, weaponData.InteractableWeaponPrefab.GetComponent<Outline>());
+            Object.Instantiate(weaponData.InteractableWeaponPrefab, interactableWeapon.ModelContainer);
+            Object.Instantiate(rarityData.VFX, interactableWeapon.transform);
         }
-        
+
         private PowerupId GetDroppedPowerup()
         {
             int roll = _randomService.Next(0, _powerupsTotalWeight);
@@ -79,7 +84,7 @@ namespace Roguelike.Infrastructure.Factory
 
             throw new ArgumentOutOfRangeException(nameof(_powerupDropTable), "Incorrectly placed weights");
         }
-        
+
         private WeaponId GetDroppedWeapon()
         {
             int roll = _randomService.Next(0, _weaponsTotalWeight);

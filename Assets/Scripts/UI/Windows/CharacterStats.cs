@@ -56,7 +56,7 @@ namespace Roguelike.UI.Windows
         protected override void Initialize()
         {
             WeaponStaticData startWeaponData = _staticData.GetWeaponData(_characterData.StartWeapon);
-            SkillStaticData skillData = _staticData.GetSkillStaticData(_characterData.Skill);
+            SkillStaticData skillData = _staticData.GetSkillData(_characterData.Skill);
 
             InitCharacter();
             InitWeapon(startWeaponData);

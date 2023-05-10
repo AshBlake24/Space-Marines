@@ -8,6 +8,7 @@ using Roguelike.StaticData.Enemies;
 using Roguelike.StaticData.Levels;
 using Roguelike.StaticData.Loot;
 using Roguelike.StaticData.Loot.Powerups;
+using Roguelike.StaticData.Loot.Rarity;
 using Roguelike.StaticData.Player;
 using Roguelike.StaticData.Projectiles;
 using Roguelike.StaticData.Skills;
@@ -58,7 +59,7 @@ namespace Roguelike.Infrastructure.Services.StaticData
 
             foreach (WeaponStaticData weaponData in _weapons.Values)
             {
-                RarityStaticData rarityData = GetRarityStaticData(weaponData.Rarity);
+                RarityStaticData rarityData = GetRarityData(weaponData.Rarity);
                 _weaponsDropWeights.Add(weaponData.Id, rarityData.Weight);
             }
         }
@@ -78,12 +79,12 @@ namespace Roguelike.Infrastructure.Services.StaticData
                 ? staticData
                 : null;
 
-        public SkillStaticData GetSkillStaticData(SkillId id) =>
+        public SkillStaticData GetSkillData(SkillId id) =>
             _skills.TryGetValue(id, out SkillStaticData staticData)
                 ? staticData
                 : null;
 
-        public EnemyStaticData GetEnemyStaticData(EnemyId id) =>
+        public EnemyStaticData GetEnemyData(EnemyId id) =>
             _enemies.TryGetValue(id, out EnemyStaticData staticData)
                 ? staticData
                 : null;
@@ -93,17 +94,17 @@ namespace Roguelike.Infrastructure.Services.StaticData
                 ? windowConfig
                 : null;
 
-        public LevelStaticData GetLevelStaticData(StageId id) =>
+        public LevelStaticData GetLevelData(StageId id) =>
             _levels.TryGetValue(id, out LevelStaticData staticData)
                 ? staticData
                 : null;
 
-        public PowerupStaticData GetPowerupStaticData(PowerupId id) =>
+        public PowerupStaticData GetPowerupData(PowerupId id) =>
             _powerups.TryGetValue(id, out PowerupStaticData staticData)
                 ? staticData
                 : null;
 
-        public RarityStaticData GetRarityStaticData(RarityId id) =>
+        public RarityStaticData GetRarityData(RarityId id) =>
             _rarity.TryGetValue(id, out RarityStaticData staticData)
                 ? staticData
                 : null;

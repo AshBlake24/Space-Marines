@@ -97,7 +97,7 @@ namespace Roguelike.Infrastructure.Factory
             CharacterStaticData characterData = _staticDataService
                 .GetCharacterData(_persistentData.PlayerProgress.Character);
             SkillStaticData skillData = _staticDataService
-                .GetSkillStaticData(characterData.Skill);
+                .GetSkillData(characterData.Skill);
 
             hud.GetComponentInChildren<PlayerWeaponsViewer>()
                 .Construct(playerShooter);
@@ -131,7 +131,7 @@ namespace Roguelike.Infrastructure.Factory
 
             GameObject LevelGeneratorPrefab = _assetProvider.InstantiateRegistered(AssetPath.LevelGeneratorPath);
             LevelGenerator levelGenerator = LevelGeneratorPrefab.GetComponent<LevelGenerator>();
-            LevelStaticData levelData = _staticDataService.GetLevelStaticData(id);
+            LevelStaticData levelData = _staticDataService.GetLevelData(id);
 
             levelGenerator.Init(levelData, _persistentData, _sceneLoadingService);
             levelGenerator.BuildLevel(_enemyFactory);

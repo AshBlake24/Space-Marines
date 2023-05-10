@@ -1,4 +1,4 @@
-namespace Roguelike.StaticData.Loot
+namespace Roguelike.StaticData.Loot.Rarity
 {
     public enum RarityId
     {
