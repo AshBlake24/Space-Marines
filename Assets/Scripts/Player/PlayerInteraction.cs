@@ -4,8 +4,6 @@ using Roguelike.Infrastructure.Services;
 using Roguelike.Infrastructure.Services.Input;
 using Roguelike.Infrastructure.Services.Windows;
 using Roguelike.Logic.Interactables;
-using Roguelike.StaticData.Weapons;
-using Roguelike.UI.Windows;
 using UnityEngine;
 
 namespace Roguelike.Player
@@ -78,7 +76,7 @@ namespace Roguelike.Player
             {
                 IInteractable closestInteractable = FindClosestInteractable();
 
-                if (closestInteractable != null && closestInteractable != _currentTargetInteractable)
+                if (InteractableIsCorrect(closestInteractable))
                     ChangeCurrentInteractable(closestInteractable);
 
                 DisableComponents();
@@ -131,7 +129,7 @@ namespace Roguelike.Player
         {
             if (_weaponStatsViewer != null)
                 Destroy(_weaponStatsViewer);
-            
+
             if (_currentTargetInteractable != null)
             {
                 _currentTargetInteractable.Outline.enabled = false;
@@ -153,5 +151,28 @@ namespace Roguelike.Player
 
         private void OnInteracted() =>
             _currentTargetInteractable?.Interact(gameObject);
+
+        private bool InteractableIsCorrect(IInteractable closestInteractable)
+        {
+            if (InteractableExists(closestInteractable) == false)
+                return false;
+
+            if (InteractableIsDifferent(closestInteractable) == false)
+                return false;
+
+            if (InteractableIsActive(closestInteractable) == false)
+                return false;
+
+            return true;
+        }
+
+        private bool InteractableIsDifferent(IInteractable closestInteractable) =>
+            closestInteractable != _currentTargetInteractable;
+
+        private static bool InteractableExists(IInteractable closestInteractable) =>
+            closestInteractable != null;
+
+        private static bool InteractableIsActive(IInteractable closestInteractable) =>
+            closestInteractable.IsActive;
     }
 }

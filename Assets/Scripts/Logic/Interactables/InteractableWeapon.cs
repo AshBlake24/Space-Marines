@@ -13,6 +13,7 @@ namespace Roguelike.Logic.Interactables
 
         public WeaponId Id { get; private set; }
         public Outline Outline { get; private set; }
+        public bool IsActive { get; private set; }
         public Transform ModelContainer => _modelContainer;
 
         public void Construct(WeaponId weaponId, Outline outline)
@@ -20,9 +21,10 @@ namespace Roguelike.Logic.Interactables
             Id = weaponId;
             Outline = outline;
             Outline.enabled = false;
+            IsActive = true;
         }
 
-        private void Update() => 
+        private void Update() =>
             transform.Rotate(Vector3.up * _rotationSpeed * Time.deltaTime);
 
         public void Interact(GameObject interactor)
@@ -31,6 +33,7 @@ namespace Roguelike.Logic.Interactables
             {
                 if (playerShooter.TryAddWeapon(Id, transform))
                 {
+                    IsActive = false;
                     interactor.GetComponent<PlayerInteraction>().Cleanup();
                     Destroy(gameObject);
                 }
