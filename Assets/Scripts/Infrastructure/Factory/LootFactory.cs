@@ -1,10 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Roguelike.Infrastructure.AssetManagement;
 using Roguelike.Infrastructure.Services.Pools;
 using Roguelike.Infrastructure.Services.Random;
 using Roguelike.Infrastructure.Services.StaticData;
 using Roguelike.Logic;
+using Roguelike.Logic.Interactables;
 using Roguelike.Loot.Powerups;
 using Roguelike.StaticData.Loot;
 using Roguelike.StaticData.Loot.Powerups;
@@ -16,6 +18,7 @@ namespace Roguelike.Infrastructure.Factory
 {
     public class LootFactory : ILootFactory
     {
+        private readonly IAssetProvider _assetProvider;
         private readonly IRandomService _randomService;
         private readonly ICoroutineRunner _coroutineRunner;
         private readonly IParticlesPoolService _particlesPoolService;
@@ -24,9 +27,10 @@ namespace Roguelike.Infrastructure.Factory
         private readonly int _powerupsTotalWeight;
         private readonly int _weaponsTotalWeight;
 
-        public LootFactory(IRandomService randomService, IParticlesPoolService particlesPoolService,
+        public LootFactory(IAssetProvider assetProvider, IRandomService randomService, IParticlesPoolService particlesPoolService,
             IStaticDataService staticData, ICoroutineRunner coroutineRunner)
         {
+            _assetProvider = assetProvider;
             _randomService = randomService;
             _coroutineRunner = coroutineRunner;
             _particlesPoolService = particlesPoolService;
@@ -47,6 +51,18 @@ namespace Roguelike.Infrastructure.Factory
             
             if (powerupData.Effect is ILastingEffect lastingEffect)
                 lastingEffect.Construct(_coroutineRunner);
+        }
+
+        public void CreateWeapon(Vector3 position)
+        {
+            WeaponId weaponId = GetDroppedWeapon();
+            WeaponStaticData interactableWeaponData = _staticData.GetWeaponData(weaponId);
+
+            //todo weapon prefab
+            
+            _assetProvider.Instantiate(AssetPath.InteractableWeaponPath, position)
+                .GetComponent<InteractableWeapon>()
+                .Construct(weaponId, interactableWeaponData.InteractableWeaponPrefab.GetComponent<Outline>());
         }
         
         private PowerupId GetDroppedPowerup()

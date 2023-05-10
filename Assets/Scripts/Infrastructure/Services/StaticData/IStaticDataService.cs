@@ -10,7 +10,6 @@ using Roguelike.StaticData.Enemies;
 using Roguelike.StaticData.Levels;
 using Roguelike.StaticData.Loot;
 using Roguelike.StaticData.Loot.Powerups;
-using Roguelike.StaticData.Weapons.PickupableWeapons;
 using Roguelike.StaticData.Windows;
 
 namespace Roguelike.Infrastructure.Services.StaticData
@@ -29,7 +28,6 @@ namespace Roguelike.Infrastructure.Services.StaticData
         EnemyStaticData GetEnemyStaticData(EnemyId id);
         LevelStaticData GetLevelStaticData(StageId id);
         PowerupStaticData GetPowerupStaticData(PowerupId id);
-        PickupableWeaponsConfig GetPickupableWeaponConfig(WeaponId id);
         void Load();
     }
 }

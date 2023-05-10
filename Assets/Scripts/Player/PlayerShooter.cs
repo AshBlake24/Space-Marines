@@ -146,7 +146,7 @@ namespace Roguelike.Player
 
             DroppedWeapon?.Invoke(_weapons[weaponIndexToDrop]);
 
-            _weaponFactory.CreatePickupableWeapon(_weapons[weaponIndexToDrop].Stats.ID, at: to);
+            _weaponFactory.CreateInteractableWeapon(_weapons[weaponIndexToDrop].Stats.ID, at: to);
             _weapons[weaponIndexToDrop] = null;
 
             return weaponIndexToDrop;

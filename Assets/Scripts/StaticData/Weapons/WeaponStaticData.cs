@@ -11,6 +11,7 @@ namespace Roguelike.StaticData.Weapons
         public WeaponSize Size;
         public RarityWeight Rarity;
         public GameObject WeaponPrefab;
+        public GameObject InteractableWeaponPrefab;
         public Sprite Icon;
         public string Name;
         

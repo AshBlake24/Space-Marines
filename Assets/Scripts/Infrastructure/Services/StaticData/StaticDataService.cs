@@ -12,7 +12,6 @@ using Roguelike.StaticData.Player;
 using Roguelike.StaticData.Projectiles;
 using Roguelike.StaticData.Skills;
 using Roguelike.StaticData.Weapons;
-using Roguelike.StaticData.Weapons.PickupableWeapons;
 using Roguelike.StaticData.Windows;
 using UnityEngine;
 
@@ -29,7 +28,6 @@ namespace Roguelike.Infrastructure.Services.StaticData
         private Dictionary<EnemyId, EnemyStaticData> _enemies;
         private Dictionary<StageId, LevelStaticData> _levels;
         private Dictionary<PowerupId, PowerupStaticData> _powerups;
-        private Dictionary<WeaponId, PickupableWeaponsConfig> _pickupableWeapons;
 
         public PlayerStaticData Player { get; private set; }
         public GameConfig GameConfig { get; private set; }
@@ -47,7 +45,6 @@ namespace Roguelike.Infrastructure.Services.StaticData
             LoadLevels();
             LoadPlayer();
             LoadPowerups();
-            LoadPickupableWeapons();
             LoadGameConfig();
             LoadPowerupDropTable();
             LoadWeaponsRarityWeights();
@@ -55,6 +52,8 @@ namespace Roguelike.Infrastructure.Services.StaticData
 
         private void LoadWeaponsRarityWeights()
         {
+            _weaponsRarityWeights = new Dictionary<WeaponId, RarityWeight>();
+            
             foreach (WeaponStaticData weaponData in _weapons.Values)
                 _weaponsRarityWeights.Add(weaponData.Id, weaponData.Rarity);
         }
@@ -99,15 +98,10 @@ namespace Roguelike.Infrastructure.Services.StaticData
                 ? staticData
                 : null;
 
-        public PickupableWeaponsConfig GetPickupableWeaponConfig(WeaponId id) =>
-            _pickupableWeapons.TryGetValue(id, out PickupableWeaponsConfig pickupableWeaponsConfig)
-                ? pickupableWeaponsConfig
-                : null;
-
         private void LoadWeapons() =>
             _weapons = Resources.LoadAll<WeaponStaticData>(AssetPath.WeaponsStaticDataPath)
                 .ToDictionary(weapon => weapon.Id);
-
+        
         private void LoadProjectiles() =>
             _projectiles = Resources.LoadAll<ProjectileStaticData>(AssetPath.ProjectilesStaticDataPath)
                 .ToDictionary(projectile => projectile.Id);
@@ -136,11 +130,6 @@ namespace Roguelike.Infrastructure.Services.StaticData
             _windows = Resources.Load<WindowStaticData>(AssetPath.WindowsStaticDataPath)
                 .Configs
                 .ToDictionary(config => config.WindowId, x => x);
-
-        private void LoadPickupableWeapons() =>
-            _pickupableWeapons = Resources.Load<PickupableWeaponsStaticData>(AssetPath.PickupableWeaponStaticDataPath)
-                .Configs
-                .ToDictionary(config => config.Id, x => x);
 
         private void LoadPlayer() =>
             Player = Resources.Load<PlayerStaticData>(AssetPath.PlayerStaticDataPath);

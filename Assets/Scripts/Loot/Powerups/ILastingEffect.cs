@@ -1,6 +1,6 @@
 using Roguelike.Infrastructure;
 
-namespace Roguelike.Logic
+namespace Roguelike.Loot.Powerups
 {
     public interface ILastingEffect
     {
