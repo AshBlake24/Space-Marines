@@ -7,7 +7,6 @@ namespace Roguelike.Logic.Interactables
     [RequireComponent(typeof(Collider))]
     public class InteractableWeapon : MonoBehaviour, IInteractable
     {
-        [SerializeField] private float _rotationSpeed;
         [SerializeField] private Transform _modelContainer;
 
         public WeaponId Id { get; private set; }
@@ -22,9 +21,6 @@ namespace Roguelike.Logic.Interactables
             Outline.enabled = false;
             IsActive = true;
         }
-
-        private void Update() =>
-            transform.Rotate(Vector3.up * _rotationSpeed * Time.deltaTime);
 
         public void Interact(GameObject interactor)
         {

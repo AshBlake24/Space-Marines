@@ -1,19 +1,19 @@
+using System;
 using Roguelike.Infrastructure.Factory;
 using Roguelike.Infrastructure.Services;
 using Roguelike.Logic.Interactables;
 using UnityEngine;
 
-namespace Roguelike.Loot
+namespace Roguelike.Loot.Chest
 {
     public class WeaponChest : MonoBehaviour, IInteractable
     {
-        private static readonly int s_open = Animator.StringToHash("Open");
-        
         [SerializeField] private Outline _outline;
-        [SerializeField] private Animator _animator;
         
         private ILootFactory _lootFactory;
 
+        public event Action Interacted;
+        
         public Outline Outline => _outline;
         public bool IsActive { get; private set; }
 
@@ -32,14 +32,9 @@ namespace Roguelike.Loot
 
         public void Interact(GameObject interactor)
         {
-            PlayOpen();
             IsActive = false;
+            Interacted?.Invoke();
+            _lootFactory.CreateRandomWeapon(transform);
         }
-
-        private void PlayOpen() => 
-            _animator.SetTrigger(s_open);
-
-        private void OnOpened() => 
-            _lootFactory.CreateRandomWeapon(transform.position + transform.forward);
     }
 }

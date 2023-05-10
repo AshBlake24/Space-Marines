@@ -12,9 +12,10 @@ GameObject:
   - component: {fileID: 4093164568021830130}
   - component: {fileID: 6272401863792323566}
   - component: {fileID: -2278837491049728069}
+  - component: {fileID: 8693746467036227521}
   - component: {fileID: -1269305000301496616}
   m_Layer: 13
-  m_Name: Small Chest
+  m_Name: Small Weapon Chest
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -83,6 +84,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _outline: {fileID: -1269305000301496616}
+--- !u!114 &8693746467036227521
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5824804152542410277}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea71376f16274f8887983e52dcee4d2b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _weaponChest: {fileID: -2278837491049728069}
   _animator: {fileID: 4093164568021830130}
 --- !u!114 &-1269305000301496616
 MonoBehaviour:
