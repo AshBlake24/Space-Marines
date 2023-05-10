@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace Roguelike.Loot.Powerups
 {
-    [CreateAssetMenu(fileName = "Immune Booster", menuName = "Static Data/Powerups/Immune Booster", order = 2)]
+    [CreateAssetMenu(fileName = "Immune Booster", menuName = "Static Data/Loot/Powerups/Immune Booster", order = 1)]
     public class ImmuneBooster : PowerupEffect, ILastingEffect
     {
         [SerializeField, Range(1f, 60f)] private float _duration;

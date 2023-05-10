@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Roguelike.Loot.Powerups
 {
-    [CreateAssetMenu(fileName = "AmmoBox", menuName = "Static Data/Powerups/AmmoBox", order = 2)]
+    [CreateAssetMenu(fileName = "AmmoBox", menuName = "Static Data/Loot/Powerups/AmmoBox", order = 1)]
     public class AmmoBox : PowerupEffect
     {
         [SerializeField, Range(0.01f, 1f)] private float _ammoAmountMultiplier;
