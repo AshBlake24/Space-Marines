@@ -7,17 +7,18 @@ namespace Roguelike.Loot.Powerups
 {
     public class Powerup : MonoBehaviour
     {
-        [SerializeField] private PowerupEffect _powerupEffect;
-        [SerializeField] private GameObject _model;
+        [SerializeField] private GameObject _view;
 
         private IParticlesPoolService _particlesPool;
+        private PowerupEffect _powerupEffect;
         private ParticleSystem _vfx;
         private GameObject _target;
         private bool _collected;
         private string _vfxKey;
 
-        public void Construct(IParticlesPoolService particlesPool, ParticleSystem vfx)
+        public void Construct(IParticlesPoolService particlesPool, PowerupEffect powerupDataEffect, ParticleSystem vfx)
         {
+            _powerupEffect = powerupDataEffect;
             _vfxKey = vfx.gameObject.name;
             CreateVFXPool(particlesPool, vfx);
         }
@@ -69,6 +70,6 @@ namespace Roguelike.Loot.Powerups
         }
 
         private void HideModel() => 
-            _model.SetActive(false);
+            _view.SetActive(false);
     }
 }

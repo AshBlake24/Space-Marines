@@ -1,9 +1,12 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Roguelike.Infrastructure.Services.Pools;
 using Roguelike.Infrastructure.Services.Random;
+using Roguelike.Infrastructure.Services.StaticData;
 using Roguelike.Logic;
 using Roguelike.Loot.Powerups;
+using Roguelike.StaticData.Loot.Powerups;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
@@ -14,42 +17,47 @@ namespace Roguelike.Infrastructure.Factory
         private readonly IRandomService _randomService;
         private readonly ICoroutineRunner _coroutineRunner;
         private readonly IParticlesPoolService _particlesPoolService;
+        private readonly IStaticDataService _staticData;
+        private readonly IReadOnlyList<PowerupConfig> _powerupDropTable;
+        private readonly int _powerupsTotalWeight;
 
         public LootFactory(IRandomService randomService, IParticlesPoolService particlesPoolService,
-            ICoroutineRunner coroutineRunner)
+            IStaticDataService staticData, ICoroutineRunner coroutineRunner)
         {
             _randomService = randomService;
             _coroutineRunner = coroutineRunner;
             _particlesPoolService = particlesPoolService;
+            _staticData = staticData;
+            _powerupDropTable = _staticData.PowerupDropTable.PowerupConfigs;
+            _powerupsTotalWeight = _powerupDropTable.Sum(x => x.Weight);
         }
 
-        public void CreatePowerup(IEnumerable<PowerupEffect> loot, Vector3 position)
+        public void CreatePowerup(Vector3 position)
         {
-            PowerupEffect droppedItem = GetDroppedItem(loot);
+            PowerupId droppedPowerup = GetDroppedPowerup();
+            PowerupStaticData powerupData = _staticData.GetPowerupStaticData(droppedPowerup);
 
-            if (droppedItem != null)
+            Object.Instantiate(powerupData.Prefab, position, Quaternion.identity)
+                .GetComponent<Powerup>()
+                .Construct(_particlesPoolService, powerupData.Effect, powerupData.VFX);
+            
+            if (powerupData.Effect is ILastingEffect lastingEffect)
+                lastingEffect.Construct(_coroutineRunner);
+        }
+
+        private PowerupId GetDroppedPowerup()
+        {
+            int roll = _randomService.Next(0, _powerupsTotalWeight);
+
+            foreach (PowerupConfig powerup in _powerupDropTable)
             {
-                Powerup powerup = Object.Instantiate(droppedItem.Prefab, position, Quaternion.identity)
-                    .GetComponent<Powerup>();
+                roll -= powerup.Weight;
 
-                powerup.Construct(_particlesPoolService, droppedItem.VFX);
-
-                if (droppedItem is ILastingEffect lastingEffect)
-                    lastingEffect.Construct(_coroutineRunner);
+                if (roll < 0)
+                    return powerup.Id;
             }
-        }
 
-        private PowerupEffect GetDroppedItem(IEnumerable<PowerupEffect> loot)
-        {
-            int randomNumber = _randomService.Next(1, 100);
-
-            List<PowerupEffect> possibleLoot = loot
-                .Where(item => randomNumber <= item.DropChance)
-                .ToList();
-
-            return possibleLoot.Count > 0
-                ? possibleLoot[_randomService.Next(0, possibleLoot.Count - 1)]
-                : null;
+            throw new ArgumentOutOfRangeException(nameof(_powerupDropTable), "Incorrectly placed weights");
         }
     }
 }

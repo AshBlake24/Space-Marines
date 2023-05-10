@@ -6,6 +6,7 @@ using Roguelike.StaticData;
 using Roguelike.StaticData.Characters;
 using Roguelike.StaticData.Enemies;
 using Roguelike.StaticData.Levels;
+using Roguelike.StaticData.Loot.Powerups;
 using Roguelike.StaticData.Player;
 using Roguelike.StaticData.Projectiles;
 using Roguelike.StaticData.Skills;
@@ -25,10 +26,12 @@ namespace Roguelike.Infrastructure.Services.StaticData
         private Dictionary<WindowId, WindowConfig> _windows;
         private Dictionary<EnemyId, EnemyStaticData> _enemies;
         private Dictionary<StageId, LevelStaticData> _levels;
+        private Dictionary<PowerupId, PowerupStaticData> _powerups;
         private Dictionary<WeaponId, PickupableWeaponsConfig> _pickupableWeapons;
 
         public PlayerStaticData Player { get; private set; }
         public GameConfig GameConfig { get; private set; }
+        public PowerupDropTable PowerupDropTable { get; private set; }
 
         public void Load()
         {
@@ -40,8 +43,10 @@ namespace Roguelike.Infrastructure.Services.StaticData
             LoadEnemies();
             LoadLevels();
             LoadPlayer();
+            LoadPowerups();
             LoadPickupableWeapons();
             LoadGameConfig();
+            LoadPowerupDropTable();
         }
 
         public WeaponStaticData GetWeaponData(WeaponId id) =>
@@ -79,6 +84,11 @@ namespace Roguelike.Infrastructure.Services.StaticData
                 ? staticData
                 : null;
 
+        public PowerupStaticData GetPowerupStaticData(PowerupId id) =>
+            _powerups.TryGetValue(id, out PowerupStaticData staticData)
+                ? staticData
+                : null;
+
         public PickupableWeaponsConfig GetPickupableWeaponConfig(WeaponId id) =>
             _pickupableWeapons.TryGetValue(id, out PickupableWeaponsConfig pickupableWeaponsConfig)
                 ? pickupableWeaponsConfig
@@ -108,6 +118,10 @@ namespace Roguelike.Infrastructure.Services.StaticData
             _levels = Resources.LoadAll<LevelStaticData>(AssetPath.LevelsPath)
                 .ToDictionary(level => level.Id);
 
+        private void LoadPowerups() =>
+            _powerups = Resources.LoadAll<PowerupStaticData>(AssetPath.PowerupStaticDataPath)
+                .ToDictionary(powerup => powerup.Id);
+
         private void LoadWindows() =>
             _windows = Resources.Load<WindowStaticData>(AssetPath.WindowsStaticDataPath)
                 .Configs
@@ -123,5 +137,8 @@ namespace Roguelike.Infrastructure.Services.StaticData
 
         private void LoadGameConfig() =>
             GameConfig = Resources.Load<GameConfig>(AssetPath.GameConfigPath);
+
+        private void LoadPowerupDropTable() => 
+            PowerupDropTable = Resources.Load<PowerupDropTable>(AssetPath.PowerupDropTablePath);
     }
 }

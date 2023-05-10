@@ -4,7 +4,10 @@ using UnityEngine;
 
 namespace Roguelike.Loot.Powerups
 {
-    [CreateAssetMenu(fileName = "First Aid Kit", menuName = "Static Data/Loot/Powerups/First Aid Kit", order = 1)]
+    [CreateAssetMenu(
+        fileName = "First Aid Kit", 
+        menuName = "Static Data/Loot/Powerups/Effects/First Aid Kit", 
+        order = 1)]
     public class FirstAidKit : PowerupEffect
     {
         [SerializeField, Range(1, 5)] private int _healthAmount;

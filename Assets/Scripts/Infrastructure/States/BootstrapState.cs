@@ -66,11 +66,13 @@ namespace Roguelike.Infrastructure.States
             _services.RegisterSingle<ILootFactory>(new LootFactory(
                 _services.Single<IRandomService>(),
                 _services.Single<IParticlesPoolService>(),
+                _services.Single<IStaticDataService>(),
                 _coroutineRunner));
 
             _services.RegisterSingle<IEnemyFactory>(new EnemyFactory(
                 _services.Single<IStaticDataService>(),
-                _services.Single<ILootFactory>()));
+                _services.Single<ILootFactory>(),
+                _services.Single<IRandomService>()));
 
             _services.RegisterSingle<ISkillFactory>(new SkillFactory(
                 _coroutineRunner,

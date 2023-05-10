@@ -1,6 +1,5 @@
-using System.Collections.Generic;
 using Roguelike.Infrastructure.Factory;
-using Roguelike.Loot.Powerups;
+using Roguelike.Infrastructure.Services.Random;
 using UnityEngine;
 
 namespace Roguelike.Enemies
@@ -8,22 +7,29 @@ namespace Roguelike.Enemies
     public class EnemyLootSpawner : MonoBehaviour
     {
         [SerializeField] private EnemyHealth _health;
-        [SerializeField] private List<PowerupEffect> _loot;
-        
-        private ILootFactory _lootFactory;
+        [SerializeField, Range(0f, 100f)] private float _powerupDropChance;
 
-        public void Construct(ILootFactory lootFactory)
+        private ILootFactory _lootFactory;
+        private IRandomService _randomService;
+
+        public void Construct(ILootFactory lootFactory, IRandomService randomService)
         {
             _lootFactory = lootFactory;
+            _randomService = randomService;
         }
 
-        private void Start() => 
+        private void Start() =>
             _health.Died += OnDied;
 
-        private void OnDied(EnemyHealth enemy) => 
-            SpawnLoot();
+        private void OnDied(EnemyHealth enemy) =>
+            TrySpawnLoot();
 
-        private void SpawnLoot() => 
-            _lootFactory.CreatePowerup(_loot, transform.position);
+        private void TrySpawnLoot()
+        {
+            float roll = _randomService.Next(0f, 100f);
+
+            if (roll <= _powerupDropChance)
+                _lootFactory.CreatePowerup(transform.position);
+        }
     }
 }

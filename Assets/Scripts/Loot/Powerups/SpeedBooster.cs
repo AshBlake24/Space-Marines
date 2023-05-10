@@ -8,7 +8,10 @@ using UnityEngine;
 
 namespace Roguelike.Loot.Powerups
 {
-    [CreateAssetMenu(fileName = "Speed Booster", menuName = "Static Data/Loot/Powerups/Speed Booster", order = 1)]
+    [CreateAssetMenu(
+        fileName = "Speed Booster", 
+        menuName = "Static Data/Loot/Powerups/Effects/Speed Booster", 
+        order = 1)]
     public class SpeedBooster : PowerupEffect, ILastingEffect
     {
         [SerializeField, Range(1f,2f)] private float _speedMultiplier;
