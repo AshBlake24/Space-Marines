@@ -123,7 +123,7 @@ namespace Roguelike.Player
             _currentTargetInteractable = closestInteractable;
             _currentTargetInteractable.Outline.enabled = true;
 
-            if (_currentTargetInteractable is WeaponToPickUp weapon)
+            if (_currentTargetInteractable is InteractableWeapon weapon)
                 _weaponStatsViewer = _windowService.OpenWeaponStatsViewer(weapon.Id);
         }
 

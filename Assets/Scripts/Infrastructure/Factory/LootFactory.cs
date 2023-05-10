@@ -6,7 +6,9 @@ using Roguelike.Infrastructure.Services.Random;
 using Roguelike.Infrastructure.Services.StaticData;
 using Roguelike.Logic;
 using Roguelike.Loot.Powerups;
+using Roguelike.StaticData.Loot;
 using Roguelike.StaticData.Loot.Powerups;
+using Roguelike.StaticData.Weapons;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
@@ -20,6 +22,7 @@ namespace Roguelike.Infrastructure.Factory
         private readonly IStaticDataService _staticData;
         private readonly IReadOnlyList<PowerupConfig> _powerupDropTable;
         private readonly int _powerupsTotalWeight;
+        private readonly int _weaponsTotalWeight;
 
         public LootFactory(IRandomService randomService, IParticlesPoolService particlesPoolService,
             IStaticDataService staticData, ICoroutineRunner coroutineRunner)
@@ -30,6 +33,7 @@ namespace Roguelike.Infrastructure.Factory
             _staticData = staticData;
             _powerupDropTable = _staticData.PowerupDropTable.PowerupConfigs;
             _powerupsTotalWeight = _powerupDropTable.Sum(x => x.Weight);
+            _weaponsTotalWeight = _staticData.WeaponsRarityWeights.Sum(x => (int)x.Value);
         }
 
         public void CreatePowerup(Vector3 position)
@@ -44,7 +48,7 @@ namespace Roguelike.Infrastructure.Factory
             if (powerupData.Effect is ILastingEffect lastingEffect)
                 lastingEffect.Construct(_coroutineRunner);
         }
-
+        
         private PowerupId GetDroppedPowerup()
         {
             int roll = _randomService.Next(0, _powerupsTotalWeight);
@@ -58,6 +62,21 @@ namespace Roguelike.Infrastructure.Factory
             }
 
             throw new ArgumentOutOfRangeException(nameof(_powerupDropTable), "Incorrectly placed weights");
+        }
+        
+        private WeaponId GetDroppedWeapon()
+        {
+            int roll = _randomService.Next(0, _weaponsTotalWeight);
+
+            foreach ((WeaponId weaponId, RarityWeight rarity) in _staticData.WeaponsRarityWeights)
+            {
+                roll -= (int)rarity;
+
+                if (roll < 0)
+                    return weaponId;
+            }
+
+            throw new ArgumentOutOfRangeException(nameof(_staticData.WeaponsRarityWeights), "Incorrectly placed weights");
         }
     }
 }

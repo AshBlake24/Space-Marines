@@ -6,6 +6,7 @@ using Roguelike.StaticData;
 using Roguelike.StaticData.Characters;
 using Roguelike.StaticData.Enemies;
 using Roguelike.StaticData.Levels;
+using Roguelike.StaticData.Loot;
 using Roguelike.StaticData.Loot.Powerups;
 using Roguelike.StaticData.Player;
 using Roguelike.StaticData.Projectiles;
@@ -20,6 +21,7 @@ namespace Roguelike.Infrastructure.Services.StaticData
     public class StaticDataService : IStaticDataService
     {
         private Dictionary<WeaponId, WeaponStaticData> _weapons;
+        private Dictionary<WeaponId, RarityWeight> _weaponsRarityWeights;
         private Dictionary<ProjectileId, ProjectileStaticData> _projectiles;
         private Dictionary<CharacterId, CharacterStaticData> _characters;
         private Dictionary<SkillId, SkillStaticData> _skills;
@@ -32,6 +34,7 @@ namespace Roguelike.Infrastructure.Services.StaticData
         public PlayerStaticData Player { get; private set; }
         public GameConfig GameConfig { get; private set; }
         public PowerupDropTable PowerupDropTable { get; private set; }
+        public IReadOnlyDictionary<WeaponId, RarityWeight> WeaponsRarityWeights => _weaponsRarityWeights;
 
         public void Load()
         {
@@ -47,6 +50,13 @@ namespace Roguelike.Infrastructure.Services.StaticData
             LoadPickupableWeapons();
             LoadGameConfig();
             LoadPowerupDropTable();
+            LoadWeaponsRarityWeights();
+        }
+
+        private void LoadWeaponsRarityWeights()
+        {
+            foreach (WeaponStaticData weaponData in _weapons.Values)
+                _weaponsRarityWeights.Add(weaponData.Id, weaponData.Rarity);
         }
 
         public WeaponStaticData GetWeaponData(WeaponId id) =>
