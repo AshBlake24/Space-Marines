@@ -13,11 +13,15 @@ namespace Roguelike.Enemies
 
         public Enemy Enemy => _enemy;
 
+        private void OnEnable()
+        {
+            SwitchState(_startState);
+        }
+
         public void Init (Enemy enemy) 
         {
             _enemy = enemy;
             _enemyHealth = _enemy.Health;
-            SwitchState(_startState);
 
             _enemyHealth.Died += OnEnemyDead;
         }
