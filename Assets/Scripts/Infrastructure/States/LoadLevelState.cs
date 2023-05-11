@@ -84,6 +84,10 @@ namespace Roguelike.Infrastructure.States
                     InitDungeon();
 
                     break;
+                case LevelId.EnvironmetDebug:
+                    InitWorld();
+                    
+                    break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
@@ -104,15 +108,16 @@ namespace Roguelike.Infrastructure.States
         private void InitDungeon()
         {
             _gameFactory.GenerateLevel();
+            InitWorld();
+        }
 
+        private void InitWorld()
+        {
             GameObject player = InitPlayer();
 
             InitHud(player, createMiniMap: true);
             CameraFollow(player);
         }
-
-        private void InitHud(GameObject player, bool createMiniMap) =>
-            _gameFactory.CreateHud(player, createMiniMap);
 
         private GameObject InitPlayer()
         {
@@ -122,20 +127,21 @@ namespace Roguelike.Infrastructure.States
             return player;
         }
 
-        private void CameraFollow(GameObject hero)
-        {
+        private void InitHud(GameObject player, bool createMiniMap) =>
+            _gameFactory.CreateHud(player, createMiniMap);
+
+        private void CameraFollow(GameObject hero) =>
             Camera.main
                 .GetComponent<CameraFollower>()
                 .Follow(hero);
-        }
+
+        private void InformProgressReaders() =>
+            _saveLoadService.InformProgressReaders();
 
         private void Cleanup()
         {
             _saveLoadService.Cleanup();
             Helpers.CleanupPools();
         }
-
-        private void InformProgressReaders() =>
-            _saveLoadService.InformProgressReaders();
     }
 }

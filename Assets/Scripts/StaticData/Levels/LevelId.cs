@@ -4,6 +4,7 @@ namespace Roguelike.StaticData.Levels
     {
         MainMenu = 0,
         Hub = 1,
-        Dungeon = 2
+        Dungeon = 2,
+        EnvironmetDebug = 3
     }
 }
