@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 namespace Roguelike.Infrastructure
@@ -14,7 +13,7 @@ namespace Roguelike.Infrastructure
             if (s_isInitialized)
                 return;
 
-            GameBootstrapper bootstrapper = FindObjectOfType<GameBootstrapper>();
+            GameBootstrapper bootstrapper = FindFirstObjectByType<GameBootstrapper>();
 
             if (bootstrapper == null)
                 Instantiate(_gameBootstrapperPrefab);
