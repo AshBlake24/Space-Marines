@@ -94,8 +94,8 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 0}
-  m_LightingSettings: {fileID: 4890085278179872738, guid: 9443b5b75c24d3c4b9a30b2d80d82b26, type: 2}
+  m_LightingDataAsset: {fileID: 112000000, guid: deba991ddb9aeda4cb8cc0f62413bbe8, type: 2}
+  m_LightingSettings: {fileID: 4890085278179872738, guid: fec2fa14d4d51e44e838b52998011fab, type: 2}
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -128,6 +128,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1435559463}
     m_Modifications:
+    - target: {fileID: 2521439560937321197, guid: 0d5636958ab4f3f458ebd8343d0afcaa, type: 3}
+      propertyPath: m_ScaleInLightmap
+      value: 0.6
+      objectReference: {fileID: 0}
     - target: {fileID: 3654353576120469890, guid: 0d5636958ab4f3f458ebd8343d0afcaa, type: 3}
       propertyPath: m_RootOrder
       value: -1
@@ -579,12 +583,12 @@ Light:
   m_Shape: 0
   m_Color: {r: 0.990566, g: 0.7761816, b: 0.4438857, a: 1}
   m_Intensity: 1.5
-  m_Range: 20
+  m_Range: 25
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 1
+    m_Type: 2
     m_Resolution: 0
     m_CustomResolution: -1
     m_Strength: 1
@@ -968,6 +972,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1435559463}
     m_Modifications:
+    - target: {fileID: 3354916504973765959, guid: aa911b8c8c2349540a1dca7b42fa598c, type: 3}
+      propertyPath: m_ScaleInLightmap
+      value: 0.8
+      objectReference: {fileID: 0}
     - target: {fileID: 3859570284019436690, guid: aa911b8c8c2349540a1dca7b42fa598c, type: 3}
       propertyPath: m_Name
       value: Dungeon_Room_01_Props
@@ -1122,12 +1130,12 @@ Light:
   m_Shape: 0
   m_Color: {r: 0.990566, g: 0.7761816, b: 0.4438857, a: 1}
   m_Intensity: 1.5
-  m_Range: 20
+  m_Range: 25
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 1
+    m_Type: 2
     m_Resolution: 0
     m_CustomResolution: -1
     m_Strength: 1
