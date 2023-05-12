@@ -10,7 +10,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 0d2bd46c7fee7724088de79594862a5b, type: 3}
       propertyPath: m_RootOrder
-      value: 0
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0d2bd46c7fee7724088de79594862a5b, type: 3}
       propertyPath: m_LocalPosition.x
@@ -34,7 +34,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0d2bd46c7fee7724088de79594862a5b, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0d2bd46c7fee7724088de79594862a5b, type: 3}
       propertyPath: m_LocalRotation.z
@@ -52,6 +52,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 0d2bd46c7fee7724088de79594862a5b, type: 3}
+      propertyPath: m_ScaleInLightmap
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 0d2bd46c7fee7724088de79594862a5b, type: 3}
       propertyPath: m_Name
       value: Dungeon_Room_01_Wall_03
@@ -63,5 +67,41 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 0d2bd46c7fee7724088de79594862a5b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8277877407307805850}
   m_SourcePrefab: {fileID: 100100000, guid: 0d2bd46c7fee7724088de79594862a5b, type: 3}
+--- !u!23 &7869127119863464117 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -7511558181221131132, guid: 0d2bd46c7fee7724088de79594862a5b, type: 3}
+  m_PrefabInstance: {fileID: 8860081084008258609}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &8517499987770564960 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 0d2bd46c7fee7724088de79594862a5b, type: 3}
+  m_PrefabInstance: {fileID: 8860081084008258609}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &8277877407307805850
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8517499987770564960}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 20aa321faf0108b49b33c3246f64c940, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _rendererInfo:
+  - Renderer: {fileID: 7869127119863464117}
+    LightmapIndex: 0
+    LightmapOffsetScale: {x: 0.37382168, y: 0.37382168, z: -0.0023399293, w: 0.38125494}
+  _lightmaps:
+  - {fileID: 2800000, guid: fb24000aa64d8144fb758dd685eb4df6, type: 3}
+  _lightmapsDir:
+  - {fileID: 2800000, guid: f456bc40546c1b54a9b220bb812e4847, type: 3}
+  _shadowMasks:
+  - {fileID: 0}
+  _lightInfo: []
