@@ -84,7 +84,7 @@ namespace Roguelike.Infrastructure.States
                     InitDungeon();
 
                     break;
-                case LevelId.EnvironmetDebug:
+                case LevelId.DungeonLightBakeScene:
                     InitWorld();
                     
                     break;
