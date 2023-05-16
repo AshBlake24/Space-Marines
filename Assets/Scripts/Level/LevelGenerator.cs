@@ -13,31 +13,31 @@ namespace Roguelike.Level
     {
         private const string ContainerName = "Environment";
 
-        private int _roomsCount;
-        private int _bonusRoomCount;
-        private EnterTriger _enterTriger;
-        private LevelStaticData _data;
-        private Transform _roomContainer;
         private IEnemyFactory _enemyFactory;
-        private Room _currentRoom;
-        private Room _currentCorridor;
-        private ExitPoint _connectingPoint;
         private ISceneLoadingService _sceneLoadingService;
         private IPersistentDataService _persistentDataService;
+        private LevelStaticData _data;
+        private Transform _roomContainer;
+        private EnterTriger _enterTriger;
+        private ExitPoint _connectingPoint;
+        private Room _currentCorridor;
+        private Room _currentRoom;
+        private int _roomsCount;
+        private int _bonusRoomCount;
 
-        public void Init(LevelStaticData levelData, IPersistentDataService persistentDataService,
-            ISceneLoadingService sceneLoadingService)
+        public void Construct(LevelStaticData levelData, IPersistentDataService persistentDataService,
+            ISceneLoadingService sceneLoadingService, IEnemyFactory enemyFactory)
         {
             _data = levelData;
-            _roomsCount = levelData.AreaRoomCount;
-            _bonusRoomCount = levelData.BonusRoomCount;
+            _roomsCount = levelData.ArenasCount;
+            _bonusRoomCount = levelData.TreasureRoomsCount;
             _sceneLoadingService = sceneLoadingService;
             _persistentDataService = persistentDataService;
+            _enemyFactory = enemyFactory;
         }
 
-        public void BuildLevel(IEnemyFactory enemyFactory)
+        public void BuildLevel()
         {
-            _enemyFactory = enemyFactory;
             _roomContainer = new GameObject(ContainerName).transform;
 
             ConnectStartRoom();
@@ -70,7 +70,7 @@ namespace Roguelike.Level
 
         private void ConnectRoom()
         {
-            Room areaRoom = CreateRoom(_currentCorridor, _data.AreaRooms);
+            Room areaRoom = CreateRoom(_currentCorridor, _data.Arenas);
 
             if (areaRoom.gameObject.TryGetComponent<EnemySpawner>(out EnemySpawner enemySpawner))
                 enemySpawner.Init(_enemyFactory,_data.MinEncounterComplexity, _data.MaxEncounterComplexity);
@@ -94,7 +94,7 @@ namespace Roguelike.Level
         {
             _currentRoom.HideExit();
 
-            _currentRoom = CreateRoom(_currentCorridor, _data.FinishRoom);
+            _currentRoom = CreateRoom(_currentCorridor, _data.TransitionRoom);
 
             _enterTriger = _currentRoom.gameObject.GetComponentInChildren<EnterTriger>();
             _enterTriger.Construct(_data.NextStageId);

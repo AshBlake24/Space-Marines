@@ -13,9 +13,11 @@ namespace Roguelike.Level
         {
             transform.rotation = Quaternion.Euler(0, transform.rotation.y + connectingPoint.Rotation, 0);
 
-            _miniMapIcon.rotation = Quaternion.Euler(90, -transform.rotation.y, 0);
+            if (_miniMapIcon != null)
+                _miniMapIcon.rotation = Quaternion.Euler(90, -transform.rotation.y, 0);
 
-            transform.position = Vector3.MoveTowards(transform.position, _entryPoint.transform.position, -GetShiftDistance());
+            transform.position =
+                Vector3.MoveTowards(transform.position, _entryPoint.transform.position, -GetShiftDistance());
         }
 
         public ExitPoint SelectExitPoint()

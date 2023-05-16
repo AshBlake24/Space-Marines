@@ -17,12 +17,13 @@ MonoBehaviour:
   ArenasCount: 1
   MinEncounterComplexity: 1.5
   MaxEncounterComplexity: 2.2
-  TreasureRoomsCount: 1
+  TreasureRoomsCount: 0
   LevelGeneratorPrefab: {fileID: 8488997626099405086, guid: 3fabd9b5d3e605045b7e3d09fdfc14a4, type: 3}
-  StartRoom: {fileID: 4058764321769281560, guid: 9c58b7b7e9beadd4d9dc5f60206dafc1, type: 3}
-  TransitionRoom: []
-  Arenas: []
+  StartRoom: {fileID: 8998268139196313482, guid: fea8ad10ffb35bb4f88ea8151bc90d93, type: 3}
+  TransitionRoom:
+  - {fileID: 1077197105990057107, guid: ba40537d221a98b41afb56d8199f5102, type: 3}
+  Arenas:
+  - {fileID: 845401718389190516, guid: 470be4d32ecd94c4d996c008c1505dda, type: 3}
   Corridor:
-  - {fileID: -1491876943190562581, guid: d56ede08632f7874e9fe02705069ccb5, type: 3}
-  BonusRoom:
-  - {fileID: 7288677192476700871, guid: 4222f83d140a5b54e936bc68167a8b78, type: 3}
+  - {fileID: 4280527713509273514, guid: a17aed5d0019e744685c8bf06cbd46bf, type: 3}
+  BonusRoom: []
