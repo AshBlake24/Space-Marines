@@ -14,16 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: 3
   NextStageId: 1
-  AreaRoomCount: 3
+  ArenasCount: 1
   MinEncounterComplexity: 2
   MaxEncounterComplexity: 3
-  BonusRoomCount: 2
+  TreasureRoomsCount: 1
   LevelGeneratorPrefab: {fileID: 8488997626099405086, guid: 3fabd9b5d3e605045b7e3d09fdfc14a4, type: 3}
   StartRoom: {fileID: 4058764321769281560, guid: 9c58b7b7e9beadd4d9dc5f60206dafc1, type: 3}
-  FinishRoom:
-  - {fileID: 9217350025772404872, guid: 33fe5191fedb533478426daa3195fdf8, type: 3}
-  AreaRooms:
-  - {fileID: 5821904806189703284, guid: 518e192e1bdf28d4e9672cafea982d92, type: 3}
+  TransitionRoom: []
+  Arenas: []
   Corridor:
   - {fileID: -1491876943190562581, guid: d56ede08632f7874e9fe02705069ccb5, type: 3}
   BonusRoom:
