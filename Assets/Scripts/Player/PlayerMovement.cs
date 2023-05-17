@@ -2,6 +2,7 @@ using Roguelike.Enemies;
 using Roguelike.Infrastructure.Services;
 using Roguelike.Infrastructure.Services.Input;
 using UnityEngine;
+using UnityEngine.Rendering.UI;
 
 namespace Roguelike.Player
 {
@@ -13,7 +14,6 @@ namespace Roguelike.Player
         [SerializeField] private float _moveSpeed;
         [SerializeField] private PlayerAim _playerAim;
         [SerializeField] private Transform _playerAimTarget;
-        [SerializeField] private PlayerHealth _playerHealth;
         [SerializeField] private PlayerAnimator _playerAnimator;
         [SerializeField] private CharacterController _characterController;
 
@@ -89,7 +89,7 @@ namespace Roguelike.Player
         private void Move()
         {
             _characterController.Move(_direction * _moveSpeed * Time.deltaTime);
-            _playerAnimator.Move(_characterController.velocity.magnitude);
+            _playerAnimator.Move(_characterController.velocity);
         }
 
         private void OnTargetChanged(EnemyHealth enemy)

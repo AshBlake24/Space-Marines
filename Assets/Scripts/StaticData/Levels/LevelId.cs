@@ -5,6 +5,6 @@ namespace Roguelike.StaticData.Levels
         MainMenu = 0,
         Hub = 1,
         Dungeon = 2,
-        DungeonLightBakeScene = 3
+        Test = 3
     }
 }
