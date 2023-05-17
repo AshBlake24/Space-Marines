@@ -166,11 +166,15 @@ namespace Roguelike.Infrastructure.Factory
             player.GetComponent<PlayerAnimator>()
                 .Construct(character.GetComponent<Animator>());
 
-            MultiAimConstraint multiAimConstraint = player.GetComponentInChildren<MultiAimConstraint>();
-            multiAimConstraint.data.sourceObjects = new WeightedTransformArray()
+            MultiAimConstraint[] multiAimConstraint = player.GetComponentsInChildren<MultiAimConstraint>();
+
+            foreach (MultiAimConstraint constraint in multiAimConstraint)
             {
-                new(player.GetComponentInChildren<AimTarget>().transform, 1)
-            };
+                constraint.data.sourceObjects = new WeightedTransformArray
+                {
+                    new(player.GetComponentInChildren<AimTarget>().transform, 1)
+                };
+            }
 
             character.GetComponentInChildren<RigBuilder>().Build();
 

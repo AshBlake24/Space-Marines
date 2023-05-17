@@ -85,6 +85,7 @@ namespace Roguelike.Infrastructure.States
 
                     break;
                 case LevelId.Test:
+                    InitWorld();
                     
                     break;
                 default:
@@ -114,7 +115,7 @@ namespace Roguelike.Infrastructure.States
         {
             GameObject player = InitPlayer();
 
-            InitHud(player, createMiniMap: true);
+            //InitHud(player, createMiniMap: true);
             CameraFollow(player);
         }
 
