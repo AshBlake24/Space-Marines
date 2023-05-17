@@ -1,12 +1,12 @@
-﻿using Roguelike.Level;
-using Roguelike.Player;
-using UnityEngine;
+﻿using Roguelike.Player;
 using UnityEngine.AI;
 
 namespace Roguelike.Enemies.Transitions
 {
     public class TargetIsNotInRange : Transition
     {
+        private const int MinCornersCount = 2;
+
         private PlayerHealth _target;
         private NavMeshAgent _agent;
 
@@ -23,7 +23,12 @@ namespace Roguelike.Enemies.Transitions
 
         private void Update()
         {
-            if (_agent.remainingDistance <= Vector3.Distance(_target.transform.position, transform.position))
+            if (_target == null)
+                return;
+
+            _agent.SetDestination(_target.transform.position);
+
+            if (_agent.path.corners.Length > MinCornersCount)
                 NeedTransit?.Invoke(targetState);
         }
     }

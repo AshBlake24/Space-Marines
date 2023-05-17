@@ -14,5 +14,8 @@ namespace Roguelike.StaticData.Enemies
         public int Health;
         public int Damage;
         public float Speed;
+        public float AttackCooldown;
+        public float AttackSpeed;
+        public int BulletInBurst;
     }
 }

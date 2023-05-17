@@ -33,6 +33,12 @@ namespace Roguelike.Enemies
 
         private void SwitchState(EnemyState state)
         {
+            if (_currentState != null)
+            {
+                _currentState.StateFinished -= SwitchState;
+                _currentState.enabled = false;
+            }
+
             _currentState = state;
             state.Enter(_enemy);
 

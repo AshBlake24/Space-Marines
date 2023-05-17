@@ -1,9 +1,12 @@
+﻿using Roguelike.Enemies;
+using Roguelike.Enemies.EnemyStates;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
-namespace Roguelike.Enemies.EnemyStates
+namespace Roguelike.Assets.Scripts.Enemies.EnemyStates
 {
-    public class MoveState : EnemyState
+    public class ChargeState : EnemyState
     {
         private NavMeshAgent _agent;
         private Enemy _enemy;
@@ -16,17 +19,12 @@ namespace Roguelike.Enemies.EnemyStates
                 _enemy = GetComponent<EnemyStateMachine>().Enemy;
         }
 
-        private void Update()
-        {
-            _agent.SetDestination(enemy.Target.transform.position);
-        }
-
         public override void Enter(Enemy curentEnemy)
         {
             base.Enter(curentEnemy);
 
             _agent.SetDestination(enemy.Target.transform.position);
-            _agent.speed = _enemy.Speed;
+            _agent.speed = _enemy.Speed * 6;
             _agent.isStopped = false;
         }
 

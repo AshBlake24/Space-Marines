@@ -10,6 +10,8 @@ namespace Roguelike.Enemies.Transitions
 
         protected bool isNeedTransit;
 
+        protected EnemyState currentState;
+
         public EnemyState TargetState => targetState;
 
         public UnityAction<EnemyState> NeedTransit;

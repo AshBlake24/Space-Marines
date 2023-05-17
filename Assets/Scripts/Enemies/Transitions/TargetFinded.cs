@@ -13,6 +13,8 @@ namespace Roguelike.Enemies.Transitions
 {
     public class TargetFinded: Transition
     {
+        private const int MinCornersCount = 2;
+
         private PlayerHealth _target;
         private NavMeshAgent _agent;
 
@@ -31,7 +33,7 @@ namespace Roguelike.Enemies.Transitions
             if (_target == null)
                 return;
 
-            if (_agent.remainingDistance <= Vector3.Distance(_target.transform.position, transform.position))
+            if (_agent.path.corners.Length == MinCornersCount)
                 NeedTransit?.Invoke(targetState);
         }
     }

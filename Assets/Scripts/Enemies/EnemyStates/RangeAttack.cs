@@ -3,8 +3,8 @@ using Roguelike.Infrastructure.Services;
 using Roguelike.StaticData.Projectiles;
 using Roguelike.Utilities;
 using Roguelike.Weapons.Projectiles;
+using System;
 using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Pool;
 
@@ -16,12 +16,15 @@ namespace Roguelike.Enemies.EnemyStates
         [SerializeField] private Transform _shotPoint;
 
         private IProjectileFactory _factory;
+        private Coroutine _coroutine;
         private IObjectPool<Projectile> _projectilesPool;
+
+        public event Action NeedReloaded;
 
 
         protected override void OnDisable()
         {
-            StopCoroutine(Attack());
+            StopCoroutine(_coroutine);
 
             base.OnDisable();
         }
@@ -34,7 +37,7 @@ namespace Roguelike.Enemies.EnemyStates
 
             CreateProjectilesPool();
 
-            StartCoroutine(Attack());
+            _coroutine = StartCoroutine(Attack());
         }
 
         private void CreateProjectilesPool()
@@ -76,15 +79,21 @@ namespace Roguelike.Enemies.EnemyStates
 
         private IEnumerator Attack()
         {
-            while (!gameObject.IsDestroyed())
+            yield return Helpers.GetTime(enemy.AttackSpeed);
+
+            while (enemy.BulletInBurst > 0)
             {
                 Vector3 relativePos = enemy.Target.transform.position - transform.position;
 
                 transform.rotation = Quaternion.LookRotation(relativePos);
                 _projectilesPool.Get();
 
-                yield return Helpers.GetTime(0.5f);
+                enemy.RangeAttack();
+
+                yield return Helpers.GetTime(enemy.AttackSpeed);
             }
+
+            NeedReloaded?.Invoke();
         }
     }
 }
