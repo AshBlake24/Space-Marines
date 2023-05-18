@@ -3,18 +3,20 @@ namespace Roguelike.StaticData.Weapons
     public enum WeaponId
     {
         Unknow = -1,
-        BasicPistol,
-        AntimatterPistol,
+        SmallPistol,
+        Glock,
         Revolver,
-        SubmachinePistol,
-        BoltRifle,
+        SMG,
+        MPX,
+        KrissVector,
+        PumpShotgun,
+        TacticalShotgun,
+        ShortShotgun,
         M4A1,
-        DoubleBarrelledShotgun,
-        SawnOffShotgun,
-        Winchester,
-        RocketLauncher,
+        AK47,
+        BoltRifle,
         SniperRifle,
         MachineGun,
-        Glock
+        RocketLauncher
     }
 }
