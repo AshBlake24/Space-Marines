@@ -1,6 +1,7 @@
 using System;
 using Roguelike.Infrastructure.Services.StaticData;
 using Roguelike.StaticData.Projectiles;
+using Roguelike.StaticData.Weapons;
 using Roguelike.Weapons.Projectiles;
 using Roguelike.Weapons.Projectiles.Stats;
 using UnityEngine.Pool;
@@ -17,7 +18,7 @@ namespace Roguelike.Infrastructure.Factory
             _staticDataService = staticDataService;
         }
 
-        public Projectile CreateProjectile(ProjectileId id, IObjectPool<Projectile> pool)
+        public Projectile CreateProjectile(WeaponId id, IObjectPool<Projectile> pool)
         {
             ProjectileStaticData projectileData = _staticDataService.GetProjectileData(id);
 

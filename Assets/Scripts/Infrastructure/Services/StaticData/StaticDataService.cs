@@ -6,7 +6,6 @@ using Roguelike.StaticData;
 using Roguelike.StaticData.Characters;
 using Roguelike.StaticData.Enemies;
 using Roguelike.StaticData.Levels;
-using Roguelike.StaticData.Loot;
 using Roguelike.StaticData.Loot.Powerups;
 using Roguelike.StaticData.Loot.Rarity;
 using Roguelike.StaticData.Player;
@@ -22,7 +21,7 @@ namespace Roguelike.Infrastructure.Services.StaticData
     {
         private Dictionary<WeaponId, WeaponStaticData> _weapons;
         private Dictionary<WeaponId, int> _weaponsDropWeights;
-        private Dictionary<ProjectileId, ProjectileStaticData> _projectiles;
+        private Dictionary<WeaponId, ProjectileStaticData> _projectiles;
         private Dictionary<CharacterId, CharacterStaticData> _characters;
         private Dictionary<SkillId, SkillStaticData> _skills;
         private Dictionary<WindowId, WindowConfig> _windows;
@@ -69,7 +68,7 @@ namespace Roguelike.Infrastructure.Services.StaticData
                 ? staticData
                 : null;
 
-        public ProjectileStaticData GetProjectileData(ProjectileId id) =>
+        public ProjectileStaticData GetProjectileData(WeaponId id) =>
             _projectiles.TryGetValue(id, out ProjectileStaticData staticData)
                 ? staticData
                 : null;

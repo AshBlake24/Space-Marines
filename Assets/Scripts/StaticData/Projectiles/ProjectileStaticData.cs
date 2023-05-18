@@ -1,3 +1,4 @@
+using Roguelike.StaticData.Weapons;
 using UnityEngine;
 
 namespace Roguelike.StaticData.Projectiles
@@ -5,7 +6,7 @@ namespace Roguelike.StaticData.Projectiles
     public abstract class ProjectileStaticData : ScriptableObject
     {
         [Header("Stats")]
-        public ProjectileId Id;
+        public WeaponId Id;
         public ProjectileType Type;
         public GameObject Prefab;
         [Range(1, 1000)] public int Damage;
