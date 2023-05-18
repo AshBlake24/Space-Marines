@@ -14,6 +14,7 @@ namespace Roguelike.StaticData.Weapons
         Winchester,
         RocketLauncher,
         SniperRifle,
-        MachineGun
+        MachineGun,
+        Glock
     }
 }
