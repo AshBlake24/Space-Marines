@@ -6,16 +6,16 @@ namespace Roguelike.StaticData.Projectiles
     public abstract class ProjectileStaticData : ScriptableObject
     {
         [Header("Stats")]
-        public WeaponId Id;
-        public ProjectileType Type;
-        public GameObject Prefab;
-        [Range(1, 1000)] public int Damage;
-        [Range(1, 100)] public float Speed;
-        [Range(0.1f, 3f)]public float Lifetime;
+        [SerializeField] public WeaponId Id;
+        [SerializeField] public ProjectileType Type;
+        [SerializeField] public GameObject Prefab;
+        [SerializeField] [Range(1, 1000)] public int Damage;
+        [SerializeField] [Range(1, 100)] public float Speed;
+        [SerializeField] [Range(0.1f, 3f)] public float Lifetime;
         
         [Header("View")]
-        public ParticleSystem MuzzleFlashVFX;
-        public ParticleSystem ProjectileVFX;
-        public ParticleSystem ImpactVFX;
+        [SerializeField] public ParticleSystem MuzzleFlashVFX;
+        [SerializeField] public ParticleSystem ProjectileVFX;
+        [SerializeField] public ParticleSystem ImpactVFX;
     }
 }

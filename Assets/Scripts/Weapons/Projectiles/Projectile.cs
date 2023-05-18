@@ -24,8 +24,10 @@ namespace Roguelike.Weapons.Projectiles
         private void Awake() => 
             _particlesPool = AllServices.Container.Single<IParticlesPoolService>();
 
-        private void Update() => 
+        private void Update()
+        {
             LifetimeTick();
+        }
 
         public virtual void Construct<TStats>(TStats stats, IObjectPool<Projectile> projectilePool)
         {
@@ -34,26 +36,11 @@ namespace Roguelike.Weapons.Projectiles
             CreateProjectileVFX();
         }
 
-        public void Init()
-        {
-            Debug.Log(transform.position);
-            _trailRenderer.Clear();
-            Rigidbody.angularVelocity = Vector3.zero;
-            Rigidbody.velocity = transform.forward * Stats.Speed;
-            _accumulatedTime = 0f;
-            _projectileVFX.Play();
-            _trailRenderer.enabled = true;
-        }
+        public void Init() => 
+            InitProjectile(transform.forward * Stats.Speed);
 
-        public void Init(Vector3 direction)
-        {
-            _trailRenderer.Clear();
-            Rigidbody.angularVelocity = Vector3.zero;
-            Rigidbody.velocity = direction * Stats.Speed;
-            _accumulatedTime = 0f;
-            _projectileVFX.Play();
-            _trailRenderer.enabled = true;
-        }
+        public void Init(Vector3 direction) => 
+            InitProjectile(direction);
 
         public void ClearVFX()
         {
@@ -73,6 +60,18 @@ namespace Roguelike.Weapons.Projectiles
         {
             Rigidbody.velocity = Vector3.zero;
             _projectilesPool.Release(this);
+        }
+
+        private void InitProjectile(Vector3 direction)
+        {
+            _trailRenderer.Clear();
+            Rigidbody.angularVelocity = Vector3.zero;
+            
+            Rigidbody.AddForce(direction * Stats.Speed, ForceMode.VelocityChange);
+            
+            _accumulatedTime = 0f;
+            _projectileVFX.Play();
+            _trailRenderer.enabled = true;
         }
 
         private void LifetimeTick()

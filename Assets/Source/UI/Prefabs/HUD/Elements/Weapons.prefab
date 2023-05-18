@@ -187,7 +187,7 @@ RectTransform:
   - {fileID: 6241506594597700134}
   - {fileID: 3386336370793967285}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
@@ -211,7 +211,9 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 1
   m_AdditionalShaderChannelsFlag: 0
+  m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
@@ -654,8 +656,13 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 7203980993530724909}
     m_Modifications:
+    - target: {fileID: 842246937843268926, guid: 1c86e60f2f5c6ad43b4d30cf5d6de95a, type: 3}
+      propertyPath: m_VertexColorAlwaysGammaSpace
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1090305257406159998, guid: 1c86e60f2f5c6ad43b4d30cf5d6de95a, type: 3}
       propertyPath: m_Name
       value: Ammo Counter
@@ -745,6 +752,9 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1c86e60f2f5c6ad43b4d30cf5d6de95a, type: 3}
 --- !u!224 &3386336370793967285 stripped
 RectTransform:

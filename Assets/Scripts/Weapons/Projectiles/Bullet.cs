@@ -1,5 +1,4 @@
 using System;
-using Roguelike.Enemies;
 using Roguelike.Logic;
 using Roguelike.Weapons.Projectiles.Stats;
 using UnityEngine;
