@@ -104,6 +104,7 @@ namespace Roguelike.UI.Windows
             ProgressService.PlayerProgress.PlayerWeapons = new PlayerWeapons(
                 startWeapon,
                 _characterData.MaxWeaponsCount);
+            Destroy(startWeapon as Object);
             _selectionMode.OnCharacterSelected();
         }
 

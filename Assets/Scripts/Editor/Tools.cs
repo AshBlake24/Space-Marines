@@ -42,13 +42,13 @@ namespace Roguelike.Editor
         {
             string path = Path.Combine(Application.persistentDataPath, "Data.json");
 
-            using (FileStream fileStream = new FileStream(path, FileMode.Create))
-            {
-                using (StreamWriter streamWriter = new StreamWriter(fileStream))
-                {
-                    streamWriter.Write(dataToStore);
-                }
-            }
+            using FileStream fileStream = new(path, FileMode.Create);
+            using StreamWriter streamWriter = new(fileStream);
+
+            streamWriter.Write(dataToStore);
+            
+            fileStream.Dispose();
+            streamWriter.Dispose();
         }
     }
 }

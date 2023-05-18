@@ -112,6 +112,8 @@ namespace Roguelike.Weapons
         {
             Projectile projectile = GetProjectile();
             projectile.transform.SetParent(Helpers.GetPoolsContainer(gameObject.name));
+            projectile.ClearVFX();
+            OnTakeFromPool(projectile);
 
             return projectile;
         }
@@ -120,12 +122,15 @@ namespace Roguelike.Weapons
         {
             projectile.transform.SetPositionAndRotation(_firePoint.position, _firePoint.rotation);
             projectile.transform.forward += GetSpread();
-            projectile.gameObject.SetActive(true);
             projectile.Init();
+            projectile.gameObject.SetActive(true);
         }
 
-        private void OnReleaseToPool(Projectile projectile) => 
+        private void OnReleaseToPool(Projectile projectile)
+        {
+            projectile.ClearVFX();
             projectile.gameObject.SetActive(false);
+        }
 
         private void OnDestroyItem(Projectile projectile) => 
             Destroy(projectile.gameObject);

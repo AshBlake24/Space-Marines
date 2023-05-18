@@ -15,6 +15,7 @@ namespace Roguelike.Weapons.Projectiles
         protected string ImpactVFXKey;
         private float _accumulatedTime;
         private ParticleSystem _projectileVFX;
+        private TrailRenderer _trailRenderer;
         private IParticlesPoolService _particlesPool;
         private IObjectPool<Projectile> _projectilesPool;
 
@@ -35,18 +36,30 @@ namespace Roguelike.Weapons.Projectiles
 
         public void Init()
         {
+            Debug.Log(transform.position);
+            _trailRenderer.Clear();
             Rigidbody.angularVelocity = Vector3.zero;
             Rigidbody.velocity = transform.forward * Stats.Speed;
             _accumulatedTime = 0f;
             _projectileVFX.Play();
+            _trailRenderer.enabled = true;
         }
 
         public void Init(Vector3 direction)
         {
+            _trailRenderer.Clear();
             Rigidbody.angularVelocity = Vector3.zero;
             Rigidbody.velocity = direction * Stats.Speed;
             _accumulatedTime = 0f;
             _projectileVFX.Play();
+            _trailRenderer.enabled = true;
+        }
+
+        public void ClearVFX()
+        {
+            _projectileVFX.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+            _trailRenderer.Clear();
+            _trailRenderer.enabled = false;
         }
 
         protected void SpawnVFX(string key)
@@ -87,10 +100,8 @@ namespace Roguelike.Weapons.Projectiles
         private void CreateProjectileVFX()
         {
             _projectileVFX = Instantiate(Stats.ProjectileVFX, transform.position, transform.rotation, transform);
-            StopProjectileVFX();
+            _trailRenderer = _projectileVFX.GetComponentInChildren<TrailRenderer>();
+            ClearVFX();
         }
-
-        private void StopProjectileVFX() => 
-            _projectileVFX.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
     }
 }
