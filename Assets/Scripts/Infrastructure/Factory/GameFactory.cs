@@ -166,6 +166,16 @@ namespace Roguelike.Infrastructure.Factory
             player.GetComponent<PlayerAnimator>()
                 .Construct(character.GetComponent<Animator>());
 
+            InitIK(player, character);
+            
+            character.GetComponent<CharacterIKAiminig>()
+                .Construct(player.GetComponent<PlayerShooter>());
+
+            return character;
+        }
+
+        private static void InitIK(GameObject player, GameObject character)
+        {
             MultiAimConstraint[] multiAimConstraint = player.GetComponentsInChildren<MultiAimConstraint>();
 
             foreach (MultiAimConstraint constraint in multiAimConstraint)
@@ -176,9 +186,10 @@ namespace Roguelike.Infrastructure.Factory
                 };
             }
 
-            character.GetComponentInChildren<RigBuilder>().Build();
+            RigBuilder[] rigBuilders = character.GetComponentsInChildren<RigBuilder>();
 
-            return character;
+            foreach (RigBuilder rigBuilder in rigBuilders)
+                rigBuilder.Build();
         }
 
         private void InitShooterComponent(GameObject player, WeaponSpawnPoint weaponSpawnPoint)
