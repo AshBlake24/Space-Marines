@@ -122,7 +122,7 @@ namespace Roguelike.Utilities.Baking
 
             Lightmapping.Bake();
 
-            PrefabLightmapData[] prefabs = FindObjectsByType<PrefabLightmapData>(FindObjectsSortMode.None);
+            PrefabLightmapData[] prefabs = FindObjectsOfType<PrefabLightmapData>();
 
             foreach (PrefabLightmapData instance in prefabs)
             {

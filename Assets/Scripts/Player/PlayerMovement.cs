@@ -2,7 +2,7 @@ using Roguelike.Enemies;
 using Roguelike.Infrastructure.Services;
 using Roguelike.Infrastructure.Services.Input;
 using UnityEngine;
-using UnityEngine.Rendering.UI;
+using UnityEngine.UI;
 
 namespace Roguelike.Player
 {
