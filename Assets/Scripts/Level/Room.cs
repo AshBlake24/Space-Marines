@@ -9,15 +9,22 @@ namespace Roguelike.Level
         [SerializeField] private GameObject _entryPoint;
         [SerializeField] private Transform _miniMapIcon;
 
+        private List<ExitPoint> _doors = new List<ExitPoint>();
+        private ExitPoint _entryDoor;
+
         public void Init(ExitPoint connectingPoint)
         {
-            transform.rotation = Quaternion.Euler(0, transform.rotation.y + connectingPoint.Rotation, 0);
+            if (_entryPoint == null)
+                return;
+
+            transform.rotation = Quaternion.Euler(0, transform.rotation.y + connectingPoint.Rotation + _entryPoint.transform.eulerAngles.y, 0);
 
             if (_miniMapIcon != null)
                 _miniMapIcon.rotation = Quaternion.Euler(90, -transform.rotation.y, 0);
 
             transform.position =
-                Vector3.MoveTowards(transform.position, _entryPoint.transform.position, -GetShiftDistance());
+            Vector3.MoveTowards(transform.position, _entryPoint.transform.position, -GetShiftDistance());
+            _entryPoint.TryGetComponent<ExitPoint>(out _entryDoor);
         }
 
         public ExitPoint SelectExitPoint()
@@ -35,6 +42,9 @@ namespace Roguelike.Level
                     break;
             }
 
+            if (connectingPoint != null)
+                _doors.Add(connectingPoint);
+
             if (_exitPoints.Count != 0)
                 _exitPoints.Remove(connectingPoint);
 
@@ -47,6 +57,29 @@ namespace Roguelike.Level
             {
                 exitPoint.Hide();
             }
+
+            OpenDoor();
+        }
+
+        public void CloseDoor()
+        {
+            foreach (var door in _doors)
+            {
+                door.Hide();
+            }
+
+            _entryDoor.Hide();
+        }
+
+        public void OpenDoor()
+        {
+            foreach (var door in _doors)
+            {
+                door.Show();
+            }
+            
+            if (_entryDoor != null)
+                _entryDoor.Show();
         }
 
         public float GetShiftDistance()

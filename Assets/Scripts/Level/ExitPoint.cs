@@ -4,7 +4,8 @@ namespace Roguelike.Level
 {
     public class ExitPoint : MonoBehaviour
     {
-        [SerializeField] private GameObject _hideWall;
+        [SerializeField] private GameObject _openedDoor;
+        [SerializeField] private GameObject _closedDoor;
         [SerializeField] private GameObject _castPoint;
 
         public float Rotation
@@ -13,24 +14,30 @@ namespace Roguelike.Level
             {
                 float angle = transform.rotation.eulerAngles.y;
 
-                if (transform.localPosition.x > 0)
-                    return Vector3.Angle(transform.localPosition, Vector3.forward) + angle;
+                if (transform.localPosition.x < 0)
+                    return angle;
                 else
-                    return -Vector3.Angle(transform.localPosition, Vector3.forward) + angle;
+                    return -angle;
             }
             private set { }
         }
 
         public void Hide()
         {
-            if (_hideWall != null)
-                _hideWall.SetActive(true);
+            if (_openedDoor != null && _closedDoor != null)
+            {
+                _openedDoor.SetActive(false);
+                _closedDoor.SetActive(true);
+            }
         }
 
         public void Show()
         {
-            if (_hideWall != null)
-                _hideWall.SetActive(false);
+            if (_openedDoor != null && _closedDoor != null)
+            {
+                _openedDoor.SetActive(true);
+                _closedDoor.SetActive(false);
+            }
         }
 
         public bool IsNextZoneFull(Room room)

@@ -8,20 +8,20 @@ using UnityEngine;
 
 namespace Roguelike.Enemies
 {
+    [RequireComponent(typeof(Room))]
     public class EnemySpawner : MonoBehaviour
     {
         [SerializeField] private List<EnemyId> _enemies;
         [SerializeField] private List<SpawnPoint> _spawnPoints;
         [SerializeField] private EnterTriger _enterPoint;
         [SerializeField] private List<EnemyHealth> _enemiesInRoom;
-        [SerializeField] private List<ExitPoint> _doors;
         [SerializeField] private float _spawnDuration;
-        [SerializeField] private Room _room;
+        [SerializeField] private float _encounterComplexity;
 
-        [SerializeField] private List<SpawnPoint> _readySpawnPoints;
+        private Room _room;
+        private List<SpawnPoint> _readySpawnPoints;
         private PlayerHealth _player;
         private IEnemyFactory _enemyFactory;
-        private float _encounterComplexity;
 
         private void OnEnable()
         {
@@ -41,7 +41,16 @@ namespace Roguelike.Enemies
         public void Init(IEnemyFactory enemyFactory, float minEncounterComplexity, float maxEncounerComplexity)
         {
             _enemyFactory = enemyFactory;
-            _encounterComplexity = Random.Range(minEncounterComplexity, maxEncounerComplexity);
+            _encounterComplexity *= Random.Range(minEncounterComplexity, maxEncounerComplexity);
+
+            _readySpawnPoints = new List<SpawnPoint>();
+
+            for (int i = 0; i < _spawnPoints.Count; i++)
+            {
+                _readySpawnPoints.Add(_spawnPoints[i]);
+            }
+
+           _room = GetComponent<Room>();
         }
 
         private GameObject GenerateEnemy(Transform spawnPosition, PlayerHealth target)
@@ -78,10 +87,7 @@ namespace Roguelike.Enemies
                 enemy.Died += OnEnemyDied;
             }
 
-            foreach (var door in _doors)
-            {
-                door.Hide();
-            }
+            _room.CloseDoor();
         }
 
         private void OnEnemyDied(EnemyHealth enemy)
@@ -98,11 +104,7 @@ namespace Roguelike.Enemies
                     return;
                 }
 
-                foreach (var door in _doors)
-                {
-                    door.Show();
-                    _room.HideExit();
-                }
+                _room.OpenDoor();
             }
         }
 
