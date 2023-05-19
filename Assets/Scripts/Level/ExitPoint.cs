@@ -16,7 +16,7 @@ namespace Roguelike.Level
             {
                 float angle = transform.rotation.eulerAngles.y;
 
-                if (transform.localPosition.x < 0)
+                if (transform.localPosition.x < 0 || transform.localPosition.z > 0)
                     return angle;
                 else
                     return -angle;
