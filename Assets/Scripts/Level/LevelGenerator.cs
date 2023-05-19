@@ -11,14 +11,14 @@ namespace Roguelike.Level
 {
     public class LevelGenerator : MonoBehaviour
     {
-        private const string ContainerName = "Environment";
+        private const string ContainerName = "Rooms";
 
         private IEnemyFactory _enemyFactory;
         private ISceneLoadingService _sceneLoadingService;
         private IPersistentDataService _persistentDataService;
         private LevelStaticData _data;
         private Transform _roomContainer;
-        private EnterTriger _enterTriger;
+        private FinishLevelTriger _enterTriger;
         private ExitPoint _connectingPoint;
         private Room _currentCorridor;
         private Room _currentRoom;
@@ -73,7 +73,7 @@ namespace Roguelike.Level
             Room areaRoom = CreateRoom(_currentCorridor, _data.Arenas);
 
             if (areaRoom.gameObject.TryGetComponent<EnemySpawner>(out EnemySpawner enemySpawner))
-                enemySpawner.Init(_enemyFactory,_data.MinEncounterComplexity, _data.MaxEncounterComplexity);
+                enemySpawner.Init(_enemyFactory,_data.MinComplexityMultiplication, _data.MaxComplexityMultiplication, _data.Spawner);
 
             _currentRoom.HideExit();
 
@@ -96,8 +96,8 @@ namespace Roguelike.Level
 
             _currentRoom = CreateRoom(_currentCorridor, _data.TransitionRoom);
 
-            _enterTriger = _currentRoom.gameObject.GetComponentInChildren<EnterTriger>();
-            _enterTriger.Construct(_data.NextStageId);
+            _enterTriger = _currentRoom.gameObject.GetComponentInChildren<FinishLevelTriger>();
+            _enterTriger.Construct(_data.NextStageId, _persistentDataService);
 
             _enterTriger.PlayerHasEntered += GenerateNextLevel;
         }

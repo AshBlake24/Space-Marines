@@ -1,10 +1,3 @@
-using Roguelike.Enemies.EnemyStates;
-using Roguelike.Player;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 namespace Roguelike.Enemies.Transitions
 {
     public class AmmoEmpty : Transition
@@ -16,15 +9,15 @@ namespace Roguelike.Enemies.Transitions
             if (_enemy == null)
                 _enemy = GetComponent<EnemyStateMachine>().Enemy;
 
-            _enemy.NeedReloaded += NeedReloaded;
+            _enemy.NeedReloaded += OnNeedReloaded;
         }
 
         private void OnDisable()
         {
-            _enemy.NeedReloaded -= NeedReloaded;
+            _enemy.NeedReloaded -= OnNeedReloaded;
         }
 
-        private void NeedReloaded()
+        private void OnNeedReloaded()
         {
             NeedTransit?.Invoke(targetState);
         }

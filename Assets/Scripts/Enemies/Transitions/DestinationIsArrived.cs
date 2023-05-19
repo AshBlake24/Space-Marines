@@ -1,7 +1,4 @@
-﻿using Roguelike.Player;
-using System.Collections;
-using UnityEngine;
-using UnityEngine.AI;
+﻿using UnityEngine.AI;
 
 namespace Roguelike.Enemies.Transitions
 {

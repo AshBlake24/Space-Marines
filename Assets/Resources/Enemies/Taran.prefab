@@ -13,10 +13,10 @@ GameObject:
   - component: {fileID: 992037642609969639}
   - component: {fileID: 4685050342670652712}
   - component: {fileID: 9160135008672490591}
+  - component: {fileID: 561044284562100928}
   - component: {fileID: 8863867860186349196}
   - component: {fileID: 6803992904553592574}
   - component: {fileID: 32263809766053483}
-  - component: {fileID: 6344088944162715187}
   - component: {fileID: 1392744054567292606}
   - component: {fileID: 6202828642767725408}
   - component: {fileID: 3918196704857838589}
@@ -52,8 +52,17 @@ CapsuleCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4935547345014440336}
   m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
   m_IsTrigger: 1
+  m_ProvidesContacts: 0
   m_Enabled: 1
+  serializedVersion: 2
   m_Radius: 0.5
   m_Height: 1.7044094
   m_Direction: 1
@@ -107,7 +116,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _transitions:
   - {fileID: 1392744054567292606}
-  - {fileID: 6344088944162715187}
+  - {fileID: 561044284562100928}
+--- !u!114 &561044284562100928
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4935547345014440336}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 377ee4e8091053949808d278f9cd8228, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetState: {fileID: 6803992904553592574}
 --- !u!114 &8863867860186349196
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -150,19 +172,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetState: {fileID: 9160135008672490591}
---- !u!114 &6344088944162715187
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4935547345014440336}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8af43de5cd4f6874184c7148f5d088e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  targetState: {fileID: 6803992904553592574}
 --- !u!114 &1392744054567292606
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -310,8 +319,17 @@ CapsuleCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8396033113490134149}
   m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
   m_IsTrigger: 0
+  m_ProvidesContacts: 0
   m_Enabled: 1
+  serializedVersion: 2
   m_Radius: 0.5135548
   m_Height: 2
   m_Direction: 1

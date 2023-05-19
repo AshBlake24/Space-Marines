@@ -11,6 +11,7 @@ namespace Roguelike.Infrastructure.AssetManagement
         public const string LevelGeneratorPath = "LevelGenerator/LevelGenerator";
         public const string EnemiesPath = "StaticData/Enemies";
         public const string LevelsPath = "StaticData/Levels";
+        public const string SpawnerPath = "StaticData/Levels/Spawner";
         public const string DesktopHudPath = "HUD/DesktopHUDCanvas";
         public const string MobileHudPath = "HUD/MobileHUDCanvas";
         public const string PlayerPath = "Player/Player";

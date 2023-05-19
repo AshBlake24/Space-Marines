@@ -1,22 +1,14 @@
-﻿using Roguelike.Enemies;
-using Roguelike.Enemies.EnemyStates;
-using System.Collections;
-using UnityEngine;
-using UnityEngine.AI;
+﻿using UnityEngine.AI;
 
-namespace Roguelike.Assets.Scripts.Enemies.EnemyStates
+namespace Roguelike.Enemies.EnemyStates
 {
     public class ChargeState : EnemyState
     {
         private NavMeshAgent _agent;
-        private Enemy _enemy;
 
         private void Awake()
         {
             _agent = GetComponent<NavMeshAgent>();
-
-            if (_enemy == null)
-                _enemy = GetComponent<EnemyStateMachine>().Enemy;
         }
 
         public override void Enter(Enemy curentEnemy)
@@ -24,7 +16,7 @@ namespace Roguelike.Assets.Scripts.Enemies.EnemyStates
             base.Enter(curentEnemy);
 
             _agent.SetDestination(enemy.Target.transform.position);
-            _agent.speed = _enemy.Speed * 6;
+            _agent.speed = enemy.Speed * enemy.ChargeSpeedMultiplication;
             _agent.isStopped = false;
         }
 

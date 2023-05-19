@@ -10,7 +10,7 @@ using UnityEngine.Pool;
 
 namespace Roguelike.Enemies.EnemyStates
 {
-    public class RangeAttack : EnemyState
+    public class RangeAttackState : EnemyState
     {
         [SerializeField] private ProjectileStaticData _bullet;
         [SerializeField] private Transform _shotPoint;
@@ -79,8 +79,6 @@ namespace Roguelike.Enemies.EnemyStates
 
         private IEnumerator Attack()
         {
-            yield return Helpers.GetTime(enemy.AttackSpeed);
-
             while (enemy.BulletInBurst > 0)
             {
                 Vector3 relativePos = enemy.Target.transform.position - transform.position;

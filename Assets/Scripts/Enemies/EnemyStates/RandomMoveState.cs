@@ -1,18 +1,12 @@
-﻿using Roguelike.Infrastructure.Factory;
-using Roguelike.Infrastructure.Services;
-using Roguelike.StaticData.Enemies;
-using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.AI;
 
 namespace Roguelike.Enemies.EnemyStates
 {
-    public class Deploy : EnemyState
+    public class RandomMoveState : EnemyState
     {
-        [SerializeField] private EnemyId _mine;
+        private const int MoveRadius = 8;
 
-        private SpawnPoint _parent;
-        private IEnemyFactory _factory;
         private NavMeshAgent _agent;
         private Vector3 _randomPoint;
         private bool _isCorrectPoint;
@@ -20,10 +14,6 @@ namespace Roguelike.Enemies.EnemyStates
         private void Awake()
         {
             _agent = GetComponent<NavMeshAgent>();
-
-            _factory = AllServices.Container.Single<IEnemyFactory>();
-
-            _parent = GetComponentInParent<SpawnPoint>();
         }
 
         private void Update()
@@ -35,10 +25,7 @@ namespace Roguelike.Enemies.EnemyStates
             }
 
             if (transform.position == _randomPoint)
-            {
-                MineSpawn();
                 GetRandomDestination();
-            }
         }
 
         public override void Enter(Enemy curentEnemy)
@@ -50,7 +37,7 @@ namespace Roguelike.Enemies.EnemyStates
 
         public override void Exit(EnemyState nextState)
         {
-            _agent.isStopped = true;
+            _agent.isStopped=true;
 
             base.Exit(nextState);
         }
@@ -65,23 +52,16 @@ namespace Roguelike.Enemies.EnemyStates
             {
                 NavMeshHit hit;
 
-                NavMesh.SamplePosition(Random.insideUnitSphere * 7 + transform.position, out hit, 7, NavMesh.AllAreas);
+                NavMesh.SamplePosition(Random.insideUnitSphere* MoveRadius + transform.position, out hit, MoveRadius, NavMesh.AllAreas);
                 _randomPoint = hit.position;
 
-                if (Vector3.Distance(_randomPoint, transform.position) > 5)
+                if (Vector3.Distance(_randomPoint, transform.position) > (MoveRadius-1))
                 {
                     _agent.CalculatePath(_randomPoint, currentPath);
                     if (currentPath.status == NavMeshPathStatus.PathComplete)
                         _isCorrectPoint = true;
                 }
             }
-        }
-
-        private void MineSpawn()
-        {
-            GameObject mine = _factory.CreateEnemy(transform, _mine, enemy.Target);
-
-            mine.transform.SetParent(_parent.transform);
         }
     }
 }

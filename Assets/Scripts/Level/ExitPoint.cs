@@ -4,6 +4,8 @@ namespace Roguelike.Level
 {
     public class ExitPoint : MonoBehaviour
     {
+        private const int CastDistance = 3;
+
         [SerializeField] private GameObject _openedDoor;
         [SerializeField] private GameObject _closedDoor;
         [SerializeField] private GameObject _castPoint;
@@ -44,7 +46,7 @@ namespace Roguelike.Level
         {
             if (_castPoint != null)
             {
-                return Physics.Raycast(_castPoint.transform.position, _castPoint.transform.position + (transform.position - room.transform.position) * 3, room.GetShiftDistance() * 3);
+                return Physics.Raycast(_castPoint.transform.position, _castPoint.transform.position + (transform.position - room.transform.position) * CastDistance, room.GetShiftDistance() * CastDistance);
             }
 
             return true;

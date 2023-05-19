@@ -6,14 +6,10 @@ namespace Roguelike.Enemies.EnemyStates
     public class MoveState : EnemyState
     {
         private NavMeshAgent _agent;
-        private Enemy _enemy;
 
         private void Awake()
         {
             _agent = GetComponent<NavMeshAgent>();
-
-            if (_enemy == null)
-                _enemy = GetComponent<EnemyStateMachine>().Enemy;
         }
 
         private void Update()
@@ -26,7 +22,7 @@ namespace Roguelike.Enemies.EnemyStates
             base.Enter(curentEnemy);
 
             _agent.SetDestination(enemy.Target.transform.position);
-            _agent.speed = _enemy.Speed;
+            _agent.speed = enemy.Speed;
             _agent.isStopped = false;
         }
 

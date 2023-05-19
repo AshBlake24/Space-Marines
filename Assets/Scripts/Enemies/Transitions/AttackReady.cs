@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Roguelike.Enemies.Transitions
 {
@@ -10,8 +9,7 @@ namespace Roguelike.Enemies.Transitions
 
         private void OnEnable()
         {
-            if (_enemy == null)
-                _enemy = GetComponent<EnemyStateMachine>().Enemy;
+            _enemy ??= GetComponent<EnemyStateMachine>().Enemy;
 
             _accumulatedTime = 0;
         }

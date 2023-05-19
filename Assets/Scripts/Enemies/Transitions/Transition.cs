@@ -12,8 +12,6 @@ namespace Roguelike.Enemies.Transitions
 
         protected EnemyState currentState;
 
-        public EnemyState TargetState => targetState;
-
         public UnityAction<EnemyState> NeedTransit;
     }
 }
