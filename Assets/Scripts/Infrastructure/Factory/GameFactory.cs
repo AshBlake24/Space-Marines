@@ -131,11 +131,6 @@ namespace Roguelike.Infrastructure.Factory
 
         public void CreatePlayerCamera(GameObject player)
         {
-            CinemachineBrain brain = Object.FindFirstObjectByType<CinemachineBrain>();
-
-            if (brain == null)
-                _assetProvider.Instantiate(AssetPath.CameraBrainPath);
-            
             GameObject camera = _assetProvider.Instantiate(AssetPath.PlayerCameraPath);
             CinemachineVirtualCamera playerCamera = camera.GetComponent<CinemachineVirtualCamera>();
 
