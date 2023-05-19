@@ -13,9 +13,12 @@ MonoBehaviour:
   m_Name: Bomber
   m_EditorClassIdentifier: 
   Id: 0
-  EnemyType: 1
   Prefab: {fileID: 4935547345014440336, guid: 7e244ec40c1a52e40a72e85800253a57, type: 3}
-  Danger: 0.2
+  Danger: 0.25
   Health: 60
   Damage: 3
-  Speed: 3
+  Speed: 3.5
+  AttackCooldown: 0
+  AttackSpeed: 0
+  BulletInBurst: 0
+  ChargeSpeedMultiplication: 0

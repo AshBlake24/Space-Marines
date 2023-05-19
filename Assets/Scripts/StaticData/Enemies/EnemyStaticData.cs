@@ -8,11 +8,18 @@ namespace Roguelike.StaticData.Enemies
     {
         [Header ("Stats")]
         public EnemyId Id;
-        public EnemyType EnemyType;
         public GameObject Prefab;
-        [Range(0.01f, 1f)] public float Danger;
+        public float Danger;
         public int Health;
         public int Damage;
         public float Speed;
+        public float AttackCooldown;
+        public float AttackSpeed;
+
+        [Header("Range enemy stats")]
+        public int BulletInBurst;
+
+        [Header("Taran enemy stats")]
+        public float ChargeSpeedMultiplication;
     }
 }

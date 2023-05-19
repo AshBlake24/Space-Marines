@@ -1,14 +1,14 @@
-﻿using Roguelike.Level;
-using Roguelike.Player;
-using UnityEngine;
+﻿using Roguelike.Player;
 using UnityEngine.AI;
 
 namespace Roguelike.Enemies.Transitions
 {
-    public class TargetIsNotInRange : Transition
+    public class TargetIsNotInRange: Transition
     {
-        private PlayerHealth _target;
-        private NavMeshAgent _agent;
+        protected const int MinCornersCount = 2;
+
+        protected PlayerHealth _target;
+        protected NavMeshAgent _agent;
 
         private void Awake()
         {
@@ -18,12 +18,21 @@ namespace Roguelike.Enemies.Transitions
         private void OnEnable()
         {
             if (_target == null)
-                _target= GetComponent<EnemyStateMachine>().Enemy.Target;
+                _target = GetComponent<EnemyStateMachine>().Enemy.Target;
         }
-
         private void Update()
         {
-            if (_agent.remainingDistance <= Vector3.Distance(_target.transform.position, transform.position))
+            if (_target == null)
+                return;
+
+            CheackLineOfSight();
+        }
+
+        protected virtual void CheackLineOfSight()
+        {
+            _agent.SetDestination(_target.transform.position);
+
+            if (_agent.path.corners.Length > MinCornersCount)
                 NeedTransit?.Invoke(targetState);
         }
     }

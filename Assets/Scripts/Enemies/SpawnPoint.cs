@@ -15,7 +15,7 @@ namespace Roguelike.Enemies
         private float _currentTime;
         private bool _isReady;
 
-        public event Action<SpawnPoint> SpawnReady;
+        public event Action<SpawnPoint, GameObject> EnemySpawned;
 
         private void Update()
         {
@@ -45,7 +45,7 @@ namespace Roguelike.Enemies
 
             _enemy.SetActive(true);
 
-            SpawnReady?.Invoke(this);
+            EnemySpawned?.Invoke(this, _enemy);
         }
     }
 }

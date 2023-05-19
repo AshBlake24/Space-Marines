@@ -1,3 +1,4 @@
+using UnityEngine;
 using UnityEngine.AI;
 
 namespace Roguelike.Enemies.EnemyStates
@@ -16,9 +17,18 @@ namespace Roguelike.Enemies.EnemyStates
             _agent.SetDestination(enemy.Target.transform.position);
         }
 
+        public override void Enter(Enemy curentEnemy)
+        {
+            base.Enter(curentEnemy);
+
+            _agent.SetDestination(enemy.Target.transform.position);
+            _agent.speed = enemy.Speed;
+            _agent.isStopped = false;
+        }
+
         public override void Exit(EnemyState nextState)
         {
-            _agent.ResetPath();
+            _agent.isStopped = true;
 
             base.Exit(nextState);
         }

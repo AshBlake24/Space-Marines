@@ -4,7 +4,10 @@ namespace Roguelike.Level
 {
     public class ExitPoint : MonoBehaviour
     {
-        [SerializeField] private GameObject _hideWall;
+        private const int CastDistance = 3;
+
+        [SerializeField] private GameObject _openedDoor;
+        [SerializeField] private GameObject _closedDoor;
         [SerializeField] private GameObject _castPoint;
 
         public float Rotation
@@ -13,31 +16,37 @@ namespace Roguelike.Level
             {
                 float angle = transform.rotation.eulerAngles.y;
 
-                if (transform.localPosition.x > 0)
-                    return Vector3.Angle(transform.localPosition, Vector3.forward) + angle;
+                if (transform.localPosition.x < 0)
+                    return angle;
                 else
-                    return -Vector3.Angle(transform.localPosition, Vector3.forward) + angle;
+                    return -angle;
             }
             private set { }
         }
 
         public void Hide()
         {
-            if (_hideWall != null)
-                _hideWall.SetActive(true);
+            if (_openedDoor != null && _closedDoor != null)
+            {
+                _openedDoor.SetActive(false);
+                _closedDoor.SetActive(true);
+            }
         }
 
         public void Show()
         {
-            if (_hideWall != null)
-                _hideWall.SetActive(false);
+            if (_openedDoor != null && _closedDoor != null)
+            {
+                _openedDoor.SetActive(true);
+                _closedDoor.SetActive(false);
+            }
         }
 
         public bool IsNextZoneFull(Room room)
         {
             if (_castPoint != null)
             {
-                return Physics.Raycast(_castPoint.transform.position, _castPoint.transform.position + (transform.position - room.transform.position) * 3, room.GetShiftDistance() * 3);
+                return Physics.Raycast(_castPoint.transform.position, _castPoint.transform.position + (transform.position - room.transform.position) * CastDistance, room.GetShiftDistance() * CastDistance);
             }
 
             return true;

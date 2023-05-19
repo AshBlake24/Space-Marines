@@ -1,4 +1,5 @@
 ﻿using Roguelike.Level;
+using Roguelike.StaticData.Levels.Spawner;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,12 +12,14 @@ namespace Roguelike.StaticData.Levels
         [Header("Stats")]
         public StageId Id;
         public StageId NextStageId;
-        public int ArenasCount;
-        public float MinEncounterComplexity;
-        public float MaxEncounterComplexity;
-        public int TreasureRoomsCount;
         public GameObject LevelGeneratorPrefab;
+        public int ArenasCount;
+        public int TreasureRoomsCount;
+        public float MinComplexityMultiplication;
+        public float MaxComplexityMultiplication;
+        public SpawnerStaticData Spawner;
 
+        [Header("Rooms")]
         public Room StartRoom;
         public List<Room> TransitionRoom;
         public List<Room> Arenas;

@@ -9,6 +9,9 @@ namespace Roguelike.StaticData.Enemies
     public enum EnemyId
     {
         Bomber,
-        Soldier
+        Soldier,
+        Taran,
+        Miner,
+        Mine
     }
 }

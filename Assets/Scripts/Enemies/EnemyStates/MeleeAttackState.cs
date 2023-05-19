@@ -1,4 +1,7 @@
-﻿
+﻿using Roguelike.Enemies;
+using System.Collections;
+using UnityEngine;
+
 namespace Roguelike.Enemies.EnemyStates
 {
     public class MeleeAttackState : EnemyState
@@ -8,9 +11,6 @@ namespace Roguelike.Enemies.EnemyStates
             base.Enter(enemy);
 
             enemy.Target.TakeDamage(enemy.Damage);
-
-            EnemyHealth health = GetComponentInChildren<EnemyHealth>();
-            health.TakeDamage(health.MaxHealth);
         }
     }
 }
