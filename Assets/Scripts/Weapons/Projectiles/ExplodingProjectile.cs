@@ -16,10 +16,10 @@ namespace Roguelike.Weapons.Projectiles
 
         protected override ProjectileStats Stats => _stats;
 
-        public override void Construct<TStats>(TStats stats, IObjectPool<Projectile> projectilePool)
+        public override void Construct<TStats>(TStats projectileStats, IObjectPool<Projectile> projectilePool)
         {
-            InitializeExplodingProjectileStats(stats);
-            base.Construct(stats, projectilePool);
+            InitializeExplodingProjectileStats(projectileStats);
+            base.Construct(projectileStats, projectilePool);
         }
 
         private void OnCollisionEnter(Collision collision)
@@ -27,7 +27,7 @@ namespace Roguelike.Weapons.Projectiles
             for (int i = 0; i < Explode(); i++)
             {
                 if (_hits[i].transform.TryGetComponent(out IHealth health))
-                    health.TakeDamage(_stats.Damage);
+                    health.TakeDamage(Damage);
             }
 
             SpawnVFX(ImpactVFXKey);

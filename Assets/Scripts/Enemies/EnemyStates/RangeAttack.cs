@@ -12,6 +12,7 @@ namespace Roguelike.Enemies.EnemyStates
 {
     public class RangeAttack : EnemyState
     {
+        [SerializeField] private int _damage;
         [SerializeField] private ProjectileStaticData _bullet;
         [SerializeField] private Transform _shotPoint;
 
@@ -65,7 +66,7 @@ namespace Roguelike.Enemies.EnemyStates
             projectile.transform.SetPositionAndRotation(_shotPoint.position, _shotPoint.rotation);
             projectile.gameObject.SetActive(true);
             Vector3 direction = (enemy.Target.transform.position - transform.position).normalized;
-            projectile.Init(direction);
+            projectile.Init(_damage, direction);
         }
 
         private void OnReleaseToPool(Projectile bullet) =>

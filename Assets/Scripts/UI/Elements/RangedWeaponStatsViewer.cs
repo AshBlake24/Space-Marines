@@ -37,7 +37,7 @@ namespace Roguelike.UI.Elements
 
         private void InitWeaponStats()
         {
-            _damage.text = $"{_weaponData.Projectile.Damage}x{_weaponData.BulletsPerShot}";
+            _damage.text = $"{_weaponData.Damage}x{_weaponData.BulletsPerShot}";
             _attackRate.text = $"{_weaponData.AttackRate}";
 
             AmmoData ammoData = _progressData.PlayerProgress.PlayerWeapons.RangedWeaponsData

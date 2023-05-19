@@ -80,14 +80,10 @@ namespace Roguelike.UI.Windows
             _startWeaponIcon.sprite = startWeaponData.Icon;
             _weaponName.text = startWeaponData.Name;
             _attackRate.text = $"Attack Rate: {startWeaponData.AttackRate}s";
+            _damage.text = $"Damage: {startWeaponData.Damage}";
 
             if (startWeaponData is RangedWeaponStaticData rangedWeaponData)
-            {
-                ProjectileStaticData projectileData = _staticData.GetProjectileData(rangedWeaponData.Projectile.Id);
-                
-                _damage.text = $"Damage: {projectileData.Damage}";
                 _ammo.text = $"Ammo: {rangedWeaponData.MaxAmmo}";
-            }
         }
 
         private void InitSkill(SkillStaticData skillData)

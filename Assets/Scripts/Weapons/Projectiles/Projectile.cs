@@ -13,6 +13,7 @@ namespace Roguelike.Weapons.Projectiles
     {
         [SerializeField] protected Rigidbody Rigidbody;
 
+        protected int Damage;
         protected string ImpactVFXKey;
         private float _accumulatedTime;
         private IParticlesPoolService _particlesPool;
@@ -30,18 +31,18 @@ namespace Roguelike.Weapons.Projectiles
             LifetimeTick();
         }
 
-        public virtual void Construct<TStats>(TStats stats, IObjectPool<Projectile> projectilePool)
+        public virtual void Construct<TStats>(TStats projectileStats, IObjectPool<Projectile> projectilePool)
         {
             InitializeProjectilesPool(projectilePool);
             CreateImpactVFXPool();
             CreateProjectileVFX();
         }
 
-        public void Init() =>
-            InitProjectile(transform.forward);
+        public void Init(int damage) =>
+            InitProjectile(damage, transform.forward);
 
-        public void Init(Vector3 direction) =>
-            InitProjectile(direction);
+        public void Init(int damage, Vector3 direction) =>
+            InitProjectile(damage, direction);
 
         public void ClearVFX()
         {
@@ -64,8 +65,9 @@ namespace Roguelike.Weapons.Projectiles
             _projectilesPool.Release(this);
         }
 
-        private void InitProjectile(Vector3 direction)
+        private void InitProjectile(int damage, Vector3 direction)
         {
+            Damage = damage;
             Rigidbody.angularVelocity = Vector3.zero;
             Rigidbody.AddForce(direction * Stats.Speed, ForceMode.VelocityChange);
             _accumulatedTime = 0f;

@@ -122,7 +122,7 @@ namespace Roguelike.Weapons
             projectile.transform.forward += GetSpread();
             projectile.gameObject.SetActive(true);
             projectile.ClearVFX();
-            projectile.Init();
+            projectile.Init(_stats.Damage);
         }
 
         private void OnReleaseToPool(Projectile projectile) => 
