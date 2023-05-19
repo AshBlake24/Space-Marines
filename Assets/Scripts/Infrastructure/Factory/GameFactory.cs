@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using Cinemachine;
 using Roguelike.Infrastructure.AssetManagement;
 using Roguelike.Infrastructure.Services.Environment;
 using Roguelike.Infrastructure.Services.Loading;
@@ -127,7 +128,28 @@ namespace Roguelike.Infrastructure.Factory
 
             return hud;
         }
-        
+
+        public void CreatePlayerCamera(GameObject player)
+        {
+            CinemachineBrain brain = Object.FindFirstObjectByType<CinemachineBrain>();
+
+            if (brain == null)
+                _assetProvider.Instantiate(AssetPath.CameraBrainPath);
+            
+            GameObject camera = _assetProvider.Instantiate(AssetPath.PlayerCameraPath);
+            CinemachineVirtualCamera playerCamera = camera.GetComponent<CinemachineVirtualCamera>();
+
+            if (playerCamera != null)
+            {
+                playerCamera.Follow = player.transform;
+                playerCamera.LookAt = player.transform;
+            }
+            else
+            {
+                throw new ArgumentNullException(nameof(CinemachineVirtualCamera));
+            }
+        }
+
         public GameObject GenerateLevel()
         {
             StageId id = _persistentData.PlayerProgress.WorldData.CurrentStage;

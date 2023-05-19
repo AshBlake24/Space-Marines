@@ -17,7 +17,6 @@ namespace Roguelike.Logic.CharacterSelection
 
         [SerializeField] private CinemachineVirtualCamera _topDownCamera;
         [SerializeField] private CinemachineVirtualCamera _characterSelectionCamera;
-        [SerializeField] private CinemachineVirtualCamera _playerCamera;
         [SerializeField] private Button _characterSelectionButton;
 
         private IStaticDataService _staticData;
@@ -74,7 +73,7 @@ namespace Roguelike.Logic.CharacterSelection
 
             GameObject player = InitPlayer(spawnPoint);
             InitHud(player);
-            SetPlayerCamera(player);
+            InitCamera(player);
 
             _saveLoadService.InformProgressReaders();
             _characterSelected = true;
@@ -114,13 +113,11 @@ namespace Roguelike.Logic.CharacterSelection
                 throw new ArgumentNullException(nameof(window), "The necessary component is missing");
         }
 
-        private void SetPlayerCamera(GameObject player)
+        private void InitCamera(GameObject player)
         {
             _topDownCamera.enabled = false;
             _characterSelectionCamera.enabled = false;
-            _playerCamera.enabled = true;
-            _playerCamera.Follow = player.transform;
-            _playerCamera.LookAt = player.transform;
+            _gameFactory.CreatePlayerCamera(player);
         }
 
         private GameObject InitPlayer(Transform spawnPoint) =>

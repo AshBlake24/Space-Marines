@@ -3,7 +3,6 @@ using Roguelike.Infrastructure.Factory;
 using Roguelike.Infrastructure.Services.SaveLoad;
 using Roguelike.Infrastructure.Services.Windows;
 using Roguelike.Logic;
-using Roguelike.Logic.Cameras;
 using Roguelike.StaticData.Levels;
 using Roguelike.Utilities;
 using UnityEngine;
@@ -116,7 +115,7 @@ namespace Roguelike.Infrastructure.States
             GameObject player = InitPlayer();
 
             InitHud(player, createMiniMap: true);
-            CameraFollow(player);
+            InitCamera(player);
         }
 
         private GameObject InitPlayer()
@@ -130,10 +129,8 @@ namespace Roguelike.Infrastructure.States
         private void InitHud(GameObject player, bool createMiniMap) =>
             _gameFactory.CreateHud(player, createMiniMap);
 
-        private void CameraFollow(GameObject hero) =>
-            Camera.main
-                .GetComponent<CameraFollower>()
-                .Follow(hero);
+        private void InitCamera(GameObject player) => 
+            _gameFactory.CreatePlayerCamera(player);
 
         private void InformProgressReaders() =>
             _saveLoadService.InformProgressReaders();
