@@ -69,6 +69,7 @@ namespace Roguelike.Enemies.EnemyStates
             projectile.transform.SetPositionAndRotation(_shotPoint.position, _shotPoint.rotation);
             projectile.gameObject.SetActive(true);
             Vector3 direction = (enemy.Target.transform.position - transform.position).normalized;
+            projectile.ClearVFX();
             projectile.Init(_damage, direction);
         }
 
