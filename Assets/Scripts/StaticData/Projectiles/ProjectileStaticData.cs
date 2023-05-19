@@ -8,7 +8,6 @@ namespace Roguelike.StaticData.Projectiles
         [Header("Stats")]
         public ProjectileType Type;
         public GameObject Prefab;
-        public float Speed;
         public float Lifetime;
         
         [Header("View")]

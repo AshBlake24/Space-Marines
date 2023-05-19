@@ -12,6 +12,7 @@ namespace Roguelike.StaticData.Weapons
 
         [Header("Ammo")]
         public int MaxAmmo;
+        public float ProjectileStartSpeed;
         public ProjectileStaticData Projectile;
     }
 }

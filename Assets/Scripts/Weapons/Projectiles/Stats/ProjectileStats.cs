@@ -5,7 +5,6 @@ namespace Roguelike.Weapons.Projectiles.Stats
 {
     public abstract class ProjectileStats
     {
-        private readonly float _speed;
         private readonly float _lifetime;
         private readonly ParticleSystem _muzzleFlashVFX;
         private readonly ParticleSystem _projectileVFX;
@@ -13,14 +12,12 @@ namespace Roguelike.Weapons.Projectiles.Stats
 
         protected ProjectileStats(ProjectileStaticData staticData)
         {
-            _speed = staticData.Speed;
             _lifetime = staticData.Lifetime;
             _muzzleFlashVFX = staticData.MuzzleFlashVFX;
             _projectileVFX = staticData.ProjectileVFX;
             _impactVFX = staticData.ImpactVFX;
         }
         
-        public float Speed => _speed;
         public float Lifetime => _lifetime;
         public ParticleSystem MuzzleFlashVFX => _muzzleFlashVFX;
         public ParticleSystem ProjectileVFX => _projectileVFX;

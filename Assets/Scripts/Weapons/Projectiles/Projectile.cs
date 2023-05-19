@@ -38,11 +38,11 @@ namespace Roguelike.Weapons.Projectiles
             CreateProjectileVFX();
         }
 
-        public void Init(int damage) =>
-            InitProjectile(damage, transform.forward);
+        public void Init(int damage, float startSpeed) =>
+            InitProjectile(damage, startSpeed, transform.forward);
 
-        public void Init(int damage, Vector3 direction) =>
-            InitProjectile(damage, direction);
+        public void Init(int damage, float startSpeed, Vector3 direction) =>
+            InitProjectile(damage, startSpeed, direction);
 
         public void ClearVFX()
         {
@@ -65,11 +65,11 @@ namespace Roguelike.Weapons.Projectiles
             _projectilesPool.Release(this);
         }
 
-        private void InitProjectile(int damage, Vector3 direction)
+        private void InitProjectile(int damage, float startSpeed, Vector3 direction)
         {
             Damage = damage;
             Rigidbody.angularVelocity = Vector3.zero;
-            Rigidbody.AddForce(direction * Stats.Speed, ForceMode.VelocityChange);
+            Rigidbody.AddForce(direction * startSpeed, ForceMode.VelocityChange);
             _accumulatedTime = 0f;
             _projectileVFX.Play();
         }
