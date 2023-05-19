@@ -125,11 +125,8 @@ namespace Roguelike.Weapons
             projectile.Init();
         }
 
-        private void OnReleaseToPool(Projectile projectile)
-        {
+        private void OnReleaseToPool(Projectile projectile) => 
             projectile.gameObject.SetActive(false);
-            projectile.ClearVFX();
-        }
 
         private void OnDestroyItem(Projectile projectile) => 
             Destroy(projectile.gameObject);

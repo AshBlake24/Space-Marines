@@ -8,11 +8,11 @@ namespace Roguelike.Weapons.Projectiles
 {
     public class ExplodingProjectile : Projectile
     {
+        private readonly Collider[] _hits = new Collider[5];
+        
         [SerializeField] private LayerMask _damageables;
 
         private ExplodingProjectileStats _stats;
-
-        private readonly Collider[] _hits = new Collider[5];
 
         protected override ProjectileStats Stats => _stats;
 
