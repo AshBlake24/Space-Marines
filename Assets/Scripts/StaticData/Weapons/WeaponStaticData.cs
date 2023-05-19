@@ -15,7 +15,7 @@ namespace Roguelike.StaticData.Weapons
         public GameObject InteractableWeaponPrefab;
         public Sprite Icon;
         public string Name;
-        [Range(0, 1000)] public int Damage;
-        [Range(0.05f, 2f)] public float AttackRate;
+        public int Damage;
+        public float AttackRate;
     }
 }

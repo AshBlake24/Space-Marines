@@ -58,7 +58,7 @@ namespace Roguelike.Enemies.EnemyStates
 
         private Projectile GetProjectile()
         {
-            return _factory.CreateProjectile(_bullet.Id, _projectilesPool);
+            return _factory.CreateProjectile(_bullet.Type, _projectilesPool);
         }
 
         private void OnTakeFromPool(Projectile projectile)

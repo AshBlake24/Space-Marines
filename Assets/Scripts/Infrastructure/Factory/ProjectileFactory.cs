@@ -18,9 +18,9 @@ namespace Roguelike.Infrastructure.Factory
             _staticDataService = staticDataService;
         }
 
-        public Projectile CreateProjectile(WeaponId id, IObjectPool<Projectile> pool)
+        public Projectile CreateProjectile(ProjectileType type, IObjectPool<Projectile> pool)
         {
-            ProjectileStaticData projectileData = _staticDataService.GetProjectileData(id);
+            ProjectileStaticData projectileData = _staticDataService.GetProjectileData(type);
 
             return ConstructProjectile(projectileData, pool);
         }

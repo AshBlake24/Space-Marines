@@ -21,7 +21,7 @@ namespace Roguelike.Infrastructure.Services.StaticData
         PowerupDropTable PowerupDropTable { get; }
         IReadOnlyDictionary<WeaponId, int> WeaponsDropWeights { get; }
         WeaponStaticData GetWeaponData(WeaponId id);
-        ProjectileStaticData GetProjectileData(WeaponId id);
+        ProjectileStaticData GetProjectileData(ProjectileType type);
         CharacterStaticData GetCharacterData(CharacterId id);
         SkillStaticData GetSkillData(SkillId id);
         WindowConfig GetWindowConfig(WindowId id);

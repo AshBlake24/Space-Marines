@@ -8,6 +8,6 @@ namespace Roguelike.Infrastructure.Factory
 {
     public interface IProjectileFactory : IService
     {
-        Projectile CreateProjectile(WeaponId id, IObjectPool<Projectile> pool);
+        Projectile CreateProjectile(ProjectileType type, IObjectPool<Projectile> pool);
     }
 }
