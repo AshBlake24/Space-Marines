@@ -1,4 +1,5 @@
 using System;
+using JetBrains.Annotations;
 using Roguelike.Infrastructure.Services;
 using Roguelike.Infrastructure.Services.Pools;
 using Roguelike.Weapons.Projectiles.Stats;
@@ -14,14 +15,14 @@ namespace Roguelike.Weapons.Projectiles
 
         protected string ImpactVFXKey;
         private float _accumulatedTime;
-        private ParticleSystem _projectileVFX;
-        private TrailRenderer _trailRenderer;
         private IParticlesPoolService _particlesPool;
         private IObjectPool<Projectile> _projectilesPool;
+        private ParticleSystem _projectileVFX;
+        private TrailRenderer _trailRenderer;
 
         protected abstract ProjectileStats Stats { get; }
 
-        private void Awake() => 
+        private void Awake() =>
             _particlesPool = AllServices.Container.Single<IParticlesPoolService>();
 
         private void Update()
@@ -36,17 +37,18 @@ namespace Roguelike.Weapons.Projectiles
             CreateProjectileVFX();
         }
 
-        public void Init() => 
-            InitProjectile(transform.forward * Stats.Speed);
+        public void Init() =>
+            InitProjectile(transform.forward);
 
-        public void Init(Vector3 direction) => 
+        public void Init(Vector3 direction) =>
             InitProjectile(direction);
 
         public void ClearVFX()
         {
             _projectileVFX.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
-            _trailRenderer.Clear();
-            _trailRenderer.enabled = false;
+            
+            if (_trailRenderer != null)
+                _trailRenderer.Clear();
         }
 
         protected void SpawnVFX(string key)
@@ -64,14 +66,10 @@ namespace Roguelike.Weapons.Projectiles
 
         private void InitProjectile(Vector3 direction)
         {
-            _trailRenderer.Clear();
             Rigidbody.angularVelocity = Vector3.zero;
-            
             Rigidbody.AddForce(direction * Stats.Speed, ForceMode.VelocityChange);
-            
             _accumulatedTime = 0f;
             _projectileVFX.Play();
-            _trailRenderer.enabled = true;
         }
 
         private void LifetimeTick()

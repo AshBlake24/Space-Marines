@@ -121,13 +121,14 @@ namespace Roguelike.Weapons
             projectile.transform.SetPositionAndRotation(_firePoint.position, _firePoint.rotation);
             projectile.transform.forward += GetSpread();
             projectile.gameObject.SetActive(true);
+            projectile.ClearVFX();
             projectile.Init();
         }
 
         private void OnReleaseToPool(Projectile projectile)
         {
-            projectile.ClearVFX();
             projectile.gameObject.SetActive(false);
+            projectile.ClearVFX();
         }
 
         private void OnDestroyItem(Projectile projectile) => 
