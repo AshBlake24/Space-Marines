@@ -1,14 +1,14 @@
+using DG.Tweening;
 using UnityEngine;
 
 namespace Roguelike.Loot.Chest
 {
-    [RequireComponent(typeof(WeaponChest))]
     public class WeaponChestAnimator : MonoBehaviour
     {
-        private static readonly int s_open = Animator.StringToHash("Open");
-
+        [SerializeField] private float _openingDuration;
+        [SerializeField] private Vector3 _openAngle;
+        [SerializeField] private Transform _hinge;
         [SerializeField] private WeaponChest _weaponChest;
-        [SerializeField] private Animator _animator;
 
         private void OnEnable() => 
             _weaponChest.Interacted += OnInteracted;
@@ -17,6 +17,6 @@ namespace Roguelike.Loot.Chest
             _weaponChest.Interacted -= OnInteracted;
 
         private void OnInteracted() => 
-            _animator.SetTrigger(s_open);
+            _hinge.DOLocalRotate(_openAngle, _openingDuration).SetEase(Ease.InOutQuad);
     }
 }

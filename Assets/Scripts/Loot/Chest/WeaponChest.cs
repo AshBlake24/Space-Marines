@@ -17,16 +17,11 @@ namespace Roguelike.Loot.Chest
         public Outline Outline => _outline;
         public bool IsActive { get; private set; }
 
-        public void Construct(ILootFactory lootFactory)
-        {
-            _lootFactory = lootFactory;
-            IsActive = true;
-        }
-
-        // todo remove
+        // TODO: replace to construct method
         private void Awake()
         {
             _lootFactory = AllServices.Container.Single<ILootFactory>();
+            Outline.enabled = false;
             IsActive = true;
         }
 
