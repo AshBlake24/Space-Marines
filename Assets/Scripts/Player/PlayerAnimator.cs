@@ -7,12 +7,15 @@ namespace Roguelike.Player
     public class PlayerAnimator : MonoBehaviour
     {
         private static readonly int s_speed = Animator.StringToHash("Speed");
+        private static readonly int s_velocityX = Animator.StringToHash("VelocityX");
+        private static readonly int s_velocityZ = Animator.StringToHash("VelocityZ");
         private static readonly int s_dieHash = Animator.StringToHash("Die");
         private static readonly int s_shot = Animator.StringToHash("Shot");
         private static readonly int s_hit = Animator.StringToHash("Hit");
+        private static readonly int s_aiming = Animator.StringToHash("Aiming");
         private static readonly int s_hasOneHanded = Animator.StringToHash("Has1HWeapon");
         private static readonly int s_hasTwoHanded = Animator.StringToHash("Has2HWeapon");
-        
+
         private Animator _animator;
 
         public event Action Restarted;
@@ -28,7 +31,13 @@ namespace Roguelike.Player
         public void Move(Vector3 velocity)
         {
             _animator.SetFloat(s_speed, velocity.magnitude);
+            velocity = velocity.normalized;
+            _animator.SetFloat(s_velocityX, velocity.x);
+            _animator.SetFloat(s_velocityZ, velocity.z);
         }
+
+        public void Aim(bool isAiming) =>
+            _animator.SetBool(s_aiming, isAiming);
 
         public void PlayHit() => _animator.SetTrigger(s_hit);
 

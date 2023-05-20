@@ -96,6 +96,7 @@ namespace Roguelike.Player
         {
             _target = enemy;
             _hasTarget = (_target != null);
+            _playerAnimator.Aim(_hasTarget);
         }
     }
 }
