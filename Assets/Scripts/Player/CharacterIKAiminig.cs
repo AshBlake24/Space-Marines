@@ -12,17 +12,22 @@ namespace Roguelike.Player
         [SerializeField] private TwoBoneIKConstraint[] _aimWith2H;
         [SerializeField, Range(0f,1f)] private float _disabledAimWeight = 0f;
         [SerializeField, Range(0f,1f)] private float _enabledAimWeight = 1f;
-        
-        private PlayerShooter _playerShooter;
 
-        public void Construct(PlayerShooter playerShooter)
+        private PlayerShooter _playerShooter;
+        private PlayerDeath _playerDeath;
+
+        public void Construct(PlayerShooter playerShooter, PlayerDeath playerDeath)
         {
+            _playerDeath = playerDeath;
             _playerShooter = playerShooter;
+            _playerDeath.Died += OnDied;
             _playerShooter.WeaponChanged += OnWeaponChanged;
         }
-        
-        private void OnDestroy() => 
+        private void OnDestroy()
+        {
             _playerShooter.WeaponChanged -= OnWeaponChanged;
+            _playerDeath.Died -= OnDied;
+        }
 
         private void Start()
         {
@@ -30,12 +35,19 @@ namespace Roguelike.Player
                 enabled = false;
         }
 
+        private void OnDied() => DisableConstraints();
+
+        private void DisableConstraints()
+        {
+            SetWeightToConstraint(_aimWith1H, _disabledAimWeight);
+            SetWeightToConstraint(_aimWith2H, _disabledAimWeight);
+        }
+
         private void OnWeaponChanged()
         {
             if (_playerShooter.CurrentWeapon == null)
             {
-                SetWeightToConstraint(_aimWith1H, _disabledAimWeight);
-                SetWeightToConstraint(_aimWith2H, _disabledAimWeight);
+                DisableConstraints();
             }
             else switch (_playerShooter.CurrentWeapon.Stats.Size)
             {

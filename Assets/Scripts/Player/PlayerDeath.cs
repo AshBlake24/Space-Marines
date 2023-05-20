@@ -24,6 +24,7 @@ namespace Roguelike.Player
         private bool _isDead;
 
         public event Action Resurrected;
+        public event Action Died;
 
         public void Construct(IWindowService windowService, ISaveLoadService saveLoadService)
         {
@@ -68,7 +69,8 @@ namespace Roguelike.Player
             _isDead = true;
             _animator.PlayDeath();
             _saveLoadService.SaveProgress();
-            
+            Died?.Invoke();
+
             StartCoroutine(OpenRessurectionWindowAfterDelay());
         }
 

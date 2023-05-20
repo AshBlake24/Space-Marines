@@ -186,7 +186,7 @@ namespace Roguelike.Infrastructure.Factory
             InitIK(player, character);
             
             character.GetComponent<CharacterIKAiminig>()
-                .Construct(player.GetComponent<PlayerShooter>());
+                .Construct(player.GetComponent<PlayerShooter>(), player.GetComponent<PlayerDeath>());
 
             return character;
         }
