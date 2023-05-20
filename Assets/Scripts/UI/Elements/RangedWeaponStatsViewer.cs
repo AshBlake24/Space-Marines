@@ -1,5 +1,4 @@
 using System.Linq;
-using System.Text;
 using Roguelike.Data;
 using Roguelike.Infrastructure.Services.PersistentData;
 using Roguelike.StaticData.Weapons;
@@ -31,14 +30,14 @@ namespace Roguelike.UI.Elements
         private void Initialize()
         {
             _weaponIcon.sprite = _weaponData.Icon;
-            _weaponName.text = GetNameWithSpaces(_weaponData.name);
             InitWeaponStats();
         }
 
         private void InitWeaponStats()
         {
-            _damage.text = $"{_weaponData.Damage}x{_weaponData.BulletsPerShot}";
+            _weaponName.text = _weaponData.Name;
             _attackRate.text = $"{_weaponData.AttackRate}";
+            _damage.text = $"{_weaponData.Damage}x{_weaponData.BulletsPerShot}";
 
             AmmoData ammoData = _progressData.PlayerProgress.PlayerWeapons.RangedWeaponsData
                 .SingleOrDefault(data => data.ID == _weaponData.Id)?.AmmoData;
@@ -46,23 +45,6 @@ namespace Roguelike.UI.Elements
             _ammo.text = ammoData != null
                 ? $"{ammoData.CurrentAmmo}/{ammoData.MaxAmmo}"
                 : $"{_weaponData.MaxAmmo}/{_weaponData.MaxAmmo}";
-        }
-
-        private static string GetNameWithSpaces(string weaponName)
-        {
-            StringBuilder name = new(weaponName.Length * 2);
-
-            name.Append(weaponName[0]);
-
-            for (int i = 1; i < weaponName.Length; i++)
-            {
-                if (char.IsUpper(weaponName[i]) && weaponName[i - 1] != ' ')
-                    name.Append(' ');
-                
-                name.Append(weaponName[i]);
-            }
-
-            return name.ToString();
         }
     }
 }
