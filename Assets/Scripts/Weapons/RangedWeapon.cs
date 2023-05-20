@@ -106,7 +106,7 @@ namespace Roguelike.Weapons
             _muzzleFlashVFX.Play();
 
         private Projectile GetProjectile() =>
-            _factory.CreateProjectile(_stats.ProjectileData.Type, _projectilesPool);
+            _factory.CreateProjectile(_stats.ProjectileData.Id, _projectilesPool);
 
         private Projectile CreatePoolItem()
         {

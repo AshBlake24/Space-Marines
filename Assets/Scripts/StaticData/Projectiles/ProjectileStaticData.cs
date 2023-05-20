@@ -1,11 +1,11 @@
-using Roguelike.StaticData.Weapons;
 using UnityEngine;
 
 namespace Roguelike.StaticData.Projectiles
 {
     public abstract class ProjectileStaticData : ScriptableObject
     {
-        [Header("Stats")]
+        [Header("Stats")] 
+        public ProjectileId Id;
         public ProjectileType Type;
         public GameObject Prefab;
         public float Lifetime;

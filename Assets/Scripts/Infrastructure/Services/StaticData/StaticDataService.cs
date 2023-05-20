@@ -21,7 +21,7 @@ namespace Roguelike.Infrastructure.Services.StaticData
     {
         private Dictionary<WeaponId, WeaponStaticData> _weapons;
         private Dictionary<WeaponId, int> _weaponsDropWeights;
-        private Dictionary<ProjectileType, ProjectileStaticData> _projectiles;
+        private Dictionary<ProjectileId, ProjectileStaticData> _projectiles;
         private Dictionary<CharacterId, CharacterStaticData> _characters;
         private Dictionary<SkillId, SkillStaticData> _skills;
         private Dictionary<WindowId, WindowConfig> _windows;
@@ -68,8 +68,8 @@ namespace Roguelike.Infrastructure.Services.StaticData
                 ? staticData
                 : null;
 
-        public ProjectileStaticData GetProjectileData(ProjectileType type) =>
-            _projectiles.TryGetValue(type, out ProjectileStaticData staticData)
+        public ProjectileStaticData GetProjectileData(ProjectileId id) =>
+            _projectiles.TryGetValue(id, out ProjectileStaticData staticData)
                 ? staticData
                 : null;
 
@@ -114,7 +114,7 @@ namespace Roguelike.Infrastructure.Services.StaticData
         
         private void LoadProjectiles() =>
             _projectiles = Resources.LoadAll<ProjectileStaticData>(AssetPath.ProjectilesStaticDataPath)
-                .ToDictionary(projectile => projectile.Type);
+                .ToDictionary(projectile => projectile.Id);
 
         private void LoadCharacters() =>
             _characters = Resources.LoadAll<CharacterStaticData>(AssetPath.CharactersStaticDataPath)
