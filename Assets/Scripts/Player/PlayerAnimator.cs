@@ -30,8 +30,8 @@ namespace Roguelike.Player
 
         public void Move(Vector3 velocity)
         {
+            velocity = transform.TransformDirection(velocity);
             _animator.SetFloat(s_speed, velocity.magnitude);
-            velocity = velocity.normalized;
             _animator.SetFloat(s_velocityX, velocity.x);
             _animator.SetFloat(s_velocityZ, velocity.z);
         }

@@ -89,7 +89,7 @@ namespace Roguelike.Player
         private void Move()
         {
             _characterController.Move(_direction * _moveSpeed * Time.deltaTime);
-            _playerAnimator.Move(_characterController.velocity);
+            _playerAnimator.Move(_characterController.velocity.normalized);
         }
 
         private void OnTargetChanged(EnemyHealth enemy)
