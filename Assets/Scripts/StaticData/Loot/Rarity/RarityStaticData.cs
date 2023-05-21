@@ -8,6 +8,7 @@ namespace Roguelike.StaticData.Loot.Rarity
         public RarityId Id;
         public int Weight;
         public Color Color;
-        public ParticleSystem VFX;
+        public ParticleSystem GlowVFX;
+        public ParticleSystem RingVFX;
     }
 }

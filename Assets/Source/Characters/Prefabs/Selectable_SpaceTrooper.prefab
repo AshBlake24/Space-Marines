@@ -10,11 +10,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1700146612509344, guid: 82d337d63a4f4e84dae853a5dcdfb7a8, type: 3}
       propertyPath: m_Name
-      value: SpaceSoldier
+      value: Selectable_SpaceTrooper
       objectReference: {fileID: 0}
     - target: {fileID: 4784068991407404, guid: 82d337d63a4f4e84dae853a5dcdfb7a8, type: 3}
       propertyPath: m_RootOrder
-      value: -1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4784068991407404, guid: 82d337d63a4f4e84dae853a5dcdfb7a8, type: 3}
       propertyPath: m_LocalPosition.x
@@ -101,6 +101,9 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 1700146612509344, guid: 82d337d63a4f4e84dae853a5dcdfb7a8, type: 3}
       insertIndex: -1
+      addedObject: {fileID: 1075038369787968383}
+    - targetCorrespondingSourceObject: {fileID: 1700146612509344, guid: 82d337d63a4f4e84dae853a5dcdfb7a8, type: 3}
+      insertIndex: -1
       addedObject: {fileID: 2357873726483723213}
     - targetCorrespondingSourceObject: {fileID: 1700146612509344, guid: 82d337d63a4f4e84dae853a5dcdfb7a8, type: 3}
       insertIndex: -1
@@ -114,6 +117,27 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1700146612509344, guid: 82d337d63a4f4e84dae853a5dcdfb7a8, type: 3}
   m_PrefabInstance: {fileID: 1884300094071945549}
   m_PrefabAsset: {fileID: 0}
+--- !u!95 &1075038369787968383
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1882621972136010733}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: c8c20564eb982f84a96a0d4d8e357cc5, type: 3}
+  m_Controller: {fileID: 9100000, guid: f10b01c5ffd5e4b42962a456339c16ad, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!65 &2357873726483723213
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -147,7 +171,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91ee075e68044e3e84517326c7fab1f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _id: 2
+  _id: 1
 --- !u!1 &1883483413079218027 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1436910795484710, guid: 82d337d63a4f4e84dae853a5dcdfb7a8, type: 3}

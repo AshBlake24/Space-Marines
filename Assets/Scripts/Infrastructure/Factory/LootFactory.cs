@@ -68,7 +68,8 @@ namespace Roguelike.Infrastructure.Factory
                 .Instantiate(AssetPath.InteractableWeaponPath, position)
                 .GetComponent<InteractableWeapon>();
 
-            Object.Instantiate(rarityData.VFX, interactableWeapon.transform);
+            Object.Instantiate(rarityData.RingVFX, interactableWeapon.transform);
+            Object.Instantiate(rarityData.GlowVFX, interactableWeapon.transform);
             GameObject model = Object.Instantiate(weaponData.InteractableWeaponPrefab, interactableWeapon.ModelContainer);
             interactableWeapon.Construct(weaponId, model.GetComponent<Outline>());
 
