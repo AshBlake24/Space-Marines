@@ -10,7 +10,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1298641209967538, guid: 80a5aa5d3c514d842841d031ae24d8e1, type: 3}
       propertyPath: m_Name
-      value: Selectable_Soldier
+      value: Selectable_Robot
       objectReference: {fileID: 0}
     - target: {fileID: 1926145621651910, guid: 80a5aa5d3c514d842841d031ae24d8e1, type: 3}
       propertyPath: m_Name
@@ -68,6 +68,14 @@ PrefabInstance:
       propertyPath: m_ApplyRootMotion
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 137003863121227428, guid: 80a5aa5d3c514d842841d031ae24d8e1, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 4300038, guid: 4cf8e35218228c74e87ae151b5dc4516, type: 3}
+    - target: {fileID: 137003863121227428, guid: 80a5aa5d3c514d842841d031ae24d8e1, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 129704b08c93bae4a89513e33c890d5e, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 1294722737895250, guid: 80a5aa5d3c514d842841d031ae24d8e1, type: 3}
@@ -139,7 +147,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91ee075e68044e3e84517326c7fab1f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _id: 0
+  _id: 1
 --- !u!1 &8263827280495521027 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1682502484032092, guid: 80a5aa5d3c514d842841d031ae24d8e1, type: 3}
