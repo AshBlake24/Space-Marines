@@ -40,10 +40,21 @@ namespace Roguelike.Infrastructure.Factory
             _weaponsTotalWeight = _staticData.WeaponsDropWeights.Sum(x => x.Value);
         }
 
-        public void CreatePowerup(Vector3 position)
+        public void CreateRandomPowerup(Vector3 position) => 
+            CreatePowerup(GetDroppedPowerup(), position);
+
+        public void CreateConcretePowerup(PowerupId powerupId, Vector3 position) => 
+            CreatePowerup(powerupId, position);
+
+        public GameObject CreateRandomWeapon(Vector3 position) => 
+            CreateWeapon(GetDroppedWeapon(), position);
+
+        public GameObject CreateConcreteWeapon(WeaponId weaponId, Vector3 position) => 
+            CreateWeapon(weaponId, position);
+
+        private void CreatePowerup(PowerupId powerupId, Vector3 position)
         {
-            PowerupId droppedPowerup = GetDroppedPowerup();
-            PowerupStaticData powerupData = _staticData.GetPowerupData(droppedPowerup);
+            PowerupStaticData powerupData = _staticData.GetPowerupData(powerupId);
 
             Object.Instantiate(powerupData.Prefab, position, Quaternion.identity)
                 .GetComponent<Powerup>()
@@ -52,12 +63,6 @@ namespace Roguelike.Infrastructure.Factory
             if (powerupData.Effect is ILastingEffect lastingEffect)
                 lastingEffect.Construct(_coroutineRunner);
         }
-
-        public GameObject CreateRandomWeapon(Vector3 position) => 
-            CreateWeapon(GetDroppedWeapon(), position);
-
-        public GameObject CreateConcreteWeapon(WeaponId weaponId, Vector3 position) => 
-            CreateWeapon(weaponId, position);
 
         private GameObject CreateWeapon(WeaponId weaponId, Vector3 position)
         {

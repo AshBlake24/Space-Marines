@@ -29,7 +29,7 @@ namespace Roguelike.Enemies
             float roll = _randomService.Next(0f, 100f);
 
             if (roll <= _powerupDropChance)
-                _lootFactory.CreatePowerup(transform.position);
+                _lootFactory.CreateRandomPowerup(transform.position);
         }
     }
 }
