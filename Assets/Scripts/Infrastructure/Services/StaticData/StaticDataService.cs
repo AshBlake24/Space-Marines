@@ -26,7 +26,7 @@ namespace Roguelike.Infrastructure.Services.StaticData
         private Dictionary<SkillId, SkillStaticData> _skills;
         private Dictionary<WindowId, WindowConfig> _windows;
         private Dictionary<EnemyId, EnemyStaticData> _enemies;
-        private Dictionary<StageId, LevelStaticData> _levels;
+        private Dictionary<StageId, StageStaticData> _stages;
         private Dictionary<PowerupId, PowerupStaticData> _powerups;
         private Dictionary<RarityId, RarityStaticData> _rarity;
 
@@ -43,7 +43,7 @@ namespace Roguelike.Infrastructure.Services.StaticData
             LoadSkills();
             LoadWindows();
             LoadEnemies();
-            LoadLevels();
+            LoadStages();
             LoadPlayer();
             LoadRarity();
             LoadPowerups();
@@ -93,8 +93,8 @@ namespace Roguelike.Infrastructure.Services.StaticData
                 ? windowConfig
                 : null;
 
-        public LevelStaticData GetLevelData(StageId id) =>
-            _levels.TryGetValue(id, out LevelStaticData staticData)
+        public StageStaticData GetStageData(StageId id) =>
+            _stages.TryGetValue(id, out StageStaticData staticData)
                 ? staticData
                 : null;
 
@@ -128,9 +128,9 @@ namespace Roguelike.Infrastructure.Services.StaticData
             _enemies = Resources.LoadAll<EnemyStaticData>(AssetPath.EnemiesPath)
                 .ToDictionary(enemy => enemy.Id);
 
-        private void LoadLevels() =>
-            _levels = Resources.LoadAll<LevelStaticData>(AssetPath.LevelsPath)
-                .ToDictionary(level => level.Id);
+        private void LoadStages() =>
+            _stages = Resources.LoadAll<StageStaticData>(AssetPath.LevelsPath)
+                .ToDictionary(stage => stage.Id);
 
         private void LoadPowerups() =>
             _powerups = Resources.LoadAll<PowerupStaticData>(AssetPath.PowerupStaticDataPath)

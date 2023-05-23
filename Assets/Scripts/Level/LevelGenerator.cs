@@ -16,7 +16,7 @@ namespace Roguelike.Level
         private IEnemyFactory _enemyFactory;
         private ISceneLoadingService _sceneLoadingService;
         private IPersistentDataService _persistentDataService;
-        private LevelStaticData _data;
+        private StageStaticData _data;
         private Transform _roomContainer;
         private FinishLevelTriger _enterTriger;
         private ExitPoint _connectingPoint;
@@ -25,12 +25,12 @@ namespace Roguelike.Level
         private int _roomsCount;
         private int _bonusRoomCount;
 
-        public void Construct(LevelStaticData levelData, IPersistentDataService persistentDataService,
+        public void Construct(StageStaticData stageData, IPersistentDataService persistentDataService,
             ISceneLoadingService sceneLoadingService, IEnemyFactory enemyFactory)
         {
-            _data = levelData;
-            _roomsCount = levelData.ArenasCount;
-            _bonusRoomCount = levelData.TreasureRoomsCount;
+            _data = stageData;
+            _roomsCount = stageData.ArenasCount;
+            _bonusRoomCount = stageData.TreasureRoomsCount;
             _sceneLoadingService = sceneLoadingService;
             _persistentDataService = persistentDataService;
             _enemyFactory = enemyFactory;

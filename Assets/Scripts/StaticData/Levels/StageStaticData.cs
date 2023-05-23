@@ -5,9 +5,9 @@ using UnityEngine;
 
 namespace Roguelike.StaticData.Levels
 {
-    [CreateAssetMenu(fileName = "New level", menuName = "Static Data/Level/New level")]
+    [CreateAssetMenu(fileName = "New Stage", menuName = "Static Data/Level/Stage")]
 
-    public class LevelStaticData : ScriptableObject
+    public class StageStaticData : ScriptableObject
     {
         [Header("Stats")]
         public StageId Id;
