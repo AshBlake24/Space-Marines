@@ -27,6 +27,7 @@ namespace Roguelike.Infrastructure.Services.StaticData
         WindowConfig GetWindowConfig(WindowId id);
         EnemyStaticData GetEnemyData(EnemyId id);
         StageStaticData GetStageData(StageId id);
+        RegionStaticData GetRegionData(LevelId id);
         PowerupStaticData GetPowerupData(PowerupId id);
         RarityStaticData GetRarityData(RarityId id);
         void Load();

@@ -10,13 +10,12 @@ namespace Roguelike.Infrastructure.AssetManagement
         public const string WindowsStaticDataPath = "StaticData/UI/WindowStaticData";
         public const string LevelGeneratorPath = "LevelGenerator/LevelGenerator";
         public const string EnemiesPath = "StaticData/Enemies";
-        public const string LevelsPath = "StaticData/Levels";
-        public const string SpawnerPath = "StaticData/Levels/Spawner";
+        public const string StagesPath = "StaticData/Levels";
+        public const string RegionsPath = "StaticData/Levels";
         public const string DesktopHudPath = "HUD/DesktopHUDCanvas";
         public const string MobileHudPath = "HUD/MobileHUDCanvas";
         public const string PlayerPath = "Player/Player";
         public const string PlayerCameraPath = "Cameras/PlayerCamera";
-        public const string CameraBrainPath = "Cameras/CameraBrain";
         public const string UIRootPath = "UI/UIRoot";
         public const string GameConfigPath = "StaticData/GameConfig";
         public const string MiniMap = "UI/Elements/MiniMap";
