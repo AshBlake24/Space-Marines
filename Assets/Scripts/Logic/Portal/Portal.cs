@@ -6,21 +6,32 @@ using Roguelike.Player;
 using Roguelike.StaticData.Levels;
 using UnityEngine;
 
-namespace Roguelike.Logic
+namespace Roguelike.Logic.Portal
 {
     [RequireComponent(typeof(Collider))]
-    public class EnterTheDungeon : MonoBehaviour
+    public class Portal : MonoBehaviour
     {
-        private const LevelId DungeonId = LevelId.Dungeon;
-        private const StageId StartDungeonStage = StageId.Level11;
-        
+        [SerializeField] private Collider _collider;
+        [SerializeField] private ParticleSystem _portalVFX;
+
         private IPersistentDataService _progressService;
         private ISceneLoadingService _sceneLoadingService;
+        private LevelId _regionId;
+        private StageId _startStageId;
 
         private void Awake()
         {
+            _collider.enabled = false;
             _progressService = AllServices.Container.Single<IPersistentDataService>();
             _sceneLoadingService = AllServices.Container.Single<ISceneLoadingService>();
+        }
+
+        public void Init(LevelId regionId, StageId startStageId)
+        {
+            _regionId = regionId;
+            _startStageId = startStageId;
+            _collider.enabled = true;
+            _portalVFX.Play();
         }
         
         private void OnTriggerEnter(Collider other)
@@ -28,10 +39,10 @@ namespace Roguelike.Logic
             if (other.TryGetComponent(out PlayerHealth player))
             {
                 _progressService.PlayerProgress.WorldData = new WorldData(
-                    DungeonId,
-                    StartDungeonStage);
+                    _regionId,
+                    _startStageId);
                 
-                _sceneLoadingService.Load(DungeonId);
+                _sceneLoadingService.Load(_regionId);
             }
         }
     }
