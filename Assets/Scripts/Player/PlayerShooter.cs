@@ -92,11 +92,11 @@ namespace Roguelike.Player
                 .ToArray();
 
             progress.PlayerWeapons.Weapons = weaponsId;
+            progress.PlayerWeapons.CurrentWeapon = _weapons[_currentWeaponIndex].Stats.ID;
         }
 
-        public void ReadProgress(PlayerProgress progress)
-        {
-        }
+        public void ReadProgress(PlayerProgress progress) => 
+            TrySwitchTo(progress.PlayerWeapons.CurrentWeapon);
 
         public void SetAttackSpeedMultiplier(float attackSpeedMultiplier)
         {
@@ -143,6 +143,7 @@ namespace Roguelike.Player
 
             IWeapon weapon = _weaponFactory.CreateWeapon(weaponId, _weaponSpawnPoint.transform);
             _weapons[emptySlot] = weapon;
+            
             SwitchTo(weapon);
 
             return true;
@@ -184,6 +185,14 @@ namespace Roguelike.Player
                 _lastShotTime = Time.time;
                 _playerAnimator.PlayShot();
             }
+        }
+
+        private void TrySwitchTo(WeaponId weaponId)
+        {
+            IWeapon weapon = _weapons.SingleOrDefault(weapon => weapon != null && weapon.Stats.ID == weaponId);
+            
+            if (weapon != null)
+                SwitchTo(weapon);
         }
 
         private void SwitchTo(IWeapon weapon)

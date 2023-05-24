@@ -10,6 +10,7 @@ namespace Roguelike.Data
     {
         public WeaponId[] Weapons;
         public List<RangedWeaponData> RangedWeaponsData;
+        public WeaponId CurrentWeapon;
 
         public PlayerWeapons(IWeapon startWeapon, int maxWeaponsCount)
         {
@@ -39,6 +40,7 @@ namespace Roguelike.Data
         private void InitStartWeapon(IWeapon startWeapon)
         {
             Weapons[0] = startWeapon.Stats.ID;
+            CurrentWeapon = startWeapon.Stats.ID;
             
             if (startWeapon is RangedWeapon rangedWeapon)
                 SaveRangedWeapon(
