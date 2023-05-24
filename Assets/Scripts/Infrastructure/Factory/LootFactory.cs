@@ -76,8 +76,9 @@ namespace Roguelike.Infrastructure.Factory
             Object.Instantiate(rarityData.RingVFX, interactableWeapon.transform);
             Object.Instantiate(rarityData.GlowVFX, interactableWeapon.transform);
             GameObject model = Object.Instantiate(weaponData.InteractableWeaponPrefab, interactableWeapon.ModelContainer);
+            
             interactableWeapon.Construct(weaponId, model.GetComponent<Outline>());
-
+            
             return interactableWeapon.gameObject;
         }
 

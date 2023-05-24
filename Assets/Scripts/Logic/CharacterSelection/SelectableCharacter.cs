@@ -1,3 +1,4 @@
+using System;
 using Roguelike.StaticData.Characters;
 using UnityEngine;
 

@@ -9,6 +9,7 @@ namespace Roguelike.Loot.Chest
     public class WeaponChest : MonoBehaviour, IInteractable
     {
         [SerializeField] private Outline _outline;
+        [SerializeField] private ParticleSystem _lootVFX;
         
         private ILootFactory _lootFactory;
 
@@ -17,7 +18,6 @@ namespace Roguelike.Loot.Chest
         public Outline Outline => _outline;
         public bool IsActive { get; private set; }
 
-        // TODO: replace to construct method
         private void Awake()
         {
             _lootFactory = AllServices.Container.Single<ILootFactory>();
@@ -27,8 +27,9 @@ namespace Roguelike.Loot.Chest
 
         public void Interact(GameObject interactor)
         {
-            IsActive = false;
+            _lootVFX.Stop();
             Interacted?.Invoke();
+            IsActive = false;
             GameObject weapon = _lootFactory.CreateRandomWeapon(transform.position);
             weapon.transform.rotation = transform.rotation;
         }
