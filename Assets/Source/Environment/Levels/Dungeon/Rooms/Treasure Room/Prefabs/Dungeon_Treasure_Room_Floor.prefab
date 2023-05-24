@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1001 &8801152335714525161
+--- !u!1001 &4759741189407945183
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -53,25 +53,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 07efe961c8af57a4d878989416d5d537, type: 3}
       propertyPath: m_Name
-      value: Dungeon_Treasure_Room_Floor
+      value: Dungeon_Treasure_Room_Floor Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 07efe961c8af57a4d878989416d5d537, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 07efe961c8af57a4d878989416d5d537, type: 3}
---- !u!1 &8566568573446660792 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 07efe961c8af57a4d878989416d5d537, type: 3}
-  m_PrefabInstance: {fileID: 8801152335714525161}
-  m_PrefabAsset: {fileID: 0}
---- !u!65 &7112103375826621485
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8566568573446660792}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 15.906847, y: 0.1, z: 17.72877}
-  m_Center: {x: -0.21702528, y: -0.05, z: -1.3468928}
