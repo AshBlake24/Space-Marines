@@ -9,7 +9,6 @@ namespace Roguelike.Loot.Chest
     public class WeaponChest : MonoBehaviour, IInteractable
     {
         [SerializeField] private Outline _outline;
-        [SerializeField] private ParticleSystem _lootVFX;
         
         private ILootFactory _lootFactory;
 
@@ -27,7 +26,6 @@ namespace Roguelike.Loot.Chest
 
         public void Interact(GameObject interactor)
         {
-            _lootVFX.Stop();
             Interacted?.Invoke();
             IsActive = false;
             GameObject weapon = _lootFactory.CreateRandomWeapon(transform.position);

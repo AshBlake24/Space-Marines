@@ -767,6 +767,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 9209555370473766789, guid: d16b4c392f44fca48ba1e16e4db8924d, type: 3}
   m_PrefabInstance: {fileID: 219710388559770781}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &716384630 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1700708898327373152, guid: d16b4c392f44fca48ba1e16e4db8924d, type: 3}
+  m_PrefabInstance: {fileID: 219710388559770781}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07d84428a98e4ffdabacb000ae76914c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &866425856
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1212,6 +1223,11 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1204326357 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1060176914556170, guid: bdcfeb8672d996f40ba6a9d5895248f3, type: 3}
+  m_PrefabInstance: {fileID: 1480450396732963378}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1204796969
 GameObject:
   m_ObjectHideFlags: 0
@@ -1952,7 +1968,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   outlineMode: 1
   outlineColor: {r: 1, g: 0.82790744, b: 0.6, a: 1}
-  outlineWidth: 3
+  outlineWidth: 5
   precomputeOutline: 1
   bakeKeys:
   - {fileID: -2089217059845879562, guid: b78fc7273fde0204ea2a939be0c250e9, type: 3}
@@ -4572,6 +4588,20 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4025617714519272, guid: bdcfeb8672d996f40ba6a9d5895248f3, type: 3}
   m_PrefabInstance: {fileID: 1480450396732963378}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1480450396732963382
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1204326357}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40c95e3c8a6c4befbffba5ddefbb9f7e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _chest: {fileID: 716384630}
+  _markerEffect: {fileID: 1480450396732963379}
 --- !u!1001 &3112124662626756725
 PrefabInstance:
   m_ObjectHideFlags: 0
