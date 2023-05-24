@@ -15,7 +15,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &104669502379999944
 Transform:
@@ -60,7 +60,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &7064764744060756440
 Transform:
@@ -123,7 +123,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 53deb04ba1aef2b428435a2960e9087c, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 53deb04ba1aef2b428435a2960e9087c, type: 3}
       propertyPath: m_LocalRotation.z
@@ -140,6 +140,10 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 53deb04ba1aef2b428435a2960e9087c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 53deb04ba1aef2b428435a2960e9087c, type: 3}
+      propertyPath: m_ScaleInLightmap
+      value: 0.6
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 53deb04ba1aef2b428435a2960e9087c, type: 3}
       propertyPath: m_Name
