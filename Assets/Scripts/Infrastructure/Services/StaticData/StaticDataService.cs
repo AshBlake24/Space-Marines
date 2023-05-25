@@ -26,7 +26,36 @@ namespace Roguelike.Infrastructure.Services.StaticData
         public GameConfig GameConfig { get; private set; }
         public PowerupDropTable PowerupDropTable { get; private set; }
 
-        public void Load()
+        public void Load() => 
+            LoadAllStaticData();
+
+        public TResult GetDataById<TKey, TResult>(TKey id) 
+            where TKey : Enum
+            where TResult : IStaticData
+        {
+            KeyValuePair<Type, Dictionary<Enum, IStaticData>> data = 
+                _data.SingleOrDefault(data => data.Key == typeof(TKey));
+
+            if (data.Equals(default(KeyValuePair<Type, Dictionary<Enum, IStaticData>>)))
+                throw new ArgumentNullException($"{typeof(TKey)}", "This data does not exist");
+
+            return (TResult) data.Value.SingleOrDefault(staticData => Equals(staticData.Key, id)).Value;
+        }
+
+        private void LoadData<TData>(string path) where TData : ScriptableObject, IStaticData
+        {
+            Dictionary<Enum, IStaticData> data = Resources
+                .LoadAll<TData>(path)
+                .ToDictionary(weapon => weapon.Key, weapon => weapon as IStaticData);
+
+            if (data.Count > 0)
+            {
+                IStaticData staticData = data.Select(pair => pair.Value).First();
+                _data.Add(staticData.Key.GetType(), data);
+            }
+        }
+
+        private void LoadAllStaticData()
         {
             LoadWeapons();
             LoadProjectiles();
@@ -41,32 +70,6 @@ namespace Roguelike.Infrastructure.Services.StaticData
             LoadPlayer();
             LoadGameConfig();
             LoadPowerupDropTable();
-        }
-
-        public TResult GetDataById<TKey, TResult>(TKey id) 
-            where TKey : Enum
-            where TResult : IStaticData
-        {
-            KeyValuePair<Type, Dictionary<Enum, IStaticData>> data = 
-                _data.SingleOrDefault(data => data.Key == typeof(TKey));
-
-            if (data.Equals(default(KeyValuePair<Type, Dictionary<Enum, IStaticData>>)))
-                throw new ArgumentNullException($"{typeof(TKey)}", "This data does not exist");
-
-            return (TResult) data.Value.SingleOrDefault(staticData => Equals(staticData.Key, id)).Value;
-        }
-        
-        private void LoadData<TData>(string path) where TData : ScriptableObject, IStaticData
-        {
-            Dictionary<Enum, IStaticData> data = Resources
-                .LoadAll<TData>(path)
-                .ToDictionary(weapon => weapon.Key, weapon => weapon as IStaticData);
-
-            if (data.Count > 0)
-            {
-                IStaticData staticData = data.Select(pair => pair.Value).First();
-                _data.Add(staticData.Key.GetType(), data);
-            }
         }
 
         private void LoadWeapons() => LoadData<WeaponStaticData>(AssetPath.WeaponsStaticDataPath);
