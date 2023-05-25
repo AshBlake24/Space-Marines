@@ -84,6 +84,8 @@ namespace Roguelike.Enemies.EnemyStates
             GameObject mine = _factory.CreateEnemy(transform, _mine, enemy.Target);
 
             mine.transform.SetParent(_parent.transform);
+
+            mine.GetComponent<EnemyStateMachine>().enabled = true;
         }
     }
 }

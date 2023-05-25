@@ -59,6 +59,8 @@ namespace Roguelike.Enemies
         {
             GameObject enemyPrefab = _enemyFactory.CreateEnemy(spawnPosition, _data.Enemies[Random.Range(0, _data.Enemies.Count)], target);
 
+            enemyPrefab.SetActive(false);
+
             _encounterComplexity -= enemyPrefab.GetComponentInChildren<EnemyStateMachine>().Enemy.Danger;
 
             return enemyPrefab;

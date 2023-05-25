@@ -45,6 +45,8 @@ namespace Roguelike.Enemies
 
             _enemy.SetActive(true);
 
+            _enemy.GetComponent<EnemyStateMachine>().enabled = true;
+
             EnemySpawned?.Invoke(this, _enemy);
         }
     }
