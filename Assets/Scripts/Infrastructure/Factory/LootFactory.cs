@@ -24,7 +24,9 @@ namespace Roguelike.Infrastructure.Factory
         private readonly IStaticDataService _staticData;
         private readonly IReadOnlyList<PowerupConfig> _powerupDropTable;
         private readonly int _powerupsTotalWeight;
-        private readonly int _weaponsTotalWeight;
+
+        private Dictionary<WeaponId, int> _weaponsDropWeights;
+        private int _weaponsTotalWeight;
 
         public LootFactory(IAssetProvider assetProvider, IRandomService randomService,
             IParticlesPoolService particlesPoolService,
@@ -37,7 +39,7 @@ namespace Roguelike.Infrastructure.Factory
             _staticData = staticData;
             _powerupDropTable = _staticData.PowerupDropTable.PowerupConfigs;
             _powerupsTotalWeight = _powerupDropTable.Sum(x => x.Weight);
-            _weaponsTotalWeight = _staticData.WeaponsDropWeights.Sum(x => x.Value);
+            LoadWeaponsDropWeights();
         }
 
         public void CreateRandomPowerup(Vector3 position) => 
@@ -101,7 +103,7 @@ namespace Roguelike.Infrastructure.Factory
         {
             int roll = _randomService.Next(0, _weaponsTotalWeight);
             
-            foreach ((WeaponId weaponId, int weight) in _staticData.WeaponsDropWeights)
+            foreach ((WeaponId weaponId, int weight) in _weaponsDropWeights)
             {
                 roll -= weight;
 
@@ -109,7 +111,20 @@ namespace Roguelike.Infrastructure.Factory
                     return weaponId;
             }
 
-            throw new ArgumentOutOfRangeException(nameof(_staticData.WeaponsDropWeights), "Incorrectly placed weights");
+            throw new ArgumentOutOfRangeException(nameof(_weaponsDropWeights), "Incorrectly placed weights");
+        }
+        
+        private void LoadWeaponsDropWeights()
+        {
+            foreach (int id in Enum.GetValues(typeof(WeaponId)))
+            {
+                WeaponStaticData weaponData = _staticData.GetDataById<WeaponId, WeaponStaticData>((WeaponId) id);
+                RarityStaticData rarityData = _staticData.GetDataById<RarityId, RarityStaticData>(weaponData.Rarity);
+
+                _weaponsDropWeights.Add(weaponData.Id, rarityData.Weight);
+            }
+            
+            _weaponsTotalWeight = _weaponsDropWeights.Sum(x => x.Value);
         }
     }
 }

@@ -21,13 +21,10 @@ namespace Roguelike.Infrastructure.Services.StaticData
     public class StaticDataService : IStaticDataService
     {
         private readonly Dictionary<Type, Dictionary<Enum, IStaticData>> _data = new();
-
-        private Dictionary<WeaponId, int> _weaponsDropWeights;
         
         public PlayerStaticData Player { get; private set; }
         public GameConfig GameConfig { get; private set; }
         public PowerupDropTable PowerupDropTable { get; private set; }
-        public IReadOnlyDictionary<WeaponId, int> WeaponsDropWeights => _weaponsDropWeights;
 
         public void Load()
         {
@@ -44,7 +41,6 @@ namespace Roguelike.Infrastructure.Services.StaticData
             LoadPlayer();
             LoadGameConfig();
             LoadPowerupDropTable();
-            LoadWeaponsDropWeights();
         }
 
         public TResult GetDataById<TKey, TResult>(TKey id) 
@@ -70,23 +66,6 @@ namespace Roguelike.Infrastructure.Services.StaticData
             {
                 IStaticData staticData = data.Select(pair => pair.Value).First();
                 _data.Add(staticData.Key.GetType(), data);
-            }
-        }
-        
-        private void LoadWeaponsDropWeights()
-        {
-            _weaponsDropWeights = new Dictionary<WeaponId, int>();
-
-            IEnumerable<WeaponStaticData> data = 
-                _data.Single(data => data.Key == typeof(WeaponId))
-                    .Value
-                    .Where(data => data.Value is WeaponStaticData)
-                    .Select(data => (WeaponStaticData) data.Value);
-
-            foreach (WeaponStaticData weaponData in data)
-            {
-                RarityStaticData rarityData = GetDataById<RarityId, RarityStaticData>(weaponData.Rarity);
-                _weaponsDropWeights.Add(weaponData.Id, rarityData.Weight);
             }
         }
 
