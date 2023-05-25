@@ -22,11 +22,11 @@ namespace Roguelike.Infrastructure.Factory
         private readonly ICoroutineRunner _coroutineRunner;
         private readonly IParticlesPoolService _particlesPoolService;
         private readonly IStaticDataService _staticData;
-        private readonly IReadOnlyList<PowerupConfig> _powerupDropTable;
-        private readonly int _powerupsTotalWeight;
-
-        private Dictionary<WeaponId, int> _weaponsDropWeights;
+        private readonly Dictionary<WeaponId, int> _weaponsDropWeights = new();
+        
+        private List<PowerupConfig> _powerupDropTable;
         private int _weaponsTotalWeight;
+        private int _powerupsTotalWeight;
 
         public LootFactory(IAssetProvider assetProvider, IRandomService randomService,
             IParticlesPoolService particlesPoolService,
@@ -37,9 +37,8 @@ namespace Roguelike.Infrastructure.Factory
             _coroutineRunner = coroutineRunner;
             _particlesPoolService = particlesPoolService;
             _staticData = staticData;
-            _powerupDropTable = _staticData.PowerupDropTable.PowerupConfigs;
-            _powerupsTotalWeight = _powerupDropTable.Sum(x => x.Weight);
             LoadWeaponsDropWeights();
+            LoadPowerupDropTable();
         }
 
         public void CreateRandomPowerup(Vector3 position) => 
@@ -116,8 +115,6 @@ namespace Roguelike.Infrastructure.Factory
         
         private void LoadWeaponsDropWeights()
         {
-            _weaponsDropWeights = new Dictionary<WeaponId, int>();
-
             int weaponsCount = Enum.GetValues(typeof(WeaponId)).Length - 1;
             
             for (int i = 0; i < weaponsCount; i++)
@@ -129,6 +126,12 @@ namespace Roguelike.Infrastructure.Factory
             }
             
             _weaponsTotalWeight = _weaponsDropWeights.Sum(x => x.Value);
+        }
+        
+        private void LoadPowerupDropTable()
+        {
+            _powerupDropTable = Resources.Load<PowerupDropTable>(AssetPath.PowerupDropTablePath).PowerupConfigs;
+            _powerupsTotalWeight = _powerupDropTable.Sum(x => x.Weight);
         }
     }
 }
