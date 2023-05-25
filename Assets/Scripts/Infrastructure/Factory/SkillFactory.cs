@@ -24,8 +24,10 @@ namespace Roguelike.Infrastructure.Factory
         
         public void CreatePlayerSkill(GameObject player)
         {
-            CharacterStaticData characterData = _staticData.GetCharacterData(_persistentData.PlayerProgress.Character);
-            SkillStaticData skillData = _staticData.GetSkillData(characterData.Skill);
+            CharacterStaticData characterData = _staticData
+                .GetDataById<CharacterId, CharacterStaticData>(_persistentData.PlayerProgress.Character);
+            SkillStaticData skillData = _staticData
+                .GetDataById<SkillId, SkillStaticData>(characterData.Skill);
 
             ISkill skill = ConstructSkill(skillData, player);
 

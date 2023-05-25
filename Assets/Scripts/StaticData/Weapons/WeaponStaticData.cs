@@ -1,10 +1,10 @@
-using Roguelike.StaticData.Loot;
+using Roguelike.Infrastructure.Services.StaticData;
 using Roguelike.StaticData.Loot.Rarity;
 using UnityEngine;
 
 namespace Roguelike.StaticData.Weapons
 {
-    public abstract class WeaponStaticData : ScriptableObject
+    public abstract class WeaponStaticData : ScriptableObject, IStaticData
     {
         [Header("Stats")]
         public WeaponId Id;

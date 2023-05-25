@@ -1,8 +1,9 @@
+using Roguelike.Infrastructure.Services.StaticData;
 using UnityEngine;
 
 namespace Roguelike.StaticData.Skills
 {
-    public abstract class SkillStaticData : ScriptableObject
+    public abstract class SkillStaticData : ScriptableObject, IStaticData
     {
         public SkillId Id;
         public Sprite Icon;

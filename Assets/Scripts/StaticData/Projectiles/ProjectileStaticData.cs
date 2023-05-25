@@ -1,8 +1,9 @@
+using Roguelike.Infrastructure.Services.StaticData;
 using UnityEngine;
 
 namespace Roguelike.StaticData.Projectiles
 {
-    public abstract class ProjectileStaticData : ScriptableObject
+    public abstract class ProjectileStaticData : ScriptableObject, IStaticData
     {
         [Header("Stats")] 
         public ProjectileId Id;

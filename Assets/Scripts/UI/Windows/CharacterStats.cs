@@ -47,7 +47,7 @@ namespace Roguelike.UI.Windows
         public void Construct(CharacterId characterId, CharacterSelectionMode selectionMode,
             IStaticDataService staticDataService, IWeaponFactory weaponFactory)
         {
-            _characterData = staticDataService.GetCharacterData(characterId);
+            _characterData = staticDataService.GetDataById<CharacterId, CharacterStaticData>(characterId);
             _selectionMode = selectionMode;
             _weaponFactory = weaponFactory;
             _staticData = staticDataService;
@@ -55,8 +55,8 @@ namespace Roguelike.UI.Windows
 
         protected override void Initialize()
         {
-            WeaponStaticData startWeaponData = _staticData.GetWeaponData(_characterData.StartWeapon);
-            SkillStaticData skillData = _staticData.GetSkillData(_characterData.Skill);
+            WeaponStaticData startWeaponData = _staticData.GetDataById<WeaponId, WeaponStaticData>(_characterData.StartWeapon);
+            SkillStaticData skillData = _staticData.GetDataById<SkillId, SkillStaticData>(_characterData.Skill);
 
             InitCharacter();
             InitWeapon(startWeaponData);

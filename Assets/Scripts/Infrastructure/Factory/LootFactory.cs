@@ -54,7 +54,7 @@ namespace Roguelike.Infrastructure.Factory
 
         private void CreatePowerup(PowerupId powerupId, Vector3 position)
         {
-            PowerupStaticData powerupData = _staticData.GetPowerupData(powerupId);
+            PowerupStaticData powerupData = _staticData.GetDataById<PowerupId, PowerupStaticData>(powerupId);
 
             Object.Instantiate(powerupData.Prefab, position, Quaternion.identity)
                 .GetComponent<Powerup>()
@@ -66,8 +66,8 @@ namespace Roguelike.Infrastructure.Factory
 
         private GameObject CreateWeapon(WeaponId weaponId, Vector3 position)
         {
-            WeaponStaticData weaponData = _staticData.GetWeaponData(weaponId);
-            RarityStaticData rarityData = _staticData.GetRarityData(weaponData.Rarity);
+            WeaponStaticData weaponData = _staticData.GetDataById<WeaponId, WeaponStaticData>(weaponId);
+            RarityStaticData rarityData = _staticData.GetDataById<RarityId, RarityStaticData>(weaponData.Rarity);
 
             InteractableWeapon interactableWeapon = _assetProvider
                 .Instantiate(AssetPath.InteractableWeaponPath, position)

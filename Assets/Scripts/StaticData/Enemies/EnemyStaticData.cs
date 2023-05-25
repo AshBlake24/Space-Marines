@@ -1,10 +1,11 @@
+using Roguelike.Infrastructure.Services.StaticData;
 using UnityEngine;
 
 namespace Roguelike.StaticData.Enemies
 {
     [CreateAssetMenu(fileName = "Enemy", menuName = "Static Data/New enemy")]
 
-    public class EnemyStaticData : ScriptableObject
+    public class EnemyStaticData : ScriptableObject, IStaticData
     {
         [Header ("Stats")]
         public EnemyId Id;

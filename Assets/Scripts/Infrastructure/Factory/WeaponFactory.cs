@@ -31,7 +31,7 @@ namespace Roguelike.Infrastructure.Factory
             if (id == WeaponId.Unknow)
                 return null;
 
-            WeaponStaticData weaponData = _staticDataService.GetWeaponData(id);
+            WeaponStaticData weaponData = _staticDataService.GetDataById<WeaponId, WeaponStaticData>(id);
 
             return ConstructWeapon(weaponData);
         }
@@ -41,7 +41,7 @@ namespace Roguelike.Infrastructure.Factory
             if (id == WeaponId.Unknow)
                 return null;
 
-            WeaponStaticData weaponData = _staticDataService.GetWeaponData(id);
+            WeaponStaticData weaponData = _staticDataService.GetDataById<WeaponId, WeaponStaticData>(id);
 
             return ConstructWeapon(weaponData, parent);
         }

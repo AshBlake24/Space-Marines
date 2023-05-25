@@ -5,6 +5,7 @@ using Roguelike.Infrastructure.Factory;
 using Roguelike.Infrastructure.Services.PersistentData;
 using Roguelike.Infrastructure.Services.SaveLoad;
 using Roguelike.Infrastructure.Services.StaticData;
+using Roguelike.StaticData.Characters;
 using Roguelike.StaticData.Levels;
 using Roguelike.Weapons;
 
@@ -48,7 +49,7 @@ namespace Roguelike.Infrastructure.States
         {
             IWeapon startWeapon = _weaponFactory.CreateWeapon(_staticDataService.Player.StartCharacter.StartWeapon);
             int maxWeaponsCount = _staticDataService
-                .GetCharacterData(_staticDataService.Player.StartCharacter.Id)
+                .GetDataById<CharacterId, CharacterStaticData>(_staticDataService.Player.StartCharacter.Id)
                 .MaxWeaponsCount;
 
             PlayerProgress playerProgress = new(

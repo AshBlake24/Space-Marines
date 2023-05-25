@@ -19,7 +19,7 @@ namespace Roguelike.Infrastructure.Factory
 
         public Projectile CreateProjectile(ProjectileId id, IObjectPool<Projectile> pool)
         {
-            ProjectileStaticData projectileData = _staticDataService.GetProjectileData(id);
+            ProjectileStaticData projectileData = _staticDataService.GetDataById<ProjectileId, ProjectileStaticData>(id);
 
             return ConstructProjectile(projectileData, pool);
         }

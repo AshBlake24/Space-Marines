@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Roguelike.Infrastructure.AssetManagement;
@@ -19,18 +20,10 @@ namespace Roguelike.Infrastructure.Services.StaticData
 {
     public class StaticDataService : IStaticDataService
     {
-        private Dictionary<WeaponId, WeaponStaticData> _weapons;
-        private Dictionary<WeaponId, int> _weaponsDropWeights;
-        private Dictionary<ProjectileId, ProjectileStaticData> _projectiles;
-        private Dictionary<CharacterId, CharacterStaticData> _characters;
-        private Dictionary<SkillId, SkillStaticData> _skills;
-        private Dictionary<WindowId, WindowConfig> _windows;
-        private Dictionary<EnemyId, EnemyStaticData> _enemies;
-        private Dictionary<StageId, StageStaticData> _stages;
-        private Dictionary<LevelId, RegionStaticData> _regions;
-        private Dictionary<PowerupId, PowerupStaticData> _powerups;
-        private Dictionary<RarityId, RarityStaticData> _rarity;
+        private readonly Dictionary<Type, Dictionary<Enum, IStaticData>> _data = new();
 
+        private Dictionary<WeaponId, int> _weaponsDropWeights;
+        
         public PlayerStaticData Player { get; private set; }
         public GameConfig GameConfig { get; private set; }
         public PowerupDropTable PowerupDropTable { get; private set; }
@@ -46,115 +39,125 @@ namespace Roguelike.Infrastructure.Services.StaticData
             LoadEnemies();
             LoadStages();
             LoadRegions();
-            LoadPlayer();
             LoadRarity();
             LoadPowerups();
+
+            LoadPlayer();
             LoadGameConfig();
             LoadPowerupDropTable();
             LoadWeaponsDropWeights();
         }
 
-        public WeaponStaticData GetWeaponData(WeaponId id) =>
-            _weapons.TryGetValue(id, out WeaponStaticData staticData)
-                ? staticData
-                : null;
+        public TResult GetDataById<TKey, TResult>(TKey id) 
+            where TKey : Enum
+            where TResult : IStaticData
+        {
+            KeyValuePair<Type, Dictionary<Enum, IStaticData>> data = 
+                _data.SingleOrDefault(data => data.Key == typeof(TKey));
 
-        public ProjectileStaticData GetProjectileData(ProjectileId id) =>
-            _projectiles.TryGetValue(id, out ProjectileStaticData staticData)
-                ? staticData
-                : null;
+            if (data.Equals(default(KeyValuePair<Type, Dictionary<Enum, IStaticData>>)))
+                throw new ArgumentNullException($"{typeof(TKey)}", "This data does not exist");
 
-        public CharacterStaticData GetCharacterData(CharacterId id) =>
-            _characters.TryGetValue(id, out CharacterStaticData staticData)
-                ? staticData
-                : null;
-
-        public SkillStaticData GetSkillData(SkillId id) =>
-            _skills.TryGetValue(id, out SkillStaticData staticData)
-                ? staticData
-                : null;
-
-        public EnemyStaticData GetEnemyData(EnemyId id) =>
-            _enemies.TryGetValue(id, out EnemyStaticData staticData)
-                ? staticData
-                : null;
-
-        public WindowConfig GetWindowConfig(WindowId id) =>
-            _windows.TryGetValue(id, out WindowConfig windowConfig)
-                ? windowConfig
-                : null;
-
-        public StageStaticData GetStageData(StageId id) =>
-            _stages.TryGetValue(id, out StageStaticData staticData)
-                ? staticData
-                : null;
-        
-        public RegionStaticData GetRegionData(LevelId id) =>
-            _regions.TryGetValue(id, out RegionStaticData staticData)
-                ? staticData
-                : null;
-
-        public PowerupStaticData GetPowerupData(PowerupId id) =>
-            _powerups.TryGetValue(id, out PowerupStaticData staticData)
-                ? staticData
-                : null;
-
-        public RarityStaticData GetRarityData(RarityId id) =>
-            _rarity.TryGetValue(id, out RarityStaticData staticData)
-                ? staticData
-                : null;
+            return (TResult) data.Value.SingleOrDefault(staticData => Equals(staticData.Key, id)).Value;
+        }
         
         private void LoadWeaponsDropWeights()
         {
             _weaponsDropWeights = new Dictionary<WeaponId, int>();
 
-            foreach (WeaponStaticData weaponData in _weapons.Values)
+            IEnumerable<WeaponStaticData> data = 
+                _data.Single(data => data.Key == typeof(WeaponId))
+                    .Value
+                    .Where(data => data.Value is WeaponStaticData)
+                    .Select(data => (WeaponStaticData) data.Value);
+
+            foreach (WeaponStaticData weaponData in data)
             {
-                RarityStaticData rarityData = GetRarityData(weaponData.Rarity);
+                RarityStaticData rarityData = GetDataById<RarityId, RarityStaticData>(weaponData.Rarity);
                 _weaponsDropWeights.Add(weaponData.Id, rarityData.Weight);
             }
         }
 
-        private void LoadWeapons() =>
-            _weapons = Resources.LoadAll<WeaponStaticData>(AssetPath.WeaponsStaticDataPath)
-                .ToDictionary(weapon => weapon.Id);
+        private void LoadWeapons()
+        {
+            Dictionary<Enum, IStaticData> data = Resources.LoadAll<WeaponStaticData>(AssetPath.WeaponsStaticDataPath)
+                .ToDictionary(weapon => weapon.Id as Enum, weapon => weapon as IStaticData);
+            
+            _data.Add(typeof(WeaponId), data);
+        }
 
-        private void LoadProjectiles() =>
-            _projectiles = Resources.LoadAll<ProjectileStaticData>(AssetPath.ProjectilesStaticDataPath)
-                .ToDictionary(projectile => projectile.Id);
+        private void LoadProjectiles()
+        {
+            Dictionary<Enum, IStaticData> data = Resources.LoadAll<ProjectileStaticData>(AssetPath.ProjectilesStaticDataPath)
+                .ToDictionary(projectile => projectile.Id as Enum, projectile => projectile as IStaticData);
+            
+            _data.Add(typeof(ProjectileId), data);
+        }
 
-        private void LoadCharacters() =>
-            _characters = Resources.LoadAll<CharacterStaticData>(AssetPath.CharactersStaticDataPath)
-                .ToDictionary(character => character.Id);
+        private void LoadCharacters()
+        {
+            Dictionary<Enum, IStaticData> data = Resources.LoadAll<CharacterStaticData>(AssetPath.CharactersStaticDataPath)
+                .ToDictionary(character => character.Id as Enum, character => character as IStaticData);
+            
+            _data.Add(typeof(CharacterId), data);
+        }
 
-        private void LoadSkills() =>
-            _skills = Resources.LoadAll<SkillStaticData>(AssetPath.SkillsStaticDataPath)
-                .ToDictionary(skill => skill.Id);
+        private void LoadSkills()
+        {
+            Dictionary<Enum, IStaticData> data = Resources.LoadAll<SkillStaticData>(AssetPath.SkillsStaticDataPath)
+                .ToDictionary(skill => skill.Id as Enum, skill => skill as IStaticData);
+            
+            _data.Add(typeof(SkillId), data);
+        }
 
-        private void LoadEnemies() =>
-            _enemies = Resources.LoadAll<EnemyStaticData>(AssetPath.EnemiesPath)
-                .ToDictionary(enemy => enemy.Id);
+        private void LoadEnemies()
+        {
+            Dictionary<Enum, IStaticData> data = Resources.LoadAll<EnemyStaticData>(AssetPath.EnemiesPath)
+                .ToDictionary(enemy => enemy.Id as Enum, enemy => enemy as IStaticData);
+            
+            _data.Add(typeof(EnemyId), data);
+        }
 
-        private void LoadStages() =>
-            _stages = Resources.LoadAll<StageStaticData>(AssetPath.StagesPath)
-                .ToDictionary(stage => stage.Id);
+        private void LoadStages()
+        {
+            Dictionary<Enum, IStaticData> data = Resources.LoadAll<StageStaticData>(AssetPath.StagesPath)
+                .ToDictionary(stage => stage.Id as Enum, stage => stage as IStaticData);
+            
+            _data.Add(typeof(StageId), data);
+        }
 
-        private void LoadRegions() =>
-            _regions = Resources.LoadAll<RegionStaticData>(AssetPath.RegionsPath)
-                .ToDictionary(region => region.Id);
+        private void LoadRegions()
+        {
+            Dictionary<Enum, IStaticData> data = Resources.LoadAll<RegionStaticData>(AssetPath.RegionsPath)
+                .ToDictionary(region => region.Id as Enum, region => region as IStaticData);
+            
+            _data.Add(typeof(LevelId), data);
+        }
 
-        private void LoadPowerups() =>
-            _powerups = Resources.LoadAll<PowerupStaticData>(AssetPath.PowerupStaticDataPath)
-                .ToDictionary(powerup => powerup.Id);
+        private void LoadPowerups()
+        {
+            Dictionary<Enum, IStaticData> data = Resources.LoadAll<PowerupStaticData>(AssetPath.PowerupStaticDataPath)
+                .ToDictionary(powerup => powerup.Id as Enum, powerup => powerup as IStaticData);
+            
+            _data.Add(typeof(PowerupId), data);
+        }
 
-        private void LoadWindows() =>
-            _windows = Resources.Load<WindowStaticData>(AssetPath.WindowsStaticDataPath)
+        private void LoadWindows()
+        {
+            Dictionary<Enum, IStaticData> data = Resources.Load<WindowStaticData>(AssetPath.WindowsStaticDataPath)
                 .Configs
-                .ToDictionary(config => config.WindowId, x => x);
+                .ToDictionary(config => config.WindowId as Enum, config => config as IStaticData);
+            
+            _data.Add(typeof(WindowId), data);
+        }
 
-        private void LoadRarity() =>
-            _rarity = Resources.LoadAll<RarityStaticData>(AssetPath.RarityStaticDataPath)
-                .ToDictionary(rarity => rarity.Id);
+        private void LoadRarity()
+        {
+            Dictionary<Enum, IStaticData> data = Resources.LoadAll<RarityStaticData>(AssetPath.RarityStaticDataPath)
+                .ToDictionary(rarity => rarity.Id as Enum, rarity => rarity as IStaticData);
+            
+            _data.Add(typeof(RarityId), data);
+        }
 
         private void LoadPlayer() =>
             Player = Resources.Load<PlayerStaticData>(AssetPath.PlayerStaticDataPath);

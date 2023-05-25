@@ -1,3 +1,4 @@
+using Roguelike.Infrastructure.Services.StaticData;
 using Roguelike.Loot.Powerups;
 using UnityEngine;
 
@@ -7,7 +8,7 @@ namespace Roguelike.StaticData.Loot.Powerups
         fileName = "Powerup Static Data", 
         menuName = "Static Data/Powerups/Powerup", 
         order = 1)]
-    public class PowerupStaticData : ScriptableObject
+    public class PowerupStaticData : ScriptableObject, IStaticData
     {
         public PowerupId Id;
         public Powerup Prefab;

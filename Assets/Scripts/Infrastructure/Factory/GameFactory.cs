@@ -99,9 +99,9 @@ namespace Roguelike.Infrastructure.Factory
 
             PlayerShooter playerShooter = player.GetComponent<PlayerShooter>();
             CharacterStaticData characterData = _staticDataService
-                .GetCharacterData(_persistentData.PlayerProgress.Character);
+                .GetDataById<CharacterId, CharacterStaticData>(_persistentData.PlayerProgress.Character);
             SkillStaticData skillData = _staticDataService
-                .GetSkillData(characterData.Skill);
+                .GetDataById<SkillId, SkillStaticData>(characterData.Skill);
 
             hud.GetComponentInChildren<PlayerWeaponsViewer>()
                 .Construct(playerShooter);
@@ -149,14 +149,14 @@ namespace Roguelike.Infrastructure.Factory
         {
             StageId id = _persistentData.PlayerProgress.WorldData.CurrentStage;
 
-            GameObject LevelGeneratorPrefab = _assetProvider.InstantiateRegistered(AssetPath.LevelGeneratorPath);
-            LevelGenerator levelGenerator = LevelGeneratorPrefab.GetComponent<LevelGenerator>();
-            StageStaticData stageData = _staticDataService.GetStageData(id);
+            GameObject levelGeneratorPrefab = _assetProvider.InstantiateRegistered(AssetPath.LevelGeneratorPath);
+            LevelGenerator levelGenerator = levelGeneratorPrefab.GetComponent<LevelGenerator>();
+            StageStaticData stageData = _staticDataService.GetDataById<StageId, StageStaticData>(id);
 
             levelGenerator.Construct(stageData, _persistentData, _sceneLoadingService, _enemyFactory);
             levelGenerator.BuildLevel();
 
-            return LevelGeneratorPrefab;
+            return levelGeneratorPrefab;
         }
 
         public void CreateCharacterSelectionMode()
@@ -173,7 +173,7 @@ namespace Roguelike.Infrastructure.Factory
 
         private GameObject CreateCharacter(CharacterId id, GameObject player)
         {
-            CharacterStaticData characterData = _staticDataService.GetCharacterData(id);
+            CharacterStaticData characterData = _staticDataService.GetDataById<CharacterId, CharacterStaticData>(id);
             GameObject character = Object.Instantiate(
                 characterData.Prefab,
                 player.transform.position,

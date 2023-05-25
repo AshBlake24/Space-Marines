@@ -1,4 +1,5 @@
 using Roguelike.Infrastructure.Services.StaticData;
+using Roguelike.StaticData.Characters;
 using Roguelike.StaticData.Levels;
 using Roguelike.UI.Elements;
 using Roguelike.Utilities;
@@ -18,7 +19,9 @@ namespace Roguelike.UI.Windows
 
         private void InitStageViewer()
         {
-            Sprite characterIcon = _staticData.GetCharacterData(ProgressService.PlayerProgress.Character).Icon;
+            Sprite characterIcon = _staticData
+                .GetDataById<CharacterId, CharacterStaticData>(ProgressService.PlayerProgress.Character)
+                .Icon;
             string stageLabel;
             int currentStage;
 

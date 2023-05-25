@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Roguelike.Infrastructure.Services.StaticData;
 using UnityEngine;
 
 namespace Roguelike.StaticData.Windows

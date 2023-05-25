@@ -33,7 +33,7 @@ namespace Roguelike.Infrastructure.Factory
 
         public BaseWindow CreateWindow(IWindowService windowService, WindowId windowId)
         {
-            WindowConfig config = _staticData.GetWindowConfig(windowId);
+            WindowConfig config = _staticData.GetDataById<WindowId, WindowConfig>(windowId);
             BaseWindow window = Object.Instantiate(config.WindowPrefab, _uiRoot);
             window.Construct(_progressService);
             
@@ -59,7 +59,7 @@ namespace Roguelike.Infrastructure.Factory
         public GameObject CreateWeaponStatsViewer(WindowService windowService, WeaponId weaponId)
         {
             GameObject weaponStatsViewer = _assetProvider.Instantiate(AssetPath.WeaponStatsViewer, _uiRoot);
-            WeaponStaticData weaponData = _staticData.GetWeaponData(weaponId);
+            WeaponStaticData weaponData = _staticData.GetDataById<WeaponId, WeaponStaticData>(weaponId);
 
             if (weaponData is RangedWeaponStaticData rangedWeaponData)
             {

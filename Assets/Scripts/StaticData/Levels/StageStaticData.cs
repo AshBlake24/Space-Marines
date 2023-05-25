@@ -1,13 +1,14 @@
 ﻿using Roguelike.Level;
 using Roguelike.StaticData.Levels.Spawner;
 using System.Collections.Generic;
+using Roguelike.Infrastructure.Services.StaticData;
 using UnityEngine;
 
 namespace Roguelike.StaticData.Levels
 {
     [CreateAssetMenu(fileName = "New Stage", menuName = "Static Data/Level/Stage")]
 
-    public class StageStaticData : ScriptableObject
+    public class StageStaticData : ScriptableObject, IStaticData
     {
         [Header("Stats")]
         public StageId Id;
