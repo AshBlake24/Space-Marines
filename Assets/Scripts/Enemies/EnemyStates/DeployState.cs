@@ -1,7 +1,6 @@
 ﻿using Roguelike.Infrastructure.Factory;
 using Roguelike.Infrastructure.Services;
 using Roguelike.StaticData.Enemies;
-using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -30,16 +29,10 @@ namespace Roguelike.Enemies.EnemyStates
 
         private void Update()
         {
-            if (_isCorrectPoint)
+            if (_agent.remainingDistance <= _agent.radius)
             {
-                _agent.SetDestination(_randomPoint);
-                _agent.isStopped = false;
-            }
-
-            if (transform.position == _randomPoint)
-            {
-                MineSpawn();
                 GetRandomDestination();
+                MineSpawn();
             }
         }
 
@@ -70,13 +63,16 @@ namespace Roguelike.Enemies.EnemyStates
                 NavMesh.SamplePosition(Random.insideUnitSphere * DeployRadius + transform.position, out hit, DeployRadius, NavMesh.AllAreas);
                 _randomPoint = hit.position;
 
-                if (Vector3.Distance(_randomPoint, transform.position) > (DeployRadius-1))
+                if (Vector3.Distance(_randomPoint, transform.position) > (DeployRadius - 1))
                 {
                     _agent.CalculatePath(_randomPoint, currentPath);
                     if (currentPath.status == NavMeshPathStatus.PathComplete)
                         _isCorrectPoint = true;
                 }
             }
+
+            _agent.SetDestination(_randomPoint);
+            _agent.isStopped = false;
         }
 
         private void MineSpawn()

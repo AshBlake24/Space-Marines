@@ -8,10 +8,6 @@ namespace Roguelike.Enemies.Transitions
     {
         [SerializeField] protected EnemyState targetState;
 
-        protected bool isNeedTransit;
-
-        protected EnemyState currentState;
-
         public UnityAction<EnemyState> NeedTransit;
     }
 }
