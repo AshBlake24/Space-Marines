@@ -46,7 +46,7 @@ namespace Roguelike.Infrastructure.Services.StaticData
         {
             Dictionary<Enum, IStaticData> data = Resources
                 .LoadAll<TData>(path)
-                .ToDictionary(weapon => weapon.Key, weapon => weapon as IStaticData);
+                .ToDictionary(staticData => staticData.Key, weapon => weapon as IStaticData);
 
             if (data.Count > 0)
             {

@@ -116,9 +116,13 @@ namespace Roguelike.Infrastructure.Factory
         
         private void LoadWeaponsDropWeights()
         {
-            foreach (int id in Enum.GetValues(typeof(WeaponId)))
+            _weaponsDropWeights = new Dictionary<WeaponId, int>();
+
+            int weaponsCount = Enum.GetValues(typeof(WeaponId)).Length - 1;
+            
+            for (int i = 0; i < weaponsCount; i++)
             {
-                WeaponStaticData weaponData = _staticData.GetDataById<WeaponId, WeaponStaticData>((WeaponId) id);
+                WeaponStaticData weaponData = _staticData.GetDataById<WeaponId, WeaponStaticData>((WeaponId) i);
                 RarityStaticData rarityData = _staticData.GetDataById<RarityId, RarityStaticData>(weaponData.Rarity);
 
                 _weaponsDropWeights.Add(weaponData.Id, rarityData.Weight);
