@@ -35,13 +35,12 @@ namespace Roguelike.Infrastructure.Services.StaticData
             LoadProjectiles();
             LoadCharacters();
             LoadSkills();
-            LoadWindows();
             LoadEnemies();
             LoadStages();
             LoadRegions();
             LoadRarity();
             LoadPowerups();
-
+            LoadWindows();
             LoadPlayer();
             LoadGameConfig();
             LoadPowerupDropTable();
@@ -61,6 +60,19 @@ namespace Roguelike.Infrastructure.Services.StaticData
             return (TResult) data.Value.SingleOrDefault(staticData => Equals(staticData.Key, id)).Value;
         }
         
+        private void LoadData<TData>(string path) where TData : ScriptableObject, IStaticData
+        {
+            Dictionary<Enum, IStaticData> data = Resources
+                .LoadAll<TData>(path)
+                .ToDictionary(weapon => weapon.Key, weapon => weapon as IStaticData);
+
+            if (data.Count > 0)
+            {
+                IStaticData staticData = data.Select(pair => pair.Value).First();
+                _data.Add(staticData.Key.GetType(), data);
+            }
+        }
+        
         private void LoadWeaponsDropWeights()
         {
             _weaponsDropWeights = new Dictionary<WeaponId, int>();
@@ -78,69 +90,24 @@ namespace Roguelike.Infrastructure.Services.StaticData
             }
         }
 
-        private void LoadWeapons()
-        {
-            Dictionary<Enum, IStaticData> data = Resources.LoadAll<WeaponStaticData>(AssetPath.WeaponsStaticDataPath)
-                .ToDictionary(weapon => weapon.Id as Enum, weapon => weapon as IStaticData);
-            
-            _data.Add(typeof(WeaponId), data);
-        }
+        private void LoadWeapons() => LoadData<WeaponStaticData>(AssetPath.WeaponsStaticDataPath);
+        private void LoadProjectiles() => LoadData<ProjectileStaticData>(AssetPath.ProjectilesStaticDataPath);
+        private void LoadCharacters() => LoadData<CharacterStaticData>(AssetPath.CharactersStaticDataPath);
+        private void LoadSkills() => LoadData<SkillStaticData>(AssetPath.SkillsStaticDataPath);
+        private void LoadEnemies() => LoadData<EnemyStaticData>(AssetPath.EnemiesPath);
+        private void LoadStages() => LoadData<StageStaticData>(AssetPath.StagesPath);
+        private void LoadRegions() => LoadData<RegionStaticData>(AssetPath.RegionsPath);
+        private void LoadPowerups() => LoadData<PowerupStaticData>(AssetPath.PowerupStaticDataPath);
+        private void LoadRarity() => LoadData<RarityStaticData>(AssetPath.RarityStaticDataPath);
+        
+        private void LoadPlayer() =>
+            Player = Resources.Load<PlayerStaticData>(AssetPath.PlayerStaticDataPath);
+        
+        private void LoadGameConfig() =>
+            GameConfig = Resources.Load<GameConfig>(AssetPath.GameConfigPath);
 
-        private void LoadProjectiles()
-        {
-            Dictionary<Enum, IStaticData> data = Resources.LoadAll<ProjectileStaticData>(AssetPath.ProjectilesStaticDataPath)
-                .ToDictionary(projectile => projectile.Id as Enum, projectile => projectile as IStaticData);
-            
-            _data.Add(typeof(ProjectileId), data);
-        }
-
-        private void LoadCharacters()
-        {
-            Dictionary<Enum, IStaticData> data = Resources.LoadAll<CharacterStaticData>(AssetPath.CharactersStaticDataPath)
-                .ToDictionary(character => character.Id as Enum, character => character as IStaticData);
-            
-            _data.Add(typeof(CharacterId), data);
-        }
-
-        private void LoadSkills()
-        {
-            Dictionary<Enum, IStaticData> data = Resources.LoadAll<SkillStaticData>(AssetPath.SkillsStaticDataPath)
-                .ToDictionary(skill => skill.Id as Enum, skill => skill as IStaticData);
-            
-            _data.Add(typeof(SkillId), data);
-        }
-
-        private void LoadEnemies()
-        {
-            Dictionary<Enum, IStaticData> data = Resources.LoadAll<EnemyStaticData>(AssetPath.EnemiesPath)
-                .ToDictionary(enemy => enemy.Id as Enum, enemy => enemy as IStaticData);
-            
-            _data.Add(typeof(EnemyId), data);
-        }
-
-        private void LoadStages()
-        {
-            Dictionary<Enum, IStaticData> data = Resources.LoadAll<StageStaticData>(AssetPath.StagesPath)
-                .ToDictionary(stage => stage.Id as Enum, stage => stage as IStaticData);
-            
-            _data.Add(typeof(StageId), data);
-        }
-
-        private void LoadRegions()
-        {
-            Dictionary<Enum, IStaticData> data = Resources.LoadAll<RegionStaticData>(AssetPath.RegionsPath)
-                .ToDictionary(region => region.Id as Enum, region => region as IStaticData);
-            
-            _data.Add(typeof(LevelId), data);
-        }
-
-        private void LoadPowerups()
-        {
-            Dictionary<Enum, IStaticData> data = Resources.LoadAll<PowerupStaticData>(AssetPath.PowerupStaticDataPath)
-                .ToDictionary(powerup => powerup.Id as Enum, powerup => powerup as IStaticData);
-            
-            _data.Add(typeof(PowerupId), data);
-        }
+        private void LoadPowerupDropTable() => 
+            PowerupDropTable = Resources.Load<PowerupDropTable>(AssetPath.PowerupDropTablePath);
 
         private void LoadWindows()
         {
@@ -150,22 +117,5 @@ namespace Roguelike.Infrastructure.Services.StaticData
             
             _data.Add(typeof(WindowId), data);
         }
-
-        private void LoadRarity()
-        {
-            Dictionary<Enum, IStaticData> data = Resources.LoadAll<RarityStaticData>(AssetPath.RarityStaticDataPath)
-                .ToDictionary(rarity => rarity.Id as Enum, rarity => rarity as IStaticData);
-            
-            _data.Add(typeof(RarityId), data);
-        }
-
-        private void LoadPlayer() =>
-            Player = Resources.Load<PlayerStaticData>(AssetPath.PlayerStaticDataPath);
-
-        private void LoadGameConfig() =>
-            GameConfig = Resources.Load<GameConfig>(AssetPath.GameConfigPath);
-
-        private void LoadPowerupDropTable() => 
-            PowerupDropTable = Resources.Load<PowerupDropTable>(AssetPath.PowerupDropTablePath);
     }
 }

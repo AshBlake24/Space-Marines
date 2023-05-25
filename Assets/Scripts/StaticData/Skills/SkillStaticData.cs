@@ -1,3 +1,4 @@
+using System;
 using Roguelike.Infrastructure.Services.StaticData;
 using UnityEngine;
 
@@ -12,5 +13,7 @@ namespace Roguelike.StaticData.Skills
 
         [Header("VFX")] 
         public ParticleSystem SkillEffect;
+        
+        public Enum Key => Id;
     }
 }

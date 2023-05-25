@@ -1,3 +1,4 @@
+using System;
 using Roguelike.Infrastructure.Services.StaticData;
 using UnityEngine;
 
@@ -11,5 +12,7 @@ namespace Roguelike.StaticData.Loot.Rarity
         public Color Color;
         public ParticleSystem GlowVFX;
         public ParticleSystem RingVFX;
+        
+        public Enum Key => Id;
     }
 }

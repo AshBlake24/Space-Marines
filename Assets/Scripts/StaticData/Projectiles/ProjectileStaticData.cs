@@ -1,3 +1,4 @@
+using System;
 using Roguelike.Infrastructure.Services.StaticData;
 using UnityEngine;
 
@@ -15,5 +16,7 @@ namespace Roguelike.StaticData.Projectiles
         public ParticleSystem MuzzleFlashVFX;
         public ParticleSystem ProjectileVFX;
         public ParticleSystem ImpactVFX;
+        
+        public Enum Key => Id;
     }
 }

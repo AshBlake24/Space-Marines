@@ -1,3 +1,4 @@
+using System;
 using Roguelike.Infrastructure.Services.StaticData;
 using Roguelike.StaticData.Skills;
 using Roguelike.StaticData.Weapons;
@@ -16,5 +17,7 @@ namespace Roguelike.StaticData.Characters
         [Range(1, 10)] public int MaxHealth;
         [Range(1, 5)] public int MaxWeaponsCount;
         [TextArea(2, 3)] public string Desctription;
+        
+        public Enum Key => Id;
     }
 }

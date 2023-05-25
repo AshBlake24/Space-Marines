@@ -1,3 +1,4 @@
+using System;
 using Roguelike.Infrastructure.Services.StaticData;
 using UnityEngine;
 
@@ -22,5 +23,7 @@ namespace Roguelike.StaticData.Enemies
 
         [Header("Taran enemy stats")]
         public float ChargeSpeedMultiplication;
+        
+        public Enum Key => Id;
     }
 }

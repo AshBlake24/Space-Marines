@@ -10,5 +10,7 @@ namespace Roguelike.StaticData.Windows
     {
         public WindowId WindowId;
         public BaseWindow WindowPrefab;
+        
+        public Enum Key => WindowId;
     }
 }

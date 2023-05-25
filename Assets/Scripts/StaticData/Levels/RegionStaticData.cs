@@ -1,3 +1,4 @@
+using System;
 using Roguelike.Infrastructure.Services.StaticData;
 using UnityEngine;
 
@@ -12,5 +13,7 @@ namespace Roguelike.StaticData.Levels
         
         [Range(1, 5)] 
         public int Difficulty;
+        
+        public Enum Key => Id;
     }
 }

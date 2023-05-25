@@ -1,3 +1,4 @@
+using System;
 using Roguelike.Infrastructure.Services.StaticData;
 using Roguelike.StaticData.Loot.Rarity;
 using UnityEngine;
@@ -17,5 +18,7 @@ namespace Roguelike.StaticData.Weapons
         public string Name;
         public int Damage;
         public float AttackRate;
+        
+        public Enum Key => Id;
     }
 }
