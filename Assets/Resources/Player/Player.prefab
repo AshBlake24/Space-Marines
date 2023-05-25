@@ -134,17 +134,9 @@ CharacterController:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5183326114531077828}
   m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
   m_IsTrigger: 0
-  m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
+  serializedVersion: 2
   m_Height: 2
   m_Radius: 0.4
   m_SlopeLimit: 45
@@ -225,6 +217,7 @@ MonoBehaviour:
     m_Bits: 4096
   _updateTargetsPerFrame: 2
   _radius: 15
+  _firePointHeight: 1.5
   _drawGizmos: 0
 --- !u!114 &3023580893681268667
 MonoBehaviour:

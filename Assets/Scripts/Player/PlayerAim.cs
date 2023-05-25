@@ -11,6 +11,7 @@ namespace Roguelike.Player
         [SerializeField] private LayerMask _enemiesLayerMask;
         [SerializeField] private float _updateTargetsPerFrame;
         [SerializeField, Range(1f, 20f)] private float _radius;
+        [SerializeField] private float _firePointHeight;
         [SerializeField] private bool _drawGizmos;
 
         private readonly Collider[] _colliders = new Collider[6];
@@ -60,7 +61,8 @@ namespace Roguelike.Player
                 if (collider == null)
                     continue;
 
-                if (collider.gameObject.TryGetComponent(out EnemyHealth enemyHealth))
+                if (collider.gameObject.TryGetComponent(out EnemyHealth enemyHealth)
+                    && LineOfFireIsFree(enemyHealth.transform))
                 {
                     float distanceToEnemy = Vector3.Distance(transform.position, enemyHealth.transform.position);
 
@@ -71,6 +73,16 @@ namespace Roguelike.Player
                     }
                 }
             }
+        }
+
+        private bool LineOfFireIsFree(Transform enemyTransform)
+        {
+            Vector3 raycastOrigin = transform.position;
+            raycastOrigin.y = _firePointHeight;
+            Vector3 direction = enemyTransform.position - raycastOrigin;
+            Physics.Raycast(raycastOrigin, direction, out RaycastHit hit, _radius);
+
+            return (1 << hit.transform.gameObject.layer) == _enemiesLayerMask.value;
         }
     }
 }
