@@ -3,12 +3,14 @@ using Roguelike.Player;
 using Roguelike.Weapons;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Roguelike.UI.Elements
 {
     public class AmmoCounter : MonoBehaviour
     {
-        [SerializeField] private TextMeshProUGUI _currentAmmo;
+        [SerializeField] private TextMeshProUGUI _currentWeaponAmmo;
+        [SerializeField] private Image _infinityAmmoIcon;
 
         private PlayerShooter _playerShooter;
         private RangedWeapon _rangedWeapon;
@@ -20,34 +22,51 @@ namespace Roguelike.UI.Elements
             _playerShooter.WeaponChanged += OnWeaponChaged;
         }
 
-        private void OnDestroy() => 
+        private void OnDestroy() =>
             _playerShooter.WeaponChanged -= OnWeaponChaged;
 
         private void OnWeaponChaged()
         {
+            UnsubscribeWeapon();
+
             if (_playerShooter.CurrentWeapon is RangedWeapon rangedWeapon)
+                SetRangedWeapon(rangedWeapon);
+            else
+                ResetSettings();
+        }
+
+        private void SetRangedWeapon(RangedWeapon rangedWeapon)
+        {
+            _rangedWeapon = rangedWeapon;
+            
+            if (rangedWeapon.AmmoData.InfinityAmmo == false)
             {
-                UnsubscribeWeapon();
-                
-                _currentAmmo.enabled = true;
+                _infinityAmmoIcon.enabled = false;
+                _currentWeaponAmmo.enabled = true;
                 _ammoData = rangedWeapon.AmmoData;
-                _rangedWeapon = rangedWeapon;
-                
-                SubscribeWeapon();
+                SubscribeRangedWeapon();
                 ChangeAmmo();
             }
             else
             {
-                UnsubscribeWeapon();
-                
-                _rangedWeapon = null;
-                _ammoData = null;
-                _currentAmmo.enabled = false;
+                _currentWeaponAmmo.enabled = false;
+                _infinityAmmoIcon.enabled = true;
             }
         }
 
-        private void SubscribeWeapon()
+        private void ResetSettings()
         {
+            _rangedWeapon = null;
+            _ammoData = null;
+            _currentWeaponAmmo.enabled = false;
+            _infinityAmmoIcon.enabled = false;
+        }
+
+        private void SubscribeRangedWeapon()
+        {
+            if (_rangedWeapon.AmmoData.InfinityAmmo)
+                return;
+
             _rangedWeapon.Fired += ChangeAmmo;
             _ammoData.AmmoChanged += ChangeAmmo;
         }
@@ -60,11 +79,7 @@ namespace Roguelike.UI.Elements
                 _ammoData.AmmoChanged -= ChangeAmmo;
         }
 
-        private void ChangeAmmo()
-        {
-            _currentAmmo.text = _ammoData.InfinityAmmo 
-                ? "infinity" 
-                : $"{_ammoData.CurrentAmmo}/{_ammoData.MaxAmmo}";
-        }
+        private void ChangeAmmo() => 
+            _currentWeaponAmmo.text = $"{_ammoData.CurrentAmmo}/{_ammoData.MaxAmmo}";
     }
 }

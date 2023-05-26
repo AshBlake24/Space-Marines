@@ -9,10 +9,15 @@ namespace Roguelike.UI.Elements
 {
     public class PlayerWeaponsViewer : MonoBehaviour
     {
-        [SerializeField] private Image _currentWeapon;
-        [SerializeField] private Image _nextWeapon;
-        [SerializeField] private Image _rarityShadow;
         [SerializeField] private Sprite _emptyWeaponSprite;
+        
+        [Header("Current Weapon")]
+        [SerializeField] private Image _currentWeapon;
+        [SerializeField] private Image _rarityShadow;
+        
+        [Header("Next Weapon")]
+        [SerializeField] private Image _nextWeapon;
+        
         
         private PlayerShooter _playerShooter;
         private Dictionary<RarityId, Color> _rarityColors;
@@ -30,18 +35,21 @@ namespace Roguelike.UI.Elements
 
         private void OnWeaponChanged()
         {
-            
-
-            SetNextWeaponIcon();
+            SetCurrentWeapon();
+            SetNextWeapon();
         }
 
-        private void SetNextWeaponIcon()
+        private void SetNextWeapon()
         {
             IWeapon weapon = _playerShooter.TryGetNextWeapon();
             
-            _nextWeapon.sprite = weapon != null 
-                ? weapon.Stats.Icon 
-                : _emptyWeaponSprite;
+            if (weapon == null)
+            {
+                _nextWeapon.sprite = _emptyWeaponSprite;
+                return;
+            }
+
+            _nextWeapon.sprite = weapon.Stats.Icon;
         }
 
         private void SetCurrentWeapon()
