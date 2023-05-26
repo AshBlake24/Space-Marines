@@ -1,7 +1,7 @@
 using Roguelike.Infrastructure.Services.StaticData;
 using Roguelike.StaticData.Characters;
 using Roguelike.StaticData.Levels;
-using Roguelike.UI.Elements;
+using Roguelike.UI.Elements.GameOver;
 using Roguelike.Utilities;
 using UnityEngine;
 
@@ -19,25 +19,36 @@ namespace Roguelike.UI.Windows
 
         private void InitStageViewer()
         {
+            LevelId currentLevel = ProgressService.PlayerProgress.WorldData.CurrentLevel;
             Sprite characterIcon = _staticData
                 .GetDataById<CharacterId, CharacterStaticData>(ProgressService.PlayerProgress.Character)
                 .Icon;
-            string stageLabel;
-            int currentStage;
 
-            if (ProgressService.PlayerProgress.WorldData.CurrentLevel == LevelId.Hub)
+            (int stage, string label) = GetLevelInfo(currentLevel);
+
+            RegionStaticData regionStaticData = _staticData.GetDataById<LevelId, RegionStaticData>(currentLevel);
+            int stagesCount = regionStaticData.Stages.Length;
+
+            GetComponentInChildren<GameOverStageViewer>()
+                .Construct(stage, label, stagesCount, characterIcon);
+        }
+
+        private (int, string) GetLevelInfo(LevelId currentLevel)
+        {
+            (int stage, string label) levelInfo;
+
+            if (currentLevel == LevelId.Hub)
             {
-                stageLabel = "Hub";
-                currentStage = 0;
+                levelInfo.label = "Hub";
+                levelInfo.stage = 0;
             }
             else
             {
-                currentStage = (int) ProgressService.PlayerProgress.WorldData.CurrentStage;
-                stageLabel = ProgressService.PlayerProgress.WorldData.CurrentStage.ToLabel();
+                levelInfo.label = ProgressService.PlayerProgress.WorldData.CurrentStage.ToLabel();
+                levelInfo.stage = (int) ProgressService.PlayerProgress.WorldData.CurrentStage;
             }
 
-            GetComponentInChildren<GameOverStageViewer>()
-                .Construct(currentStage, characterIcon, stageLabel);
+            return levelInfo;
         }
     }
 }

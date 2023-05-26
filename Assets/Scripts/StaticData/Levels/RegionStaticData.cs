@@ -9,7 +9,7 @@ namespace Roguelike.StaticData.Levels
     {
         public LevelId Id;
         public string Name;
-        public StageStaticData StartStage;
+        public StageStaticData[] Stages;
         
         [Range(1, 5)] 
         public int Difficulty;
