@@ -12,7 +12,8 @@ namespace Roguelike.UI.Elements.GameOver
         [SerializeField] private StageView _bossStageView;
         [SerializeField] private RectTransform _parent;
 
-        [Header("Current Stage Viewer")]
+        [Header("Current Stage Viewer")] 
+        [SerializeField] private GameObject _currentLevelViewer;
         [SerializeField] private Slider _slider;
         [SerializeField] private Image _characterIcon;
         [SerializeField] private TextMeshProUGUI _stageLabel;
@@ -33,6 +34,8 @@ namespace Roguelike.UI.Elements.GameOver
 
         private void InitCurrentStageViewer(int currentStage, Sprite characterIcon, string stageLabel)
         {
+            _currentLevelViewer.SetActive(true);
+            _slider.maxValue = _stagesCount;
             _slider.value = currentStage;
             _characterIcon.sprite = characterIcon;
             _stageLabel.text = stageLabel;

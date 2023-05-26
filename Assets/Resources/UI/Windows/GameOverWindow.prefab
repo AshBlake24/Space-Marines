@@ -54,6 +54,7 @@ MonoBehaviour:
   _stageView: {fileID: 4058106498594013388, guid: 54fa00e430589004c91fdc7767525d8b, type: 3}
   _bossStageView: {fileID: 4058106498594013388, guid: ba8f784a9ff647a45a12e63f09d6ef3a, type: 3}
   _parent: {fileID: 6931468277512538474}
+  _currentLevelViewer: {fileID: 6931468279040602819}
   _slider: {fileID: 6931468279040602817}
   _characterIcon: {fileID: 6931468278619632415}
   _stageLabel: {fileID: 6931468278145813135}
@@ -398,7 +399,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 40, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -877,7 +878,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &6931468279040602818
 RectTransform:
   m_ObjectHideFlags: 0

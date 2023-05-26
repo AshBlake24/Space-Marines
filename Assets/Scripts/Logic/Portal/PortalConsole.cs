@@ -25,7 +25,7 @@ namespace Roguelike.Logic.Portal
             if (interactor.TryGetComponent(out PlayerHealth player))
             {
                 _holoMap.Play();
-                _portal.Init(LevelId.Dungeon, StageId.Level11);
+                _portal.Init(LevelId.Dungeon, StageId.Level11); // TODO: remove hardcode
             }
         }
     }

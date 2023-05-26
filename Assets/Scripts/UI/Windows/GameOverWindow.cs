@@ -20,17 +20,21 @@ namespace Roguelike.UI.Windows
         private void InitStageViewer()
         {
             LevelId currentLevel = ProgressService.PlayerProgress.WorldData.CurrentLevel;
-            Sprite characterIcon = _staticData
-                .GetDataById<CharacterId, CharacterStaticData>(ProgressService.PlayerProgress.Character)
-                .Icon;
 
-            (int stage, string label) = GetLevelInfo(currentLevel);
-
-            RegionStaticData regionStaticData = _staticData.GetDataById<LevelId, RegionStaticData>(currentLevel);
-            int stagesCount = regionStaticData.Stages.Length;
-
-            GetComponentInChildren<GameOverStageViewer>()
-                .Construct(stage, label, stagesCount, characterIcon);
+            if (currentLevel == LevelId.Dungeon)
+            {
+                Sprite characterIcon = _staticData
+                    .GetDataById<CharacterId, CharacterStaticData>(ProgressService.PlayerProgress.Character)
+                    .Icon;
+                
+                RegionStaticData regionStaticData = _staticData.GetDataById<LevelId, RegionStaticData>(currentLevel);
+                int stagesCount = regionStaticData.Stages.Length;
+                
+                (int stage, string label) = GetLevelInfo(currentLevel);
+                
+                GetComponentInChildren<GameOverStageViewer>()
+                    .Construct(stage, label, stagesCount, characterIcon);
+            }
         }
 
         private (int, string) GetLevelInfo(LevelId currentLevel)

@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3074084fe86db8849856584a346c6943, type: 3}
+  m_Name: DungeonLevel13
+  m_EditorClassIdentifier: 
+  Id: 3
+  NextStageId: 4
+  LevelGeneratorPrefab: {fileID: 8488997626099405086, guid: 3fabd9b5d3e605045b7e3d09fdfc14a4, type: 3}
+  ArenasCount: 1
+  TreasureRoomsCount: 1
+  MinComplexityMultiplication: 1.5
+  MaxComplexityMultiplication: 2
+  Spawner: {fileID: 11400000, guid: 974b5a6db7dc6c741884b12717a16410, type: 2}
+  StartRoom: {fileID: 6036104572692001948, guid: fea8ad10ffb35bb4f88ea8151bc90d93, type: 3}
+  TransitionRoom:
+  - {fileID: 1267888501014772572, guid: ba40537d221a98b41afb56d8199f5102, type: 3}
+  Arenas:
+  - {fileID: 5207814067427524140, guid: 470be4d32ecd94c4d996c008c1505dda, type: 3}
+  Corridor:
+  - {fileID: 6787712665870501743, guid: a17aed5d0019e744685c8bf06cbd46bf, type: 3}
+  BonusRoom:
+  - {fileID: 5650884660556561519, guid: 3d4391f4a87ed3e4aa8c6a15491edca2, type: 3}

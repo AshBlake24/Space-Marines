@@ -2,6 +2,7 @@
 {
     public enum StageId
     {
+        Exit = 0,
         Level11 = 1,
         Level12 = 2,
         Level13 = 3,
