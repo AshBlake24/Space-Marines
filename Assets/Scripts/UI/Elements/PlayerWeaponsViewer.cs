@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using Roguelike.Player;
+using Roguelike.StaticData.Loot.Rarity;
 using Roguelike.Weapons;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,14 +11,16 @@ namespace Roguelike.UI.Elements
     {
         [SerializeField] private Image _currentWeapon;
         [SerializeField] private Image _nextWeapon;
-        [SerializeField] private Image _previousWeapon;
+        [SerializeField] private Image _rarityShadow;
         [SerializeField] private Sprite _emptyWeaponSprite;
         
         private PlayerShooter _playerShooter;
+        private Dictionary<RarityId, Color> _rarityColors;
 
-        public void Construct(PlayerShooter playerShooter)
+        public void Construct(PlayerShooter playerShooter, Dictionary<RarityId, Color> rarityColors)
         {
             _playerShooter = playerShooter;
+            _rarityColors = rarityColors;
             
             _playerShooter.WeaponChanged += OnWeaponChanged;
         }
@@ -26,21 +30,9 @@ namespace Roguelike.UI.Elements
 
         private void OnWeaponChanged()
         {
-            _currentWeapon.sprite = _playerShooter.CurrentWeapon != null
-                ? _playerShooter.CurrentWeapon.Stats.Icon
-                : _emptyWeaponSprite;
+            
 
             SetNextWeaponIcon();
-            SetPreviousWeaponSprite();
-        }
-
-        private void SetPreviousWeaponSprite()
-        {
-            IWeapon weapon = _playerShooter.TryGetPreviousWeapon();
-
-            _previousWeapon.sprite = weapon != null 
-                ? weapon.Stats.Icon 
-                : _emptyWeaponSprite;
         }
 
         private void SetNextWeaponIcon()
@@ -50,6 +42,18 @@ namespace Roguelike.UI.Elements
             _nextWeapon.sprite = weapon != null 
                 ? weapon.Stats.Icon 
                 : _emptyWeaponSprite;
+        }
+
+        private void SetCurrentWeapon()
+        {
+            if (_playerShooter.CurrentWeapon == null)
+            {
+                _currentWeapon.sprite = _emptyWeaponSprite;
+                return;
+            }
+
+            _currentWeapon.sprite = _playerShooter.CurrentWeapon.Stats.Icon;
+            _rarityShadow.color = _rarityColors[_playerShooter.CurrentWeapon.Stats.Rarity];
         }
     }
 }

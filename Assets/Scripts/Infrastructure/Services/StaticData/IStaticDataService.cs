@@ -16,5 +16,9 @@ namespace Roguelike.Infrastructure.Services.StaticData
             where TResult : IStaticData;
 
         void Load();
+
+        IEnumerable<TData> GetAllDataByType<TEnum, TData>() 
+            where TEnum : Enum 
+            where TData : IStaticData;
     }
 }

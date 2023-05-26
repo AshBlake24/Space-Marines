@@ -32,6 +32,13 @@ namespace Roguelike.Infrastructure.Services.StaticData
 
             return (TResult) data.Value.SingleOrDefault(staticData => Equals(staticData.Key, id)).Value;
         }
+        
+        public IEnumerable<TData> GetAllDataByType<TEnum, TData>() 
+            where TEnum : Enum 
+            where TData : IStaticData =>
+            _data.ContainsKey(typeof(TEnum)) 
+                ? _data[typeof(TEnum)].Select(pair => (TData) pair.Value).ToList() 
+                : null;
 
         private void LoadData()
         {

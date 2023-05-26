@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Cinemachine;
 using Roguelike.Infrastructure.AssetManagement;
@@ -18,6 +19,7 @@ using Roguelike.Level;
 using Roguelike.StaticData.Levels;
 using Object = UnityEngine.Object;
 using Roguelike.Logic.CharacterSelection;
+using Roguelike.StaticData.Loot.Rarity;
 using Roguelike.StaticData.Skills;
 using Roguelike.UI.Buttons;
 using Roguelike.UI.Windows;
@@ -103,8 +105,11 @@ namespace Roguelike.Infrastructure.Factory
             SkillStaticData skillData = _staticDataService
                 .GetDataById<SkillId, SkillStaticData>(characterData.Skill);
 
+            Dictionary<RarityId, Color> rarityColors = _staticDataService.GetAllDataByType<RarityId, RarityStaticData>()
+                .ToDictionary(data => data.Id, data => data.Color);
+
             hud.GetComponentInChildren<PlayerWeaponsViewer>()
-                .Construct(playerShooter);
+                .Construct(playerShooter, rarityColors);
 
             hud.GetComponentInChildren<AmmoCounter>()
                 .Construct(playerShooter);
