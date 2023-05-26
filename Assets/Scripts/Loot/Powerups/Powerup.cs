@@ -1,5 +1,4 @@
 using Roguelike.Infrastructure.Services.Pools;
-using Roguelike.Logic;
 using Roguelike.Weapons;
 using UnityEngine;
 

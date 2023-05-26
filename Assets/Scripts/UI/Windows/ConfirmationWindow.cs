@@ -1,3 +1,4 @@
+using System;
 using Roguelike.Infrastructure.Services.Loading;
 using Roguelike.Infrastructure.Services.StaticData;
 using UnityEngine;
@@ -11,6 +12,8 @@ namespace Roguelike.UI.Windows
 
         protected IStaticDataService StaticData;
         protected ISceneLoadingService SceneLoadingService;
+
+        public event Action Confirmed;
 
         public void Construct(IStaticDataService staticData, ISceneLoadingService sceneLoadingService)
         {
@@ -27,6 +30,6 @@ namespace Roguelike.UI.Windows
             _confirmButton.onClick.RemoveAllListeners();
         }
 
-        protected abstract void OnConfirm();
+        protected virtual void OnConfirm() => Confirmed?.Invoke();
     }
 }
