@@ -13,6 +13,7 @@ namespace Roguelike.Infrastructure.Services.Windows
         Resurrection = 8,
         GameOver = 9,
         Authorization = 10,
-        RangedWeaponStatsWindow = 11
+        RangedWeaponStatsWindow = 11,
+        RegionSelectionWindow = 12
     }
 }

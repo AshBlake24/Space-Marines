@@ -8,6 +8,7 @@ using Roguelike.StaticData.Weapons;
 using Roguelike.StaticData.Windows;
 using Roguelike.UI.Elements;
 using Roguelike.UI.Windows;
+using Roguelike.UI.Windows.Regions;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
@@ -50,6 +51,9 @@ namespace Roguelike.Infrastructure.Factory
                     break;
                 case GameOverWindow gameOverWindow:
                     gameOverWindow.Construct(_staticData);
+                    break;
+                case RegionSelectionWindow regionSelectionWindow:
+                    regionSelectionWindow.Construct(_staticData);
                     break;
             }
             
