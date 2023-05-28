@@ -20,7 +20,7 @@ namespace Roguelike.Enemies.Transitions
                 _accumulatedTime += Time.deltaTime;
 
                 if (_accumulatedTime >= _enemy.LifeTime)
-                    Destroy(gameObject);
+                    _enemy.Health.TakeDamage(_enemy.Health.MaxHealth);
             }
         }
     }

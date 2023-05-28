@@ -5,26 +5,38 @@ namespace Roguelike.Level
 {
     public class Room : MonoBehaviour
     {
+        private const int RotationModification = 180;
         [SerializeField] private List<ExitPoint> _exitPoints;
-        [SerializeField] private GameObject _entryPoint;
         [SerializeField] private Transform _miniMapIcon;
 
+        private ExitPoint _entryPoint;
         private List<ExitPoint> _doors = new List<ExitPoint>();
-        private ExitPoint _entryDoor;
+
+        public ExitPoint EntryPoint => _entryPoint;
+        public int ExitCount => _exitPoints.Count;
 
         public void Init(ExitPoint connectingPoint)
         {
+            _entryPoint = SelectEntryPoint();
+
             if (_entryPoint == null)
                 return;
 
-            transform.rotation = Quaternion.Euler(0, transform.rotation.y + connectingPoint.Rotation + _entryPoint.transform.eulerAngles.y, 0);
+            Room previousRoom = connectingPoint.GetComponentInParent<Room>();
+
+            float rotateAngle =
+                -_entryPoint.Rotation 
+                + RotationModification 
+                + connectingPoint.Rotation 
+                + previousRoom.transform.rotation.eulerAngles.y;
+
+            transform.rotation = Quaternion.Euler(0, rotateAngle, 0);
 
             if (_miniMapIcon != null)
                 _miniMapIcon.rotation = Quaternion.Euler(90, -transform.rotation.y, 0);
 
             transform.position =
             Vector3.MoveTowards(transform.position, _entryPoint.transform.position, -GetShiftDistance());
-            _entryPoint.TryGetComponent<ExitPoint>(out _entryDoor);
         }
 
         public ExitPoint SelectExitPoint()
@@ -68,7 +80,7 @@ namespace Roguelike.Level
                 door.Hide();
             }
 
-            _entryDoor.Hide();
+            _entryPoint.Hide();
         }
 
         public void OpenDoor()
@@ -78,13 +90,30 @@ namespace Roguelike.Level
                 door.Show();
             }
             
-            if (_entryDoor != null)
-                _entryDoor.Show();
+            if (_entryPoint != null)
+                _entryPoint.Show();
         }
 
         public float GetShiftDistance()
         {
+            if (_entryPoint == null)
+                return 0;
+
             return Vector3.Distance(transform.position, _entryPoint.transform.position);
+        }
+
+        private ExitPoint SelectEntryPoint()
+        {
+            ExitPoint point;
+
+            if (_exitPoints.Count != 0) 
+                point = _exitPoints[Random.Range(0, _exitPoints.Count)];
+            else
+                point = null;
+
+            _exitPoints.Remove(point);
+
+            return point;
         }
     }
 }

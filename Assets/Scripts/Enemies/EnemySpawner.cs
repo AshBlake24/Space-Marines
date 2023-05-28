@@ -11,21 +11,16 @@ namespace Roguelike.Enemies
     public class EnemySpawner : MonoBehaviour
     {
         [SerializeField] private List<SpawnPoint> _spawnPoints;
-        [SerializeField] private EnterTriger _enterPoint;
         [SerializeField] private float _spawnDuration;
 
-        private SpawnerStaticData _data; 
         private float _encounterComplexity;
+        private EnterTriger _enterPoint;
+        private SpawnerStaticData _data; 
         private List<EnemyHealth> _enemiesInRoom;
         private Room _room;
         private List<SpawnPoint> _readySpawnPoints;
         private PlayerHealth _player;
         private IEnemyFactory _enemyFactory;
-
-        private void OnEnable()
-        {
-            _enterPoint.PlayerHasEntered += OnPlayerHasEntered;
-        }
 
         private void OnDisable()
         {
@@ -53,6 +48,10 @@ namespace Roguelike.Enemies
             }
 
             _room = GetComponent<Room>();
+
+            _enterPoint = _room.EntryPoint.GetComponent<EnterTriger>();
+
+            _enterPoint.PlayerHasEntered += OnPlayerHasEntered;
         }
 
         private GameObject GenerateEnemy(Transform spawnPosition, PlayerHealth target)
@@ -70,7 +69,12 @@ namespace Roguelike.Enemies
         {
             _player = player;
 
-            while (_readySpawnPoints.Count > 0)
+            int count = _readySpawnPoints.Count; ;
+
+            if (_data.SpawnPointsInWave < _readySpawnPoints.Count)
+                count = _data.SpawnPointsInWave;
+
+            for (int i =0; i < count; i++)
             {
                 Spawn();
 
@@ -110,8 +114,6 @@ namespace Roguelike.Enemies
 
             enemy.Died += OnEnemyDied;
         }
-
-
 
         private SpawnPoint GetRandomSpawnPoint()
         {
