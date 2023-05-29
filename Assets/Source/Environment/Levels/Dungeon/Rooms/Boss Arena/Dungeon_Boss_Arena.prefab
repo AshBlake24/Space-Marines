@@ -85,6 +85,7 @@ GameObject:
   - component: {fileID: 6285755873363847321}
   - component: {fileID: 7955372356459538835}
   - component: {fileID: 5963930858928000668}
+  - component: {fileID: 2640502994673588220}
   m_Layer: 0
   m_Name: Dungeon_Boss_Arena
   m_TagString: Untagged
@@ -127,7 +128,6 @@ MonoBehaviour:
   - {fileID: 4835350057933474366}
   - {fileID: 1811150692597142124}
   - {fileID: 2097272755421296737}
-  _entryPoint: {fileID: 1851024120712217127}
   _miniMapIcon: {fileID: 0}
   _enterTriger: {fileID: 0}
 --- !u!114 &5963930858928000668
@@ -219,6 +219,36 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   _lightInfo: []
+--- !u!114 &2640502994673588220
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6285755873363847320}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a5ac11cc976e418e8d13136b07e1f52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_AgentTypeID: 0
+  m_CollectObjects: 0
+  m_Size: {x: 10, y: 10, z: 10}
+  m_Center: {x: 0, y: 2, z: 0}
+  m_LayerMask:
+    serializedVersion: 2
+    m_Bits: 1
+  m_UseGeometry: 0
+  m_DefaultArea: 0
+  m_IgnoreNavMeshAgent: 1
+  m_IgnoreNavMeshObstacle: 1
+  m_OverrideTileSize: 0
+  m_TileSize: 256
+  m_OverrideVoxelSize: 0
+  m_VoxelSize: 0.11666667
+  m_MinRegionArea: 2
+  m_NavMeshData: {fileID: 23800000, guid: 22da0b2aa8b22a0488f18f00f1d7d50a, type: 2}
+  m_BuildHeightMesh: 0
 --- !u!1 &7293206013930391253
 GameObject:
   m_ObjectHideFlags: 0
@@ -921,11 +951,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: de6a4ab8dba2a50429ad9b8a0ce5091d, type: 3}
---- !u!1 &1851024120712217127 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3515617036642186708, guid: de6a4ab8dba2a50429ad9b8a0ce5091d, type: 3}
-  m_PrefabInstance: {fileID: 2988652580787533811}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8108144182108005523 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6484120909053924192, guid: de6a4ab8dba2a50429ad9b8a0ce5091d, type: 3}
