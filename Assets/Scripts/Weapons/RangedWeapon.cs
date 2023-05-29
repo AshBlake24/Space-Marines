@@ -21,6 +21,7 @@ namespace Roguelike.Weapons
         private IObjectPool<Projectile> _projectilesPool;
         private ParticleSystem _muzzleFlashVFX;
         private RangedWeaponStats _stats;
+        private int _totalDamage;
         
         public event Action Fired;
 
@@ -36,6 +37,7 @@ namespace Roguelike.Weapons
         public void Construct(RangedWeaponStats stats)
         {
             _stats = stats;
+            _totalDamage = stats.Damage;
             
             CreateProjectilesPool();
             CreateMuzzleFlashVFX();
@@ -44,9 +46,18 @@ namespace Roguelike.Weapons
         public override void WriteProgress(PlayerProgress progress) => 
             progress.PlayerWeapons.SaveRangedWeapon(_stats.ID, AmmoData);
 
-        public override void ReadProgress(PlayerProgress progress) =>
-            AmmoData = GetAmmoData(progress) 
+        public override void ReadProgress(PlayerProgress progress)
+        {
+            AmmoData = GetAmmoData(progress)
                        ?? new AmmoData(infinityAmmo: false, _stats.MaxAmmo, _stats.MaxAmmo);
+
+            if (progress.State.Enhancements.Damage.Value > 0)
+            {
+                int additiveDamage = _stats.Damage * progress.State.Enhancements.Damage.Value / 100;
+                _totalDamage = _stats.Damage + additiveDamage;
+                Debug.Log($"Base Damage: {_stats.Damage}\nTotal Damage: {_totalDamage}");
+            }
+        }
 
         public bool TryReload(float ammoAmountMultiplier) => 
             AmmoData.Reload(ammoAmountMultiplier);
@@ -122,7 +133,7 @@ namespace Roguelike.Weapons
             projectile.transform.forward += GetSpread();
             projectile.gameObject.SetActive(true);
             projectile.ClearVFX();
-            projectile.Init(_stats.Damage, _stats.ProjectileStartSpeed);
+            projectile.Init(_totalDamage, _stats.ProjectileStartSpeed);
         }
 
         private void OnReleaseToPool(Projectile projectile) => 
