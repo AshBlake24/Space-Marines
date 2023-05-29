@@ -28,7 +28,7 @@ namespace Roguelike.UI.Windows
                     .Icon;
                 
                 RegionStaticData regionStaticData = _staticData.GetDataById<LevelId, RegionStaticData>(currentLevel);
-                int stagesCount = regionStaticData.Stages.Length;
+                int stagesCount = regionStaticData.StagesCount;
                 
                 (int stage, string label) = GetLevelInfo(currentLevel);
                 

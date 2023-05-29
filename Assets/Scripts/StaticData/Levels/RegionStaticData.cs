@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using Roguelike.Infrastructure.Services.StaticData;
 using UnityEngine;
 
@@ -9,11 +10,18 @@ namespace Roguelike.StaticData.Levels
     {
         public LevelId Id;
         public string Name;
-        public StageStaticData[] Stages;
+        public Floor[] Floors;
         
         [Range(1, 5)] 
         public int Difficulty;
         
         public Enum Key => Id;
+        public int StagesCount => Floors.SelectMany(floor => floor.Stages).Count();
+        
+        [Serializable]
+        public struct Floor
+        {
+            public StageStaticData[] Stages;
+        }
     }
 }
