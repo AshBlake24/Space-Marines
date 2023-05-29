@@ -23,13 +23,13 @@ namespace Roguelike.Loot.Powerups
         public void Construct(ICoroutineRunner coroutineRunner) =>
             _coroutineRunner = coroutineRunner;
 
-        public override bool TryApply(GameObject target, Action onComplete)
+        public override bool TryApply(GameObject target)
         {
             if (target.TryGetComponent(out PlayerHealth playerHealth))
             {
                 if (playerHealth.IsImmune == false)
                 {
-                    _coroutineRunner.StartCoroutine(EffectDuration(playerHealth, onComplete));
+                    _coroutineRunner.StartCoroutine(EffectDuration(playerHealth));
                     return true;
                 }
             }
@@ -37,14 +37,13 @@ namespace Roguelike.Loot.Powerups
             return false;
         }
 
-        private IEnumerator EffectDuration(PlayerHealth playerHealth, Action onComplete)
+        private IEnumerator EffectDuration(PlayerHealth playerHealth)
         {
             playerHealth.SetImmune(true);
 
             yield return Helpers.GetTime(_duration);
             
             playerHealth.SetImmune(false);
-            onComplete?.Invoke();
         }
     }
 }

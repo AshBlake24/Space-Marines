@@ -23,13 +23,13 @@ namespace Roguelike.Loot.Powerups
         public void Construct(ICoroutineRunner coroutineRunner) => 
             _coroutineRunner = coroutineRunner;
         
-        public override bool TryApply(GameObject target, Action onComplete)
+        public override bool TryApply(GameObject target)
         {
             if (target.TryGetComponent(out PlayerShooter playerShooter))
             {
                 if (playerShooter.Boosted == false)
                 {
-                    _coroutineRunner.StartCoroutine(EffectDuration(playerShooter, onComplete));
+                    _coroutineRunner.StartCoroutine(EffectDuration(playerShooter));
                     return true;
                 }
             }
@@ -37,14 +37,13 @@ namespace Roguelike.Loot.Powerups
             return false;
         }
 
-        private IEnumerator EffectDuration(PlayerShooter playerShooter, Action onComplete)
+        private IEnumerator EffectDuration(PlayerShooter playerShooter)
         {
             playerShooter.SetAttackSpeedMultiplier(_speedMultiplier);
 
             yield return Helpers.GetTime(_duration);
             
             playerShooter.ResetAttackSpeedMultiplier();
-            onComplete?.Invoke();
         }
     }
 }

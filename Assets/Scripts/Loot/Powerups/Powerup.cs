@@ -6,14 +6,14 @@ namespace Roguelike.Loot.Powerups
 {
     public class Powerup : MonoBehaviour
     {
-        [SerializeField] private GameObject _view;
-
         private IParticlesPoolService _particlesPool;
         private PowerupEffect _powerupEffect;
         private ParticleSystem _vfx;
-        private GameObject _target;
         private bool _collected;
         private string _vfxKey;
+
+        private void OnDestroy() => 
+            Destroy(gameObject);
 
         public void Construct(IParticlesPoolService particlesPool, PowerupEffect powerupDataEffect, ParticleSystem vfx)
         {
@@ -30,20 +30,13 @@ namespace Roguelike.Loot.Powerups
             TryApplyPowerup(other.gameObject);
         }
 
-        private void LateUpdate()
-        {
-            if (_collected)
-                _vfx.transform.position = _target.transform.position;
-        }
-
         private void TryApplyPowerup(GameObject target)
         {
-            if (_powerupEffect.TryApply(target, () => Destroy(gameObject)))
+            if (_powerupEffect.TryApply(target))
             {
                 _collected = true;
-                _target = target;
-                HideModel();
-                SpawnVFX();
+                SpawnVFX(target.transform);
+                Destroy(gameObject);
             }
             else
             {
@@ -51,10 +44,11 @@ namespace Roguelike.Loot.Powerups
             }
         }
 
-        private void SpawnVFX()
+        private void SpawnVFX(Transform target)
         {
             _vfx = _particlesPool.GetInstance(_vfxKey);
-            _vfx.transform.position = _target.transform.position;
+            _vfx.transform.SetParent(target);
+            _vfx.transform.localPosition = Vector3.zero;
 
             if (_powerupEffect is ILastingEffect lastingEffect)
                 _vfx.GetComponent<ReturnToPool>().StartLastingEffect(lastingEffect.Duration);
@@ -65,10 +59,7 @@ namespace Roguelike.Loot.Powerups
         private void CreateVFXPool(IParticlesPoolService particlesPool, ParticleSystem vfx)
         {
             _particlesPool = particlesPool;
-            _particlesPool.CreateNewPool(_vfxKey, vfx, 3, 10);
+            _particlesPool.CreateNewPool(_vfxKey, vfx, defaultSize: 3, maxSize: 10);
         }
-
-        private void HideModel() => 
-            _view.SetActive(false);
     }
 }
