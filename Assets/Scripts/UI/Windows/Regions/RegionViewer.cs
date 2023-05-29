@@ -31,6 +31,7 @@ namespace Roguelike.UI.Windows.Regions
         {
             _toggle.isOn = false;
             _name.text = RegionData.Name;
+            _icon.sprite = RegionData.Icon;
             _floorsCount.text = RegionData.Floors.Length.ToString();
             _stagesCount.text = RegionData.Floors[0].Stages.Length.ToString();
             _toggle.onValueChanged.AddListener(OnToggleClick);

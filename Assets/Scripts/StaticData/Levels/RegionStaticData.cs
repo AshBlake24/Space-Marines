@@ -10,6 +10,7 @@ namespace Roguelike.StaticData.Levels
     {
         public LevelId Id;
         public string Name;
+        public Sprite Icon;
         public Floor[] Floors;
         
         [Range(1, 5)] 
