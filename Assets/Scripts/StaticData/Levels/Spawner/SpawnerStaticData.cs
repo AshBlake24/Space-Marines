@@ -1,5 +1,4 @@
 using Roguelike.StaticData.Enemies;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,5 +10,6 @@ namespace Roguelike.StaticData.Levels.Spawner
         [Header("Stats")]
         public List<EnemyId> Enemies;
         public float Complexity;
+        public int SpawnPointsInWave;
     }
 }

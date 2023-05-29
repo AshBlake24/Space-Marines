@@ -1,8 +1,8 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 namespace Roguelike.Enemies.Transitions
 {
-    public class AttackReady : Transition
+    public class LifeTimeIsOver : Transition    
     {
         private Enemy _enemy;
         private float _accumulatedTime;
@@ -13,15 +13,14 @@ namespace Roguelike.Enemies.Transitions
 
             _accumulatedTime = 0;
         }
-
         private void Update()
         {
             if (_enemy != null)
             {
                 _accumulatedTime += Time.deltaTime;
 
-                if (_accumulatedTime >= _enemy.AttackColldown)
-                    NeedTransit?.Invoke(targetState);
+                if (_accumulatedTime >= _enemy.LifeTime)
+                    _enemy.Health.TakeDamage(_enemy.Health.MaxHealth);
             }
         }
     }

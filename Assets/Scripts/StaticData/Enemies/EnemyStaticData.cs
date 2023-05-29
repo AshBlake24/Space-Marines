@@ -23,7 +23,10 @@ namespace Roguelike.StaticData.Enemies
 
         [Header("Taran enemy stats")]
         public float ChargeSpeedMultiplication;
-        
+
+        [Header("Mine enemy stats")]
+        public float LifeTime;
+
         public Enum Key => Id;
     }
 }

@@ -14,12 +14,7 @@ namespace Roguelike.Level
         {
             get
             {
-                float angle = transform.rotation.eulerAngles.y;
-
-                if (transform.localPosition.x < 0 || transform.localPosition.z > 0)
-                    return angle;
-                else
-                    return -angle;
+                return transform.localEulerAngles.y;
             }
             private set { }
         }
@@ -46,7 +41,9 @@ namespace Roguelike.Level
         {
             if (_castPoint != null)
             {
-                return Physics.Raycast(_castPoint.transform.position, _castPoint.transform.position + (transform.position - room.transform.position) * CastDistance, room.GetShiftDistance() * CastDistance);
+                return Physics.Raycast(_castPoint.transform.position,
+                    _castPoint.transform.position + (transform.position - room.transform.position) * CastDistance,
+                    room.GetShiftDistance() * CastDistance);
             }
 
             return true;

@@ -15,6 +15,8 @@ GameObject:
   - component: {fileID: 1201708532490801697}
   - component: {fileID: 4609532754909512435}
   - component: {fileID: 1392744054567292606}
+  - component: {fileID: 585718070987995855}
+  - component: {fileID: 1530647012416985552}
   m_Layer: 12
   m_Name: Mine
   m_TagString: Enemy
@@ -81,7 +83,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4935547345014440336}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 38c5c59b35f4a0b488703a85f9928c3a, type: 3}
   m_Name: 
@@ -114,6 +116,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _transitions:
   - {fileID: 1392744054567292606}
+  - {fileID: 1530647012416985552}
 --- !u!114 &1392744054567292606
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -127,6 +130,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetState: {fileID: 1201708532490801697}
+--- !u!114 &585718070987995855
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4935547345014440336}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef0eb0c65d5e48cab30ac4365bcba646, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _health: {fileID: 0}
+  _powerupDropChance: 0
+--- !u!114 &1530647012416985552
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4935547345014440336}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7bf51ac8a9910464fa2df0f2c254f18a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetState: {fileID: 0}
 --- !u!1 &8396033113490134149
 GameObject:
   m_ObjectHideFlags: 0
@@ -138,6 +168,7 @@ GameObject:
   - component: {fileID: 4219941432483561209}
   - component: {fileID: 5428774164977646253}
   - component: {fileID: 6677215565608345886}
+  - component: {fileID: 157841652960552701}
   m_Layer: 12
   m_Name: Capsule
   m_TagString: Untagged
@@ -210,3 +241,15 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &157841652960552701
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8396033113490134149}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bcb001b05e5743d7be29b39197ec7e17, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

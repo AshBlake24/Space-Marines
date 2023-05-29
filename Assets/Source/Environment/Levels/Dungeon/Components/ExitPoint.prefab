@@ -10,6 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4834361398578102371}
   - component: {fileID: 4460834034615642610}
+  - component: {fileID: 2806956393101815909}
+  - component: {fileID: 4319075444099918979}
   m_Layer: 0
   m_Name: ExitPoint
   m_TagString: Untagged
@@ -31,7 +33,7 @@ Transform:
   m_Children:
   - {fileID: 1379009122700374307}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &4460834034615642610
 MonoBehaviour:
@@ -45,19 +47,44 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d79334b01e98294999662331e8fb888, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _hideWall: {fileID: 0}
+  _openedDoor: {fileID: 0}
+  _closedDoor: {fileID: 0}
   _castPoint: {fileID: 1717690006607030843}
+--- !u!65 &2806956393101815909
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 293568806887578610}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 3.9022994, y: 1.7425382, z: 0.5919914}
+  m_Center: {x: 0.15113401, y: 0.6655369, z: -1.0330296}
+--- !u!114 &4319075444099918979
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 293568806887578610}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78d3aed8c270ad4469e47be26a1e1d46, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &3493418229615342956
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    serializedVersion: 3
     m_TransformParent: {fileID: 4834361398578102371}
     m_Modifications:
     - target: {fileID: 2546825323371856975, guid: 30dd5898c3c70e74ea36776d92e0a43f, type: 3}
       propertyPath: m_RootOrder
-      value: -1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2546825323371856975, guid: 30dd5898c3c70e74ea36776d92e0a43f, type: 3}
       propertyPath: m_LocalPosition.x
@@ -104,9 +131,6 @@ PrefabInstance:
       value: CastPoint
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 30dd5898c3c70e74ea36776d92e0a43f, type: 3}
 --- !u!4 &1379009122700374307 stripped
 Transform:

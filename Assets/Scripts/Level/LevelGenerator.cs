@@ -12,6 +12,7 @@ namespace Roguelike.Level
     public class LevelGenerator : MonoBehaviour
     {
         private const string ContainerName = "Rooms";
+        private const int MinExitCount = 2;
 
         private IEnemyFactory _enemyFactory;
         private ISceneLoadingService _sceneLoadingService;
@@ -22,14 +23,14 @@ namespace Roguelike.Level
         private ExitPoint _connectingPoint;
         private Room _currentCorridor;
         private Room _currentRoom;
-        private int _roomsCount;
+        private int _arenaRoomsCount;
         private int _bonusRoomCount;
 
         public void Construct(StageStaticData stageData, IPersistentDataService persistentDataService,
             ISceneLoadingService sceneLoadingService, IEnemyFactory enemyFactory)
         {
             _data = stageData;
-            _roomsCount = stageData.ArenasCount;
+            _arenaRoomsCount = stageData.ArenasCount;
             _bonusRoomCount = stageData.TreasureRoomsCount;
             _sceneLoadingService = sceneLoadingService;
             _persistentDataService = persistentDataService;
@@ -42,20 +43,27 @@ namespace Roguelike.Level
 
             ConnectStartRoom();
 
-            while (_roomsCount > 0)
+            while (_arenaRoomsCount > 0)
             {
                 ConnectCorridor();
+                ConnectArenaRoom();
 
-                ConnectRoom();
-
-                if (_bonusRoomCount > 0)
+                while (_currentRoom.ExitCount > 1)
                 {
-                    ConnectCorridor();
-                    ConnectBonusRoom();
-                    _bonusRoomCount--;
+                    if (_bonusRoomCount > 0)
+                    {
+                        ConnectCorridor();
+                        ConnectBonusRoom();
+
+                        _bonusRoomCount--;
+                    }
+                    else
+                    {
+                        break;
+                    }
                 }
 
-                _roomsCount--;
+                _arenaRoomsCount--;
             }
 
             ConnectCorridor();
@@ -68,16 +76,38 @@ namespace Roguelike.Level
             _currentCorridor = CreateRoom(_currentRoom, _data.Corridor, _connectingPoint);
         }
 
-        private void ConnectRoom()
+        private void ConnectArenaRoom()
         {
-            Room areaRoom = CreateRoom(_currentCorridor, _data.Arenas);
+            Room arenaRoom = GetValidArenaRoom();
 
-            if (areaRoom.gameObject.TryGetComponent<EnemySpawner>(out EnemySpawner enemySpawner))
-                enemySpawner.Init(_enemyFactory,_data.MinComplexityMultiplication, _data.MaxComplexityMultiplication, _data.Spawner);
+            if (arenaRoom.gameObject.TryGetComponent<EnemySpawner>(out EnemySpawner enemySpawner))
+                enemySpawner.Init(_enemyFactory, _data.MinComplexityMultiplication, _data.MaxComplexityMultiplication, _data.Spawner);
 
             _currentRoom.HideExit();
 
-            _currentRoom = areaRoom;
+            _currentRoom = arenaRoom;
+        }
+
+        private Room GetValidArenaRoom()
+        {
+            if (_bonusRoomCount < _arenaRoomsCount)
+            {
+                return CreateRoom(_currentCorridor, _data.Arenas);
+            }
+            else
+            {
+                List<Room> validRoom = new();
+
+                foreach (var room in _data.Arenas)
+                {
+                    if (room.ExitCount > MinExitCount)
+                    {
+                        validRoom.Add(room);
+                    }
+                }
+
+                return CreateRoom(_currentCorridor, validRoom);
+            }
         }
 
         private void ConnectBonusRoom()
@@ -117,7 +147,7 @@ namespace Roguelike.Level
 
             nextRoom = Instantiate(nextRoom, currentExitPoint.transform.position, Quaternion.identity);
 
-            nextRoom.Init(_connectingPoint);
+            nextRoom.Init(currentExitPoint);
 
             nextRoom.transform.SetParent(_roomContainer, true);
 
