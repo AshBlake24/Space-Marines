@@ -1,3 +1,4 @@
+using System;
 using Roguelike.StaticData.Enemies;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,6 +11,12 @@ namespace Roguelike.StaticData.Levels.Spawner
         [Header("Stats")]
         public List<EnemyId> Enemies;
         public float Complexity;
-        public int SpawnPointsInWave;
+        public int MinSpawnPointsInWave;
+
+        private void OnValidate()
+        {
+            if (MinSpawnPointsInWave <= 0)
+                MinSpawnPointsInWave = 1;
+        }
     }
 }
