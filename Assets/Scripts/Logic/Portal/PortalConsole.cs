@@ -45,6 +45,6 @@ namespace Roguelike.Logic.Portal
         }
 
         private void OnRegionSelected(RegionSelectionWindow regionSelectionWindow, RegionStaticData regionData) => 
-            _portal.Init(regionData.Id, regionData.Stages[0].Id);
+            _portal.Init(regionData.Id, regionData.Floors[0].Stages[0].Id);
     }
 }

@@ -14,11 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: 2
   Name: Old Dungeon
-  Stages:
-  - {fileID: 11400000, guid: 294abc8f42f712d439daf2edb8dc6c44, type: 2}
-  - {fileID: 11400000, guid: 22b4f014cb8acb246883b2ad19e1c156, type: 2}
-  - {fileID: 11400000, guid: 6f8d15da6d7a3fa4bb6e661bc7e47bd2, type: 2}
-  - {fileID: 11400000, guid: be2c7b52b4681a24e88c222274ddb6b8, type: 2}
-  - {fileID: 11400000, guid: 58a91e882d748ed49883f09ad430de93, type: 2}
-  - {fileID: 11400000, guid: 7736e00a40df5ca4ab8214882816a840, type: 2}
-  Difficulty: 1
+  Floors:
+  - Stages:
+    - {fileID: 11400000, guid: 294abc8f42f712d439daf2edb8dc6c44, type: 2}
+    - {fileID: 11400000, guid: 22b4f014cb8acb246883b2ad19e1c156, type: 2}
+    - {fileID: 11400000, guid: 6f8d15da6d7a3fa4bb6e661bc7e47bd2, type: 2}
+  - Stages:
+    - {fileID: 11400000, guid: be2c7b52b4681a24e88c222274ddb6b8, type: 2}
+    - {fileID: 11400000, guid: 58a91e882d748ed49883f09ad430de93, type: 2}
+    - {fileID: 11400000, guid: 7736e00a40df5ca4ab8214882816a840, type: 2}
+  Difficulty: 2

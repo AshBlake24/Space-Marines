@@ -10,8 +10,10 @@ namespace Roguelike.UI.Windows.Regions
     {
         [SerializeField] private Toggle _toggle;
         [SerializeField] private TextMeshProUGUI _name;
+        [SerializeField] private TextMeshProUGUI _floorsCount;
         [SerializeField] private TextMeshProUGUI _stagesCount;
         [SerializeField] private Image _icon;
+        [SerializeField] private RegionDangerViewer _dangerViewer;
 
         public event Action<bool> ToggleClicked;
 
@@ -20,12 +22,22 @@ namespace Roguelike.UI.Windows.Regions
 
         public void Construct(RegionStaticData regionData)
         {
-            _toggle.isOn = false;
             RegionData = regionData;
+            InitRegionViewer();
+            InitDangerViewer();
+        }
+
+        private void InitRegionViewer()
+        {
+            _toggle.isOn = false;
             _name.text = RegionData.Name;
-            _stagesCount.text = RegionData.Stages.Length.ToString();
+            _floorsCount.text = RegionData.Floors.Length.ToString();
+            _stagesCount.text = RegionData.Floors[0].Stages.Length.ToString();
             _toggle.onValueChanged.AddListener(OnToggleClick);
         }
+
+        private void InitDangerViewer() => 
+            _dangerViewer.Init(RegionData.Difficulty);
 
         private void OnDestroy() => 
             _toggle.onValueChanged.RemoveListener(OnToggleClick);
