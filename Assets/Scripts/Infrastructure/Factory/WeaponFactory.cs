@@ -63,7 +63,6 @@ namespace Roguelike.Infrastructure.Factory
                     .GetComponent<RangedWeapon>();
 
             weapon.Construct(InitializeRangedWeaponStats(weaponData));
-            weapon.ReadProgress(_progressData.PlayerProgress);
             weapon.transform.localPosition = weapon.PositionOffset;
             weapon.transform.localRotation = Quaternion.Euler(weapon.RotationOffset);
             weapon.Hide();

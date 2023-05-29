@@ -21,6 +21,6 @@ namespace Roguelike.Weapons.Logic
             _playerShooter.DroppedWeapon -= OnDroppedWeapon;
 
         private void OnDroppedWeapon(IWeapon weapon) => 
-            weapon.WriteProgress(_persistentData.PlayerProgress);
+            weapon.WriteProgress(_persistentData.PlayerProgress);   
     }
 }

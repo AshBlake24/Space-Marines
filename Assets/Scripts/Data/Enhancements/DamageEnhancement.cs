@@ -7,12 +7,12 @@ namespace Roguelike.Data.Enhancements
     {
         public int Value;
 
-        public event Action Changed;
-
         public DamageEnhancement()
         {
             Value = 0;
         }
+
+        public event Action Changed;
 
         public void Upgrade(int value)
         {

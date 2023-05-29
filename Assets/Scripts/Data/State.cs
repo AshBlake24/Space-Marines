@@ -14,7 +14,7 @@ namespace Roguelike.Data
 
         public void ResetState()
         {
-            Enhancements = new Enhancements.PlayerEnhancements();
+            Enhancements = new PlayerEnhancements();
             CurrentHealth = MaxHealth;
             HasResurrected = false;
             Dead = false;

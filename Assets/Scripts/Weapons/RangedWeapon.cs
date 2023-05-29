@@ -12,12 +12,12 @@ using UnityEngine.Pool;
 
 namespace Roguelike.Weapons
 {
-    public class RangedWeapon : Weapon, IProgressWriter
+    public class RangedWeapon : Weapon
     {
         [SerializeField] private Transform _firePoint;
 
         private IRandomService _random;
-        private IProjectileFactory _factory;
+        private IProjectileFactory _projectileFactory;
         private IObjectPool<Projectile> _projectilesPool;
         private ParticleSystem _muzzleFlashVFX;
         private RangedWeaponStats _stats;
@@ -31,13 +31,14 @@ namespace Roguelike.Weapons
         private void Awake()
         {
             _random = AllServices.Container.Single<IRandomService>();
-            _factory = AllServices.Container.Single<IProjectileFactory>();
+            _projectileFactory = AllServices.Container.Single<IProjectileFactory>();
         }
 
         public void Construct(RangedWeaponStats stats)
         {
             _stats = stats;
             _totalDamage = stats.Damage;
+            AmmoData = new AmmoData(infinityAmmo: false, stats.MaxAmmo, stats.MaxAmmo);
             
             CreateProjectilesPool();
             CreateMuzzleFlashVFX();
@@ -48,14 +49,15 @@ namespace Roguelike.Weapons
 
         public override void ReadProgress(PlayerProgress progress)
         {
-            AmmoData = GetAmmoData(progress)
-                       ?? new AmmoData(infinityAmmo: false, _stats.MaxAmmo, _stats.MaxAmmo);
+            AmmoData = TryGetAmmoData(progress);
+            
+            Debug.Log($"Base Damage: {_stats.Damage}\tTotal Damage: {_totalDamage}");
 
             if (progress.State.Enhancements.Damage.Value > 0)
             {
                 int additiveDamage = _stats.Damage * progress.State.Enhancements.Damage.Value / 100;
                 _totalDamage = _stats.Damage + additiveDamage;
-                Debug.Log($"Base Damage: {_stats.Damage}\nTotal Damage: {_totalDamage}");
+                Debug.Log($"Calculating\tBase Damage: {_stats.Damage}    Total Damage: {_totalDamage}");
             }
         }
 
@@ -117,7 +119,7 @@ namespace Roguelike.Weapons
             _muzzleFlashVFX.Play();
 
         private Projectile GetProjectile() =>
-            _factory.CreateProjectile(_stats.ProjectileData.Id, _projectilesPool);
+            _projectileFactory.CreateProjectile(_stats.ProjectileData.Id, _projectilesPool);
 
         private Projectile CreatePoolItem()
         {
@@ -142,7 +144,7 @@ namespace Roguelike.Weapons
         private void OnDestroyItem(Projectile projectile) => 
             Destroy(projectile.gameObject);
 
-        private AmmoData GetAmmoData(PlayerProgress progress) => 
-            progress?.PlayerWeapons.RangedWeaponsData.Find(weapon => weapon.ID == Stats.ID)?.AmmoData;
+        private AmmoData TryGetAmmoData(PlayerProgress progress) => 
+            progress.PlayerWeapons.RangedWeaponsData.Find(weapon => weapon.ID == Stats.ID)?.AmmoData;
     }
 }
