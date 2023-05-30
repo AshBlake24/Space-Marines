@@ -83,8 +83,8 @@ namespace Roguelike.Infrastructure.States
             _services.RegisterSingle<IWeaponFactory>(new WeaponFactory(
                 _services.Single<IStaticDataService>(),
                 _services.Single<ISaveLoadService>(),
-                _services.Single<IPersistentDataService>(),
-                _services.Single<ILootFactory>()));
+                _services.Single<IProjectileFactory>(),
+                _services.Single<IRandomService>()));
 
             _services.RegisterSingle<IUIFactory>(new UIFactory(
                 _services.Single<IAssetProvider>(),

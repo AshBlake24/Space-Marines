@@ -1,5 +1,5 @@
 using System;
-using Roguelike.Infrastructure.Services.PersistentData;
+using Roguelike.Infrastructure.Services.Random;
 using Roguelike.Infrastructure.Services.SaveLoad;
 using Roguelike.Infrastructure.Services.StaticData;
 using Roguelike.StaticData.Weapons;
@@ -14,26 +14,16 @@ namespace Roguelike.Infrastructure.Factory
     {
         private readonly IStaticDataService _staticDataService;
         private readonly ISaveLoadService _saveLoadService;
-        private readonly IPersistentDataService _progressData;
-        private readonly ILootFactory _lootFactory;
+        private readonly IProjectileFactory _projectileFactory;
+        private readonly IRandomService _randomService;
 
         public WeaponFactory(IStaticDataService staticDataService, ISaveLoadService saveLoadService,
-            IPersistentDataService progressData, ILootFactory lootFactory)
+            IProjectileFactory projectileFactory, IRandomService randomService)
         {
             _staticDataService = staticDataService;
             _saveLoadService = saveLoadService;
-            _progressData = progressData;
-            _lootFactory = lootFactory;
-        }
-
-        public IWeapon CreateWeapon(WeaponId id) // todo refactor fabric
-        {
-            if (id == WeaponId.Unknow)
-                return null;
-
-            WeaponStaticData weaponData = _staticDataService.GetDataById<WeaponId, WeaponStaticData>(id);
-
-            return ConstructWeapon(weaponData);
+            _projectileFactory = projectileFactory;
+            _randomService = randomService;
         }
 
         public IWeapon CreateWeapon(WeaponId id, Transform parent)
@@ -62,7 +52,7 @@ namespace Roguelike.Infrastructure.Factory
                 : Object.Instantiate(weaponData.WeaponPrefab, parent.position, Quaternion.identity, parent)
                     .GetComponent<RangedWeapon>();
 
-            weapon.Construct(InitializeRangedWeaponStats(weaponData));
+            weapon.Construct(InitializeRangedWeaponStats(weaponData), _projectileFactory, _randomService);
             weapon.transform.localPosition = weapon.PositionOffset;
             weapon.transform.localRotation = Quaternion.Euler(weapon.RotationOffset);
             weapon.Hide();

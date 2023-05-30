@@ -7,7 +7,6 @@ namespace Roguelike.Infrastructure.Factory
 {
     public interface IWeaponFactory : IService
     {
-        IWeapon CreateWeapon(WeaponId id);
-        IWeapon CreateWeapon(WeaponId id, Transform parent);
+        IWeapon CreateWeapon(WeaponId id, Transform parent = null);
     }
 }
