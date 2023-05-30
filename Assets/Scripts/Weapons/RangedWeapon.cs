@@ -44,14 +44,24 @@ namespace Roguelike.Weapons
         public override void WriteProgress(PlayerProgress progress) => 
             progress.PlayerWeapons.SaveRangedWeapon(_stats.ID, AmmoData);
 
-        public override void ReadProgress(PlayerProgress progress)
-        {
+        public override void ReadProgress(PlayerProgress progress) => 
             AmmoData = TryGetAmmoData(progress);
-            TryApplyDamageEnhancement(progress);
-        }
 
         public bool TryReload(float ammoAmountMultiplier) => 
             AmmoData.Reload(ammoAmountMultiplier);
+
+        public override void CalculateTotalDamage(int extraDamageAtPercentage)
+        {
+            Debug.Log($"Before: {_totalDamage}");
+            
+            if (extraDamageAtPercentage > 0)
+            {
+                int additiveDamage = _stats.Damage * extraDamageAtPercentage / 100;
+                _totalDamage = _stats.Damage + additiveDamage;
+                
+                Debug.Log($"After: {_totalDamage}");
+            }
+        }
 
         public override bool TryAttack()
         {
@@ -135,18 +145,5 @@ namespace Roguelike.Weapons
 
         private AmmoData TryGetAmmoData(PlayerProgress progress) => 
             progress.PlayerWeapons.RangedWeaponsData.Find(weapon => weapon.ID == Stats.ID)?.AmmoData;
-
-        private void TryApplyDamageEnhancement(PlayerProgress progress)
-        {
-            EnhancementData damageEnhancement = progress.State.Enhancements
-                .SingleOrDefault(enhancement => enhancement.Id == EnhancementId.Damage);
-
-            if (damageEnhancement is {Value: > 0})
-            {
-                int additiveDamage = _stats.Damage * damageEnhancement.Value / 100;
-                _totalDamage = _stats.Damage + additiveDamage;
-                Debug.Log($"Calculating\tBase Damage: {_stats.Damage}    Total Damage: {_totalDamage}");
-            }
-        }
     }
 }

@@ -9,7 +9,6 @@ namespace Roguelike.Player.Skills
     public abstract class Skill : ISkill
     {
         protected readonly ICoroutineRunner CoroutineRunner;
-        private readonly float _cooldown;
 
         protected Skill(
             ICoroutineRunner coroutineRunner,
@@ -17,7 +16,7 @@ namespace Roguelike.Player.Skills
             ParticleSystem skillEffect)
         {
             CoroutineRunner = coroutineRunner;
-            _cooldown = skillCooldown;
+            Cooldown = skillCooldown;
             VFX = skillEffect;
             ReadyToUse = true;
             IsActive = false;
@@ -26,16 +25,16 @@ namespace Roguelike.Player.Skills
         public abstract event Action Performed;
 
         public ParticleSystem VFX { get; }
+        public float Cooldown { get; }
         public bool IsActive { get; protected set; }
         public bool ReadyToUse { get; protected set; }
-        public virtual bool Boosted { get; protected set; }
-        public float Cooldown => _cooldown;
+        public virtual bool Boosted { get; }
 
         public abstract void UseSkill();
         
         protected IEnumerator SkillCooldown()
         {
-            yield return Helpers.GetTime(_cooldown);
+            yield return Helpers.GetTime(Cooldown);
 
             ReadyToUse = true;
         }

@@ -8,6 +8,7 @@ namespace Roguelike.Weapons
     public interface IWeapon : IProgressWriter
     {
         WeaponStats Stats { get; }
+        void CalculateTotalDamage(int extraDamageAtPercentage);
         bool TryAttack();
         void Show();
         void Hide();

@@ -13,9 +13,10 @@ namespace Roguelike.Weapons
         public Vector3 RotationOffset => _rotationOffset;
 
         public abstract WeaponStats Stats { get; }
-        public abstract bool TryAttack();
         public void Show() => gameObject.SetActive(true);
         public void Hide() => gameObject.SetActive(false);
+        public abstract bool TryAttack();
+        public abstract void CalculateTotalDamage(int extraDamageAtPercentage);
         public virtual void ReadProgress(PlayerProgress progress) { }
         public virtual void WriteProgress(PlayerProgress progress) { }
     }
