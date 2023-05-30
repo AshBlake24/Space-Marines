@@ -107,6 +107,9 @@ namespace Roguelike.Infrastructure.States
                 _services.Single<IEnvironmentService>(),
                 _services.Single<ISceneLoadingService>(),
                 _services.Single<ILootFactory>()));
+            
+            _services.RegisterSingle<IEnhancementFactory>(new EnhancementFactory(
+                _services.Single<IStaticDataService>()));
         }
 
         private void RegisterStaticData()

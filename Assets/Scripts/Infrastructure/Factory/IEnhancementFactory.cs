@@ -1,9 +1,12 @@
+using Roguelike.Infrastructure.Services;
+using Roguelike.Player.Enhancements;
 using Roguelike.StaticData.Enhancements;
+using UnityEngine;
 
 namespace Roguelike.Infrastructure.Factory
 {
-    public interface IEnhancementFactory
+    public interface IEnhancementFactory : IService
     {
-        void CreateEnhancement(EnhancementId id);
+        IEnhancement CreateEnhancement(EnhancementId id, GameObject player);
     }
 }
