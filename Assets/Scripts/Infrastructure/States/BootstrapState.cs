@@ -95,6 +95,9 @@ namespace Roguelike.Infrastructure.States
             _services.RegisterSingle<IWindowService>(new WindowService(
                 _services.Single<IUIFactory>()));
 
+            _services.RegisterSingle<IEnhancementFactory>(new EnhancementFactory(
+                _services.Single<IStaticDataService>()));
+            
             _services.RegisterSingle<IGameFactory>(new GameFactory(
                 _services.Single<IAssetProvider>(),
                 _services.Single<IPersistentDataService>(),
@@ -106,10 +109,8 @@ namespace Roguelike.Infrastructure.States
                 _services.Single<IWindowService>(),
                 _services.Single<IEnvironmentService>(),
                 _services.Single<ISceneLoadingService>(),
-                _services.Single<ILootFactory>()));
-            
-            _services.RegisterSingle<IEnhancementFactory>(new EnhancementFactory(
-                _services.Single<IStaticDataService>()));
+                _services.Single<ILootFactory>(),
+                _services.Single<IEnhancementFactory>()));
         }
 
         private void RegisterStaticData()

@@ -8,8 +8,5 @@ namespace Roguelike.Data
     {
         public EnhancementId Id;
         public int Tier;
-        public int Value;
-
-        public event Action Changed;
     }
 }

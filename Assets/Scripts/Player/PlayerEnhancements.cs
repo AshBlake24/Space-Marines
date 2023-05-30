@@ -22,6 +22,7 @@ namespace Roguelike.Player
                 throw new ArgumentOutOfRangeException(nameof(enhancementId), "This enhancement already exists");
 
             IEnhancement enhancement = _enhancementFactory.CreateEnhancement(enhancementId, gameObject);
+            enhancement.Apply();
             _enhancements.Add(enhancement);
         }
         

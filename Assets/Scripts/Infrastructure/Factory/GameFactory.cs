@@ -40,6 +40,7 @@ namespace Roguelike.Infrastructure.Factory
         private readonly IEnvironmentService _environmentService;
         private readonly ISceneLoadingService _sceneLoadingService;
         private readonly ILootFactory _lootFactory;
+        private readonly IEnhancementFactory _enhancementFactory;
 
         public GameFactory(IAssetProvider assetProvider,
             IPersistentDataService persistentData,
@@ -51,7 +52,8 @@ namespace Roguelike.Infrastructure.Factory
             IWindowService windowService,
             IEnvironmentService environmentService,
             ISceneLoadingService sceneLoadingService,
-            ILootFactory lootFactory)
+            ILootFactory lootFactory,
+            IEnhancementFactory enhancementFactory)
         {
             _assetProvider = assetProvider;
             _persistentData = persistentData;
@@ -63,6 +65,7 @@ namespace Roguelike.Infrastructure.Factory
             _environmentService = environmentService;
             _sceneLoadingService = sceneLoadingService;
             _lootFactory = lootFactory;
+            _enhancementFactory = enhancementFactory;
             _enemyFactory = enemyFactory;
         }
 
@@ -82,6 +85,9 @@ namespace Roguelike.Infrastructure.Factory
             
             player.GetComponent<PlayerInteraction>()
                 .Construct(_windowService);
+            
+            player.GetComponent<PlayerEnhancements>()
+                .Construct(_enhancementFactory);
 
             _skillFactory.CreatePlayerSkill(player);
 

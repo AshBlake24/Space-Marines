@@ -2,7 +2,7 @@ using Roguelike.StaticData.Enhancements;
 
 namespace Roguelike.Player.Enhancements
 {
-    public class DamageEnhancement : Enhancement
+    public sealed class DamageEnhancement : Enhancement
     {
         private readonly PlayerShooter _playerShooter;
 
@@ -20,7 +20,7 @@ namespace Roguelike.Player.Enhancements
         }
 
         public override void Apply() => 
-            _playerShooter.CurrentWeapon?.CalculateTotalDamage(Data.ValuesOnTiers[CurrentTier]);
+            _playerShooter.CurrentWeapon?.CalculateTotalDamage(Data.ValuesOnTiers[CurrentTier - 1]);
 
         public override void Cleanup() => 
             _playerShooter.WeaponChanged -= OnWeaponChanged;
