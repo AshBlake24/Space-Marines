@@ -9,6 +9,7 @@ namespace Roguelike.Enemies
     public class EnemyStateMachine : MonoBehaviour
     {
         [SerializeField] private EnemyState _startState;
+        [SerializeField] private EnemyState _dieState;
 
         private EnemyHealth _enemyHealth;
         private Enemy _enemy;
@@ -54,7 +55,8 @@ namespace Roguelike.Enemies
         private void OnEnemyDead(EnemyHealth enemy)
         {
             enemy.Died -= OnEnemyDead;
-            Destroy(gameObject);
+
+            _currentState.Exit(_dieState);
         }
     }
 }
