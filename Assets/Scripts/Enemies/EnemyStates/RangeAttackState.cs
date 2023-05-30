@@ -1,5 +1,6 @@
 using Roguelike.Infrastructure.Factory;
 using Roguelike.Infrastructure.Services;
+using Roguelike.Roguelike.Enemies.Animators;
 using Roguelike.StaticData.Projectiles;
 using Roguelike.Utilities;
 using Roguelike.Weapons.Projectiles;
@@ -31,9 +32,9 @@ namespace Roguelike.Enemies.EnemyStates
             base.OnDisable();
         }
 
-        public override void Enter(Enemy enemy)
+        public override void Enter(Enemy enemy, EnemyAnimator enemyAnimator)
         {
-            base.Enter(enemy);
+            base.Enter(enemy, enemyAnimator);
 
             _factory = AllServices.Container.Single<IProjectileFactory>();
 

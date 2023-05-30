@@ -1,5 +1,6 @@
 ﻿using Roguelike.Infrastructure.Factory;
 using Roguelike.Infrastructure.Services;
+using Roguelike.Roguelike.Enemies.Animators;
 using Roguelike.StaticData.Enemies;
 using UnityEngine;
 using UnityEngine.AI;
@@ -36,9 +37,9 @@ namespace Roguelike.Enemies.EnemyStates
             }
         }
 
-        public override void Enter(Enemy curentEnemy)
+        public override void Enter(Enemy curentEnemy, EnemyAnimator enemyAnimator)
         {
-            base.Enter(curentEnemy);
+            base.Enter(curentEnemy, enemyAnimator);
 
             GetRandomDestination();
         }
