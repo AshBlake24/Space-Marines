@@ -46,9 +46,6 @@ namespace Roguelike.Editor
             using StreamWriter streamWriter = new(fileStream);
 
             streamWriter.Write(dataToStore);
-            
-            fileStream.Dispose();
-            streamWriter.Dispose();
         }
     }
 }

@@ -4,7 +4,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace Roguelike.Utilities.Baking
+namespace Roguelike.Utilities
 {
     [ExecuteAlways]
     public class PrefabLightmapData : MonoBehaviour

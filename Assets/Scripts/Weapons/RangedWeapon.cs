@@ -1,9 +1,10 @@
 using System;
+using System.Linq;
 using Roguelike.Data;
 using Roguelike.Infrastructure.Factory;
 using Roguelike.Infrastructure.Services;
-using Roguelike.Infrastructure.Services.PersistentData;
 using Roguelike.Infrastructure.Services.Random;
+using Roguelike.StaticData.Enhancements;
 using Roguelike.Utilities;
 using Roguelike.Weapons.Projectiles;
 using Roguelike.Weapons.Stats;
@@ -28,18 +29,14 @@ namespace Roguelike.Weapons
         public override WeaponStats Stats => _stats;
         public AmmoData AmmoData { get; private set; }
 
-        private void Awake()
-        {
-            _random = AllServices.Container.Single<IRandomService>();
-            _projectileFactory = AllServices.Container.Single<IProjectileFactory>();
-        }
-
-        public void Construct(RangedWeaponStats stats)
+        public void Construct(RangedWeaponStats stats, IProjectileFactory projectileFactory, IRandomService randomService)
         {
             _stats = stats;
+            _random = randomService;
+            _projectileFactory = projectileFactory;
             _totalDamage = stats.Damage;
             AmmoData = new AmmoData(infinityAmmo: false, stats.MaxAmmo, stats.MaxAmmo);
-            
+
             CreateProjectilesPool();
             CreateMuzzleFlashVFX();
         }
@@ -50,15 +47,7 @@ namespace Roguelike.Weapons
         public override void ReadProgress(PlayerProgress progress)
         {
             AmmoData = TryGetAmmoData(progress);
-            
-            Debug.Log($"Base Damage: {_stats.Damage}\tTotal Damage: {_totalDamage}");
-
-            if (progress.State.Enhancements.Damage.Value > 0)
-            {
-                int additiveDamage = _stats.Damage * progress.State.Enhancements.Damage.Value / 100;
-                _totalDamage = _stats.Damage + additiveDamage;
-                Debug.Log($"Calculating\tBase Damage: {_stats.Damage}    Total Damage: {_totalDamage}");
-            }
+            TryApplyDamageEnhancement(progress);
         }
 
         public bool TryReload(float ammoAmountMultiplier) => 
@@ -146,5 +135,18 @@ namespace Roguelike.Weapons
 
         private AmmoData TryGetAmmoData(PlayerProgress progress) => 
             progress.PlayerWeapons.RangedWeaponsData.Find(weapon => weapon.ID == Stats.ID)?.AmmoData;
+
+        private void TryApplyDamageEnhancement(PlayerProgress progress)
+        {
+            EnhancementData damageEnhancement = progress.State.Enhancements
+                .SingleOrDefault(enhancement => enhancement.Id == EnhancementId.Damage);
+
+            if (damageEnhancement is {Value: > 0})
+            {
+                int additiveDamage = _stats.Damage * damageEnhancement.Value / 100;
+                _totalDamage = _stats.Damage + additiveDamage;
+                Debug.Log($"Calculating\tBase Damage: {_stats.Damage}    Total Damage: {_totalDamage}");
+            }
+        }
     }
 }
