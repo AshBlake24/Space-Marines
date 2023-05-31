@@ -1,10 +1,7 @@
 using System;
-using System.Linq;
 using Roguelike.Data;
 using Roguelike.Infrastructure.Factory;
-using Roguelike.Infrastructure.Services;
 using Roguelike.Infrastructure.Services.Random;
-using Roguelike.StaticData.Enhancements;
 using Roguelike.Utilities;
 using Roguelike.Weapons.Projectiles;
 using Roguelike.Weapons.Stats;
@@ -50,16 +47,12 @@ namespace Roguelike.Weapons
         public bool TryReload(float ammoAmountMultiplier) => 
             AmmoData.Reload(ammoAmountMultiplier);
 
-        public override void CalculateTotalDamage(int extraDamageAtPercentage)
+        public override void Enhance(int extraDamageAtPercentage)
         {
-            Debug.Log($"Before: {_totalDamage}");
-            
             if (extraDamageAtPercentage > 0)
             {
                 int additiveDamage = _stats.Damage * extraDamageAtPercentage / 100;
                 _totalDamage = _stats.Damage + additiveDamage;
-                
-                Debug.Log($"After: {_totalDamage}");
             }
         }
 

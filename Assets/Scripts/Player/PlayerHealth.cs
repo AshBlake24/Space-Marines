@@ -3,13 +3,14 @@ using System.Collections;
 using Roguelike.Data;
 using Roguelike.Infrastructure.Services.PersistentData;
 using Roguelike.Logic;
+using Roguelike.Player.Enhancements;
 using Roguelike.Utilities;
 using UnityEngine;
 
 namespace Roguelike.Player
 {
     [RequireComponent(typeof(PlayerAnimator))]
-    public class PlayerHealth : MonoBehaviour, IProgressWriter, IHealth
+    public class PlayerHealth : MonoBehaviour, IProgressWriter, IHealth, IEnhanceable<int>
     {
         [SerializeField] private PlayerAnimator _playerAnimator;
         [SerializeField] private PlayerDeath _playerDeath;
@@ -101,7 +102,7 @@ namespace Roguelike.Player
                 CurrentHealth = Mathf.Min(CurrentHealth + health, MaxHealth);
         }
 
-        public void IncreaseMaxHealth(int value)
+        public void Enhance(int value)
         {
             if (value < 1)
                 throw new ArgumentOutOfRangeException(nameof(value), "Value cannot be lower than 0");

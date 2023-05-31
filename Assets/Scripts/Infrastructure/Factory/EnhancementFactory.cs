@@ -45,7 +45,9 @@ namespace Roguelike.Infrastructure.Factory
 
         private IEnhancement CreateMoveSpeedEnhancement(EnhancementStaticData enhancementData, GameObject player)
         {
-            throw new NotImplementedException();
+            PlayerMovement playerMovement = player.GetComponent<PlayerMovement>();
+            
+            return new MovementSpeedEnhancement(enhancementData, playerMovement);
         }
 
         private IEnhancement CreateMaxHealthEnhancement(EnhancementStaticData enhancementData, GameObject player)

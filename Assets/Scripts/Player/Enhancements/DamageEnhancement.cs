@@ -13,8 +13,11 @@ namespace Roguelike.Player.Enhancements
             _playerShooter.WeaponChanged += OnWeaponChanged;
         }
 
-        public override void Apply() => 
-            _playerShooter.CurrentWeapon?.CalculateTotalDamage(Data.ValuesOnTiers[CurrentTier - 1]);
+        public override void Apply()
+        {
+            if (_playerShooter.CurrentWeapon is IEnhanceable<int> weapon)
+                weapon.Enhance(Data.ValuesOnTiers[CurrentTier - 1]);
+        }
 
         public override void Cleanup() => 
             _playerShooter.WeaponChanged -= OnWeaponChanged;

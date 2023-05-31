@@ -1,16 +1,17 @@
 using Roguelike.Enemies;
 using Roguelike.Infrastructure.Services;
 using Roguelike.Infrastructure.Services.Input;
+using Roguelike.Player.Enhancements;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace Roguelike.Player
 {
     [RequireComponent(typeof(PlayerAim))]
-    public class PlayerMovement : MonoBehaviour
+    public class PlayerMovement : MonoBehaviour, IEnhanceable<int>
     {
         private const float SmoothTime = 0.05f;
-        
+
         [SerializeField] private float _moveSpeed;
         [SerializeField] private PlayerAim _playerAim;
         [SerializeField] private Transform _playerAimTarget;
@@ -22,6 +23,7 @@ namespace Roguelike.Player
         private EnemyHealth _target;
         private float _currentVelocity;
         private float _defaultMoveSpeed;
+        private float _baseMoveSpeed;
         private bool _hasTarget;
         
         public bool Boosted { get; private set; }
@@ -29,7 +31,7 @@ namespace Roguelike.Player
         private void Awake()
         {
             _inputService = AllServices.Container.Single<IInputService>();
-            _defaultMoveSpeed = _moveSpeed;
+            _baseMoveSpeed = _moveSpeed;
             Boosted = false;
         }
 
@@ -63,6 +65,20 @@ namespace Roguelike.Player
         {
             _moveSpeed = _defaultMoveSpeed;
             Boosted = false;
+        }
+
+        public void Enhance(int moveSpeedPercentage)
+        {
+            Debug.Log("Default speed = " + _defaultMoveSpeed);
+            Debug.Log("Move speed = " + _moveSpeed);
+            
+            float additionalMoveSpeed = _baseMoveSpeed * moveSpeedPercentage / 100;
+            _defaultMoveSpeed = _baseMoveSpeed + additionalMoveSpeed;
+            _moveSpeed = _defaultMoveSpeed;
+            
+            Debug.Log("Additional speed = " + additionalMoveSpeed);
+            Debug.Log("New Default speed = " + _defaultMoveSpeed);
+            Debug.Log("New Move speed = " + _moveSpeed);
         }
 
         private Vector3 GetDirection() =>

@@ -16,6 +16,24 @@ namespace Roguelike.Player
         public void Construct(IEnhancementFactory enhancementFactory) => 
             _enhancementFactory = enhancementFactory;
 
+        
+        //TODO : Remove this test code
+        private void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                AddEnhancement(EnhancementId.MovementSpeed);
+            }
+
+            if (Input.GetKeyDown(KeyCode.U))
+            {
+                foreach (IEnhancement enhancement in _enhancements)
+                {
+                    enhancement.Upgrade();
+                }
+            }
+        }
+
         public void AddEnhancement(EnhancementId enhancementId)
         {
             if (_enhancements.Exists(item => item.Id == enhancementId))

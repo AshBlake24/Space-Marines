@@ -1,15 +1,19 @@
+using System;
 using Roguelike.StaticData.Enhancements;
 
 namespace Roguelike.Player.Enhancements
 {
     public sealed class MaxHealthEnhancement : Enhancement
     {
-        private readonly PlayerHealth _playerHealth;
+        private readonly IEnhanceable<int> _playerHealth;
         
         public MaxHealthEnhancement(EnhancementStaticData enhancementStaticData, PlayerHealth playerHealth) : 
             base(enhancementStaticData)
         {
-            _playerHealth = playerHealth;
+            if (playerHealth is IEnhanceable<int> health)
+                _playerHealth = health;
+            else
+                throw new ArgumentNullException(nameof(playerHealth), $"Not an interface of {typeof(IEnhanceable<int>)}");
         }
 
         public override void Apply()
@@ -19,7 +23,7 @@ namespace Roguelike.Player.Enhancements
             if (CurrentTier > 1)
                 incrementValue -= Data.ValuesOnTiers[CurrentTier - 2];
             
-            _playerHealth.IncreaseMaxHealth(incrementValue);
+            _playerHealth.Enhance(incrementValue);
         }
     }
 }
