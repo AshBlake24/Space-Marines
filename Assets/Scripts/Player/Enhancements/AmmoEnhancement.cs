@@ -16,7 +16,7 @@ namespace Roguelike.Player.Enhancements
         public override void Apply()
         {
             if (_playerShooter.CurrentWeapon is IEnhanceable<float> rangedWeapon)
-                rangedWeapon.Enhance(Data.ValuesOnTiers[CurrentTier - 1]);
+                rangedWeapon.Enhance(Data.Tiers[CurrentTier - 1].Value);
         }
         
         public override void Cleanup() => 

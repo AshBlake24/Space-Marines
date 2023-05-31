@@ -15,13 +15,13 @@ namespace Roguelike.Player.Enhancements
 
         public EnhancementId Id => Data.Id;
         public int CurrentTier { get; protected set; }
-        public bool CanUpgrade => CurrentTier < Data.ValuesOnTiers.Length;
+        public bool CanUpgrade => CurrentTier < Data.Tiers.Length;
 
         public abstract void Apply();
 
         public virtual void Upgrade()
         {
-            if (CurrentTier >= Data.ValuesOnTiers.Length)
+            if (CurrentTier >= Data.Tiers.Length)
                 throw new ArgumentOutOfRangeException(nameof(CurrentTier), "Current tier already reached max level!");
 
             CurrentTier++;

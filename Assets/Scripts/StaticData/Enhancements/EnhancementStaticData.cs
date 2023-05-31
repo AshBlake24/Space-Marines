@@ -11,7 +11,7 @@ namespace Roguelike.StaticData.Enhancements
     public class EnhancementStaticData : ScriptableObject, IStaticData
     {
         public EnhancementId Id;
-        public int[] ValuesOnTiers;
+        public TierInfo[] Tiers;
 
         public Enum Key => Id;
     }

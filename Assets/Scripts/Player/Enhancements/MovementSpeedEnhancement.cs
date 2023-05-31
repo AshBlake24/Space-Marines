@@ -18,6 +18,6 @@ namespace Roguelike.Player.Enhancements
         }
 
         public override void Apply() => 
-            _playerMovement.Enhance(Data.ValuesOnTiers[CurrentTier]);
+            _playerMovement.Enhance(Data.Tiers[CurrentTier - 1].Value);
     }
 }

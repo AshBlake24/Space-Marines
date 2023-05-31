@@ -18,10 +18,10 @@ namespace Roguelike.Player.Enhancements
 
         public override void Apply()
         {
-            int incrementValue = Data.ValuesOnTiers[CurrentTier - 1];
+            int incrementValue = Data.Tiers[CurrentTier - 1].Value;
             
             if (CurrentTier > 1)
-                incrementValue -= Data.ValuesOnTiers[CurrentTier - 2];
+                incrementValue -= Data.Tiers[CurrentTier - 2].Value;
             
             _playerHealth.Enhance(incrementValue);
         }
