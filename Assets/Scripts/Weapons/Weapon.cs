@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Roguelike.Weapons
 {
-    public abstract class Weapon : MonoBehaviour, IWeapon, IEnhanceable<int>
+    public abstract class Weapon : MonoBehaviour, IWeapon
     {
         [SerializeField] private Vector3 _positionOffset;
         [SerializeField] private Vector3 _rotationOffset;

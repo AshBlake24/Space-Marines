@@ -2,6 +2,7 @@ using System;
 using JetBrains.Annotations;
 using Roguelike.Infrastructure.Services;
 using Roguelike.Infrastructure.Services.Pools;
+using Roguelike.Player.Enhancements;
 using Roguelike.Weapons.Projectiles.Stats;
 using UnityEngine;
 using UnityEngine.Pool;

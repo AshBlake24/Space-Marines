@@ -1,11 +1,10 @@
-using System;
 using Roguelike.Infrastructure.Services.PersistentData;
-using UnityEngine;
+using Roguelike.Player.Enhancements;
 using Roguelike.Weapons.Stats;
 
 namespace Roguelike.Weapons
 {
-    public interface IWeapon : IProgressWriter
+    public interface IWeapon : IProgressWriter, IEnhanceable<int>
     {
         WeaponStats Stats { get; }
         bool TryAttack();
