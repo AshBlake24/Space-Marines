@@ -31,6 +31,7 @@ namespace Roguelike.Infrastructure.Factory
                 EnhancementId.Damage => CreateDamageEnhancement(enhancementData, player),
                 EnhancementId.MovementSpeed => CreateMoveSpeedEnhancement(enhancementData, player),
                 EnhancementId.MaxHealth => CreateMaxHealthEnhancement(enhancementData, player),
+                EnhancementId.AmmoConsumingEnhancement => CreateAmmoConsumingEnhancement(enhancementData, player),
                 _ => throw new ArgumentOutOfRangeException(nameof(enhancementData.Id),
                     "This enhancement does not exist")
             };
@@ -55,6 +56,13 @@ namespace Roguelike.Infrastructure.Factory
             PlayerHealth playerHealth = player.GetComponent<PlayerHealth>();
 
             return new MaxHealthEnhancement(enhancementData, playerHealth);
+        }
+
+        private IEnhancement CreateAmmoConsumingEnhancement(EnhancementStaticData enhancementData, GameObject player)
+        {
+            PlayerShooter playerShooter = player.GetComponent<PlayerShooter>();
+            
+            return new AmmoEnhancement(enhancementData, playerShooter);
         }
     }
 }

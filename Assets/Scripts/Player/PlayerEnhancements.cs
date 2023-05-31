@@ -22,7 +22,7 @@ namespace Roguelike.Player
         {
             if (Input.GetKeyDown(KeyCode.E))
             {
-                AddEnhancement(EnhancementId.MovementSpeed);
+                AddEnhancement(EnhancementId.AmmoConsumingEnhancement);
             }
 
             if (Input.GetKeyDown(KeyCode.U))

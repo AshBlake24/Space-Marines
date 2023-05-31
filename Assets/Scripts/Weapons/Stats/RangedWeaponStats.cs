@@ -8,7 +8,6 @@ namespace Roguelike.Weapons.Stats
 {
     public class RangedWeaponStats : WeaponStats
     {
-        private readonly int _damage;
         private readonly int _maxAmmo;
         private readonly int _bulletsPerShot;
         private readonly float _horizontalSpread;
@@ -18,7 +17,6 @@ namespace Roguelike.Weapons.Stats
 
         public RangedWeaponStats(RangedWeaponStaticData weaponData) : base(weaponData)
         {
-            _damage = weaponData.Damage;
             _maxAmmo = weaponData.MaxAmmo;
             _bulletsPerShot = weaponData.BulletsPerShot;
             _horizontalSpread = weaponData.HorizontalSpread;
@@ -27,7 +25,6 @@ namespace Roguelike.Weapons.Stats
             _projectileData = weaponData.Projectile;
         }
 
-        public int Damage => _damage;
         public int MaxAmmo => _maxAmmo;
         public ProjectileStaticData ProjectileData => _projectileData;
         public int BulletsPerShot => _bulletsPerShot;

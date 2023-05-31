@@ -4,6 +4,7 @@ namespace Roguelike.StaticData.Enhancements
     {
         Damage,
         MovementSpeed,
-        MaxHealth
+        MaxHealth,
+        AmmoConsumingEnhancement
     }
 }

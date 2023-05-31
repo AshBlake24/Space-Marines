@@ -9,6 +9,8 @@ namespace Roguelike.Weapons
     {
         [SerializeField] private Vector3 _positionOffset;
         [SerializeField] private Vector3 _rotationOffset;
+        
+        protected int TotalDamage;
 
         public Vector3 PositionOffset => _positionOffset;
         public Vector3 RotationOffset => _rotationOffset;
@@ -17,7 +19,15 @@ namespace Roguelike.Weapons
         public void Show() => gameObject.SetActive(true);
         public void Hide() => gameObject.SetActive(false);
         public abstract bool TryAttack();
-        public abstract void Enhance(int extraDamageAtPercentage);
+
+        public virtual void Enhance(int extraDamageAtPercentage)
+        {
+            if (extraDamageAtPercentage > 0)
+            {
+                int additiveDamage = Stats.Damage * extraDamageAtPercentage / 100;
+                TotalDamage = Stats.Damage + additiveDamage;
+            }
+        }
         public virtual void ReadProgress(PlayerProgress progress) { }
         public virtual void WriteProgress(PlayerProgress progress) { }
     }

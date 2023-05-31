@@ -2,6 +2,7 @@ using System;
 using Roguelike.Data;
 using Roguelike.Infrastructure.Factory;
 using Roguelike.Infrastructure.Services.Random;
+using Roguelike.Player.Enhancements;
 using Roguelike.Utilities;
 using Roguelike.Weapons.Projectiles;
 using Roguelike.Weapons.Stats;
@@ -10,8 +11,10 @@ using UnityEngine.Pool;
 
 namespace Roguelike.Weapons
 {
-    public class RangedWeapon : Weapon
+    public class RangedWeapon : Weapon, IEnhanceable<float>
     {
+        private const float DefaultChanceToConsumeAmmo = 100f;
+        
         [SerializeField] private Transform _firePoint;
 
         private IRandomService _random;
@@ -19,8 +22,8 @@ namespace Roguelike.Weapons
         private IObjectPool<Projectile> _projectilesPool;
         private ParticleSystem _muzzleFlashVFX;
         private RangedWeaponStats _stats;
-        private int _totalDamage;
-        
+        private float _chanceToConsumeAmmo;
+
         public event Action Fired;
 
         public override WeaponStats Stats => _stats;
@@ -31,8 +34,9 @@ namespace Roguelike.Weapons
             _stats = stats;
             _random = randomService;
             _projectileFactory = projectileFactory;
-            _totalDamage = stats.Damage;
+            _chanceToConsumeAmmo = DefaultChanceToConsumeAmmo;
             AmmoData = new AmmoData(infinityAmmo: false, stats.MaxAmmo, stats.MaxAmmo);
+            TotalDamage = stats.Damage;
 
             CreateProjectilesPool();
             CreateMuzzleFlashVFX();
@@ -47,14 +51,8 @@ namespace Roguelike.Weapons
         public bool TryReload(float ammoAmountMultiplier) => 
             AmmoData.Reload(ammoAmountMultiplier);
 
-        public override void Enhance(int extraDamageAtPercentage)
-        {
-            if (extraDamageAtPercentage > 0)
-            {
-                int additiveDamage = _stats.Damage * extraDamageAtPercentage / 100;
-                _totalDamage = _stats.Damage + additiveDamage;
-            }
-        }
+        public void Enhance(float chanceToNotConsumeAmmo) => 
+            _chanceToConsumeAmmo = DefaultChanceToConsumeAmmo - chanceToNotConsumeAmmo;
 
         public override bool TryAttack()
         {
@@ -70,13 +68,20 @@ namespace Roguelike.Weapons
         private void Shot()
         {
             if (AmmoData.InfinityAmmo == false)
-                AmmoData.CurrentAmmo--;
+                TryConsumeAmmo();
 
             for (int i = 0; i < _stats.BulletsPerShot; i++)
                 _projectilesPool.Get();
 
             SpawnMuzzleFlashVFX();
             Fired?.Invoke();
+        }
+
+        private void TryConsumeAmmo()
+        {
+            int chance = _random.Next(0, 101);
+            if (chance < _chanceToConsumeAmmo)
+                AmmoData.CurrentAmmo--;
         }
 
         private void CreateMuzzleFlashVFX()
@@ -127,7 +132,7 @@ namespace Roguelike.Weapons
             projectile.transform.forward += GetSpread();
             projectile.gameObject.SetActive(true);
             projectile.ClearVFX();
-            projectile.Init(_totalDamage, _stats.ProjectileStartSpeed);
+            projectile.Init(TotalDamage, _stats.ProjectileStartSpeed);
         }
 
         private void OnReleaseToPool(Projectile projectile) => 

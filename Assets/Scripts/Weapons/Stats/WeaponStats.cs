@@ -8,6 +8,7 @@ namespace Roguelike.Weapons.Stats
     {
         private readonly string _name;
         private readonly float _attackRate;
+        private readonly int _damage;
         private readonly WeaponSize _weaponSize;
         private readonly RarityId _rarity;
         private readonly WeaponType _type;
@@ -19,6 +20,7 @@ namespace Roguelike.Weapons.Stats
         {
             _name = weaponData.Name;
             _attackRate = weaponData.AttackRate;
+            _damage = weaponData.Damage;
             _weaponSize = weaponData.Size;
             _type = weaponData.Type;
             _id = weaponData.Id;
@@ -29,6 +31,7 @@ namespace Roguelike.Weapons.Stats
         
         public string Name => _name;
         public float AttackRate => _attackRate;
+        public int Damage => _damage;
         public WeaponSize Size => _weaponSize;
         public RarityId Rarity => _rarity;
         public WeaponType Type => _type;

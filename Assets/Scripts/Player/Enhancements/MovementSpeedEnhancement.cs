@@ -3,7 +3,7 @@ using Roguelike.StaticData.Enhancements;
 
 namespace Roguelike.Player.Enhancements
 {
-    public class MovementSpeedEnhancement : Enhancement
+    public sealed class MovementSpeedEnhancement : Enhancement
     {
         private readonly IEnhanceable<int> _playerMovement;
 
