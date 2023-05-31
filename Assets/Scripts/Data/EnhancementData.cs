@@ -8,5 +8,11 @@ namespace Roguelike.Data
     {
         public EnhancementId Id;
         public int Tier;
+
+        public EnhancementData(EnhancementId id, int currentTier)
+        {
+            Id = id;
+            Tier = currentTier;
+        }
     }
 }

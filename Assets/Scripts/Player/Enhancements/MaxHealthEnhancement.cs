@@ -7,8 +7,8 @@ namespace Roguelike.Player.Enhancements
     {
         private readonly IEnhanceable<int> _playerHealth;
         
-        public MaxHealthEnhancement(EnhancementStaticData enhancementStaticData, PlayerHealth playerHealth) : 
-            base(enhancementStaticData)
+        public MaxHealthEnhancement(EnhancementStaticData enhancementStaticData, int tier, PlayerHealth playerHealth) : 
+            base(enhancementStaticData, tier)
         {
             if (playerHealth is IEnhanceable<int> health)
                 _playerHealth = health;

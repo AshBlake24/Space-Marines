@@ -7,10 +7,10 @@ namespace Roguelike.Player.Enhancements
     {
         protected readonly EnhancementStaticData Data;
         
-        protected Enhancement(EnhancementStaticData enhancementStaticData)
+        protected Enhancement(EnhancementStaticData enhancementStaticData, int tier)
         {
             Data = enhancementStaticData;
-            CurrentTier = 1;
+            CurrentTier = tier;
         }
 
         public EnhancementId Id => Data.Id;

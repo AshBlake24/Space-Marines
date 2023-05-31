@@ -7,6 +7,6 @@ namespace Roguelike.Infrastructure.Factory
 {
     public interface IEnhancementFactory : IService
     {
-        IEnhancement CreateEnhancement(EnhancementId id, GameObject player);
+        IEnhancement CreateEnhancement(EnhancementId id, int tier, GameObject player);
     }
 }

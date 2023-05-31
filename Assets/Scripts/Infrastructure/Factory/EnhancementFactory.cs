@@ -16,53 +16,56 @@ namespace Roguelike.Infrastructure.Factory
             _staticData = staticData;
         }
         
-        public IEnhancement CreateEnhancement(EnhancementId id, GameObject player)
+        public IEnhancement CreateEnhancement(EnhancementId id, int tier, GameObject player)
         {
             EnhancementStaticData enhancementData = _staticData
                 .GetDataById<EnhancementId, EnhancementStaticData>(id);
             
-            return ConstructEnhancement(enhancementData, player);
+            return ConstructEnhancement(enhancementData, tier, player);
         }
 
-        private IEnhancement ConstructEnhancement(EnhancementStaticData enhancementData, GameObject player)
+        private IEnhancement ConstructEnhancement(EnhancementStaticData enhancementData, int tier, GameObject player)
         {
             return enhancementData.Id switch
             {
-                EnhancementId.Damage => CreateDamageEnhancement(enhancementData, player),
-                EnhancementId.MovementSpeed => CreateMoveSpeedEnhancement(enhancementData, player),
-                EnhancementId.MaxHealth => CreateMaxHealthEnhancement(enhancementData, player),
-                EnhancementId.AmmoConsumingEnhancement => CreateAmmoConsumingEnhancement(enhancementData, player),
+                EnhancementId.Damage => CreateDamageEnhancement(enhancementData, tier, player),
+                EnhancementId.MovementSpeed => CreateMoveSpeedEnhancement(enhancementData, tier, player),
+                EnhancementId.MaxHealth => CreateMaxHealthEnhancement(enhancementData, tier, player),
+                EnhancementId.AmmoConsumingEnhancement => CreateAmmoConsumingEnhancement(enhancementData, tier, player),
                 _ => throw new ArgumentOutOfRangeException(nameof(enhancementData.Id),
                     "This enhancement does not exist")
             };
         }
 
-        private IEnhancement CreateDamageEnhancement(EnhancementStaticData enhancementData, GameObject player)
+        private IEnhancement CreateDamageEnhancement(EnhancementStaticData enhancementData, int tier, GameObject player)
         {
             PlayerShooter playerShooter = player.GetComponent<PlayerShooter>();
             
-            return new DamageEnhancement(enhancementData, playerShooter);
+            return new DamageEnhancement(enhancementData, tier, playerShooter);
         }
 
-        private IEnhancement CreateMoveSpeedEnhancement(EnhancementStaticData enhancementData, GameObject player)
+        private IEnhancement CreateMoveSpeedEnhancement(EnhancementStaticData enhancementData, int tier,
+            GameObject player)
         {
             PlayerMovement playerMovement = player.GetComponent<PlayerMovement>();
             
-            return new MovementSpeedEnhancement(enhancementData, playerMovement);
+            return new MovementSpeedEnhancement(enhancementData, tier, playerMovement);
         }
 
-        private IEnhancement CreateMaxHealthEnhancement(EnhancementStaticData enhancementData, GameObject player)
+        private IEnhancement CreateMaxHealthEnhancement(EnhancementStaticData enhancementData, int tier,
+            GameObject player)
         {
             PlayerHealth playerHealth = player.GetComponent<PlayerHealth>();
 
-            return new MaxHealthEnhancement(enhancementData, playerHealth);
+            return new MaxHealthEnhancement(enhancementData, tier, playerHealth);
         }
 
-        private IEnhancement CreateAmmoConsumingEnhancement(EnhancementStaticData enhancementData, GameObject player)
+        private IEnhancement CreateAmmoConsumingEnhancement(EnhancementStaticData enhancementData, int tier,
+            GameObject player)
         {
             PlayerShooter playerShooter = player.GetComponent<PlayerShooter>();
             
-            return new AmmoEnhancement(enhancementData, playerShooter);
+            return new AmmoEnhancement(enhancementData, tier, playerShooter);
         }
     }
 }

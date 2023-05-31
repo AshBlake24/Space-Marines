@@ -6,8 +6,8 @@ namespace Roguelike.Player.Enhancements
     {
         private readonly PlayerShooter _playerShooter;
 
-        public AmmoEnhancement(EnhancementStaticData enhancementStaticData, PlayerShooter playerShooter) : 
-            base(enhancementStaticData)
+        public AmmoEnhancement(EnhancementStaticData enhancementStaticData, int tier, PlayerShooter playerShooter) : 
+            base(enhancementStaticData, tier)
         {
             _playerShooter = playerShooter;
             _playerShooter.WeaponChanged += OnWeaponChanged;

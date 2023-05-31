@@ -7,8 +7,9 @@ namespace Roguelike.Player.Enhancements
     {
         private readonly IEnhanceable<int> _playerMovement;
 
-        public MovementSpeedEnhancement(EnhancementStaticData enhancementStaticData, PlayerMovement playerMovement) : 
-            base(enhancementStaticData)
+        public MovementSpeedEnhancement(EnhancementStaticData enhancementStaticData, int tier,
+            PlayerMovement playerMovement) : 
+            base(enhancementStaticData, tier)
         {
             if (playerMovement is IEnhanceable<int> movement)
                 _playerMovement = movement;
