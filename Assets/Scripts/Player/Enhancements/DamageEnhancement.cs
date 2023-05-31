@@ -13,12 +13,6 @@ namespace Roguelike.Player.Enhancements
             _playerShooter.WeaponChanged += OnWeaponChanged;
         }
 
-        public override void Upgrade()
-        {
-            base.Upgrade();
-            Apply();
-        }
-
         public override void Apply() => 
             _playerShooter.CurrentWeapon?.CalculateTotalDamage(Data.ValuesOnTiers[CurrentTier - 1]);
 
@@ -27,6 +21,5 @@ namespace Roguelike.Player.Enhancements
 
         private void OnWeaponChanged() => 
             Apply();
-            
     }
 }

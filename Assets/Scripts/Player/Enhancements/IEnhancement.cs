@@ -8,8 +8,8 @@ namespace Roguelike.Player.Enhancements
         int CurrentTier { get; }
         bool CanUpgrade { get; }
 
-        void Upgrade();
         void Apply();
+        void Upgrade();
         void Cleanup();
     }
 }

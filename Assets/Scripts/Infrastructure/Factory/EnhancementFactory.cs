@@ -50,7 +50,9 @@ namespace Roguelike.Infrastructure.Factory
 
         private IEnhancement CreateMaxHealthEnhancement(EnhancementStaticData enhancementData, GameObject player)
         {
-            throw new NotImplementedException();
+            PlayerHealth playerHealth = player.GetComponent<PlayerHealth>();
+
+            return new MaxHealthEnhancement(enhancementData, playerHealth);
         }
     }
 }

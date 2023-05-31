@@ -38,7 +38,14 @@ namespace Roguelike.Player
         public int MaxHealth
         {
             get => _state.MaxHealth;
-            private set => _state.MaxHealth = value;
+            private set
+            {
+                if (_state.MaxHealth != value)
+                {
+                    _state.MaxHealth = value;
+                    HealthChanged?.Invoke();
+                }
+            }
         }
 
         private void OnGUI()
@@ -92,6 +99,15 @@ namespace Roguelike.Player
         {
             if (IsPositive(health))
                 CurrentHealth = Mathf.Min(CurrentHealth + health, MaxHealth);
+        }
+
+        public void IncreaseMaxHealth(int value)
+        {
+            if (value < 1)
+                throw new ArgumentOutOfRangeException(nameof(value), "Value cannot be lower than 0");
+
+            MaxHealth += value;
+            CurrentHealth += value;
         }
 
         public void SetImmune(bool isImmune) => 

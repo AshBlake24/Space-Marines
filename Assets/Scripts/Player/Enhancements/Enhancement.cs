@@ -17,15 +17,19 @@ namespace Roguelike.Player.Enhancements
         public int CurrentTier { get; protected set; }
         public bool CanUpgrade => CurrentTier < Data.ValuesOnTiers.Length;
 
+        public abstract void Apply();
+
         public virtual void Upgrade()
         {
             if (CurrentTier >= Data.ValuesOnTiers.Length)
                 throw new ArgumentOutOfRangeException(nameof(CurrentTier), "Current tier already reached max level!");
 
             CurrentTier++;
+            Apply();
         }
 
-        public abstract void Apply();
-        public abstract void Cleanup();
+        public virtual void Cleanup()
+        {
+        }
     }
 }
