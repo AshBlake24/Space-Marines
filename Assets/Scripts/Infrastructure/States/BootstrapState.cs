@@ -90,7 +90,8 @@ namespace Roguelike.Infrastructure.States
                 _services.Single<IAssetProvider>(),
                 _services.Single<IStaticDataService>(),
                 _services.Single<IPersistentDataService>(),
-                _services.Single<ISceneLoadingService>()));
+                _services.Single<ISceneLoadingService>(),
+                _services.Single<IRandomService>()));
 
             _services.RegisterSingle<IWindowService>(new WindowService(
                 _services.Single<IUIFactory>()));

@@ -10,8 +10,14 @@ namespace Roguelike.StaticData.Enhancements
         order = 0)]
     public class EnhancementStaticData : ScriptableObject, IStaticData
     {
+        [Header("Stats")]
         public EnhancementId Id;
         public TierInfo[] Tiers;
+
+        [Header("Info")] 
+        public Sprite Icon;
+        public string Name;
+        public string Description;
 
         public Enum Key => Id;
     }

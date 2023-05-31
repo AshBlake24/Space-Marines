@@ -14,6 +14,7 @@ namespace Roguelike.Infrastructure.Services.Windows
         GameOver = 9,
         Authorization = 10,
         RangedWeaponStatsWindow = 11,
-        RegionSelectionWindow = 12
+        RegionSelectionWindow = 12,
+        EnhancementShop = 13
     }
 }

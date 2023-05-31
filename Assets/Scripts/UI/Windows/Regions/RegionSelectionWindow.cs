@@ -19,7 +19,6 @@ namespace Roguelike.UI.Windows.Regions
 
         [Header("Start Button")]
         [SerializeField] private Button _startButton;
-
         [SerializeField] private TextMeshProUGUI _startButtonLabel;
         [SerializeField] private Color _inactiveColor;
         [SerializeField] private Color _activeColor;

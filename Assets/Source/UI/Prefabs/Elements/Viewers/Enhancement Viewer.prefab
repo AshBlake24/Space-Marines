@@ -1822,6 +1822,7 @@ GameObject:
   - component: {fileID: 8973397564544479275}
   - component: {fileID: 8973397564544479285}
   - component: {fileID: 8973397564544479274}
+  - component: {fileID: 582826537543338855}
   m_Layer: 5
   m_Name: Enhancement Viewer
   m_TagString: Untagged
@@ -1890,6 +1891,27 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &582826537543338855
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8973397564544479272}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0992d935c9034a6ebe6c90e26919cab9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _sellButton: {fileID: 8973397565312038772}
+  _icon: {fileID: 8973397564981130544}
+  _name: {fileID: 8973397563628545817}
+  _currentTier: {fileID: 8973397564478265675}
+  _currentValue: {fileID: 8973397565519352177}
+  _nextValue: {fileID: 8973397564154734032}
+  _description: {fileID: 8973397564004694560}
+  _price: {fileID: 8973397564416920192}
+  _noValueMark: '-'
 --- !u!1 &8973397564585332944
 GameObject:
   m_ObjectHideFlags: 0
@@ -2832,7 +2854,7 @@ GameObject:
   - component: {fileID: 8973397565312038775}
   - component: {fileID: 8973397565312038772}
   m_Layer: 5
-  m_Name: Upgrade Button
+  m_Name: Sell Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
