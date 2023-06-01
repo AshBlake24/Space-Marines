@@ -11,5 +11,6 @@ namespace Roguelike.Infrastructure.Services.Windows
         BaseWindow Open(WindowId windowId);
         GameObject OpenWeaponStatsViewer(WeaponId weaponId);
         void OpenResurrectionWindow(PlayerDeath playerDeath);
+        void CreateEnhancementShop(PlayerEnhancements playerEnhancements);
     }
 }

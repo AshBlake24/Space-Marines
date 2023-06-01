@@ -2,9 +2,9 @@ namespace Roguelike.StaticData.Enhancements
 {
     public enum EnhancementId
     {
-        Damage,
-        MovementSpeed,
-        MaxHealth,
-        AmmoConsumingEnhancement
+        ViciousProjectiles,
+        HermesTread,
+        SteelSkin,
+        LuckyAmmo
     }
 }

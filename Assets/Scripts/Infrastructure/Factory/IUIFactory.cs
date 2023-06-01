@@ -10,8 +10,9 @@ namespace Roguelike.Infrastructure.Factory
     public interface IUIFactory : IService
     {
         BaseWindow CreateWindow(IWindowService windowService, WindowId windowId);
-        GameObject CreateWeaponStatsViewer(WindowService windowService, WeaponId weaponId);
+        GameObject CreateWeaponStatsViewer(IWindowService windowService, WeaponId weaponId);
         void CreateResurrectionWindow(IWindowService windowService, PlayerDeath playerDeath);
+        void CreateEnhancementShop(IWindowService windowService, PlayerEnhancements playerEnhancements);
         void CreateUIRoot();
     }
 }

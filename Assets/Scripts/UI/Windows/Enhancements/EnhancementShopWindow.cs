@@ -4,6 +4,7 @@ using System.Linq;
 using Roguelike.Data;
 using Roguelike.Infrastructure.Services.Random;
 using Roguelike.Infrastructure.Services.StaticData;
+using Roguelike.Player;
 using Roguelike.StaticData.Enhancements;
 using UnityEngine;
 
@@ -17,11 +18,14 @@ namespace Roguelike.UI.Windows.Enhancements
 
         private IStaticDataService _staticDataService;
         private IRandomService _random;
+        private PlayerEnhancements _playerEnhancements;
 
-        public void Construct(IStaticDataService staticDataService, IRandomService randomService)
+        public void Construct(IStaticDataService staticDataService, IRandomService randomService,
+            PlayerEnhancements playerEnhancements)
         {
             _staticDataService = staticDataService;
             _random = randomService;
+            _playerEnhancements = playerEnhancements;
         }
 
         protected override void Initialize() => 
@@ -43,9 +47,9 @@ namespace Roguelike.UI.Windows.Enhancements
                         .SingleOrDefault(item => item.Id == enhancementData.Id);
 
                     if (enhancementProgress == null)
-                        enhancementProgress = new EnhancementData(enhancementData.Id, 1);
+                        enhancementProgress = new EnhancementData(enhancementData.Id, 0);
                     
-                    enhancementViewer.Init(enhancementData, enhancementProgress);
+                    enhancementViewer.Construct(enhancementData, enhancementProgress, _playerEnhancements);
                 }
             }
             else

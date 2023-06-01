@@ -33,16 +33,6 @@ namespace Roguelike.Player
                 progress.State.Enhancements.Add(new EnhancementData(enhancement.Id, enhancement.CurrentTier));
         }
 
-        private void Update()
-        {
-            if (Input.GetKeyDown(KeyCode.E))
-                AddEnhancement(EnhancementId.MovementSpeed, 1);
-            
-            if (Input.GetKeyDown(KeyCode.U))
-                _enhancements[0].Upgrade();
-                
-        }
-
         public void AddEnhancement(EnhancementId enhancementId, int tier)
         {
             if (_enhancements.Exists(item => item.Id == enhancementId))
@@ -53,10 +43,19 @@ namespace Roguelike.Player
             _enhancements.Add(enhancement);
         }
 
+        public bool EnhancementExist(EnhancementId enhancementId) =>
+            _enhancements.Exists(item => item.Id == enhancementId);
+
         private void Cleanup()
         {
             foreach (IEnhancement enhancement in _enhancements)
                 enhancement.Cleanup();
+        }
+
+        public void Upgrade(EnhancementId enhancementId, int i)
+        {
+            IEnhancement enhancement = _enhancements.Single(enhancement => enhancement.Id == enhancementId);
+            enhancement.Upgrade();
         }
     }
 }

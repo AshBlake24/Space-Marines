@@ -28,23 +28,23 @@ namespace Roguelike.Infrastructure.Factory
         {
             return enhancementData.Id switch
             {
-                EnhancementId.Damage => CreateDamageEnhancement(enhancementData, tier, player),
-                EnhancementId.MovementSpeed => CreateMoveSpeedEnhancement(enhancementData, tier, player),
-                EnhancementId.MaxHealth => CreateMaxHealthEnhancement(enhancementData, tier, player),
-                EnhancementId.AmmoConsumingEnhancement => CreateAmmoConsumingEnhancement(enhancementData, tier, player),
+                EnhancementId.ViciousProjectiles => CreateViciousProjectiles(enhancementData, tier, player),
+                EnhancementId.HermesTread => CreateHermesTread(enhancementData, tier, player),
+                EnhancementId.SteelSkin => CreateSteelSkin(enhancementData, tier, player),
+                EnhancementId.LuckyAmmo => CreateLuckyAmmo(enhancementData, tier, player),
                 _ => throw new ArgumentOutOfRangeException(nameof(enhancementData.Id),
                     "This enhancement does not exist")
             };
         }
 
-        private IEnhancement CreateDamageEnhancement(EnhancementStaticData enhancementData, int tier, GameObject player)
+        private IEnhancement CreateViciousProjectiles(EnhancementStaticData enhancementData, int tier, GameObject player)
         {
             PlayerShooter playerShooter = player.GetComponent<PlayerShooter>();
             
             return new DamageEnhancement(enhancementData, tier, playerShooter);
         }
 
-        private IEnhancement CreateMoveSpeedEnhancement(EnhancementStaticData enhancementData, int tier,
+        private IEnhancement CreateHermesTread(EnhancementStaticData enhancementData, int tier,
             GameObject player)
         {
             PlayerMovement playerMovement = player.GetComponent<PlayerMovement>();
@@ -52,7 +52,7 @@ namespace Roguelike.Infrastructure.Factory
             return new MovementSpeedEnhancement(enhancementData, tier, playerMovement);
         }
 
-        private IEnhancement CreateMaxHealthEnhancement(EnhancementStaticData enhancementData, int tier,
+        private IEnhancement CreateSteelSkin(EnhancementStaticData enhancementData, int tier,
             GameObject player)
         {
             PlayerHealth playerHealth = player.GetComponent<PlayerHealth>();
@@ -60,7 +60,7 @@ namespace Roguelike.Infrastructure.Factory
             return new MaxHealthEnhancement(enhancementData, tier, playerHealth);
         }
 
-        private IEnhancement CreateAmmoConsumingEnhancement(EnhancementStaticData enhancementData, int tier,
+        private IEnhancement CreateLuckyAmmo(EnhancementStaticData enhancementData, int tier,
             GameObject player)
         {
             PlayerShooter playerShooter = player.GetComponent<PlayerShooter>();

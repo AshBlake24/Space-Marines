@@ -22,6 +22,9 @@ namespace Roguelike.Infrastructure.Services.Windows
         public void OpenResurrectionWindow(PlayerDeath playerDeath) => 
             _uiFactory.CreateResurrectionWindow(this, playerDeath);
 
+        public void CreateEnhancementShop(PlayerEnhancements playerEnhancements) => 
+            _uiFactory.CreateEnhancementShop(this, playerEnhancements);
+
         public BaseWindow Open(WindowId windowId)
         {
             return windowId switch
