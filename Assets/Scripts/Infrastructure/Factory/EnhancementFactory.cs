@@ -28,16 +28,16 @@ namespace Roguelike.Infrastructure.Factory
         {
             return enhancementData.Id switch
             {
-                EnhancementId.ViciousProjectiles => CreateViciousProjectiles(enhancementData, tier, player),
+                EnhancementId.HeavyProjectiles => CreateHeavyProjectiles(enhancementData, tier, player),
                 EnhancementId.HermesTread => CreateHermesTread(enhancementData, tier, player),
-                EnhancementId.SteelSkin => CreateSteelSkin(enhancementData, tier, player),
-                EnhancementId.LuckyAmmo => CreateLuckyAmmo(enhancementData, tier, player),
+                EnhancementId.IntensiveTraining => CreateIntensiveTraining(enhancementData, tier, player),
+                EnhancementId.LuckyGuy => CreateLuckyGuy(enhancementData, tier, player),
                 _ => throw new ArgumentOutOfRangeException(nameof(enhancementData.Id),
                     "This enhancement does not exist")
             };
         }
 
-        private IEnhancement CreateViciousProjectiles(EnhancementStaticData enhancementData, int tier, GameObject player)
+        private IEnhancement CreateHeavyProjectiles(EnhancementStaticData enhancementData, int tier, GameObject player)
         {
             PlayerShooter playerShooter = player.GetComponent<PlayerShooter>();
             
@@ -52,7 +52,7 @@ namespace Roguelike.Infrastructure.Factory
             return new MovementSpeedEnhancement(enhancementData, tier, playerMovement);
         }
 
-        private IEnhancement CreateSteelSkin(EnhancementStaticData enhancementData, int tier,
+        private IEnhancement CreateIntensiveTraining(EnhancementStaticData enhancementData, int tier,
             GameObject player)
         {
             PlayerHealth playerHealth = player.GetComponent<PlayerHealth>();
@@ -60,7 +60,7 @@ namespace Roguelike.Infrastructure.Factory
             return new MaxHealthEnhancement(enhancementData, tier, playerHealth);
         }
 
-        private IEnhancement CreateLuckyAmmo(EnhancementStaticData enhancementData, int tier,
+        private IEnhancement CreateLuckyGuy(EnhancementStaticData enhancementData, int tier,
             GameObject player)
         {
             PlayerShooter playerShooter = player.GetComponent<PlayerShooter>();

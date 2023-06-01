@@ -2,9 +2,9 @@ namespace Roguelike.StaticData.Enhancements
 {
     public enum EnhancementId
     {
-        ViciousProjectiles,
+        HeavyProjectiles,
         HermesTread,
-        SteelSkin,
-        LuckyAmmo
+        IntensiveTraining,
+        LuckyGuy
     }
 }
