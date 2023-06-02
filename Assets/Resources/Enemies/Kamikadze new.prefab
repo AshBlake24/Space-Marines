@@ -333,11 +333,15 @@ GameObject:
   m_Component:
   - component: {fileID: 3730292728815793013}
   - component: {fileID: 3730292728815793010}
+  - component: {fileID: 2835980698264315133}
   - component: {fileID: 3730292728815792998}
   - component: {fileID: 3730292728815793017}
+  - component: {fileID: 4270375268436888670}
+  - component: {fileID: 3783201635016216175}
+  - component: {fileID: 6095422460904431471}
   - component: {fileID: 3730292728815793008}
   - component: {fileID: 7695795051017055042}
-  - component: {fileID: 6095422460904431471}
+  - component: {fileID: 845877862575499697}
   m_Layer: 0
   m_Name: Kamikadze new
   m_TagString: Untagged
@@ -373,7 +377,7 @@ Animator:
   m_GameObject: {fileID: 3730292728815792999}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: b69174d668ba02d44b14a084b217670a, type: 3}
-  m_Controller: {fileID: 9100000, guid: 4ed3dbce9be660d49adb9bdebba9599e, type: 2}
+  m_Controller: {fileID: 9100000, guid: 42d355c5e1d58594092a8fe341458119, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 1
@@ -383,6 +387,20 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!136 &2835980698264315133
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3730292728815792999}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 0.3
+  m_Height: 1.9137468
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.8664832, z: -0}
 --- !u!195 &3730292728815792998
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -392,7 +410,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 3730292728815792999}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.5
+  m_Radius: 0.3
   m_Speed: 3.5
   m_Acceleration: 10
   avoidancePriority: 0
@@ -417,8 +435,50 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38c5c59b35f4a0b488703a85f9928c3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _startState: {fileID: 0}
+  _startState: {fileID: 4270375268436888670}
   _dieState: {fileID: 6095422460904431471}
+--- !u!114 &4270375268436888670
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3730292728815792999}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24ca2ce3a4d46bb4d8b5f3047cec5187, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _transitions:
+  - {fileID: 845877862575499697}
+--- !u!114 &3783201635016216175
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3730292728815792999}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a2d5561abd4a74458c989263b44a4ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _transitions: []
+  _delayForAnimation: 0.9
+--- !u!114 &6095422460904431471
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3730292728815792999}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b50597bda3428ea4e84562791a5be6cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _transitions: []
+  _delayForAnimation: 1.5
 --- !u!114 &3730292728815793008
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -445,20 +505,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7129ee7981dfce24f85519fc427541f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &6095422460904431471
+--- !u!114 &845877862575499697
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3730292728815792999}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b50597bda3428ea4e84562791a5be6cc, type: 3}
+  m_Script: {fileID: 11500000, guid: 1df8340f1c7ecef46ac6b557872147e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _transitions: []
-  _delayForAnimation: 1.5
+  targetState: {fileID: 3783201635016216175}
 --- !u!1 &3730292728845120798
 GameObject:
   m_ObjectHideFlags: 0
