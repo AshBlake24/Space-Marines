@@ -10,6 +10,7 @@ namespace Roguelike.Enemies.EnemyStates
         private static readonly float ClipDuration = 2.1f;
 
         [SerializeField, Range(0.5f, 3f)] private float _delayForAnimation;
+        [SerializeField] private ParticleSystem _effects;
 
         private NavMeshAgent _agent;
         private Coroutine _delayCoroutine;
@@ -46,6 +47,8 @@ namespace Roguelike.Enemies.EnemyStates
 
             animator.Move(0, _agent.isStopped);
 
+            _effects.Stop();
+
             base.Exit(nextState);
         }
 
@@ -62,6 +65,8 @@ namespace Roguelike.Enemies.EnemyStates
 
             _agent.SetDestination(enemy.Target.transform.position);
             _agent.isStopped = false;
+
+            _effects.Play();
         }
     }
 }
