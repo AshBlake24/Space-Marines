@@ -48,7 +48,8 @@ namespace Roguelike.Enemies.EnemyStates
             EnemyHealth health = GetComponentInChildren<EnemyHealth>();
             health.TakeDamage(health.MaxHealth);
 
-            _effects.Play();
+            if (_effects != null)
+                _effects.Play();
         }
     }
 }

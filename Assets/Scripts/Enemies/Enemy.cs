@@ -12,7 +12,6 @@ namespace Roguelike.Enemies
         public float Speed { get; private set; }
         public float ChargeSpeedMultiplication { get; private set; }
         public float AttackColldown { get; private set; }
-        public float AttackSpeed { get; private set; }
         public float LifeTime { get; private set; }
         public int BulletInBurst { get; private set; }
 
@@ -27,7 +26,6 @@ namespace Roguelike.Enemies
             Damage = data.Damage;
             Danger = data.Danger;
             AttackColldown = data.AttackCooldown;
-            AttackSpeed = data.AttackSpeed;
             LifeTime = data.LifeTime;
             BulletInBurst = data.BulletInBurst;
             _maxBulletInBurst = data.BulletInBurst;
