@@ -6,12 +6,12 @@ namespace Roguelike.Weapons.Logic
 {
     public class WeaponsObserver : MonoBehaviour
     {
-        private IPersistentDataService _persistentData;
+        private IPersistentDataService _progressService;
         private PlayerShooter _playerShooter;
 
-        public void Construct(IPersistentDataService persistentData, PlayerShooter playerShooter)
+        public void Construct(IPersistentDataService progressService, PlayerShooter playerShooter)
         {
-            _persistentData = persistentData;
+            _progressService = progressService;
             _playerShooter = playerShooter;
             
             _playerShooter.DroppedWeapon += OnDroppedWeapon;
@@ -21,6 +21,6 @@ namespace Roguelike.Weapons.Logic
             _playerShooter.DroppedWeapon -= OnDroppedWeapon;
 
         private void OnDroppedWeapon(IWeapon weapon) => 
-            weapon.WriteProgress(_persistentData.PlayerProgress);   
+            weapon.WriteProgress(_progressService.PlayerProgress);   
     }
 }

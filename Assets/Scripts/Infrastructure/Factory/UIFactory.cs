@@ -96,7 +96,7 @@ namespace Roguelike.Infrastructure.Factory
             BaseWindow window = CreateWindow(windowService, WindowId.EnhancementShop);
             
             if (window is EnhancementShopWindow shop)
-                shop.Construct(_staticData, _randomService, playerEnhancements);
+                shop.Construct(_staticData, _progressService, _randomService, playerEnhancements);
         }
 
         public void CreateUIRoot() =>

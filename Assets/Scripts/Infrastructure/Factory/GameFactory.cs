@@ -19,6 +19,7 @@ using Roguelike.Level;
 using Roguelike.StaticData.Levels;
 using Object = UnityEngine.Object;
 using Roguelike.Logic.CharacterSelection;
+using Roguelike.Player.Enhancements;
 using Roguelike.StaticData.Loot.Rarity;
 using Roguelike.StaticData.Skills;
 using Roguelike.UI.Buttons;
@@ -85,11 +86,10 @@ namespace Roguelike.Infrastructure.Factory
             
             player.GetComponent<PlayerInteraction>()
                 .Construct(_windowService);
-            
-            player.GetComponent<PlayerEnhancements>()
-                .Construct(_enhancementFactory);
 
             _skillFactory.CreatePlayerSkill(player);
+            
+            InitEnhancementsComponent(player);
 
             return player;
         }
@@ -237,6 +237,14 @@ namespace Roguelike.Infrastructure.Factory
                 _lootFactory,
                 _staticDataService.Player.WeaponSwtichCooldown,
                 weaponSpawnPoint);
+        }
+
+        private void InitEnhancementsComponent(GameObject player)
+        {
+            PlayerEnhancements playerEnhancements = player.GetComponent<PlayerEnhancements>();
+            playerEnhancements.Construct(_enhancementFactory);
+
+            player.AddComponent<EnhancementsObserver>().Construct(_persistentData, playerEnhancements);
         }
     }
 }
