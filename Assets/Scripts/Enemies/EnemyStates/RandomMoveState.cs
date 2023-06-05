@@ -23,6 +23,8 @@ namespace Roguelike.Enemies.EnemyStates
             {
                 _agent.SetDestination(_randomPoint);
                 _agent.isStopped = false;
+
+                animator.Move(_agent.speed, _agent.isStopped);
             }
 
             if (transform.position == _randomPoint)
@@ -39,6 +41,8 @@ namespace Roguelike.Enemies.EnemyStates
         public override void Exit(EnemyState nextState)
         {
             _agent.isStopped=true;
+
+            animator.Move(0, _agent.isStopped);
 
             base.Exit(nextState);
         }

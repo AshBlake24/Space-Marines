@@ -5,7 +5,6 @@ using Roguelike.StaticData.Projectiles;
 using Roguelike.Utilities;
 using Roguelike.Weapons.Projectiles;
 using System;
-using System.Collections;
 using UnityEngine;
 using UnityEngine.Pool;
 
@@ -19,29 +18,44 @@ namespace Roguelike.Enemies.EnemyStates
         [SerializeField] private Transform _shotPoint;
 
         private IProjectileFactory _factory;
-        private Coroutine _coroutine;
         private IObjectPool<Projectile> _projectilesPool;
 
         public event Action NeedReloaded;
 
-
-        protected override void OnDisable()
+        private void Update()
         {
-            StopCoroutine(_coroutine);
-
-            base.OnDisable();
+            LookAtPlayer();
         }
 
         public override void Enter(Enemy enemy, EnemyAnimator enemyAnimator)
         {
             base.Enter(enemy, enemyAnimator);
 
+            LookAtPlayer();
+
             _factory = AllServices.Container.Single<IProjectileFactory>();
 
             CreateProjectilesPool();
 
-            _coroutine = StartCoroutine(Attack());
+            animator.PlayAttack();
         }
+
+        public void Shoot()
+        {
+            if (enemy.BulletInBurst > 0)
+            {
+                _projectilesPool.Get();
+                enemy.RangeAttack();
+            }
+            else
+            {
+                NeedReloaded?.Invoke();
+            }
+        }
+
+        private void LookAtPlayer() =>
+            transform.rotation = Quaternion.LookRotation(enemy.Target.transform.position - transform.position);
+
 
         private void CreateProjectilesPool()
         {
@@ -80,22 +94,5 @@ namespace Roguelike.Enemies.EnemyStates
 
         private void OnDestroyItem(Projectile bullet) =>
             Destroy(bullet.gameObject);
-
-        private IEnumerator Attack()
-        {
-            while (enemy.BulletInBurst > 0)
-            {
-                Vector3 relativePos = enemy.Target.transform.position - transform.position;
-
-                transform.rotation = Quaternion.LookRotation(relativePos);
-                _projectilesPool.Get();
-
-                enemy.RangeAttack();
-
-                yield return Helpers.GetTime(enemy.AttackSpeed);
-            }
-
-            NeedReloaded?.Invoke();
-        }
     }
 }

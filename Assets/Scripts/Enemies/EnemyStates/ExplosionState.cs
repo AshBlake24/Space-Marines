@@ -10,6 +10,7 @@ namespace Roguelike.Enemies.EnemyStates
         private static readonly float ClipDuration = 2.1f;
 
         [SerializeField, Range(0.5f, 3f)] private float _delayForAnimation;
+        [SerializeField] private ParticleSystem _effects;
 
         private Coroutine _delayCoroutine;
 
@@ -27,12 +28,10 @@ namespace Roguelike.Enemies.EnemyStates
 
             enemy.Target.TakeDamage(enemy.Damage);
 
+            animator.SetClipSpeed(ClipDuration / _delayForAnimation);
             animator.PlayAttack();
 
             _delayCoroutine = StartCoroutine(Explosion());
-
-            EnemyHealth health = GetComponentInChildren<EnemyHealth>();
-            health.TakeDamage(health.MaxHealth);
         }
 
         private IEnumerator Explosion()
@@ -48,6 +47,8 @@ namespace Roguelike.Enemies.EnemyStates
 
             EnemyHealth health = GetComponentInChildren<EnemyHealth>();
             health.TakeDamage(health.MaxHealth);
+
+            _effects.Play();
         }
     }
 }

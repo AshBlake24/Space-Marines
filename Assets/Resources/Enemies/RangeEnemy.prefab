@@ -133,7 +133,7 @@ GameObject:
   - component: {fileID: -674055862033480935}
   - component: {fileID: -2915551524992193178}
   - component: {fileID: 7655706329950465049}
-  - component: {fileID: 3030326111388718185}
+  - component: {fileID: 5416181900390974547}
   m_Layer: 12
   m_Name: RangeEnemy
   m_TagString: Enemy
@@ -193,6 +193,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _startState: {fileID: 7118670731981257212}
+  _dieState: {fileID: 0}
 --- !u!114 &2288662536714694925
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -206,7 +207,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _transitions:
-  - {fileID: 3030326111388718185}
+  - {fileID: 0}
   - {fileID: -674055862033480935}
   _damage: 1
   _projectileSpeed: 20
@@ -293,19 +294,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _health: {fileID: 8620067898738932593}
   _powerupDropChance: 100
---- !u!114 &3030326111388718185
+--- !u!114 &5416181900390974547
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4935547345014440336}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8af43de5cd4f6874184c7148f5d088e7, type: 3}
+  m_Script: {fileID: 11500000, guid: 7129ee7981dfce24f85519fc427541f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetState: {fileID: 7118670731981257212}
 --- !u!1 &8396033113490134149
 GameObject:
   m_ObjectHideFlags: 0
