@@ -9,6 +9,7 @@ namespace Roguelike.Data
     public class PlayerProgress
     {
         public State State;
+        public Balance Balance;
         public WorldData WorldData;
         public PlayerWeapons PlayerWeapons;
         public CharacterId Character;
@@ -17,6 +18,7 @@ namespace Roguelike.Data
             int maxWeaponsCount)
         {
             State = new State();
+            Balance = new Balance();
             WorldData = new WorldData(startLevel, startStage);
             PlayerWeapons = new PlayerWeapons(startWeapon, maxWeaponsCount);
             Character = startCharacter;
