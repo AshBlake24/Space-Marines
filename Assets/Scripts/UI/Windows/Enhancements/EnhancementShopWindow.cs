@@ -2,10 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Roguelike.Data;
+using Roguelike.Infrastructure.Services.PersistentData;
 using Roguelike.Infrastructure.Services.Random;
 using Roguelike.Infrastructure.Services.StaticData;
 using Roguelike.Player;
 using Roguelike.StaticData.Enhancements;
+using TMPro;
 using UnityEngine;
 
 namespace Roguelike.UI.Windows.Enhancements
@@ -14,22 +16,39 @@ namespace Roguelike.UI.Windows.Enhancements
     {
         [SerializeField] private Transform _content;
         [SerializeField] private EnhancementViewer _enhancementViewer;
+        [SerializeField] private TextMeshProUGUI _playerBalance;
         [SerializeField, Range(1, 3)] private int _enhancementsCount;
 
         private IStaticDataService _staticDataService;
+        private IPersistentDataService _progressService;
         private IRandomService _random;
         private PlayerEnhancements _playerEnhancements;
+        private HashSet<EnhancementViewer> _viewers;
 
-        public void Construct(IStaticDataService staticDataService, IRandomService randomService,
+        public void Construct(IStaticDataService staticDataService, IPersistentDataService persistentData, IRandomService randomService,
             PlayerEnhancements playerEnhancements)
         {
             _staticDataService = staticDataService;
+            _progressService = persistentData;
             _random = randomService;
             _playerEnhancements = playerEnhancements;
+            _viewers = new HashSet<EnhancementViewer>(_enhancementsCount);
         }
 
-        protected override void Initialize() => 
+        protected override void Initialize()
+        {
             InitEnhancementViewers();
+            RefreshBalance();
+        }
+
+        protected override void SubscribeUpdates() => 
+            ProgressService.PlayerProgress.Balance.Changed += RefreshBalance;
+
+        protected override void Cleanup()
+        {
+            base.Cleanup();
+            ProgressService.PlayerProgress.Balance.Changed -= RefreshBalance;
+        }
 
         private void InitEnhancementViewers()
         {
@@ -43,13 +62,10 @@ namespace Roguelike.UI.Windows.Enhancements
                 foreach (EnhancementStaticData enhancementData in randomEnhancements)
                 {
                     EnhancementViewer enhancementViewer = Instantiate(_enhancementViewer, _content);
-                    EnhancementData enhancementProgress = ProgressService.PlayerProgress.State.Enhancements
-                        .SingleOrDefault(item => item.Id == enhancementData.Id);
-
-                    if (enhancementProgress == null)
-                        enhancementProgress = new EnhancementData(enhancementData.Id, 0);
                     
-                    enhancementViewer.Construct(enhancementData, enhancementProgress, _playerEnhancements);
+                    enhancementViewer.Construct(_progressService, _playerEnhancements, enhancementData);
+                    
+                    _viewers.Add(enhancementViewer);
                 }
             }
             else
@@ -76,5 +92,8 @@ namespace Roguelike.UI.Windows.Enhancements
 
             return randomEnhancements;
         }
+        
+        private void RefreshBalance() => 
+            _playerBalance.text = ProgressService.PlayerProgress.Balance.Coins.ToString();
     }
 }
