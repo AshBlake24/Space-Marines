@@ -9,6 +9,7 @@ namespace Roguelike.Player
         private const float DelayBeforeFindingTargets = 1f;
 
         [SerializeField] private LayerMask _aimLayerMask;
+        [SerializeField] private LayerMask _raycastLayerMask;
         [SerializeField] private float _updateTargetsPerFrame;
         [SerializeField, Range(1f, 20f)] private float _radius;
         [SerializeField] private float _firePointHeight;
@@ -81,8 +82,7 @@ namespace Roguelike.Player
             raycastOrigin.y = _firePointHeight;
             enemyPosition.y = _firePointHeight;
             Vector3 direction = enemyPosition - raycastOrigin;
-            Physics.Raycast(raycastOrigin, direction, out RaycastHit hit, _radius);
-            Debug.DrawRay(raycastOrigin, direction, Color.red, 0.5f);
+            Physics.Raycast(raycastOrigin, direction, out RaycastHit hit, _radius, _raycastLayerMask);
 
             return (1 << hit.transform.gameObject.layer) == _aimLayerMask.value;
         }

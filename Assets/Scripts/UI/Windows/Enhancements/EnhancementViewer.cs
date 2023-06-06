@@ -49,7 +49,7 @@ namespace Roguelike.UI.Windows.Enhancements
             OnBalanceChanged();
         }
 
-        public void InitViewer()
+        private void InitViewer()
         {
             InitEnhancementProgress();
             InitMainInfoFields();
