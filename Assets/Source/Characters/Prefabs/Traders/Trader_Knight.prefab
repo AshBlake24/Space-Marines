@@ -662,6 +662,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8995188753220186671}
   - component: {fileID: 8995188753225118227}
+  - component: {fileID: 2682343799117688348}
   m_Layer: 0
   m_Name: Character_Hero_Knight_Male
   m_TagString: Untagged
@@ -786,6 +787,24 @@ SkinnedMeshRenderer:
     m_Center: {x: 0.0064811707, y: 88.050514, z: -11.7474575}
     m_Extent: {x: 102.71184, y: 99.389854, z: 33.084465}
   m_DirtyAABB: 0
+--- !u!114 &2682343799117688348
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8995188753219843345}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 1
+  outlineColor: {r: 1, g: 0.82790744, b: 0.6, a: 1}
+  outlineWidth: 1
+  precomputeOutline: 1
+  bakeKeys: []
+  bakeValues: []
 --- !u!1 &8995188753219844411
 GameObject:
   m_ObjectHideFlags: 0
@@ -1550,6 +1569,8 @@ GameObject:
   m_Component:
   - component: {fileID: 8995188753220195061}
   - component: {fileID: 8995188753229273967}
+  - component: {fileID: 8674097397504752251}
+  - component: {fileID: 8461651486496786064}
   m_Layer: 0
   m_Name: Trader_Knight
   m_TagString: Untagged
@@ -1564,8 +1585,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8995188753219870615}
-  m_LocalRotation: {x: -0, y: 0.3324621, z: -0, w: 0.94311666}
-  m_LocalPosition: {x: -3.9, y: 0.152, z: -4.01}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1573,7 +1594,7 @@ Transform:
   - {fileID: 8995188753220205337}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 38.837, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &8995188753229273967
 Animator:
   serializedVersion: 4
@@ -1594,6 +1615,33 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!136 &8674097397504752251
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8995188753219870615}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.25
+  m_Height: 1.81
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.905, z: 0}
+--- !u!114 &8461651486496786064
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8995188753219870615}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f01d49228b2348419f8202baff62cd4e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _outline: {fileID: 0}
 --- !u!1 &8995188753219875047
 GameObject:
   m_ObjectHideFlags: 0
