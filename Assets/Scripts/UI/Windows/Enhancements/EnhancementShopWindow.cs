@@ -32,8 +32,11 @@ namespace Roguelike.UI.Windows.Enhancements
             _playerEnhancements = playerEnhancements;
         }
 
-        protected override void Initialize() => 
+        protected override void Initialize()
+        {
+            TimeService.PauseGame();
             RefreshBalance();
+        }
 
         protected override void SubscribeUpdates() => 
             ProgressService.PlayerProgress.Balance.Changed += RefreshBalance;
@@ -42,6 +45,7 @@ namespace Roguelike.UI.Windows.Enhancements
         {
             base.Cleanup();
             ProgressService.PlayerProgress.Balance.Changed -= RefreshBalance;
+            TimeService.ResumeGame();
         }
 
         public void InitEnhancementViewers(HashSet<EnhancementStaticData> enhancements)

@@ -14,8 +14,17 @@ namespace Roguelike.UI.Windows
         public void Construct(IStaticDataService staticData) => 
             _staticData = staticData;
 
-        protected override void Initialize() => 
+        protected override void Initialize()
+        {
+            TimeService.PauseGame();
             InitStageViewer();
+        }
+
+        protected override void Cleanup()
+        {
+            base.Cleanup();
+            TimeService.ResumeGame();
+        }
 
         private void InitStageViewer()
         {

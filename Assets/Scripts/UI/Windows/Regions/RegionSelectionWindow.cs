@@ -34,6 +34,7 @@ namespace Roguelike.UI.Windows.Regions
         
         protected override void Initialize()
         {
+            TimeService.PauseGame();
             InitRegionViewers();
             SetStartButtonState();
         }
@@ -49,6 +50,7 @@ namespace Roguelike.UI.Windows.Regions
                 regionViewer.ToggleClicked -= OnToggleClicked;
             
             _startButton.onClick.RemoveListener(OnStartButtonClick);
+            TimeService.ResumeGame();
         }
 
         private void InitRegionViewers()

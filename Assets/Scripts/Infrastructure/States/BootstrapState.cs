@@ -10,6 +10,7 @@ using Roguelike.Infrastructure.Services.Random;
 using Roguelike.Infrastructure.Services.SaveLoad;
 using Roguelike.Infrastructure.Services.StaticData;
 using Roguelike.Infrastructure.Services.Windows;
+using Roguelike.Logic.Pause;
 
 namespace Roguelike.Infrastructure.States
 {
@@ -51,6 +52,7 @@ namespace Roguelike.Infrastructure.States
             _services.RegisterSingle<IInputService>(GetInputService());
             _services.RegisterSingle<IParticlesPoolService>(new ParticlesPoolService());
             _services.RegisterSingle<ISceneLoadingService>(new SceneLoadingService(_stateMachine));
+            _services.RegisterSingle<ITimeService>(new TimeService());
             _services.RegisterSingle<IPersistentDataService>(new PersistentDataService(
                 _services.Single<IStaticDataService>()));
 
@@ -91,7 +93,8 @@ namespace Roguelike.Infrastructure.States
                 _services.Single<IStaticDataService>(),
                 _services.Single<IPersistentDataService>(),
                 _services.Single<ISceneLoadingService>(),
-                _services.Single<IRandomService>()));
+                _services.Single<IRandomService>(),
+                _services.Single<ITimeService>()));
 
             _services.RegisterSingle<IWindowService>(new WindowService(
                 _services.Single<IUIFactory>()));

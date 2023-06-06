@@ -5,6 +5,7 @@ using Roguelike.Infrastructure.Services.PersistentData;
 using Roguelike.Infrastructure.Services.Random;
 using Roguelike.Infrastructure.Services.StaticData;
 using Roguelike.Infrastructure.Services.Windows;
+using Roguelike.Logic.Pause;
 using Roguelike.Player;
 using Roguelike.StaticData.Weapons;
 using Roguelike.StaticData.Windows;
@@ -24,25 +25,27 @@ namespace Roguelike.Infrastructure.Factory
         private readonly IPersistentDataService _progressService;
         private readonly ISceneLoadingService _sceneLoadingService;
         private readonly IRandomService _randomService;
+        private readonly ITimeService _timeService;
 
         private Transform _uiRoot;
 
         public UIFactory(IAssetProvider assetProvider, IStaticDataService staticData,
             IPersistentDataService progressService, ISceneLoadingService sceneLoadingService,
-            IRandomService randomService)
+            IRandomService randomService, ITimeService timeService)
         {
             _assetProvider = assetProvider;
             _staticData = staticData;
             _progressService = progressService;
             _sceneLoadingService = sceneLoadingService;
             _randomService = randomService;
+            _timeService = timeService;
         }
 
         public BaseWindow CreateWindow(IWindowService windowService, WindowId windowId)
         {
             WindowConfig config = _staticData.GetDataById<WindowId, WindowConfig>(windowId);
             BaseWindow window = Object.Instantiate(config.WindowPrefab, _uiRoot);
-            window.Construct(_progressService);
+            window.Construct(_progressService, _timeService);
 
             foreach (OpenWindowButton openWindowButton in window.GetComponentsInChildren<OpenWindowButton>())
                 openWindowButton.Construct(windowService);
