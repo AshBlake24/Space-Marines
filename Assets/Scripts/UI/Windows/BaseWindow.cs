@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Roguelike.Infrastructure.Services.PersistentData;
 using Roguelike.Logic.Pause;
@@ -12,6 +13,7 @@ namespace Roguelike.UI.Windows
 
         protected IPersistentDataService ProgressService;
         protected ITimeService TimeService;
+        public event Action<BaseWindow> Closed;
 
         public void Construct(IPersistentDataService progressService, ITimeService timeService)
         {
@@ -37,14 +39,18 @@ namespace Roguelike.UI.Windows
 
         private void OnClose()
         {
+            Closed?.Invoke(this);
+            
             foreach (Button closeButton in _closeButtons)
                 closeButton.onClick.RemoveListener(OnClose);
 
             Destroy(gameObject);
         }
 
-        protected virtual void Initialize() { }
-        protected virtual void SubscribeUpdates() { }
-        protected virtual void Cleanup() { }
+        protected virtual void Initialize() {}
+
+        protected virtual void SubscribeUpdates() {}
+
+        protected virtual void Cleanup() {}
     }
 }

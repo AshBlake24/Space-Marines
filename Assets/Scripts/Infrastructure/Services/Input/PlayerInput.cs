@@ -71,6 +71,15 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Pause"",
+                    ""type"": ""Button"",
+                    ""id"": ""c2a220c5-a7c6-4294-9884-03b4f2c0f232"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -187,11 +196,22 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""98cd982c-ae5c-4697-9bb6-6f696cf86c31"",
-                    ""path"": ""<Keyboard>/enter"",
+                    ""path"": ""<Mouse>/leftButton"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard & Mouse"",
                     ""action"": ""Interaction"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""100ddd8d-7ee2-4da1-a2ef-98c0eeb86ef1"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard & Mouse"",
+                    ""action"": ""Pause"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -213,6 +233,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         m_Player_SwitchWeapon = m_Player.FindAction("SwitchWeapon", throwIfNotFound: true);
         m_Player_UseSkill = m_Player.FindAction("UseSkill", throwIfNotFound: true);
         m_Player_Interaction = m_Player.FindAction("Interaction", throwIfNotFound: true);
+        m_Player_Pause = m_Player.FindAction("Pause", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -277,6 +298,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_SwitchWeapon;
     private readonly InputAction m_Player_UseSkill;
     private readonly InputAction m_Player_Interaction;
+    private readonly InputAction m_Player_Pause;
     public struct PlayerActions
     {
         private @PlayerInput m_Wrapper;
@@ -286,6 +308,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         public InputAction @SwitchWeapon => m_Wrapper.m_Player_SwitchWeapon;
         public InputAction @UseSkill => m_Wrapper.m_Player_UseSkill;
         public InputAction @Interaction => m_Wrapper.m_Player_Interaction;
+        public InputAction @Pause => m_Wrapper.m_Player_Pause;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -310,6 +333,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @Interaction.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnInteraction;
                 @Interaction.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnInteraction;
                 @Interaction.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnInteraction;
+                @Pause.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPause;
+                @Pause.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPause;
+                @Pause.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPause;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -329,6 +355,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @Interaction.started += instance.OnInteraction;
                 @Interaction.performed += instance.OnInteraction;
                 @Interaction.canceled += instance.OnInteraction;
+                @Pause.started += instance.OnPause;
+                @Pause.performed += instance.OnPause;
+                @Pause.canceled += instance.OnPause;
             }
         }
     }
@@ -349,5 +378,6 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         void OnSwitchWeapon(InputAction.CallbackContext context);
         void OnUseSkill(InputAction.CallbackContext context);
         void OnInteraction(InputAction.CallbackContext context);
+        void OnPause(InputAction.CallbackContext context);
     }
 }

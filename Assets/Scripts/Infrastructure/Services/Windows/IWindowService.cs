@@ -1,4 +1,4 @@
-using Roguelike.Infrastructure.Services.StaticData;
+using System;
 using Roguelike.Player;
 using Roguelike.StaticData.Weapons;
 using Roguelike.UI.Windows;
@@ -9,6 +9,9 @@ namespace Roguelike.Infrastructure.Services.Windows
 {
     public interface IWindowService : IService
     {
+        public event Action WindowOpened;
+        public event Action WindowClosed;
+        
         BaseWindow Open(WindowId windowId);
         GameObject OpenWeaponStatsViewer(WeaponId weaponId);
         EnhancementShopWindow CreateEnhancementShop(PlayerEnhancements playerEnhancements);

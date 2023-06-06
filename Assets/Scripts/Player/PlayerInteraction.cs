@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using Roguelike.Infrastructure.Services;
 using Roguelike.Infrastructure.Services.Input;
 using Roguelike.Infrastructure.Services.Windows;
 using Roguelike.Logic.Interactables;
@@ -23,6 +22,7 @@ namespace Roguelike.Player
         private IInputService _input;
         private IWindowService _windowService;
         private GameObject _weaponStatsViewer;
+        private bool _isActive;
 
         public event Action GotInteractable;
         public event Action LostInteractable;
@@ -36,16 +36,17 @@ namespace Roguelike.Player
             }
         }
 
-        public void Construct(IWindowService windowService) =>
+        public void Construct(IWindowService windowService, IInputService inputService)
+        {
+            _isActive = true;
             _windowService = windowService;
-
-        private void Awake() =>
-            _input = AllServices.Container.Single<IInputService>();
-
-        private void OnEnable() =>
+            _input = inputService;
             _input.Interacted += OnInteracted;
+            _windowService.WindowOpened += OnWindowOpened;
+            _windowService.WindowClosed += OnWindowClosed;
+        }
 
-        private void OnDisable() =>
+        private void OnDestroy() =>
             _input.Interacted -= OnInteracted;
 
         private void Start()
@@ -66,6 +67,9 @@ namespace Roguelike.Player
 
         private void CheckForInteractables()
         {
+            if (_isActive == false)
+                return;
+
             int collidersInArea = Physics.OverlapSphereNonAlloc(
                 transform.position,
                 _radius,
@@ -174,5 +178,13 @@ namespace Roguelike.Player
 
         private static bool InteractableIsActive(IInteractable closestInteractable) =>
             closestInteractable.IsActive;
+
+        private void OnWindowClosed() => _isActive = true;
+
+        private void OnWindowOpened()
+        {
+            _isActive = false;
+            ClearCurrentInteractable();
+        }
     }
 }
