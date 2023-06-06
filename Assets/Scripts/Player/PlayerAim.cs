@@ -8,7 +8,7 @@ namespace Roguelike.Player
     {
         private const float DelayBeforeFindingTargets = 1f;
 
-        [SerializeField] private LayerMask _enemiesLayerMask;
+        [SerializeField] private LayerMask _aimLayerMask;
         [SerializeField] private float _updateTargetsPerFrame;
         [SerializeField, Range(1f, 20f)] private float _radius;
         [SerializeField] private float _firePointHeight;
@@ -44,7 +44,7 @@ namespace Roguelike.Player
                 transform.position,
                 _radius,
                 _colliders,
-                _enemiesLayerMask);
+                _aimLayerMask);
 
             if (collidersInArea > 0)
                 FindClosestTarget();
@@ -62,7 +62,7 @@ namespace Roguelike.Player
                     continue;
 
                 if (collider.gameObject.TryGetComponent(out EnemyHealth enemyHealth)
-                    && LineOfFireIsFree(enemyHealth.transform))
+                    && LineOfFireIsFree(enemyHealth.transform.position))
                 {
                     float distanceToEnemy = Vector3.Distance(transform.position, enemyHealth.transform.position);
 
@@ -75,14 +75,16 @@ namespace Roguelike.Player
             }
         }
 
-        private bool LineOfFireIsFree(Transform enemyTransform)
+        private bool LineOfFireIsFree(Vector3 enemyPosition)
         {
             Vector3 raycastOrigin = transform.position;
             raycastOrigin.y = _firePointHeight;
-            Vector3 direction = enemyTransform.position - raycastOrigin;
+            enemyPosition.y = _firePointHeight;
+            Vector3 direction = enemyPosition - raycastOrigin;
             Physics.Raycast(raycastOrigin, direction, out RaycastHit hit, _radius);
+            Debug.DrawRay(raycastOrigin, direction, Color.red, 0.5f);
 
-            return (1 << hit.transform.gameObject.layer) == _enemiesLayerMask.value;
+            return (1 << hit.transform.gameObject.layer) == _aimLayerMask.value;
         }
     }
 }

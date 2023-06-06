@@ -213,13 +213,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39baedacab2141a389bd360a251c834e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enemiesLayerMask:
+  _aimLayerMask:
     serializedVersion: 2
-    m_Bits: 4096
+    m_Bits: 262144
   _updateTargetsPerFrame: 2
   _radius: 15
   _firePointHeight: 1.5
-  _drawGizmos: 0
+  _drawGizmos: 1
 --- !u!114 &7304403835282790820
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -263,7 +263,7 @@ MonoBehaviour:
   _radius: 2
   _componentsToDeactivateWhileInteraction:
   - {fileID: 2753311284853847007}
-  _drawGizmos: 1
+  _drawGizmos: 0
 --- !u!114 &1584298645333498346
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -298,7 +298,7 @@ GameObject:
   m_Layer: 10
   m_Name: AimTarget
   m_TagString: Untagged
-  m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: -1412012063857583412, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
