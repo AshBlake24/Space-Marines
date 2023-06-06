@@ -8,7 +8,7 @@ namespace Roguelike.Player
     {
         private const float DelayBeforeFindingTargets = 1f;
 
-        [SerializeField] private LayerMask _aimLayerMask;
+        [SerializeField] private LayerMask _damageableLayerMask;
         [SerializeField] private LayerMask _raycastLayerMask;
         [SerializeField] private float _updateTargetsPerFrame;
         [SerializeField, Range(1f, 20f)] private float _radius;
@@ -45,7 +45,7 @@ namespace Roguelike.Player
                 transform.position,
                 _radius,
                 _colliders,
-                _aimLayerMask);
+                _damageableLayerMask);
 
             if (collidersInArea > 0)
                 FindClosestTarget();
@@ -84,7 +84,7 @@ namespace Roguelike.Player
             Vector3 direction = enemyPosition - raycastOrigin;
 
             if (Physics.Raycast(raycastOrigin, direction, out RaycastHit hit, _radius, _raycastLayerMask))
-                return (1 << hit.transform.gameObject.layer) == _aimLayerMask.value;
+                return (1 << hit.transform.gameObject.layer) == _damageableLayerMask.value;
 
             return false;
         }
