@@ -1823,6 +1823,7 @@ GameObject:
   - component: {fileID: 8973397564544479285}
   - component: {fileID: 8973397564544479274}
   - component: {fileID: 582826537543338855}
+  - component: {fileID: 8408483191422050397}
   m_Layer: 5
   m_Name: Enhancement Viewer
   m_TagString: Untagged
@@ -1912,6 +1913,23 @@ MonoBehaviour:
   _description: {fileID: 8973397564004694560}
   _price: {fileID: 8973397564416920192}
   _noValueMark: '-'
+--- !u!114 &8408483191422050397
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8973397564544479272}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 608c6e2681c64e09b3732dc7cee7e412, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _viewer: {fileID: 582826537543338855}
+  _sellButton: {fileID: 8973397565312038772}
+  _sellButtonImage: {fileID: 8973397565312038775}
+  _activeColor: {r: 0.12941177, g: 0.75686276, b: 0.8509804, a: 1}
+  _inactiveColor: {r: 0.10180798, g: 0.4515402, b: 0.504, a: 1}
 --- !u!1 &8973397564585332944
 GameObject:
   m_ObjectHideFlags: 0

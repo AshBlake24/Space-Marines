@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using Roguelike.Data;
 using Roguelike.Infrastructure.Services.PersistentData;
@@ -13,7 +14,8 @@ namespace Roguelike.UI.Windows.Enhancements
     {
         [SerializeField] private Button _sellButton;
 
-        [Header("Info")] [SerializeField] private Image _icon;
+        [Header("Info")] 
+        [SerializeField] private Image _icon;
         [SerializeField] private TextMeshProUGUI _name;
         [SerializeField] private TextMeshProUGUI _currentTier;
         [SerializeField] private TextMeshProUGUI _currentValue;
@@ -27,7 +29,13 @@ namespace Roguelike.UI.Windows.Enhancements
         private EnhancementStaticData _enhancementData;
         private EnhancementData _enhancementProgress;
 
-        private void OnDestroy() => _sellButton.onClick.RemoveAllListeners();
+        public event Action SellButtonInitialized;
+
+        private void OnDestroy()
+        {
+            _sellButton.onClick.RemoveAllListeners();
+            _progressService.PlayerProgress.Balance.Changed -= OnBalanceChanged;
+        }
 
         public void Construct(IPersistentDataService progressService, PlayerEnhancements playerEnhancements,
             EnhancementStaticData enhancementStaticData)
@@ -44,13 +52,13 @@ namespace Roguelike.UI.Windows.Enhancements
         private void InitViewer()
         {
             InitEnhancementProgress();
-            InitMainInfoFields(_enhancementData);
-            InitCurrentTierField(_enhancementData, _enhancementProgress);
+            InitMainInfoFields();
+            InitCurrentTierField();
 
             if (_enhancementProgress.Tier == 0)
-                InitNewStatsFields(_enhancementData, _enhancementProgress);
+                InitNewStatsFields();
             else
-                InitCurrentStatsFields(_enhancementData, _enhancementProgress);
+                InitCurrentStatsFields();
         }
 
         private void InitEnhancementProgress()
@@ -62,52 +70,54 @@ namespace Roguelike.UI.Windows.Enhancements
                 _enhancementProgress = new EnhancementData(_enhancementData.Id, 0);
         }
 
-        private void InitMainInfoFields(EnhancementStaticData enhancementStaticData)
+        private void InitMainInfoFields()
         {
-            _icon.sprite = enhancementStaticData.Icon;
-            _name.text = enhancementStaticData.Name;
-            _description.text = enhancementStaticData.Description;
+            _icon.sprite = _enhancementData.Icon;
+            _name.text = _enhancementData.Name;
+            _description.text = _enhancementData.Description;
         }
 
-        private void InitCurrentTierField(EnhancementStaticData enhancementStaticData,
-            EnhancementData enhancementProgress)
+        private void InitCurrentTierField()
         {
-            if (enhancementProgress.Tier == enhancementStaticData.Tiers.Length)
+            if (_enhancementProgress.Tier == _enhancementData.Tiers.Length)
                 _currentTier.color = Color.red;
 
-            _currentTier.text = $"{enhancementProgress.Tier.ToString()}/{enhancementStaticData.Tiers.Length}";
+            _currentTier.text = $"{_enhancementProgress.Tier.ToString()}/{_enhancementData.Tiers.Length}";
         }
 
-        private void InitNewStatsFields(EnhancementStaticData enhancementStaticData,
-            EnhancementData enhancementProgress)
+        private void InitNewStatsFields()
         {
-            _price.text = enhancementStaticData.Tiers[enhancementProgress.Tier].Price.ToString();
+            _price.text = _enhancementData.Tiers[_enhancementProgress.Tier].Price.ToString();
             _currentValue.text = _noValueMark;
-            _nextValue.text = enhancementProgress.Tier < enhancementStaticData.Tiers.Length
-                ? enhancementStaticData.Tiers[enhancementProgress.Tier + 1].Value.ToString()
+            _nextValue.text = _enhancementProgress.Tier < _enhancementData.Tiers.Length
+                ? _enhancementData.Tiers[_enhancementProgress.Tier + 1].Value.ToString()
                 : _noValueMark;
         }
 
-        private void InitCurrentStatsFields(EnhancementStaticData enhancementStaticData,
-            EnhancementData enhancementProgress)
+        private void InitCurrentStatsFields()
         {
-            _price.text = enhancementStaticData.Tiers[enhancementProgress.Tier].Price.ToString();
-            _currentValue.text = enhancementStaticData.Tiers[enhancementProgress.Tier].Value.ToString();
-            _nextValue.text = enhancementProgress.Tier < enhancementStaticData.Tiers.Length
-                ? enhancementStaticData.Tiers[enhancementProgress.Tier].Value.ToString()
+            _price.text = _enhancementProgress.Tier < _enhancementData.Tiers.Length
+                ? _enhancementData.Tiers[_enhancementProgress.Tier].Price.ToString()
                 : _noValueMark;
+
+            _nextValue.text = _enhancementProgress.Tier < _enhancementData.Tiers.Length
+                ? _enhancementData.Tiers[_enhancementProgress.Tier].Value.ToString()
+                : _noValueMark;
+
+            _currentValue.text = _enhancementData.Tiers[_enhancementProgress.Tier - 1].Value.ToString();
         }
 
-        private void InitSellButton(EnhancementStaticData enhancementStaticData, EnhancementData enhancementProgress)
+        private void InitSellButton()
         {
             _sellButton.onClick.RemoveAllListeners();
 
-            if (CurrentTierIsMax(enhancementStaticData, enhancementProgress) || PlayerHasMoney() == false)
+            if (CurrentTierIsMax() || PlayerHasMoney() == false)
                 _sellButton.interactable = false;
             else
                 _sellButton.interactable = true;
 
             _sellButton.onClick.AddListener(OnSellButtonClick);
+            SellButtonInitialized?.Invoke();
         }
 
         private void OnSellButtonClick()
@@ -120,16 +130,15 @@ namespace Roguelike.UI.Windows.Enhancements
                 _playerEnhancements.Upgrade(_enhancementData.Id, ++_enhancementProgress.Tier);
 
             InitViewer();
+            OnBalanceChanged();
         }
-
-        private void OnBalanceChanged() =>
-            InitSellButton(_enhancementData, _enhancementProgress);
 
         private bool PlayerHasMoney() =>
             _progressService.PlayerProgress.Balance.Coins >= _enhancementData.Tiers[_enhancementProgress.Tier].Price;
 
-        private bool CurrentTierIsMax(EnhancementStaticData enhancementStaticData,
-            EnhancementData enhancementProgress) =>
-            enhancementProgress.Tier == enhancementStaticData.Tiers.Length;
+        private bool CurrentTierIsMax() =>
+            _enhancementProgress.Tier >= _enhancementData.Tiers.Length;
+
+        private void OnBalanceChanged() => InitSellButton();
     }
 }

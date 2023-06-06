@@ -69,16 +69,9 @@ namespace Roguelike.Player
 
         public void Enhance(int moveSpeedPercentage)
         {
-            Debug.Log("Default speed = " + _defaultMoveSpeed);
-            Debug.Log("Move speed = " + _moveSpeed);
-            
             float additionalMoveSpeed = _baseMoveSpeed * moveSpeedPercentage / 100;
             _defaultMoveSpeed = _baseMoveSpeed + additionalMoveSpeed;
             _moveSpeed = _defaultMoveSpeed;
-            
-            Debug.Log("Additional speed = " + additionalMoveSpeed);
-            Debug.Log("New Default speed = " + _defaultMoveSpeed);
-            Debug.Log("New Move speed = " + _moveSpeed);
         }
 
         private Vector3 GetDirection() =>

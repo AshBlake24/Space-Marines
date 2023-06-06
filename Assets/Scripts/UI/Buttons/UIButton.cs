@@ -1,5 +1,3 @@
-using Roguelike.Infrastructure.Services;
-using Roguelike.Infrastructure.Services.Input;
 using UnityEngine;
 using UnityEngine.UI;
 
