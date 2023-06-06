@@ -9,6 +9,7 @@ namespace Roguelike.Roguelike.Enemies.Animators
         private static readonly int s_isStopped = Animator.StringToHash("IsStopped");
         private static readonly int s_attack = Animator.StringToHash("Attack");
         private static readonly int s_died = Animator.StringToHash("Died");
+        private static readonly int s_hit = Animator.StringToHash("Hit");
 
         private Animator _animator;
 
@@ -24,6 +25,8 @@ namespace Roguelike.Roguelike.Enemies.Animators
         }
 
         public void PlayAttack() => _animator.SetTrigger(s_attack);
+
+        public void PlayHit() => _animator.SetTrigger(s_hit);
 
         public void PlayDie() => _animator.SetTrigger(s_died);
 
