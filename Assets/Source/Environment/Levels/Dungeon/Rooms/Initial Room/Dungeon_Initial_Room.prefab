@@ -129,39 +129,36 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _rendererInfo:
-  - Renderer: {fileID: 1417953068836595564}
+  - Renderer: {fileID: 1417953068796399567}
     LightmapIndex: 0
-    LightmapOffsetScale: {x: 0.32935902, y: 0.32935902, z: 0.34410933, w: 0.49157026}
+    LightmapOffsetScale: {x: 0.32935902, y: 0.32935902, z: 0.6712578, w: -0.0015937963}
   - Renderer: {fileID: 6449801269761890327}
     LightmapIndex: 1
     LightmapOffsetScale: {x: 0.3619315, y: 0.3619315, z: 0.38348922, w: 0.5260673}
   - Renderer: {fileID: 8943742833425881128}
     LightmapIndex: 2
-    LightmapOffsetScale: {x: 0.1277326, y: 0.1277326, z: 0.8721694, w: 0.58408344}
+    LightmapOffsetScale: {x: 0.1277326, y: 0.1277326, z: 0.7286147, w: 0.7118919}
   - Renderer: {fileID: 8854778385590557394}
     LightmapIndex: 2
-    LightmapOffsetScale: {x: 0.12768276, y: 0.12768276, z: 0.74231154, w: 0.705248}
-  - Renderer: {fileID: 7534445259847920871}
+    LightmapOffsetScale: {x: 0.12768276, y: 0.12768276, z: 0.8585225, w: 0.71191686}
+  - Renderer: {fileID: 5268367543661890238}
     LightmapIndex: 2
-    LightmapOffsetScale: {x: 0.12768257, y: 0.12768257, z: 0.74231154, w: 0.5841084}
+    LightmapOffsetScale: {x: 0.12768257, y: 0.12768257, z: 0.85656935, w: 0.5841084}
   - Renderer: {fileID: 4896404831023516108}
     LightmapIndex: 1
     LightmapOffsetScale: {x: 0.5288141, y: 0.5288141, z: -0.002687206, w: -0.002687206}
   - Renderer: {fileID: 2895680186273255601}
-    LightmapIndex: 3
-    LightmapOffsetScale: {x: 0.29522917, y: 0.29522917, z: -0.0016084476, w: 0.6224379}
+    LightmapIndex: 0
+    LightmapOffsetScale: {x: 0.29522917, y: 0.29522917, z: 0.62114155, w: 0.67124313}
   _lightmaps:
-  - {fileID: 2800000, guid: b896db633c34ffc4d96bacddb10a0059, type: 3}
+  - {fileID: 2800000, guid: 657165be4ee80bb4696c66e46de09042, type: 3}
   - {fileID: 2800000, guid: 302f3ea3a167e6646baca3b56158e29b, type: 3}
   - {fileID: 2800000, guid: f535e53ac1171b54caa65ed80e7a5f9c, type: 3}
-  - {fileID: 2800000, guid: bef27f460e62a45459b7c96e66e0dc00, type: 3}
   _lightmapsDir:
-  - {fileID: 2800000, guid: 0d7c55ebe2e6a6241b3f51b7e9b2d8b1, type: 3}
+  - {fileID: 2800000, guid: c464346b6d7db3c41b8dbf41612b4f01, type: 3}
   - {fileID: 2800000, guid: a591615b73541e14e9267fabf1590e72, type: 3}
   - {fileID: 2800000, guid: 2760b66ce9da4604b8fff18e656714e9, type: 3}
-  - {fileID: 2800000, guid: 302fc36167f1c5845a474552ddc5b3e7, type: 3}
   _shadowMasks:
-  - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
@@ -194,11 +191,11 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 281114410384219139}
+  - {fileID: 281114409942070432}
   - {fileID: 5316887254581027704}
   - {fileID: 7806324080450495303}
   - {fileID: 7685765336447148477}
-  - {fileID: 8702246233382819720}
+  - {fileID: 6437381656884408785}
   - {fileID: 6032759291238560419}
   - {fileID: 4063558672426183646}
   m_Father: {fileID: 3616136068856481175}
@@ -220,7 +217,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &9036328712737888947
 Transform:
   m_ObjectHideFlags: 0
@@ -286,7 +283,7 @@ LightProbeGroup:
   - {x: 3.421937, y: 4.3530064, z: -2.631035}
   - {x: 3.421937, y: 0.27733555, z: -2.631035}
   m_Dering: 1
---- !u!1001 &3616136067118939024
+--- !u!1001 &1422472060062162377
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -355,17 +352,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5cb3a8a5adc94b746b88259100df37f1, type: 3}
---- !u!23 &7534445259847920871 stripped
+--- !u!23 &5268367543661890238 stripped
 MeshRenderer:
   m_CorrespondingSourceObject: {fileID: 6530398213554722679, guid: 5cb3a8a5adc94b746b88259100df37f1, type: 3}
-  m_PrefabInstance: {fileID: 3616136067118939024}
+  m_PrefabInstance: {fileID: 1422472060062162377}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &8702246233382819720 stripped
+--- !u!4 &6437381656884408785 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5398565051724049432, guid: 5cb3a8a5adc94b746b88259100df37f1, type: 3}
-  m_PrefabInstance: {fileID: 3616136067118939024}
+  m_PrefabInstance: {fileID: 1422472060062162377}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &3616136067217675059
+--- !u!1001 &3616136067118939024
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -430,15 +427,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 33b89894f96193c41bd112a14ba21b43, type: 3}
---- !u!4 &281114410384219139 stripped
+--- !u!4 &281114409942070432 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3587575088679817008, guid: 33b89894f96193c41bd112a14ba21b43, type: 3}
-  m_PrefabInstance: {fileID: 3616136067217675059}
+  m_PrefabInstance: {fileID: 3616136067118939024}
   m_PrefabAsset: {fileID: 0}
---- !u!23 &1417953068836595564 stripped
+--- !u!23 &1417953068796399567 stripped
 MeshRenderer:
   m_CorrespondingSourceObject: {fileID: 2414646649639072863, guid: 33b89894f96193c41bd112a14ba21b43, type: 3}
-  m_PrefabInstance: {fileID: 3616136067217675059}
+  m_PrefabInstance: {fileID: 3616136067118939024}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3616136067486977103
 PrefabInstance:

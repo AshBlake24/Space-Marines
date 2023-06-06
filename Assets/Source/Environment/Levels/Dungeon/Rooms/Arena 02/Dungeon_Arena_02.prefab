@@ -36,6 +36,7 @@ Transform:
   - {fileID: 3275481867574090673}
   - {fileID: 3275481868496983030}
   - {fileID: 3275481867670916755}
+  - {fileID: 7716352658512676385}
   m_Father: {fileID: 3275481868630120521}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -63,7 +64,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 942196204665144639}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 68.75}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -96,7 +97,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2421959888973037648}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -73}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -142,7 +143,6 @@ Transform:
   - {fileID: 4983844120637346590}
   - {fileID: 1581883398}
   - {fileID: 982379043213787236}
-  - {fileID: 7716352658512676385}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -183,45 +183,48 @@ MonoBehaviour:
     LightmapOffsetScale: {x: 0.49267125, y: 0.49267125, z: -0.0017451439, w: -0.0017451439}
   - Renderer: {fileID: 7705186762634570085}
     LightmapIndex: 1
-    LightmapOffsetScale: {x: 0.08842344, y: 0.08842344, z: 0.90793693, w: 0.80051506}
+    LightmapOffsetScale: {x: 0.08842344, y: 0.08842344, z: 0.22336662, w: 0.9118432}
   - Renderer: {fileID: 5865612867647212390}
-    LightmapIndex: 1
+    LightmapIndex: 2
     LightmapOffsetScale: {x: 0.19807154, y: 0.19807154, z: 0.79989046, w: -0.0008907917}
   - Renderer: {fileID: 3791698684774274811}
-    LightmapIndex: 1
+    LightmapIndex: 2
     LightmapOffsetScale: {x: 0.19710322, y: 0.19710322, z: 0.7998866, w: 0.19930065}
   - Renderer: {fileID: 5018143255528144609}
-    LightmapIndex: 0
-    LightmapOffsetScale: {x: 0.17751172, y: 0.17751172, z: 0.34483746, w: 0.8223765}
-  - Renderer: {fileID: 8009023984824724282}
-    LightmapIndex: 2
-    LightmapOffsetScale: {x: 0.17750451, y: 0.17750451, z: -0.00086139276, w: 0.48253703}
-  - Renderer: {fileID: 7668042061238287973}
     LightmapIndex: 3
-    LightmapOffsetScale: {x: 0.29522917, y: 0.29522917, z: -0.0016084476, w: 0.32653946}
+    LightmapOffsetScale: {x: 0.17751172, y: 0.17751172, z: 0.3907359, w: 0.23546244}
+  - Renderer: {fileID: 8009023984824724282}
+    LightmapIndex: 3
+    LightmapOffsetScale: {x: 0.17750451, y: 0.17750451, z: 0.21007611, w: 0.7748672}
+  - Renderer: {fileID: 7668042061238287973}
+    LightmapIndex: 0
+    LightmapOffsetScale: {x: 0.29522917, y: 0.29522917, z: 0.34409466, w: 0.4915556}
   - Renderer: {fileID: 4541787609927083595}
-    LightmapIndex: 2
-    LightmapOffsetScale: {x: 0.16600442, y: 0.16600442, z: 0.23584577, w: 0.41553327}
+    LightmapIndex: 4
+    LightmapOffsetScale: {x: 0.28093055, y: 0.28093055, z: -0.000816289, w: 0.56558996}
   - Renderer: {fileID: 5721593226707226282}
-    LightmapIndex: 2
-    LightmapOffsetScale: {x: 0.16600442, y: 0.16600442, z: 0.7426817, w: 0.24658796}
+    LightmapIndex: 4
+    LightmapOffsetScale: {x: 0.28093055, y: 0.28093055, z: 0.28238684, w: 0.28238684}
   - Renderer: {fileID: 6336404398497491824}
-    LightmapIndex: 2
-    LightmapOffsetScale: {x: 0.16599438, y: 0.16599438, z: 0.40479624, w: 0.75342906}
+    LightmapIndex: 3
+    LightmapOffsetScale: {x: 0.16599438, y: 0.16599438, z: 0.39112437, w: 0.58448374}
   - Renderer: {fileID: 7087772906508577051}
-    LightmapIndex: 2
-    LightmapOffsetScale: {x: 0.16599438, y: 0.16599438, z: -0.00047720538, w: 0.83155406}
+    LightmapIndex: 4
+    LightmapOffsetScale: {x: 0.16599438, y: 0.16599438, z: 0.7465931, w: 0.83324945}
   _lightmaps:
   - {fileID: 2800000, guid: b896db633c34ffc4d96bacddb10a0059, type: 3}
+  - {fileID: 2800000, guid: 302f3ea3a167e6646baca3b56158e29b, type: 3}
   - {fileID: 2800000, guid: b6ff45bdd9c7a7b4ebfbac54961601e1, type: 3}
   - {fileID: 2800000, guid: f535e53ac1171b54caa65ed80e7a5f9c, type: 3}
   - {fileID: 2800000, guid: bef27f460e62a45459b7c96e66e0dc00, type: 3}
   _lightmapsDir:
   - {fileID: 2800000, guid: 0d7c55ebe2e6a6241b3f51b7e9b2d8b1, type: 3}
+  - {fileID: 2800000, guid: a591615b73541e14e9267fabf1590e72, type: 3}
   - {fileID: 2800000, guid: 6b9d6b57081914a41b1449925cf61bdc, type: 3}
   - {fileID: 2800000, guid: 2760b66ce9da4604b8fff18e656714e9, type: 3}
   - {fileID: 2800000, guid: 302fc36167f1c5845a474552ddc5b3e7, type: 3}
   _shadowMasks:
+  - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
@@ -330,7 +333,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7716352658512676385
 Transform:
   m_ObjectHideFlags: 0
@@ -343,8 +346,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 3275481868630120521}
-  m_RootOrder: 5
+  m_Father: {fileID: 1581883398}
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!220 &1644008680742193065
 LightProbeGroup:
@@ -629,6 +632,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5012099185378689322}
     m_Modifications:
+    - target: {fileID: 4940440524603020637, guid: 9aeb054e7ac4b1847b2f623ba66fc53d, type: 3}
+      propertyPath: m_ScaleInLightmap
+      value: 1.69
+      objectReference: {fileID: 0}
     - target: {fileID: 6108240812287962674, guid: 9aeb054e7ac4b1847b2f623ba66fc53d, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -2455,6 +2462,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5012099185378689322}
     m_Modifications:
+    - target: {fileID: 4940440524603020637, guid: 9aeb054e7ac4b1847b2f623ba66fc53d, type: 3}
+      propertyPath: m_ScaleInLightmap
+      value: 1.69
+      objectReference: {fileID: 0}
     - target: {fileID: 6108240812287962674, guid: 9aeb054e7ac4b1847b2f623ba66fc53d, type: 3}
       propertyPath: m_RootOrder
       value: 0

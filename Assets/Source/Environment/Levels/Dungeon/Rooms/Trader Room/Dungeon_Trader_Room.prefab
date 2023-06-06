@@ -172,39 +172,42 @@ MonoBehaviour:
   _rendererInfo:
   - Renderer: {fileID: 3668115517357855213}
     LightmapIndex: 0
-    LightmapOffsetScale: {x: 0.29502085, y: 0.29502085, z: 0.6353958, w: -0.0010260494}
+    LightmapOffsetScale: {x: 0.23601668, y: 0.23601668, z: 0.74722606, w: 0.52652293}
   - Renderer: {fileID: 4010645057568193834}
     LightmapIndex: 1
-    LightmapOffsetScale: {x: 0.76998323, y: 0.76998323, z: -0.0027274406, w: -0.0027274406}
+    LightmapOffsetScale: {x: 0.6736124, y: 0.6736124, z: -0.002386075, w: -0.002386075}
   - Renderer: {fileID: 1788437128075107518}
-    LightmapIndex: 0
-    LightmapOffsetScale: {x: 0.26276588, y: 0.26276588, z: 0.5868791, w: 0.59445673}
+    LightmapIndex: 2
+    LightmapOffsetScale: {x: 0.18403454, y: 0.18403454, z: 0.7832849, w: 0.8000728}
   - Renderer: {fileID: 885908178611876223}
-    LightmapIndex: 2
-    LightmapOffsetScale: {x: 0.254361, y: 0.254361, z: 0.2458674, w: -0.0012029168}
-  - Renderer: {fileID: 1520723387893069405}
-    LightmapIndex: 2
-    LightmapOffsetScale: {x: 0.24554655, y: 0.24554655, z: -0.0011910689, w: -0.0011910689}
-  - Renderer: {fileID: 5143867648870409090}
     LightmapIndex: 3
-    LightmapOffsetScale: {x: 0.24554785, y: 0.24554785, z: 0.74685454, w: 0.5261514}
+    LightmapOffsetScale: {x: 0.17844707, y: 0.17844707, z: 0.56556237, w: 0.83288276}
+  - Renderer: {fileID: 1520723387893069405}
+    LightmapIndex: 4
+    LightmapOffsetScale: {x: 0.17158675, y: 0.17158675, z: 0.74428487, w: 0.2354958}
+  - Renderer: {fileID: 5143867648870409090}
+    LightmapIndex: 4
+    LightmapOffsetScale: {x: 0.17158766, y: 0.17158766, z: 0.57045585, w: 0.23549494}
   - Renderer: {fileID: 3371771137026615404}
     LightmapIndex: 0
-    LightmapOffsetScale: {x: 0.2754814, y: 0.2754814, z: 0.2943976, w: 0.61863923}
+    LightmapOffsetScale: {x: 0.23598585, y: 0.23598585, z: 0.7467612, w: 0.7643393}
   - Renderer: {fileID: 5401186473995042631}
-    LightmapIndex: 2
-    LightmapOffsetScale: {x: 0.16599438, y: 0.16599438, z: 0.23585092, w: 0.58448374}
+    LightmapIndex: 4
+    LightmapOffsetScale: {x: 0.16599438, y: 0.16599438, z: 0.5600697, w: 0.41553843}
   _lightmaps:
-  - {fileID: 2800000, guid: bef27f460e62a45459b7c96e66e0dc00, type: 3}
-  - {fileID: 2800000, guid: 657165be4ee80bb4696c66e46de09042, type: 3}
-  - {fileID: 2800000, guid: f535e53ac1171b54caa65ed80e7a5f9c, type: 3}
   - {fileID: 2800000, guid: 302f3ea3a167e6646baca3b56158e29b, type: 3}
+  - {fileID: 2800000, guid: 657165be4ee80bb4696c66e46de09042, type: 3}
+  - {fileID: 2800000, guid: b6ff45bdd9c7a7b4ebfbac54961601e1, type: 3}
+  - {fileID: 2800000, guid: bef27f460e62a45459b7c96e66e0dc00, type: 3}
+  - {fileID: 2800000, guid: f535e53ac1171b54caa65ed80e7a5f9c, type: 3}
   _lightmapsDir:
-  - {fileID: 2800000, guid: 302fc36167f1c5845a474552ddc5b3e7, type: 3}
-  - {fileID: 2800000, guid: c464346b6d7db3c41b8dbf41612b4f01, type: 3}
-  - {fileID: 2800000, guid: 2760b66ce9da4604b8fff18e656714e9, type: 3}
   - {fileID: 2800000, guid: a591615b73541e14e9267fabf1590e72, type: 3}
+  - {fileID: 2800000, guid: c464346b6d7db3c41b8dbf41612b4f01, type: 3}
+  - {fileID: 2800000, guid: 6b9d6b57081914a41b1449925cf61bdc, type: 3}
+  - {fileID: 2800000, guid: 302fc36167f1c5845a474552ddc5b3e7, type: 3}
+  - {fileID: 2800000, guid: 2760b66ce9da4604b8fff18e656714e9, type: 3}
   _shadowMasks:
+  - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
@@ -226,7 +229,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8578953394990963056
 Transform:
   m_ObjectHideFlags: 0
@@ -525,7 +528,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8744965332446546794, guid: 6c129494eda15344c82391814d948623, type: 3}
       propertyPath: m_ScaleInLightmap
-      value: 1.4
+      value: 1.2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6c129494eda15344c82391814d948623, type: 3}
@@ -687,6 +690,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6311430247963116717}
     m_Modifications:
+    - target: {fileID: 7309755610572520582, guid: 0a38a9eecf1202942ac0f6b603c0c949, type: 3}
+      propertyPath: m_ScaleInLightmap
+      value: 0.8
+      objectReference: {fileID: 0}
     - target: {fileID: 8447164258831566825, guid: 0a38a9eecf1202942ac0f6b603c0c949, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -761,6 +768,10 @@ PrefabInstance:
     - target: {fileID: 4451701440440748029, guid: eb03f13495b041e4da1d3b9f1919fe69, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 5712669104218020862, guid: eb03f13495b041e4da1d3b9f1919fe69, type: 3}
+      propertyPath: m_ScaleInLightmap
+      value: 0.7
       objectReference: {fileID: 0}
     - target: {fileID: 6072970200610519595, guid: eb03f13495b041e4da1d3b9f1919fe69, type: 3}
       propertyPath: m_Name
@@ -881,6 +892,10 @@ PrefabInstance:
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
+    - target: {fileID: 6935007077071176064, guid: 10fe38f16e21724499248ff377964ae8, type: 3}
+      propertyPath: m_ScaleInLightmap
+      value: 1.75
+      objectReference: {fileID: 0}
     - target: {fileID: 6996836733472594115, guid: 10fe38f16e21724499248ff377964ae8, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
@@ -967,6 +982,10 @@ PrefabInstance:
     - target: {fileID: 4703894104187171904, guid: 539bdd833a2de8d4398d681415e2cb86, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 4795213761093012726, guid: 539bdd833a2de8d4398d681415e2cb86, type: 3}
+      propertyPath: m_ScaleInLightmap
+      value: 0.7
       objectReference: {fileID: 0}
     - target: {fileID: 5964781718804920217, guid: 539bdd833a2de8d4398d681415e2cb86, type: 3}
       propertyPath: m_RootOrder
@@ -1095,6 +1114,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6619680760050811796, guid: ea5d66994156b26428130b7e06a96add, type: 3}
+      propertyPath: m_ScaleInLightmap
+      value: 0.7
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ea5d66994156b26428130b7e06a96add, type: 3}
 --- !u!23 &885908178611876223 stripped
@@ -1165,6 +1188,10 @@ PrefabInstance:
     - target: {fileID: 861586592480542396, guid: a870627ba8662fd429988bae4e8d3a4c, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 1221605800504794985, guid: a870627ba8662fd429988bae4e8d3a4c, type: 3}
+      propertyPath: m_ScaleInLightmap
+      value: 0.7
       objectReference: {fileID: 0}
     - target: {fileID: 6229375863836347433, guid: a870627ba8662fd429988bae4e8d3a4c, type: 3}
       propertyPath: m_StaticEditorFlags
