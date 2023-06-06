@@ -13,7 +13,7 @@ namespace Roguelike.Enemies.Transitions
 
         private void Update()
         {
-            if (_agent.destination == transform.position)
+            if (_agent.remainingDistance <= _agent.stoppingDistance)
                 NeedTransit?.Invoke(targetState);
         }
     }

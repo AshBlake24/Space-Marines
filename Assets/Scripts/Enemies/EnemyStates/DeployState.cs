@@ -1,5 +1,6 @@
 ﻿using Roguelike.Infrastructure.Factory;
 using Roguelike.Infrastructure.Services;
+using Roguelike.Roguelike.Enemies.Animators;
 using Roguelike.StaticData.Enemies;
 using UnityEngine;
 using UnityEngine.AI;
@@ -17,6 +18,7 @@ namespace Roguelike.Enemies.EnemyStates
         private NavMeshAgent _agent;
         private Vector3 _randomPoint;
         private bool _isCorrectPoint;
+        private bool _isReadyToDeploy;
 
         private void Awake()
         {
@@ -29,16 +31,15 @@ namespace Roguelike.Enemies.EnemyStates
 
         private void Update()
         {
-            if (_agent.remainingDistance <= _agent.radius)
+            if (_agent.remainingDistance <= _agent.radius && _isReadyToDeploy)
             {
-                GetRandomDestination();
                 MineSpawn();
             }
         }
 
-        public override void Enter(Enemy curentEnemy)
+        public override void Enter(Enemy curentEnemy, EnemyAnimator enemyAnimator)
         {
-            base.Enter(curentEnemy);
+            base.Enter(curentEnemy, enemyAnimator);
 
             GetRandomDestination();
         }
@@ -54,7 +55,7 @@ namespace Roguelike.Enemies.EnemyStates
         {
             _isCorrectPoint = false;
 
-            NavMeshPath currentPath = new NavMeshPath();
+            NavMeshPath currentPath = new();
 
             while (!_isCorrectPoint)
             {
@@ -65,23 +66,35 @@ namespace Roguelike.Enemies.EnemyStates
 
                 if (Vector3.Distance(_randomPoint, transform.position) > (DeployRadius - 1))
                 {
-                    _agent.CalculatePath(_randomPoint, currentPath);
-                    if (currentPath.status == NavMeshPathStatus.PathComplete)
-                        _isCorrectPoint = true;
+                    if (_agent.CalculatePath(_randomPoint, currentPath))
+                        if (currentPath.status == NavMeshPathStatus.PathComplete)
+                            _isCorrectPoint = true;
                 }
             }
 
             _agent.SetDestination(_randomPoint);
             _agent.isStopped = false;
+            _isReadyToDeploy= true;
+
+            animator.Move(_agent.speed, _agent.isStopped);
         }
 
         private void MineSpawn()
+        {
+            animator.PlayAttack();
+
+            _isReadyToDeploy = false;
+        }
+
+        public void Spawn()
         {
             GameObject mine = _factory.CreateEnemy(transform, _mine, enemy.Target);
 
             mine.transform.SetParent(_parent.transform);
 
             mine.GetComponent<EnemyStateMachine>().enabled = true;
+
+            GetRandomDestination();
         }
     }
 }

@@ -4,6 +4,7 @@ namespace Roguelike.StaticData.Projectiles
     {
         StandartBullet,
         SniperBullet,
-        Rocket
+        Rocket,
+        EnemyBullet
     }
 }

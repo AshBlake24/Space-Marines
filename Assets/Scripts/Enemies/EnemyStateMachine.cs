@@ -1,15 +1,20 @@
 using UnityEngine;
 using Roguelike.Enemies.EnemyStates;
+using Roguelike.Roguelike.Enemies.Animators;
 
 namespace Roguelike.Enemies
 {
+    [RequireComponent(typeof(EnemyAnimator))]
+
     public class EnemyStateMachine : MonoBehaviour
     {
         [SerializeField] private EnemyState _startState;
+        [SerializeField] private EnemyState _dieState;
 
         private EnemyHealth _enemyHealth;
         private Enemy _enemy;
         private EnemyState _currentState;
+        private EnemyAnimator _animator;
 
         public Enemy Enemy => _enemy;
 
@@ -22,6 +27,8 @@ namespace Roguelike.Enemies
         {
             _enemy = enemy;
             _enemyHealth = _enemy.Health;
+
+            _animator = GetComponent<EnemyAnimator>();
 
             _enemyHealth.Died += OnEnemyDead;
         }
@@ -40,7 +47,7 @@ namespace Roguelike.Enemies
             }
 
             _currentState = state;
-            state.Enter(_enemy);
+            state.Enter(_enemy, _animator);
 
             _currentState.StateFinished += SwitchState;
         }
@@ -48,7 +55,8 @@ namespace Roguelike.Enemies
         private void OnEnemyDead(EnemyHealth enemy)
         {
             enemy.Died -= OnEnemyDead;
-            Destroy(gameObject);
+
+            _currentState.Exit(_dieState);
         }
     }
 }

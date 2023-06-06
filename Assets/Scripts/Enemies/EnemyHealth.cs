@@ -1,5 +1,7 @@
 using System;
 using Roguelike.Logic;
+using Roguelike.Player;
+using Roguelike.Roguelike.Enemies.Animators;
 using Roguelike.StaticData.Enemies;
 using UnityEngine;
 
@@ -7,12 +9,12 @@ namespace Roguelike.Enemies
 {
     public class EnemyHealth : MonoBehaviour, IHealth
     {
+        [SerializeField] private EnemyAnimator _enemyAnimator;
+
         private int _maxHealth;
-        
         private int _currentHealth;
 
         public event Action HealthChanged;
-
         public event Action<EnemyHealth> Died;
 
         public int CurrentHealth
@@ -49,7 +51,9 @@ namespace Roguelike.Enemies
                 throw new ArgumentOutOfRangeException(nameof(damage), "Damage must not be less than 0");
 
             _currentHealth = Mathf.Max(_currentHealth - damage, 0);
-            
+
+            _enemyAnimator.PlayHit();
+
             if (_currentHealth <= 0)
             {
                 Died?.Invoke(this);

@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using Roguelike.Enemies.Transitions;
+using Roguelike.Roguelike.Enemies.Animators;
 
 namespace Roguelike.Enemies.EnemyStates
 {
@@ -10,6 +11,7 @@ namespace Roguelike.Enemies.EnemyStates
         [SerializeField] private List<Transition> _transitions;
 
         protected Enemy enemy;
+        protected EnemyAnimator animator;
 
         public event UnityAction<EnemyState> StateFinished;
 
@@ -31,10 +33,11 @@ namespace Roguelike.Enemies.EnemyStates
             }
         }
 
-        public virtual void Enter(Enemy curentEnemy)
+        public virtual void Enter(Enemy curentEnemy, EnemyAnimator enemyAnimator)
         {
             enabled = true;
             enemy = curentEnemy;
+            animator = enemyAnimator;
         }
 
         public virtual void Exit(EnemyState nextState) 

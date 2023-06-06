@@ -62,6 +62,12 @@ namespace Roguelike.Enemies
 
             _encounterComplexity -= enemyPrefab.GetComponentInChildren<EnemyStateMachine>().Enemy.Danger;
 
+            EnemyHealth enemy = enemyPrefab.GetComponentInChildren<EnemyHealth>();
+
+            _enemiesInRoom.Add(enemy);
+
+            enemy.Died += OnEnemyDied;
+
             return enemyPrefab;
         }
 
@@ -107,12 +113,6 @@ namespace Roguelike.Enemies
             _readySpawnPoints.Add(spawnpoint);
 
             spawnpoint.EnemySpawned += OnEnemySpawned;
-
-            EnemyHealth enemy = enemyPrefab.GetComponentInChildren<EnemyHealth>();
-
-            _enemiesInRoom.Add(enemy);
-
-            enemy.Died += OnEnemyDied;
         }
 
         private SpawnPoint GetRandomSpawnPoint()
