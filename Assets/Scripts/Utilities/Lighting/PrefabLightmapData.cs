@@ -1,10 +1,12 @@
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace Roguelike.Utilities
+namespace Roguelike.Utilities.Lighting
 {
     [ExecuteAlways]
     public class PrefabLightmapData : MonoBehaviour
@@ -15,14 +17,12 @@ namespace Roguelike.Utilities
         [SerializeField] private Texture2D[] _shadowMasks;
         [SerializeField] private LightInfo[] _lightInfo;
 
-        private void Awake() => 
+        private IEnumerator Start()
+        {
+            yield return null;
+            
             Init();
-
-        private void OnEnable() => 
-            SceneManager.sceneLoaded += OnSceneLoaded;
-
-        private void OnDisable() => 
-            SceneManager.sceneLoaded -= OnSceneLoaded;
+        }
 
         private void Init()
         {
@@ -105,9 +105,6 @@ namespace Roguelike.Utilities
                 lightsInfo[i].Light.bakingOutput = bakingOutput;
             }
         }
-
-        private void OnSceneLoaded(Scene scene, LoadSceneMode mode) => 
-            Init();
 
 #if UNITY_EDITOR
         [MenuItem("Assets/Bake Prefab Lightmaps")]

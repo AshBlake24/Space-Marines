@@ -82,9 +82,11 @@ namespace Roguelike.Player
             raycastOrigin.y = _firePointHeight;
             enemyPosition.y = _firePointHeight;
             Vector3 direction = enemyPosition - raycastOrigin;
-            Physics.Raycast(raycastOrigin, direction, out RaycastHit hit, _radius, _raycastLayerMask);
 
-            return (1 << hit.transform.gameObject.layer) == _aimLayerMask.value;
+            if (Physics.Raycast(raycastOrigin, direction, out RaycastHit hit, _radius, _raycastLayerMask))
+                return (1 << hit.transform.gameObject.layer) == _aimLayerMask.value;
+
+            return false;
         }
     }
 }
