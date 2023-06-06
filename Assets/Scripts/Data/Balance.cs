@@ -9,7 +9,7 @@ namespace Roguelike.Data
 
         public Balance()
         {
-            Coins = 1000;
+            Coins = 5000;
         }
 
         public event Action Changed;

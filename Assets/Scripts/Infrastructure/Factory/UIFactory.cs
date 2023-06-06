@@ -1,3 +1,4 @@
+using System;
 using Roguelike.Infrastructure.AssetManagement;
 using Roguelike.Infrastructure.Services.Loading;
 using Roguelike.Infrastructure.Services.PersistentData;
@@ -83,20 +84,25 @@ namespace Roguelike.Infrastructure.Factory
             return weaponStatsViewer;
         }
 
+        public EnhancementShopWindow CreateEnhancementShop(IWindowService windowService, PlayerEnhancements playerEnhancements)
+        {
+            BaseWindow window = CreateWindow(windowService, WindowId.EnhancementShop);
+
+            if (window is EnhancementShopWindow shop)
+            {
+                shop.Construct(_staticData, _progressService, _randomService, playerEnhancements);
+                return shop;
+            }
+
+            throw new ArgumentNullException(nameof(window));
+        }
+
         public void CreateResurrectionWindow(IWindowService windowService, PlayerDeath playerDeath)
         {
             BaseWindow window = CreateWindow(windowService, WindowId.Resurrection);
 
             if (window is ResurrectionWindow resurrectionWindow)
                 resurrectionWindow.Construct(playerDeath);
-        }
-
-        public void CreateEnhancementShop(IWindowService windowService, PlayerEnhancements playerEnhancements)
-        {
-            BaseWindow window = CreateWindow(windowService, WindowId.EnhancementShop);
-            
-            if (window is EnhancementShopWindow shop)
-                shop.Construct(_staticData, _progressService, _randomService, playerEnhancements);
         }
 
         public void CreateUIRoot() =>

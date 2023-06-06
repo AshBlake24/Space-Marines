@@ -3,6 +3,7 @@ using Roguelike.Infrastructure.Factory;
 using Roguelike.Player;
 using Roguelike.StaticData.Weapons;
 using Roguelike.UI.Windows;
+using Roguelike.UI.Windows.Enhancements;
 using UnityEngine;
 
 namespace Roguelike.Infrastructure.Services.Windows
@@ -19,11 +20,11 @@ namespace Roguelike.Infrastructure.Services.Windows
         public GameObject OpenWeaponStatsViewer(WeaponId weaponId) => 
             _uiFactory.CreateWeaponStatsViewer(this, weaponId);
 
+        public EnhancementShopWindow CreateEnhancementShop(PlayerEnhancements playerEnhancements) => 
+            _uiFactory.CreateEnhancementShop(this, playerEnhancements);
+
         public void OpenResurrectionWindow(PlayerDeath playerDeath) => 
             _uiFactory.CreateResurrectionWindow(this, playerDeath);
-
-        public void CreateEnhancementShop(PlayerEnhancements playerEnhancements) => 
-            _uiFactory.CreateEnhancementShop(this, playerEnhancements);
 
         public BaseWindow Open(WindowId windowId)
         {

@@ -14,7 +14,7 @@ namespace Roguelike.UI.Windows.Enhancements
     public class EnhancementShopWindow : BaseWindow
     {
         [SerializeField] private Transform _content;
-        [SerializeField] private EnhancementViewer _enhancementViewer;
+        [SerializeField] private EnhancementViewer _enhancementViewerPrefab;
         [SerializeField] private TextMeshProUGUI _playerBalance;
         [SerializeField, Range(1, 3)] private int _enhancementsCount;
 
@@ -22,23 +22,18 @@ namespace Roguelike.UI.Windows.Enhancements
         private IPersistentDataService _progressService;
         private IRandomService _random;
         private PlayerEnhancements _playerEnhancements;
-        private HashSet<EnhancementViewer> _viewers;
 
-        public void Construct(IStaticDataService staticDataService, IPersistentDataService persistentData, IRandomService randomService,
-            PlayerEnhancements playerEnhancements)
+        public void Construct(IStaticDataService staticDataService, IPersistentDataService persistentData, 
+            IRandomService randomService, PlayerEnhancements playerEnhancements)
         {
             _staticDataService = staticDataService;
             _progressService = persistentData;
             _random = randomService;
             _playerEnhancements = playerEnhancements;
-            _viewers = new HashSet<EnhancementViewer>(_enhancementsCount);
         }
 
-        protected override void Initialize()
-        {
-            InitEnhancementViewers();
+        protected override void Initialize() => 
             RefreshBalance();
-        }
 
         protected override void SubscribeUpdates() => 
             ProgressService.PlayerProgress.Balance.Changed += RefreshBalance;
@@ -49,49 +44,49 @@ namespace Roguelike.UI.Windows.Enhancements
             ProgressService.PlayerProgress.Balance.Changed -= RefreshBalance;
         }
 
-        private void InitEnhancementViewers()
+        public void InitEnhancementViewers(HashSet<EnhancementStaticData> enhancements)
         {
-            EnhancementStaticData[] enhancementsData = _staticDataService
-                .GetAllDataByType<EnhancementId, EnhancementStaticData>().ToArray();
-
-            if (enhancementsData.Length >= _enhancementsCount)
+            foreach (EnhancementStaticData enhancementData in enhancements)
             {
-                IEnumerable<EnhancementStaticData> randomEnhancements = SelectRandomEnhancements(enhancementsData);
-
-                foreach (EnhancementStaticData enhancementData in randomEnhancements)
-                {
-                    EnhancementViewer enhancementViewer = Instantiate(_enhancementViewer, _content);
-                    
-                    enhancementViewer.Construct(_progressService, _playerEnhancements, enhancementData);
-                    
-                    _viewers.Add(enhancementViewer);
-                }
-            }
-            else
-            {
-                throw new ArgumentOutOfRangeException(nameof(_enhancementsCount), "Not enough enhancements");
+                EnhancementViewer enhancementViewer = Instantiate(_enhancementViewerPrefab, _content);
+                enhancementViewer.Construct(_progressService, _playerEnhancements, enhancementData);
             }
         }
 
-        private IEnumerable<EnhancementStaticData> SelectRandomEnhancements(IList<EnhancementStaticData> enhancementData)
+        public HashSet<EnhancementStaticData> InitNewEnhancementViewers()
         {
-            EnhancementStaticData[] randomEnhancements = new EnhancementStaticData[_enhancementsCount];
+            HashSet<EnhancementStaticData> randomEnhancements = SelectRandomEnhancements();
+
+            InitEnhancementViewers(randomEnhancements);
+
+            return randomEnhancements;
+        }
+
+        private HashSet<EnhancementStaticData> SelectRandomEnhancements()
+        {
+            IList<EnhancementStaticData> enhancementsData = _staticDataService
+                .GetAllDataByType<EnhancementId, EnhancementStaticData>().ToList();
+
+            if (enhancementsData.Count < _enhancementsCount)
+                throw new ArgumentOutOfRangeException(nameof(_enhancementsCount), "Not enough enhancements");
+            
+            HashSet<EnhancementStaticData> randomEnhancements = new(_enhancementsCount);
             
             for (int i = 0; i < _enhancementsCount;)
             {
-                int randomEnhancementIndex = _random.Next(0, enhancementData.Count);
+                int randomEnhancementIndex = _random.Next(0, enhancementsData.Count);
 
-                if (enhancementData[randomEnhancementIndex] != null)
+                if (enhancementsData[randomEnhancementIndex] != null)
                 {
-                    randomEnhancements[i] = enhancementData[randomEnhancementIndex];
-                    enhancementData[randomEnhancementIndex] = null;
+                    randomEnhancements.Add(enhancementsData[randomEnhancementIndex]);
+                    enhancementsData.RemoveAt(randomEnhancementIndex);
                     i++;
                 }
             }
 
             return randomEnhancements;
         }
-        
+
         private void RefreshBalance() => 
             _playerBalance.text = ProgressService.PlayerProgress.Balance.Coins.ToString();
     }

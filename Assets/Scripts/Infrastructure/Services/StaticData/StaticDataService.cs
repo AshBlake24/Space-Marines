@@ -37,7 +37,7 @@ namespace Roguelike.Infrastructure.Services.StaticData
             where TEnum : Enum 
             where TData : IStaticData =>
             _data.ContainsKey(typeof(TEnum)) 
-                ? _data[typeof(TEnum)].Select(pair => (TData) pair.Value).ToList() 
+                ? _data[typeof(TEnum)].Select(pair => (TData) pair.Value)
                 : null;
 
         private void LoadData()
