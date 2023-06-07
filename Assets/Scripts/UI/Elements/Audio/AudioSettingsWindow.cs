@@ -1,21 +1,17 @@
-using System;
 using Roguelike.Audio;
 using UnityEngine;
 
 namespace Roguelike.UI.Elements.Audio
 {
-    public class AudioSettings : MonoBehaviour
+    public class AudioSettingsWindow : MonoBehaviour
     {
         [SerializeField] private VolumeSlider _musicVolumeSlider;
         [SerializeField] private VolumeSlider _sfxVolumeSlider;
         
-        private IAudioService _audioService;
-
         public void Construct(IAudioService audioService)
         {
-            _audioService = audioService;
-            _musicVolumeSlider.Init(_audioService);
-            _sfxVolumeSlider.Init(_audioService);
+            _musicVolumeSlider.Init(audioService);
+            _sfxVolumeSlider.Init(audioService);
         }
     }
 }

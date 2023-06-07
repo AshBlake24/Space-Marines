@@ -6,6 +6,7 @@ namespace Roguelike.Audio
     {
         // void MuteChannel(AudioChannel channel);
         // void UnmuteChannel(AudioChannel channel);
-        // void SetChannelVolume(AudioChannel channel, float value);
+        void SetChannelVolume(AudioChannel channel, float value);
+        void LoadVolumeSettings();
     }
 }

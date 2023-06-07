@@ -12,11 +12,11 @@ using Roguelike.StaticData.Weapons;
 using Roguelike.StaticData.Windows;
 using Roguelike.UI.Buttons;
 using Roguelike.UI.Elements;
+using Roguelike.UI.Elements.Audio;
 using Roguelike.UI.Windows;
 using Roguelike.UI.Windows.Enhancements;
 using Roguelike.UI.Windows.Regions;
 using UnityEngine;
-using AudioSettings = Roguelike.UI.Elements.Audio.AudioSettings;
 using Object = UnityEngine.Object;
 
 namespace Roguelike.Infrastructure.Factory
@@ -122,7 +122,7 @@ namespace Roguelike.Infrastructure.Factory
 
         private void InitOptionsMenu(OptionsMenu optionsMenu)
         {
-            optionsMenu.GetComponentInChildren<AudioSettings>()
+            optionsMenu.GetComponentInChildren<AudioSettingsWindow>()
                 .Construct(_audioService);
         }
     }

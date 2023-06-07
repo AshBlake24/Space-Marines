@@ -57,10 +57,10 @@ namespace Roguelike.Infrastructure.States
             _services.RegisterSingle<IPersistentDataService>(new PersistentDataService(
                 _services.Single<IStaticDataService>()));
             
-            _services.RegisterSingle<IAudioService>(new AudioService(
-                _services.Single<IPersistentDataService>()));
-
             _services.RegisterSingle<ISaveLoadService>(new SaveLoadService(
+                _services.Single<IPersistentDataService>()));
+            
+            _services.RegisterSingle<IAudioService>(new AudioService(
                 _services.Single<IPersistentDataService>()));
 
             _services.RegisterSingle<IAssetProvider>(new AssetProvider(

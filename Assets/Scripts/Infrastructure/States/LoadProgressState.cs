@@ -1,5 +1,4 @@
-using System.Collections.Generic;
-using System.Linq;
+using Roguelike.Audio;
 using Roguelike.Data;
 using Roguelike.Infrastructure.Factory;
 using Roguelike.Infrastructure.Services.PersistentData;
@@ -18,15 +17,18 @@ namespace Roguelike.Infrastructure.States
         private readonly ISaveLoadService _saveLoadService;
         private readonly IWeaponFactory _weaponFactory;
         private readonly IStaticDataService _staticDataService;
+        private readonly IAudioService _audioService;
 
         public LoadProgressState(GameStateMachine stateMachine, IPersistentDataService progressService,
-            ISaveLoadService saveLoadService, IWeaponFactory weaponFactory, IStaticDataService staticDataService)
+            ISaveLoadService saveLoadService, IWeaponFactory weaponFactory, IStaticDataService staticDataService,
+            IAudioService audioService)
         {
             _stateMachine = stateMachine;
             _progressService = progressService;
             _saveLoadService = saveLoadService;
             _weaponFactory = weaponFactory;
             _staticDataService = staticDataService;
+            _audioService = audioService;
         }
 
         public void Enter()
@@ -40,10 +42,14 @@ namespace Roguelike.Infrastructure.States
         {
         }
 
-        private void LoadProgress() =>
+        private void LoadProgress()
+        {
             _progressService.PlayerProgress =
                 _saveLoadService.LoadProgress()
                 ?? CreateNewProgress();
+            
+            _audioService.LoadVolumeSettings();
+        }
 
         private PlayerProgress CreateNewProgress()
         {

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Roguelike.Audio;
 using Roguelike.Infrastructure.Factory;
 using Roguelike.Infrastructure.Services;
 using Roguelike.Infrastructure.Services.PersistentData;
@@ -28,7 +29,7 @@ namespace Roguelike.Infrastructure.States
 
                 [typeof(LoadProgressState)] = new LoadProgressState(this, services.Single<IPersistentDataService>(),
                     services.Single<ISaveLoadService>(), services.Single<IWeaponFactory>(),
-                    services.Single<IStaticDataService>()),
+                    services.Single<IStaticDataService>(), services.Single<IAudioService>()),
 
                 [typeof(GameLoopState)] = new GameLoopState(this, services.Single<ISaveLoadService>(), 
                     services.Single<ITimeService>()),
