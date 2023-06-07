@@ -26,10 +26,14 @@ namespace Roguelike.Loot.Chest
 
         public void Interact(GameObject interactor)
         {
-            Interacted?.Invoke();
-            IsActive = false;
-            GameObject weapon = _lootFactory.CreateRandomWeapon(transform.position);
-            weapon.transform.rotation = transform.rotation;
+            if (IsActive)
+            {
+                Interacted?.Invoke();
+                IsActive = false;
+                Outline.enabled = false;
+                GameObject weapon = _lootFactory.CreateRandomWeapon(transform.position);
+                weapon.transform.rotation = transform.rotation;
+            }
         }
     }
 }

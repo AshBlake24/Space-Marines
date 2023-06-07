@@ -26,6 +26,7 @@ using Roguelike.Player.Observers;
 using Roguelike.StaticData.Loot.Rarity;
 using Roguelike.StaticData.Skills;
 using Roguelike.UI.Buttons;
+using Roguelike.UI.Elements.Observers;
 using Roguelike.UI.Windows;
 using Roguelike.Weapons.Logic;
 
@@ -140,6 +141,9 @@ namespace Roguelike.Infrastructure.Factory
 
             hud.GetComponentInChildren<ActiveSkillObserver>()
                 .Construct(player.GetComponent<PlayerSkill>(), skillData.Icon);
+            
+            hud.GetComponentInChildren<CoinsObserver>()
+                .Construct(_persistentData.PlayerProgress.Balance);
 
             MobileActionButton mobileActionButton = hud.GetComponentInChildren<MobileActionButton>();
 

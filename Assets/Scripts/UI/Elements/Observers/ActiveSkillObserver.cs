@@ -2,7 +2,7 @@ using Roguelike.Player;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Roguelike.UI.Elements
+namespace Roguelike.UI.Elements.Observers
 {
     public class ActiveSkillObserver : MonoBehaviour
     {

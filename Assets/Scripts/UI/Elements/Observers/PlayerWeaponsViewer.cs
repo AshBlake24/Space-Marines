@@ -5,7 +5,7 @@ using Roguelike.Weapons;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Roguelike.UI.Elements
+namespace Roguelike.UI.Elements.Observers
 {
     public class PlayerWeaponsViewer : MonoBehaviour
     {
