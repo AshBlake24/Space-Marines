@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Roguelike.StaticData.Levels;
@@ -8,6 +10,9 @@ namespace Roguelike.Utilities
     {
         public static string ToLabel(this StageId stageId) => 
             ParseCurrentStage(stageId);
+        
+        public static IEnumerable<T> GetValues<T>() => 
+            Enum.GetValues(typeof(T)).Cast<T>();
 
         private static string ParseCurrentStage(StageId stageId)
         {

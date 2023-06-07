@@ -1,7 +1,9 @@
 using Roguelike.Infrastructure.AssetManagement;
 using Roguelike.Infrastructure.Services.PersistentData;
+using Roguelike.Utilities;
 using UnityEngine;
 using UnityEngine.Audio;
+using AudioSettings = Roguelike.Data.AudioSettings;
 
 namespace Roguelike.Audio
 {
@@ -9,41 +11,31 @@ namespace Roguelike.Audio
     {
         public const float MaxLinearValue = 1f;
         public const float MinLinearValue = 0.0001f;
-        private const float VolumeMultiplier = 30f;
+        private const float VolumeMultiplicator = 30f;
 
-        private readonly IPersistentDataService _persistentData;
         private readonly AudioMixer _mixer;
-        
+        private readonly AudioSettings _audioSettings;
+
         public AudioService(IPersistentDataService persistentData)
         {
-            _persistentData = persistentData;
+            _audioSettings = persistentData.PlayerProgress.Settings.AudioSettings;
             _mixer = Resources.Load<AudioMixer>(AssetPath.AudioMixerPath);
+            LoadVolumeSettings();
         }
 
-        public void UnmuteChannel(AudioChannel channel) =>
-            _mixer.SetFloat(channel.ToString(), 
-                ConvertToVolume(_persistentData.PlayerProgress.Settings.AudioSettings.ChannelsVolume[channel]));
-
-        public void MuteChannel(AudioChannel channel)
+        private void LoadVolumeSettings()
         {
-            SaveChannelVolume(channel);
-            _mixer.SetFloat(channel.ToString(), ConvertToVolume(MinLinearValue));
+            foreach (AudioChannel audioChannel in EnumExtensions.GetValues<AudioChannel>())
+                _mixer.SetFloat(audioChannel.ToString(), ConvertToVolume(_audioSettings.ChannelsVolume[audioChannel]));
         }
 
         public void SetChannelVolume(AudioChannel channel, float value)
         {
             _mixer.SetFloat(channel.ToString(), ConvertToVolume(value));
-            SaveChannelVolume(channel);
+            _audioSettings.ChannelsVolume[channel] = value;
         }
 
-        private void SaveChannelVolume(AudioChannel channel)
-        {
-            _mixer.GetFloat(channel.ToString(), out float currentValue);
-            float convertedValue = Mathf.Pow(-currentValue, 10);
-            _persistentData.PlayerProgress.Settings.AudioSettings.ChannelsVolume[channel] = convertedValue;
-        }
-
-        private float ConvertToVolume(float linearValue) => 
-            Mathf.Log10(linearValue) * VolumeMultiplier;
+        private static float ConvertToVolume(float value) => 
+            Mathf.Log10(value) * VolumeMultiplicator;
     }
 }
