@@ -22,12 +22,15 @@ namespace Roguelike.Infrastructure.Services.Input
             _playerInput.Enable();
             _playerInput.Player.UseSkill.performed += (ctx) => OnSkillUsed();
             _playerInput.Player.Interaction.performed += (ctx) => OnInteracted();
+            _playerInput.Player.Pause.performed += (ctx) => OnPausePressed();
             _playerInput.Player.SwitchWeapon.performed += (ctx) =>
             {
                 float value = ctx.ReadValue<float>();
                 ChangeWeapon(value < 0);
             };
         }
+
+        private void OnPausePressed() => Pause();
 
         private void OnSkillUsed() => UseSkill();
 

@@ -7,6 +7,7 @@ using Roguelike.Infrastructure.Services.SaveLoad;
 using Roguelike.Infrastructure.Services.StaticData;
 using Roguelike.Infrastructure.Services.Windows;
 using Roguelike.Logic;
+using Roguelike.Logic.Pause;
 
 namespace Roguelike.Infrastructure.States
 {
@@ -29,7 +30,9 @@ namespace Roguelike.Infrastructure.States
                     services.Single<ISaveLoadService>(), services.Single<IWeaponFactory>(),
                     services.Single<IStaticDataService>()),
 
-                [typeof(GameLoopState)] = new GameLoopState(this, services.Single<ISaveLoadService>()),
+                [typeof(GameLoopState)] = new GameLoopState(this, services.Single<ISaveLoadService>(), 
+                    services.Single<ITimeService>()),
+                
                 [typeof(ExitGameState)] = new ExitGameState(this)
             };
         }

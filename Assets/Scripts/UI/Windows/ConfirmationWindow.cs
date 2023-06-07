@@ -21,8 +21,11 @@ namespace Roguelike.UI.Windows
             SceneLoadingService = sceneLoadingService;
         }
         
-        protected override void Initialize() => 
+        protected override void Initialize()
+        {
+            TimeService.PauseGame();
             _confirmButton.onClick.AddListener(OnConfirm);
+        }
 
         protected override void Cleanup()
         {

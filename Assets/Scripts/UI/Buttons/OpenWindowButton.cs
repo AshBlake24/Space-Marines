@@ -2,7 +2,7 @@ using Roguelike.Infrastructure.Services.Windows;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Roguelike.UI.Elements
+namespace Roguelike.UI.Buttons
 {
     public class OpenWindowButton : MonoBehaviour
     {

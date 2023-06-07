@@ -1,5 +1,6 @@
 using System;
 using Roguelike.Infrastructure.Factory;
+using Roguelike.Logic.Pause;
 using Roguelike.Player;
 using Roguelike.StaticData.Weapons;
 using Roguelike.UI.Windows;

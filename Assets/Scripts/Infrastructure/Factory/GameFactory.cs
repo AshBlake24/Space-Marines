@@ -20,7 +20,9 @@ using Roguelike.Level;
 using Roguelike.StaticData.Levels;
 using Object = UnityEngine.Object;
 using Roguelike.Logic.CharacterSelection;
+using Roguelike.Logic.Pause;
 using Roguelike.Player.Enhancements;
+using Roguelike.Player.Observers;
 using Roguelike.StaticData.Loot.Rarity;
 using Roguelike.StaticData.Skills;
 using Roguelike.UI.Buttons;
@@ -44,6 +46,7 @@ namespace Roguelike.Infrastructure.Factory
         private readonly ILootFactory _lootFactory;
         private readonly IEnhancementFactory _enhancementFactory;
         private readonly IInputService _inputService;
+        private readonly ITimeService _timeService;
 
         public GameFactory(IAssetProvider assetProvider,
             IPersistentDataService persistentData,
@@ -57,7 +60,8 @@ namespace Roguelike.Infrastructure.Factory
             ISceneLoadingService sceneLoadingService,
             ILootFactory lootFactory,
             IEnhancementFactory enhancementFactory,
-            IInputService inputService)
+            IInputService inputService,
+            ITimeService timeService)
         {
             _assetProvider = assetProvider;
             _persistentData = persistentData;
@@ -71,6 +75,7 @@ namespace Roguelike.Infrastructure.Factory
             _lootFactory = lootFactory;
             _enhancementFactory = enhancementFactory;
             _inputService = inputService;
+            _timeService = timeService;
             _enemyFactory = enemyFactory;
         }
 
@@ -90,6 +95,9 @@ namespace Roguelike.Infrastructure.Factory
             
             player.GetComponent<PlayerInteraction>()
                 .Construct(_windowService, _inputService);
+            
+            player.AddComponent<PlayerPauseObserver>()
+                .Construct(_windowService, _inputService, _timeService);
 
             _skillFactory.CreatePlayerSkill(player);
             

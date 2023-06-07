@@ -4,7 +4,7 @@ using Roguelike.Infrastructure.Factory;
 using Roguelike.Infrastructure.Services.SaveLoad;
 using Roguelike.Infrastructure.Services.StaticData;
 using Roguelike.Infrastructure.Services.Windows;
-using Roguelike.UI.Elements;
+using Roguelike.UI.Buttons;
 using Roguelike.UI.Windows;
 using UnityEngine;
 using UnityEngine.UI;

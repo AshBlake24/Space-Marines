@@ -20,12 +20,6 @@ namespace Roguelike.UI.Windows
             InitStageViewer();
         }
 
-        protected override void Cleanup()
-        {
-            base.Cleanup();
-            TimeService.ResumeGame();
-        }
-
         private void InitStageViewer()
         {
             LevelId currentLevel = ProgressService.PlayerProgress.WorldData.CurrentLevel;

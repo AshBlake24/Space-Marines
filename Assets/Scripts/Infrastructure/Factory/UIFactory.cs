@@ -9,6 +9,7 @@ using Roguelike.Logic.Pause;
 using Roguelike.Player;
 using Roguelike.StaticData.Weapons;
 using Roguelike.StaticData.Windows;
+using Roguelike.UI.Buttons;
 using Roguelike.UI.Elements;
 using Roguelike.UI.Windows;
 using Roguelike.UI.Windows.Enhancements;

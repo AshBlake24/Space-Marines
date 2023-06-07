@@ -30,6 +30,8 @@ namespace Roguelike.UI.Windows
         }
 
         private void OnDestroy() => Cleanup();
+        
+        public void Close() => OnClose();
 
         private void OnAwake()
         {
@@ -39,11 +41,12 @@ namespace Roguelike.UI.Windows
 
         private void OnClose()
         {
+            TimeService.ResumeGame();
             Closed?.Invoke(this);
             
             foreach (Button closeButton in _closeButtons)
                 closeButton.onClick.RemoveListener(OnClose);
-
+            
             Destroy(gameObject);
         }
 
