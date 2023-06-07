@@ -1,4 +1,3 @@
-using System;
 using Roguelike.Audio;
 using UnityEngine;
 using UnityEngine.UI;
@@ -18,8 +17,11 @@ namespace Roguelike.UI.Elements.Audio
         private void OnDisable() => 
             _slider.onValueChanged.RemoveListener(OnValueChanged);
         
-        public void Init(IAudioService audioService) => 
+        public void Init(IAudioService audioService)
+        {
             _audioService = audioService;
+            _slider.value = _audioService.GetChannelVolumeLinear(_audioChannel);
+        }
 
         private void OnValueChanged(float value) => 
             _audioService.SetChannelVolume(_audioChannel, value);

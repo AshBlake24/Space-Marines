@@ -25,9 +25,12 @@ namespace Roguelike.Audio
             _mixer = Resources.Load<AudioMixer>(AssetPath.AudioMixerPath);
         }
 
+        public float GetChannelVolumeLinear(AudioChannel channel) => 
+            _audioSettings[channel].Value;
+
         public void SetChannelVolume(AudioChannel channel, float value)
         {
-            _mixer.SetFloat(channel.ToString(), ConvertToVolume(value));
+            _mixer.SetFloat(channel.ToString(), ConvertToLogVolume(value));
             _audioSettings[channel].Value = value;
         }
 
@@ -37,12 +40,10 @@ namespace Roguelike.Audio
                 .ToDictionary(settings => settings.Channel);
 
             foreach (AudioChannel audioChannel in _audioSettings.Keys)
-                _mixer.SetFloat(audioChannel.ToString(), ConvertToVolume(_audioSettings[audioChannel].Value));
+                _mixer.SetFloat(audioChannel.ToString(), ConvertToLogVolume(_audioSettings[audioChannel].Value));
         }
 
-        private static float ConvertToVolume(float value) => 
+        private static float ConvertToLogVolume(float value) => 
             Mathf.Log10(value) * VolumeMultiplicator;
-
-        
     }
 }
