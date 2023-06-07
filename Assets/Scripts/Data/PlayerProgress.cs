@@ -12,6 +12,7 @@ namespace Roguelike.Data
         public Balance Balance;
         public WorldData WorldData;
         public PlayerWeapons PlayerWeapons;
+        public Settings Settings;
         public CharacterId Character;
 
         public PlayerProgress(LevelId startLevel, StageId startStage, CharacterId startCharacter, IWeapon startWeapon,
@@ -21,6 +22,7 @@ namespace Roguelike.Data
             Balance = new Balance();
             WorldData = new WorldData(startLevel, startStage);
             PlayerWeapons = new PlayerWeapons(startWeapon, maxWeaponsCount);
+            Settings = new Settings();
             Character = startCharacter;
         }
     }

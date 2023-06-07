@@ -1,3 +1,4 @@
+using Roguelike.Audio;
 using Roguelike.Infrastructure.AssetManagement;
 using Roguelike.Infrastructure.Factory;
 using Roguelike.Infrastructure.Services;
@@ -55,6 +56,9 @@ namespace Roguelike.Infrastructure.States
             _services.RegisterSingle<ITimeService>(new TimeService());
             _services.RegisterSingle<IPersistentDataService>(new PersistentDataService(
                 _services.Single<IStaticDataService>()));
+            
+            _services.RegisterSingle<IAudioService>(new AudioService(
+                _services.Single<IPersistentDataService>()));
 
             _services.RegisterSingle<ISaveLoadService>(new SaveLoadService(
                 _services.Single<IPersistentDataService>()));
@@ -94,7 +98,8 @@ namespace Roguelike.Infrastructure.States
                 _services.Single<IPersistentDataService>(),
                 _services.Single<ISceneLoadingService>(),
                 _services.Single<IRandomService>(),
-                _services.Single<ITimeService>()));
+                _services.Single<ITimeService>(),
+                _services.Single<IAudioService>()));
 
             _services.RegisterSingle<IWindowService>(new WindowService(
                 _services.Single<IUIFactory>()));

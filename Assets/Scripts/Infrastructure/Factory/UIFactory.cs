@@ -1,4 +1,5 @@
 using System;
+using Roguelike.Audio;
 using Roguelike.Infrastructure.AssetManagement;
 using Roguelike.Infrastructure.Services.Loading;
 using Roguelike.Infrastructure.Services.PersistentData;
@@ -15,6 +16,7 @@ using Roguelike.UI.Windows;
 using Roguelike.UI.Windows.Enhancements;
 using Roguelike.UI.Windows.Regions;
 using UnityEngine;
+using AudioSettings = Roguelike.UI.Elements.Audio.AudioSettings;
 using Object = UnityEngine.Object;
 
 namespace Roguelike.Infrastructure.Factory
@@ -27,12 +29,13 @@ namespace Roguelike.Infrastructure.Factory
         private readonly ISceneLoadingService _sceneLoadingService;
         private readonly IRandomService _randomService;
         private readonly ITimeService _timeService;
+        private readonly IAudioService _audioService;
 
         private Transform _uiRoot;
 
         public UIFactory(IAssetProvider assetProvider, IStaticDataService staticData,
             IPersistentDataService progressService, ISceneLoadingService sceneLoadingService,
-            IRandomService randomService, ITimeService timeService)
+            IRandomService randomService, ITimeService timeService, IAudioService audioService)
         {
             _assetProvider = assetProvider;
             _staticData = staticData;
@@ -40,6 +43,7 @@ namespace Roguelike.Infrastructure.Factory
             _sceneLoadingService = sceneLoadingService;
             _randomService = randomService;
             _timeService = timeService;
+            _audioService = audioService;
         }
 
         public BaseWindow CreateWindow(IWindowService windowService, WindowId windowId)
@@ -67,6 +71,10 @@ namespace Roguelike.Infrastructure.Factory
                     break;
                 case RegionSelectionWindow regionSelectionWindow:
                     regionSelectionWindow.Construct(_staticData);
+
+                    break;
+                case OptionsMenu optionsMenu:
+                    InitOptionsMenu(optionsMenu);
 
                     break;
             }
@@ -111,5 +119,11 @@ namespace Roguelike.Infrastructure.Factory
 
         public void CreateUIRoot() =>
             _uiRoot = _assetProvider.Instantiate(AssetPath.UIRootPath).transform;
+
+        private void InitOptionsMenu(OptionsMenu optionsMenu)
+        {
+            optionsMenu.GetComponentInChildren<AudioSettings>()
+                .Construct(_audioService);
+        }
     }
 }
