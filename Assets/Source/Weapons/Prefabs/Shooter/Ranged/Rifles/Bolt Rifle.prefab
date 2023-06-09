@@ -29,14 +29,13 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 528303497587211848}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &62575706910316963
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 379a5065230700242aba245e83aff48a, type: 3}
@@ -88,15 +87,6 @@ PrefabInstance:
       value: Bolt Rifle
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 379a5065230700242aba245e83aff48a, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 89122080568834921}
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 379a5065230700242aba245e83aff48a, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: -7719039922756672948}
   m_SourcePrefab: {fileID: 100100000, guid: 379a5065230700242aba245e83aff48a, type: 3}
 --- !u!4 &528303497587211848 stripped
 Transform:
@@ -123,3 +113,19 @@ MonoBehaviour:
   _positionOffset: {x: 0.113, y: 0.06, z: -0.068}
   _rotationOffset: {x: 0, y: 90, z: -90}
   _firePoint: {fileID: 89122080568834921}
+--- !u!114 &1170931694767722396
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 873480177629816050}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52e8dc01f90448f097288720107056d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _audioClip: {fileID: 8300000, guid: c9078c3724d980347b7b29c5e846c2bb, type: 3}
+  _outputChannel: {fileID: 6202206878185114221, guid: 3d1c4eef8a71bd741ad58d6de9521292, type: 2}
+  _pitchMultiplier: 1.1
+  _rangedWeapon: {fileID: -7719039922756672948}

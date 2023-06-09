@@ -29,14 +29,13 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7229743768543946579}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &7196625599297388728
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 20015c7056fe9a14ebc7055fb3c0ec49, type: 3}
@@ -88,15 +87,6 @@ PrefabInstance:
       value: Sniper Rifle
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 20015c7056fe9a14ebc7055fb3c0ec49, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 3559987802710118552}
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 20015c7056fe9a14ebc7055fb3c0ec49, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 6094587569422246626}
   m_SourcePrefab: {fileID: 100100000, guid: 20015c7056fe9a14ebc7055fb3c0ec49, type: 3}
 --- !u!4 &7229743768543946579 stripped
 Transform:
@@ -108,6 +98,22 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 20015c7056fe9a14ebc7055fb3c0ec49, type: 3}
   m_PrefabInstance: {fileID: 7196625599297388728}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &4078405432247768222
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8007089025327807977}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52e8dc01f90448f097288720107056d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _audioClip: {fileID: 8300000, guid: 1ac313793b8d7ef47b219daa39bca823, type: 3}
+  _outputChannel: {fileID: 6202206878185114221, guid: 3d1c4eef8a71bd741ad58d6de9521292, type: 2}
+  _pitchMultiplier: 1.1
+  _rangedWeapon: {fileID: 6094587569422246626}
 --- !u!114 &6094587569422246626
 MonoBehaviour:
   m_ObjectHideFlags: 0
