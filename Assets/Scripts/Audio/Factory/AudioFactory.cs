@@ -1,4 +1,5 @@
 using System;
+using Roguelike.Audio.Logic;
 using Roguelike.Infrastructure.AssetManagement;
 using UnityEngine;
 
@@ -8,17 +9,28 @@ namespace Roguelike.Audio.Factory
     {
         private readonly IAssetProvider _assetProvider;
 
+        private Transform _audioRoot;
+
         public AudioFactory(IAssetProvider assetProvider) => 
             _assetProvider = assetProvider;
 
-        public AudioSource CreateAudioSource()
+        public Sound CreateAudioSource()
         {
-            GameObject gameObject = _assetProvider.Instantiate(AssetPath.AudioSourcePath);
+            GameObject gameObject = _assetProvider.Instantiate(AssetPath.SoundPrefabPath, _audioRoot);
 
-            if (gameObject.TryGetComponent(out AudioSource audioSource))
-                return audioSource;
+            if (gameObject.TryGetComponent(out Sound sound))
+                return sound;
             else
-                throw new ArgumentNullException(nameof(AudioSource));
+                throw new ArgumentNullException(nameof(Sound));
         }
+
+        public void CreateAudioRoot()
+        {
+            _audioRoot = new GameObject("AudioRoot").transform;
+            CreateAudioTickTimer();
+        }
+
+        private void CreateAudioTickTimer() => 
+            _assetProvider.Instantiate(AssetPath.AudioTickTimerPath, _audioRoot);
     }
 }

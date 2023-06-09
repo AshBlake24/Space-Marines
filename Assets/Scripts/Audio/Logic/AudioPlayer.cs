@@ -1,7 +1,7 @@
-using System;
 using Roguelike.Audio.Factory;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.Pool;
 using Random = UnityEngine.Random;
 
 namespace Roguelike.Audio.Logic
@@ -14,41 +14,65 @@ namespace Roguelike.Audio.Logic
         [SerializeField, Range(0.5f, 1.5f)] private float _pitchMultiplier = 1f;
 
         private IAudioFactory _audioFactory;
+        private ObjectPool<Sound> _audioSourcesPool;
+        private float _defaultPitch;
+        
         public void Construct(IAudioFactory audioFactory)
         {
             _audioFactory = audioFactory;
+            InitAudioSourcesPool();
         }
 
         protected void PlayAudio()
         {
-            AudioSource audioSource = _audioFactory.CreateAudioSource();
-            
-            audioSource.transform.position = transform.position;
-            audioSource.clip = _audioClip;
-            audioSource.outputAudioMixerGroup = _outputChannel;
-
-            if (PitchIsAdjustable())
-                AdjustPitch(audioSource);
-            
-            audioSource.Play();
-            
-            float lifetime = audioSource.clip.length / audioSource.pitch;
-            Destroy(audioSource, lifetime);
+            Sound sound = _audioSourcesPool.Get();
+            sound.AudioSource.Play();
         }
 
-        private void AdjustPitch(AudioSource audioSource)
-        {
-            float defaultPitch = audioSource.pitch;
-            
-            audioSource.pitch = Random.value < 0.5f 
-                ? defaultPitch * Random.Range(1 / _pitchMultiplier, 1) 
-                : audioSource.pitch = defaultPitch * Random.Range(1, _pitchMultiplier);
-            
-            Debug.Log($"Default pitch: {defaultPitch}");
-            Debug.Log($"New pitch: {audioSource.pitch}");
-        }
+        private void AdjustPitch(Sound sound) =>
+            sound.AudioSource.pitch = Random.value < 0.5f 
+                ? _defaultPitch * Random.Range(1 / _pitchMultiplier, 1) 
+                : _defaultPitch * Random.Range(1, _pitchMultiplier);
 
         private bool PitchIsAdjustable() => 
             Mathf.Approximately(_pitchMultiplier, 1f) == false;
+
+        private void InitAudioSourcesPool()
+        {
+            _audioSourcesPool = new ObjectPool<Sound>(
+                CreatePoolItem,
+                OnTakeFromPool,
+                OnReleaseToPool,
+                OnDestroyItem,
+                false);
+        }
+
+        private Sound CreatePoolItem()
+        {
+            Sound sound = _audioFactory.CreateAudioSource();
+            _defaultPitch = sound.AudioSource.pitch;
+            
+            return sound;
+        }
+
+        private void OnTakeFromPool(Sound sound)
+        {
+            sound.transform.position = transform.position;
+            sound.AudioSource.clip = _audioClip;
+            sound.AudioSource.outputAudioMixerGroup = _outputChannel;
+
+            if (PitchIsAdjustable())
+                AdjustPitch(sound);
+
+            float lifetime = _audioClip.length / sound.AudioSource.pitch;
+            sound.Init(_audioSourcesPool, lifetime);
+            sound.gameObject.SetActive(true);
+        }
+
+        private void OnReleaseToPool(Sound sound) => 
+            sound.gameObject.SetActive(false);
+
+        private void OnDestroyItem(Sound sound) => 
+            Destroy(sound.gameObject);
     }
 }

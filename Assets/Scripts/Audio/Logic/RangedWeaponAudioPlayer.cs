@@ -5,7 +5,7 @@ namespace Roguelike.Audio.Logic
 {
     public class RangedWeaponAudioPlayer : AudioPlayer
     {
-        [Header("Weapon")]
+        [Header("Trigger")]
         [SerializeField] private RangedWeapon _rangedWeapon;
 
         private void OnEnable() => 

@@ -1,4 +1,5 @@
 using System;
+using Roguelike.Audio.Factory;
 using Roguelike.Infrastructure.Factory;
 using Roguelike.Infrastructure.Services.SaveLoad;
 using Roguelike.Infrastructure.Services.Windows;
@@ -20,6 +21,7 @@ namespace Roguelike.Infrastructure.States
         private readonly IGameFactory _gameFactory;
         private readonly ISaveLoadService _saveLoadService;
         private readonly IUIFactory _uiFactory;
+        private readonly IAudioFactory _audioFactory;
         private readonly IWindowService _windowService;
 
         private LevelId _activeScene;
@@ -31,6 +33,7 @@ namespace Roguelike.Infrastructure.States
             IGameFactory gameFactory,
             ISaveLoadService saveLoadService,
             IUIFactory uiFactory,
+            IAudioFactory audioFactory,
             IWindowService windowService)
         {
             _stateMachine = stateMachine;
@@ -39,6 +42,7 @@ namespace Roguelike.Infrastructure.States
             _gameFactory = gameFactory;
             _saveLoadService = saveLoadService;
             _uiFactory = uiFactory;
+            _audioFactory = audioFactory;
             _windowService = windowService;
         }
 
@@ -59,6 +63,7 @@ namespace Roguelike.Infrastructure.States
             Helpers.InitializePools();
 
             InitUIRoot();
+            InitAudioRoot();
             InitCurrentLevel();
             InformProgressReaders();
 
@@ -94,6 +99,9 @@ namespace Roguelike.Infrastructure.States
             new GameObject("AppCloser").AddComponent<AppCloser>()
                 .Construct(_stateMachine);
         }
+
+        private void InitAudioRoot() =>
+            _audioFactory.CreateAudioRoot();
 
         private void InitUIRoot() =>
             _uiFactory.CreateUIRoot();

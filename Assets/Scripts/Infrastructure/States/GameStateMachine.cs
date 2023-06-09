@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Roguelike.Audio.Factory;
 using Roguelike.Audio.Service;
 using Roguelike.Infrastructure.Factory;
 using Roguelike.Infrastructure.Services;
@@ -25,7 +26,7 @@ namespace Roguelike.Infrastructure.States
                 [typeof(BootstrapState)] = new BootstrapState(this, sceneLoader, services, coroutineRunner),
                 [typeof(LoadLevelState)] = new LoadLevelState(this, sceneLoader, loadingScreen,
                     services.Single<IGameFactory>(), services.Single<ISaveLoadService>(),
-                    services.Single<IUIFactory>(), services.Single<IWindowService>()),
+                    services.Single<IUIFactory>(), services.Single<IAudioFactory>(), services.Single<IWindowService>()),
 
                 [typeof(LoadProgressState)] = new LoadProgressState(this, services.Single<IPersistentDataService>(),
                     services.Single<ISaveLoadService>(), services.Single<IWeaponFactory>(),

@@ -17,6 +17,7 @@ namespace Roguelike.Infrastructure.AssetManagement
         public const string InteractableWeaponPath = "Interactables/InteractableWeapon";
         public const string StaticDataPath = "StaticData";
         public const string AudioMixerPath = "Audio/Mixer";
-        public const string AudioSourcePath = "Audio/AudioSource";
+        public const string SoundPrefabPath = "Audio/SoundPrefab";
+        public const string AudioTickTimerPath = "Audio/AudioTickTimer";
     }
 }
