@@ -1,4 +1,6 @@
 using System;
+using Roguelike.Audio.Factory;
+using Roguelike.Audio.Logic;
 using Roguelike.Infrastructure.Services.Random;
 using Roguelike.Infrastructure.Services.SaveLoad;
 using Roguelike.Infrastructure.Services.StaticData;
@@ -16,14 +18,16 @@ namespace Roguelike.Infrastructure.Factory
         private readonly ISaveLoadService _saveLoadService;
         private readonly IProjectileFactory _projectileFactory;
         private readonly IRandomService _randomService;
+        private readonly IAudioFactory _audioFactory;
 
         public WeaponFactory(IStaticDataService staticDataService, ISaveLoadService saveLoadService,
-            IProjectileFactory projectileFactory, IRandomService randomService)
+            IProjectileFactory projectileFactory, IRandomService randomService, IAudioFactory audioFactory)
         {
             _staticDataService = staticDataService;
             _saveLoadService = saveLoadService;
             _projectileFactory = projectileFactory;
             _randomService = randomService;
+            _audioFactory = audioFactory;
         }
 
         public IWeapon CreateWeapon(WeaponId id, Transform parent)
@@ -55,6 +59,7 @@ namespace Roguelike.Infrastructure.Factory
             weapon.Construct(InitializeRangedWeaponStats(weaponData), _projectileFactory, _randomService);
             weapon.transform.localPosition = weapon.PositionOffset;
             weapon.transform.localRotation = Quaternion.Euler(weapon.RotationOffset);
+            weapon.GetComponent<AudioPlayer>().Construct(_audioFactory);
             weapon.Hide();
 
             RegisterWeapon(weapon.gameObject);

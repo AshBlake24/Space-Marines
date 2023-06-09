@@ -1,5 +1,6 @@
+using Roguelike.Audio;
+using Roguelike.Audio.Logic;
 using Roguelike.Data;
-using Roguelike.Player.Enhancements;
 using Roguelike.Weapons.Stats;
 using UnityEngine;
 
@@ -14,12 +15,12 @@ namespace Roguelike.Weapons
 
         public Vector3 PositionOffset => _positionOffset;
         public Vector3 RotationOffset => _rotationOffset;
-
         public abstract WeaponStats Stats { get; }
+        
         public void Show() => gameObject.SetActive(true);
         public void Hide() => gameObject.SetActive(false);
+        
         public abstract bool TryAttack();
-
         public virtual void Enhance(int extraDamageAtPercentage)
         {
             if (extraDamageAtPercentage > 0)

@@ -1,3 +1,4 @@
+using Roguelike.Audio.Factory;
 using Roguelike.Audio.Service;
 using Roguelike.Infrastructure.AssetManagement;
 using Roguelike.Infrastructure.Factory;
@@ -59,12 +60,15 @@ namespace Roguelike.Infrastructure.States
             
             _services.RegisterSingle<ISaveLoadService>(new SaveLoadService(
                 _services.Single<IPersistentDataService>()));
-            
-            _services.RegisterSingle<IAudioService>(new AudioService(
-                _services.Single<IPersistentDataService>()));
 
             _services.RegisterSingle<IAssetProvider>(new AssetProvider(
                 _services.Single<ISaveLoadService>()));
+            
+            _services.RegisterSingle<IAudioService>(new AudioService(
+                _services.Single<IPersistentDataService>()));
+            
+            _services.RegisterSingle<IAudioFactory>(new AudioFactory(
+                _services.Single<IAssetProvider>()));
 
             _services.RegisterSingle<IProjectileFactory>(new ProjectileFactory(
                 _services.Single<IStaticDataService>()));
@@ -90,7 +94,8 @@ namespace Roguelike.Infrastructure.States
                 _services.Single<IStaticDataService>(),
                 _services.Single<ISaveLoadService>(),
                 _services.Single<IProjectileFactory>(),
-                _services.Single<IRandomService>()));
+                _services.Single<IRandomService>(),
+                _services.Single<IAudioFactory>()));
 
             _services.RegisterSingle<IUIFactory>(new UIFactory(
                 _services.Single<IAssetProvider>(),
