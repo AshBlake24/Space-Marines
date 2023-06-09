@@ -1,4 +1,4 @@
-namespace Roguelike.Audio
+namespace Roguelike.Audio.Service
 {
     public enum AudioChannel
     {

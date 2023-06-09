@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using Roguelike.Audio;
+using Roguelike.Audio.Service;
 using Roguelike.Infrastructure.Factory;
 using Roguelike.Infrastructure.Services;
 using Roguelike.Infrastructure.Services.PersistentData;

@@ -1,4 +1,4 @@
-using Roguelike.Audio;
+using Roguelike.Audio.Service;
 using Roguelike.Data;
 using Roguelike.Infrastructure.Factory;
 using Roguelike.Infrastructure.Services.PersistentData;

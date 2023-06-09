@@ -1,5 +1,5 @@
 using System;
-using Roguelike.Audio;
+using Roguelike.Audio.Service;
 using Roguelike.Infrastructure.AssetManagement;
 using Roguelike.Infrastructure.Services.Loading;
 using Roguelike.Infrastructure.Services.PersistentData;

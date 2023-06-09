@@ -1,4 +1,4 @@
-using Roguelike.Audio;
+using Roguelike.Audio.Service;
 using UnityEngine;
 using UnityEngine.UI;
 

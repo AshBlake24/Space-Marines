@@ -1,5 +1,5 @@
 using System;
-using Roguelike.Audio;
+using Roguelike.Audio.Service;
 
 namespace Roguelike.Data
 {
@@ -8,11 +8,13 @@ namespace Roguelike.Data
     {
         public AudioChannel Channel;
         public float Value;
+        public bool IsMuted;
 
         public AudioSettingsData(AudioChannel channel)
         {
             Channel = channel;
             Value = AudioService.MaxLinearValue;
+            IsMuted = false;
         }
     }
 }

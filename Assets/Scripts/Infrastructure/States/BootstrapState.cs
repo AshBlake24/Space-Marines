@@ -1,4 +1,4 @@
-using Roguelike.Audio;
+using Roguelike.Audio.Service;
 using Roguelike.Infrastructure.AssetManagement;
 using Roguelike.Infrastructure.Factory;
 using Roguelike.Infrastructure.Services;
