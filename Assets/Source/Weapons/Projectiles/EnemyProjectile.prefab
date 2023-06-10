@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: -4568501928807488665}
   - component: {fileID: 135032959849244990}
   - component: {fileID: 6302304314995953151}
+  - component: {fileID: 2960787642453015443}
   m_Layer: 12
   m_Name: EnemyProjectile
   m_TagString: Missile
@@ -27,7 +28,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1327142519841044}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.0233257, y: 0.404, z: -1.8753885}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -79,3 +80,18 @@ MonoBehaviour:
   _damageables:
     serializedVersion: 2
     m_Bits: 1024
+--- !u!114 &2960787642453015443
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1327142519841044}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d698eb68efbf41d3aca99e5b52eeb4e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _outputChannel: {fileID: -6732172758865738371, guid: 3d1c4eef8a71bd741ad58d6de9521292, type: 2}
+  _pitchMultiplier: 1.2
+  _projectile: {fileID: 6302304314995953151}

@@ -5,7 +5,7 @@ namespace Roguelike.Audio.Logic
 {
     public class AudioTickTimer : MonoBehaviour
     {
-        public const float TickTime = 0.25f;
+        public const float TickTime = 0.2f;
 
         private float _elapsedTime;
         
