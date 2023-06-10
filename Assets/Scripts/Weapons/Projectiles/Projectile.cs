@@ -22,6 +22,8 @@ namespace Roguelike.Weapons.Projectiles
         private ParticleSystem _projectileVFX;
         private TrailRenderer _trailRenderer;
 
+        public event Action Impacted;
+        
         protected abstract ProjectileStats Stats { get; }
 
         private void Awake() =>
@@ -59,6 +61,9 @@ namespace Roguelike.Weapons.Projectiles
             particles.transform.SetPositionAndRotation(transform.position, transform.rotation);
             particles.Play();
         }
+
+        protected void OnImpacted() => 
+            Impacted?.Invoke();
 
         protected void ReturnToPool()
         {

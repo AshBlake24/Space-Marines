@@ -1,4 +1,6 @@
 using System;
+using Roguelike.Audio.Factory;
+using Roguelike.Audio.Logic;
 using Roguelike.Infrastructure.Services.StaticData;
 using Roguelike.StaticData.Projectiles;
 using Roguelike.Weapons.Projectiles;
@@ -11,10 +13,12 @@ namespace Roguelike.Infrastructure.Factory
     public class ProjectileFactory : IProjectileFactory
     {
         private readonly IStaticDataService _staticDataService;
+        private readonly IAudioFactory _audioFactory;
 
-        public ProjectileFactory(IStaticDataService staticDataService)
+        public ProjectileFactory(IStaticDataService staticDataService, IAudioFactory audioFactory)
         {
             _staticDataService = staticDataService;
+            _audioFactory = audioFactory;
         }
 
         public Projectile CreateProjectile(ProjectileId id, IObjectPool<Projectile> pool)
@@ -26,12 +30,16 @@ namespace Roguelike.Infrastructure.Factory
 
         private Projectile ConstructProjectile(ProjectileStaticData projectileData, IObjectPool<Projectile> pool)
         {
-            return projectileData.Type switch
+            Projectile projectile = projectileData.Type switch
             {
                 ProjectileType.Bullet => CreateBullet(projectileData as BulletStaticData, pool),
                 ProjectileType.Exploding => CreateExplodingAmmo(projectileData as ExplodingProjectileStaticData, pool),
                 _ => throw new ArgumentOutOfRangeException()
             };
+            
+            projectile.GetComponent<ProjectileAudioPlayer>().Construct(_audioFactory, projectileData.Clip);
+
+            return projectile;
         }
 
         private Projectile CreateBullet(BulletStaticData projectileData, IObjectPool<Projectile> pool)

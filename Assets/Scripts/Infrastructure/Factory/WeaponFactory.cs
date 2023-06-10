@@ -59,7 +59,7 @@ namespace Roguelike.Infrastructure.Factory
             weapon.Construct(InitializeRangedWeaponStats(weaponData), _projectileFactory, _randomService);
             weapon.transform.localPosition = weapon.PositionOffset;
             weapon.transform.localRotation = Quaternion.Euler(weapon.RotationOffset);
-            weapon.GetComponent<AudioPlayer>().Construct(_audioFactory);
+            weapon.GetComponent<AudioPlayer>().Construct(_audioFactory, weaponData.Clip);
             weapon.Hide();
 
             RegisterWeapon(weapon.gameObject);

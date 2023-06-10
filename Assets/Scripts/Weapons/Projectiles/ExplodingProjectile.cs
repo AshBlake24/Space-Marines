@@ -30,6 +30,7 @@ namespace Roguelike.Weapons.Projectiles
                     health.TakeDamage(Damage);
             }
 
+            OnImpacted();
             SpawnVFX(ImpactVFXKey);
             ReturnToPool();
         }

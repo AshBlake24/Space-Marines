@@ -16,6 +16,9 @@ namespace Roguelike.StaticData.Projectiles
         public ParticleSystem MuzzleFlashVFX;
         public ParticleSystem ProjectileVFX;
         public ParticleSystem ImpactVFX;
+
+        [Header("Audio")] 
+        public AudioClip Clip;
         
         public Enum Key => Id;
     }
