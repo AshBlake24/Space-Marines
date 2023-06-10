@@ -10,13 +10,12 @@ namespace Roguelike.Utilities
     {
         #region UI
 
+        private static readonly List<RaycastResult> s_results = new();
         private static PointerEventData s_eventDataCurrentPosition;
-        private static List<RaycastResult> s_results;
 
         public static bool IsOverUI()
         {
             s_eventDataCurrentPosition = new PointerEventData(EventSystem.current) {position = Input.mousePosition};
-            s_results = new List<RaycastResult>();
             EventSystem.current.RaycastAll(s_eventDataCurrentPosition, s_results);
 
             return s_results.Count > 0;
@@ -26,8 +25,7 @@ namespace Roguelike.Utilities
 
         #region Time
 
-        private static readonly Dictionary<float, WaitForSeconds> s_waitDictionary =
-            new Dictionary<float, WaitForSeconds>();
+        private static readonly Dictionary<float, WaitForSeconds> s_waitDictionary = new();
 
         public static WaitForSeconds GetTime(float timeInSeconds)
         {

@@ -9,24 +9,26 @@ namespace Roguelike.Audio.Logic
     public abstract class AudioPlayer : MonoBehaviour
     {
         [Header("Audio Settings")]
-        [SerializeField] private AudioClip _audioClip;
         [SerializeField] private AudioMixerGroup _outputChannel;
         [SerializeField, Range(0.5f, 1.5f)] private float _pitchMultiplier = 1f;
 
         private IAudioFactory _audioFactory;
         private ObjectPool<Sound> _audioSourcesPool;
+        private AudioClip _audioClip;
+        private Sound _sound;
         private float _defaultPitch;
         
-        public void Construct(IAudioFactory audioFactory)
+        public void Construct(IAudioFactory audioFactory, AudioClip audioClip)
         {
             _audioFactory = audioFactory;
+            _audioClip = audioClip;
             InitAudioSourcesPool();
         }
 
         protected void PlayAudio()
         {
-            Sound sound = _audioSourcesPool.Get();
-            sound.AudioSource.Play();
+            _sound = _audioSourcesPool.Get();
+            _sound.AudioSource.Play();
         }
 
         private void AdjustPitch(Sound sound) =>
@@ -60,12 +62,12 @@ namespace Roguelike.Audio.Logic
             sound.transform.position = transform.position;
             sound.AudioSource.clip = _audioClip;
             sound.AudioSource.outputAudioMixerGroup = _outputChannel;
+            sound.AudioSource.volume = 1f;
 
             if (PitchIsAdjustable())
                 AdjustPitch(sound);
 
-            float lifetime = _audioClip.length / sound.AudioSource.pitch;
-            sound.Init(_audioSourcesPool, lifetime);
+            sound.Init(_audioSourcesPool);
             sound.gameObject.SetActive(true);
         }
 
