@@ -1,3 +1,4 @@
+using System;
 using Roguelike.Infrastructure.Services.Pools;
 using Roguelike.Weapons;
 using UnityEngine;
@@ -11,6 +12,8 @@ namespace Roguelike.Loot.Powerups
         private ParticleSystem _vfx;
         private bool _collected;
         private string _vfxKey;
+
+        public event Action Collected;
 
         private void OnDestroy() => 
             Destroy(gameObject);
@@ -35,6 +38,7 @@ namespace Roguelike.Loot.Powerups
             if (_powerupEffect.TryApply(target))
             {
                 _collected = true;
+                Collected?.Invoke();
                 SpawnVFX(target.transform);
                 Destroy(gameObject);
             }

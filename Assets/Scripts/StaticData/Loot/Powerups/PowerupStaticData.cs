@@ -15,6 +15,7 @@ namespace Roguelike.StaticData.Loot.Powerups
         public Powerup Prefab;
         public PowerupEffect Effect;
         public ParticleSystem ActiveVFX;
+        public AudioClip AudioClip;
         
         public Enum Key => Id;
     }

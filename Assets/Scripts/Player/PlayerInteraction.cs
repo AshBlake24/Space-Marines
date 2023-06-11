@@ -81,9 +81,11 @@ namespace Roguelike.Player
                 IInteractable closestInteractable = FindClosestInteractable();
 
                 if (InteractableIsCorrect(closestInteractable))
+                {
                     ChangeCurrentInteractable(closestInteractable);
-
-                DisableComponents();
+                    DisableComponents();
+                }
+                
                 GotInteractable?.Invoke();
             }
             else

@@ -1,7 +1,7 @@
 using Roguelike.Weapons.Projectiles;
 using UnityEngine;
 
-namespace Roguelike.Audio.Logic
+namespace Roguelike.Audio.Sounds.Weapons
 {
     public class ProjectileAudioPlayer : AudioPlayer
     {

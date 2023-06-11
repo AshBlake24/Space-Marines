@@ -1,10 +1,11 @@
 using Roguelike.Audio.Factory;
+using Roguelike.Audio.Logic;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.Pool;
 using Random = UnityEngine.Random;
 
-namespace Roguelike.Audio.Logic
+namespace Roguelike.Audio.Sounds
 {
     public abstract class AudioPlayer : MonoBehaviour
     {

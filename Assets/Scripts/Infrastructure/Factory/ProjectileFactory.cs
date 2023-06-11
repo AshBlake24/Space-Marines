@@ -1,6 +1,6 @@
 using System;
 using Roguelike.Audio.Factory;
-using Roguelike.Audio.Logic;
+using Roguelike.Audio.Sounds.Weapons;
 using Roguelike.Infrastructure.Services.StaticData;
 using Roguelike.StaticData.Projectiles;
 using Roguelike.Weapons.Projectiles;

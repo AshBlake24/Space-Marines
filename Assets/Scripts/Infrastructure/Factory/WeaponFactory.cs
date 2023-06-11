@@ -1,6 +1,6 @@
 using System;
 using Roguelike.Audio.Factory;
-using Roguelike.Audio.Logic;
+using Roguelike.Audio.Sounds;
 using Roguelike.Infrastructure.Services.Random;
 using Roguelike.Infrastructure.Services.SaveLoad;
 using Roguelike.Infrastructure.Services.StaticData;

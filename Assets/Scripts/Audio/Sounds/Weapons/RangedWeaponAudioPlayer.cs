@@ -1,7 +1,7 @@
 using Roguelike.Weapons;
 using UnityEngine;
 
-namespace Roguelike.Audio.Logic
+namespace Roguelike.Audio.Sounds.Weapons
 {
     public class RangedWeaponAudioPlayer : AudioPlayer
     {

@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Roguelike.Audio.Factory;
+using Roguelike.Audio.Sounds.Loot;
 using Roguelike.Infrastructure.AssetManagement;
 using Roguelike.Infrastructure.Services.Pools;
 using Roguelike.Infrastructure.Services.Random;
@@ -20,6 +22,7 @@ namespace Roguelike.Infrastructure.Factory
         private readonly IAssetProvider _assetProvider;
         private readonly IRandomService _randomService;
         private readonly ICoroutineRunner _coroutineRunner;
+        private readonly IAudioFactory _audioFactory;
         private readonly IParticlesPoolService _particlesPoolService;
         private readonly IStaticDataService _staticData;
         private readonly Dictionary<WeaponId, int> _weaponsDropWeights = new();
@@ -30,11 +33,12 @@ namespace Roguelike.Infrastructure.Factory
 
         public LootFactory(IAssetProvider assetProvider, IRandomService randomService,
             IParticlesPoolService particlesPoolService,
-            IStaticDataService staticData, ICoroutineRunner coroutineRunner)
+            IStaticDataService staticData, IAudioFactory audioFactory, ICoroutineRunner coroutineRunner)
         {
             _assetProvider = assetProvider;
             _randomService = randomService;
             _coroutineRunner = coroutineRunner;
+            _audioFactory = audioFactory;
             _particlesPoolService = particlesPoolService;
             _staticData = staticData;
             LoadWeaponsDropWeights();
@@ -57,9 +61,13 @@ namespace Roguelike.Infrastructure.Factory
         {
             PowerupStaticData powerupData = _staticData.GetDataById<PowerupId, PowerupStaticData>(powerupId);
 
-            Object.Instantiate(powerupData.Prefab, position, Quaternion.identity)
-                .GetComponent<Powerup>()
+            Powerup powerup = Object.Instantiate(powerupData.Prefab, position, Quaternion.identity);
+            
+            powerup.GetComponent<Powerup>()
                 .Construct(_particlesPoolService, powerupData.Effect, powerupData.ActiveVFX);
+            
+            powerup.GetComponent<PowerUpAudioPlayer>()
+                .Construct(_audioFactory, powerupData.AudioClip);
 
             if (powerupData.Effect is ILastingEffect lastingEffect)
                 lastingEffect.Construct(_coroutineRunner);

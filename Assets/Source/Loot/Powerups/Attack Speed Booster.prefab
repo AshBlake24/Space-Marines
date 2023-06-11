@@ -19614,6 +19614,7 @@ GameObject:
   - component: {fileID: 860420178812736306}
   - component: {fileID: 6499513331377135367}
   - component: {fileID: 4618418391866379665}
+  - component: {fileID: -8946478687826989829}
   m_Layer: 17
   m_Name: Attack Speed Booster
   m_TagString: Untagged
@@ -19662,4 +19663,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd185a5382084404b24421746a0cb051, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _view: {fileID: 4973917872658363178}
+--- !u!114 &-8946478687826989829
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5562186716212280608}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 461d1fcc080e40b7bda509c2f783934a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _outputChannel: {fileID: 7223558684661347225, guid: 3d1c4eef8a71bd741ad58d6de9521292, type: 2}
+  _pitchMultiplier: 1
+  _powerup: {fileID: 4618418391866379665}
