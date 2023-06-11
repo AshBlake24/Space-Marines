@@ -13,6 +13,7 @@ namespace Roguelike.Logic.Portal
     {
         [SerializeField] private Collider _collider;
         [SerializeField] private ParticleSystem _portalVFX;
+        [SerializeField] private AudioSource _audio;
 
         private IPersistentDataService _progressService;
         private ISceneLoadingService _sceneLoadingService;
@@ -31,6 +32,7 @@ namespace Roguelike.Logic.Portal
             _regionId = regionId;
             _startStageId = startStageId;
             _collider.enabled = true;
+            _audio.Play();
             _portalVFX.Play();
         }
         

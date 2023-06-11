@@ -11,6 +11,13 @@ namespace Roguelike.Logic.Doors
         [SerializeField] private Vector3 _openedPosition;
         [SerializeField] private float _animationDuration;
         [SerializeField] private float _openStateTime;
+        
+        [Header("Audio")]
+        [SerializeField] private AudioSource _audioSource;
+        [SerializeField] private AudioClip _openDoorSound;
+        [SerializeField] private AudioClip _closeDoorSound;
+        [SerializeField] private float _openDoorPitch;
+        [SerializeField] private float _closeDoorPitch;
 
         private bool _isOpen;
         private Vector3 _defaultPosition;
@@ -35,6 +42,7 @@ namespace Roguelike.Logic.Doors
                 .SetEase(Ease.InOutQuad);
 
             _isOpen = true;
+            PlayAudio(_openDoorSound, _openDoorPitch);
         }
 
         private void Close()
@@ -44,6 +52,14 @@ namespace Roguelike.Logic.Doors
                 .SetEase(Ease.InOutQuad);
 
             _isOpen = false;
+            PlayAudio(_closeDoorSound, _closeDoorPitch);
+        }
+
+        private void PlayAudio(AudioClip clip, float pitch)
+        {
+            _audioSource.clip = clip;
+            _audioSource.pitch = pitch;
+            _audioSource.Play();
         }
 
         private void OnTriggered()
