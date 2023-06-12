@@ -6,6 +6,8 @@ using Roguelike.StaticData.Levels;
 using System.Collections.Generic;
 using Roguelike.Infrastructure.Services.Loading;
 using UnityEngine;
+using TMPro.EditorUtilities;
+using System.Linq;
 
 namespace Roguelike.Level
 {
@@ -25,6 +27,7 @@ namespace Roguelike.Level
         private Room _currentRoom;
         private int _arenaRoomsCount;
         private int _bonusRoomCount;
+        private int _totalWeightRoom;
 
         public void Construct(StageStaticData stageData, IPersistentDataService persistentDataService,
             ISceneLoadingService sceneLoadingService, IEnemyFactory enemyFactory)
@@ -140,7 +143,7 @@ namespace Roguelike.Level
 
         private Room CreateRoom(Room exitRoom, List<Room> roomType, ExitPoint currentExitPoint = null)
         {
-            Room nextRoom = roomType[Random.Range(0, roomType.Count)];
+            Room nextRoom = GetRandomRoom(roomType);
 
             if (currentExitPoint == null)
                 currentExitPoint = exitRoom.SelectExitPoint();
@@ -152,6 +155,23 @@ namespace Roguelike.Level
             nextRoom.transform.SetParent(_roomContainer, true);
 
             return nextRoom;
+        }
+
+        private Room GetRandomRoom(List<Room> roomType)
+        {
+            _totalWeightRoom = roomType.Sum(x => x.PickChance);
+
+            int rool = Random.Range(0, _totalWeightRoom);
+
+            foreach (Room room in roomType)
+            {
+                rool -= room.PickChance;
+
+                if (rool <= 0)
+                    return room;
+            }
+
+            return null;
         }
     }
 }
