@@ -1,4 +1,5 @@
 using System;
+using Roguelike.Infrastructure.AssetManagement;
 using UnityEngine;
 
 namespace Roguelike.Infrastructure.Services.Input
@@ -16,6 +17,6 @@ namespace Roguelike.Infrastructure.Services.Input
         public void ChangeWeapon(bool switchToNext) => WeaponChanged?.Invoke(switchToNext);
         public void UseSkill() => SkillUsed?.Invoke();
         public void Interact() => Interacted?.Invoke();
-        public void Pause() => PausePressed?.Invoke();
+        protected void Pause() => PausePressed?.Invoke();
     }
 }

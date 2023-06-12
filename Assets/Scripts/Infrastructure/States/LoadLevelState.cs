@@ -100,11 +100,11 @@ namespace Roguelike.Infrastructure.States
                 .Construct(_stateMachine);
         }
 
-        private void InitAudioRoot() =>
-            _audioFactory.CreateAudioRoot();
-
         private void InitUIRoot() =>
             _uiFactory.CreateUIRoot();
+
+        private void InitAudioRoot() =>
+            _audioFactory.CreateAudioRoot();
 
         private void InitMainMenu() =>
             _windowService.Open(WindowId.MainMenu);

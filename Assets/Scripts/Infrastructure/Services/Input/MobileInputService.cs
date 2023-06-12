@@ -1,3 +1,4 @@
+using Roguelike.Infrastructure.AssetManagement;
 using UnityEngine;
 
 namespace Roguelike.Infrastructure.Services.Input
@@ -9,7 +10,7 @@ namespace Roguelike.Infrastructure.Services.Input
         private const string AttackButton = "Fire";
 
         public override Vector2 Axis => 
-            new (SimpleInput.GetAxis(HorizontalAxis), SimpleInput.GetAxis(VerticalAxis));
+            new(SimpleInput.GetAxis(HorizontalAxis), SimpleInput.GetAxis(VerticalAxis));
 
         public override bool IsAttackButtonUp() => SimpleInput.GetButton(AttackButton);
     }

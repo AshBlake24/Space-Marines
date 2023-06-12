@@ -1,5 +1,6 @@
 using System;
 using Roguelike.Audio.Service;
+using Roguelike.Data;
 using Roguelike.Infrastructure.AssetManagement;
 using Roguelike.Infrastructure.Services.Loading;
 using Roguelike.Infrastructure.Services.PersistentData;
@@ -8,6 +9,7 @@ using Roguelike.Infrastructure.Services.StaticData;
 using Roguelike.Infrastructure.Services.Windows;
 using Roguelike.Logic.Pause;
 using Roguelike.Player;
+using Roguelike.StaticData.Enhancements;
 using Roguelike.StaticData.Weapons;
 using Roguelike.StaticData.Windows;
 using Roguelike.UI.Buttons;
@@ -77,6 +79,10 @@ namespace Roguelike.Infrastructure.Factory
                     InitOptionsMenu(optionsMenu);
 
                     break;
+                case PauseMenu pauseMenu:
+                    pauseMenu.Construct(this);
+
+                    break;
             }
 
             return window;
@@ -115,6 +121,24 @@ namespace Roguelike.Infrastructure.Factory
 
             if (window is ResurrectionWindow resurrectionWindow)
                 resurrectionWindow.Construct(playerDeath);
+        }
+
+        public void CreateEnhancementWidget(EnhancementData enhancementProgress, Transform parent, 
+            EnhancementTooltip tooltip)
+        {
+            GameObject gameObject = _assetProvider.Instantiate(AssetPath.EnhancementWidgetPath, parent);
+
+            if (gameObject.TryGetComponent(out PlayerEnhancementWidget widget))
+            {
+                EnhancementStaticData enhancementData = _staticData
+                    .GetDataById<EnhancementId, EnhancementStaticData>(enhancementProgress.Id);
+                
+                widget.Construct(tooltip, enhancementData, enhancementProgress);
+            }
+            else
+            {
+                throw new ArgumentNullException(nameof(widget));
+            }
         }
 
         public void CreateUIRoot() =>

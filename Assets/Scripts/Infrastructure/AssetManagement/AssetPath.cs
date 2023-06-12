@@ -19,5 +19,6 @@ namespace Roguelike.Infrastructure.AssetManagement
         public const string AudioMixerPath = "Audio/Mixer";
         public const string SoundPrefabPath = "Audio/SoundPrefab";
         public const string AudioTickTimerPath = "Audio/AudioTickTimer";
+        public const string EnhancementWidgetPath = "UI/Elements/PlayerEnhancementWidget";
     }
 }

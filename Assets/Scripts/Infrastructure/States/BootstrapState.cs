@@ -51,22 +51,23 @@ namespace Roguelike.Infrastructure.States
             RegisterStaticData();
             _services.RegisterSingle<IEnvironmentService>(new EnvironmentService());
             _services.RegisterSingle<IRandomService>(new UnityRandomService());
-            _services.RegisterSingle<IInputService>(GetInputService());
             _services.RegisterSingle<IParticlesPoolService>(new ParticlesPoolService());
             _services.RegisterSingle<ISceneLoadingService>(new SceneLoadingService(_stateMachine));
             _services.RegisterSingle<ITimeService>(new TimeService());
+            _services.RegisterSingle<IInputService>(GetInputService());
             _services.RegisterSingle<IPersistentDataService>(new PersistentDataService(
                 _services.Single<IStaticDataService>()));
-            
+
             _services.RegisterSingle<ISaveLoadService>(new SaveLoadService(
                 _services.Single<IPersistentDataService>()));
 
             _services.RegisterSingle<IAssetProvider>(new AssetProvider(
                 _services.Single<ISaveLoadService>()));
-            
+
+
             _services.RegisterSingle<IAudioService>(new AudioService(
                 _services.Single<IPersistentDataService>()));
-            
+
             _services.RegisterSingle<IAudioFactory>(new AudioFactory(
                 _services.Single<IAssetProvider>()));
 
