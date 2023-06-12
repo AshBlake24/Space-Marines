@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using Roguelike.Infrastructure.Services.Loading;
 using UnityEngine;
 using System.Linq;
+using Roguelike.Assets.Scripts.Enemies;
 
 namespace Roguelike.Level
 {
@@ -131,6 +132,12 @@ namespace Roguelike.Level
 
             _enterTriger = _currentRoom.gameObject.GetComponentInChildren<FinishLevelTriger>();
             _enterTriger.Construct(_data.NextStageId, _persistentDataService);
+
+            if (_currentRoom.TryGetComponent<BossSpawner>(out BossSpawner spawner))
+            {
+                spawner.Init(_enemyFactory);
+                _currentRoom.OpenDoor();
+            }
 
             _enterTriger.PlayerHasEntered += GenerateNextLevel;
         }
