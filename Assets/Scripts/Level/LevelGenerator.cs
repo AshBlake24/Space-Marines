@@ -103,7 +103,7 @@ namespace Roguelike.Level
 
                 foreach (var room in _data.Arenas)
                 {
-                    if (room.ExitCount > MinExitCount)
+                    if (room.ExitCount >= MinExitCount)
                     {
                         validRoom.Add(room);
                     }
@@ -159,13 +159,13 @@ namespace Roguelike.Level
 
         private Room GetRandomRoom(List<Room> roomType)
         {
-            _totalWeightRoom = roomType.Sum(x => x.PickChance);
+            _totalWeightRoom = roomType.Sum(x => x.SpawnWeight);
 
             int rool = Random.Range(0, _totalWeightRoom);
 
             foreach (Room room in roomType)
             {
-                rool -= room.PickChance;
+                rool -= room.SpawnWeight;
 
                 if (rool <= 0)
                     return room;

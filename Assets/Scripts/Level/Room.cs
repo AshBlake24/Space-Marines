@@ -7,14 +7,14 @@ namespace Roguelike.Level
     {
         private const int RotationModification = 180;
         [SerializeField] private List<ExitPoint> _exitPoints;
-        [SerializeField, Range (0,100f)] private int _pickChance;
         [SerializeField] private Transform _miniMapIcon;
+        [SerializeField] private int _spawnWeight;
 
         private ExitPoint _entryPoint;
         private List<ExitPoint> _doors = new List<ExitPoint>();
 
         public ExitPoint EntryPoint => _entryPoint;
-        public int PickChance => _pickChance;
+        public int SpawnWeight => _spawnWeight;
         public int ExitCount => _exitPoints.Count;
 
         public void Init(ExitPoint connectingPoint)
