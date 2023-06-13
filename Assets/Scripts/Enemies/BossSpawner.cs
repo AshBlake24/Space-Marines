@@ -1,5 +1,4 @@
-﻿using Cinemachine;
-using Roguelike.Enemies;
+﻿using Roguelike.Enemies;
 using Roguelike.Infrastructure.Factory;
 using Roguelike.Level;
 using Roguelike.Player;
@@ -10,7 +9,6 @@ namespace Roguelike.Assets.Scripts.Enemies
 {
     public class BossSpawner : MonoBehaviour
     {
-        [SerializeField] private CinemachineVirtualCamera _camera;
         [SerializeField] private Transform _spawnPoint;
         [SerializeField] private EnemyId _boosId;
 
@@ -31,13 +29,7 @@ namespace Roguelike.Assets.Scripts.Enemies
 
         private void OnPlayerHasEntered(PlayerHealth player)
         {
-            _player = player;
-
-            _camera = FindObjectOfType<CinemachineVirtualCamera>();
-
-            Transform transform = Spawn(_spawnPoint, _player);
-
-            LookAtBoss(transform);
+            Spawn(_spawnPoint, player);
         }
 
         private Transform Spawn(Transform spawnPosition, PlayerHealth target)
@@ -47,11 +39,6 @@ namespace Roguelike.Assets.Scripts.Enemies
             enemyPrefab.GetComponent<EnemyStateMachine>().enabled = true;
 
             return enemyPrefab.transform;
-        }
-
-        private void LookAtBoss(Transform character)
-        {
-            _camera.Follow = character;
         }
     }
 }
