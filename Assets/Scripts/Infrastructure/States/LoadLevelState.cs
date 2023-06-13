@@ -72,7 +72,7 @@ namespace Roguelike.Infrastructure.States
 
         private void InitCurrentLevel()
         {
-            Enum.TryParse<LevelId>(SceneManager.GetActiveScene().name, true, out _activeScene);
+            _activeScene = EnumExtensions.GetCurrentLevelId();
 
             switch (_activeScene)
             {

@@ -11,7 +11,6 @@ namespace Roguelike.Infrastructure.AssetManagement
         public const string PlayerCameraPath = "Cameras/PlayerCamera";
         public const string UIRootPath = "UI/UIRoot";
         public const string GameConfigPath = "StaticData/GameConfig";
-        public const string MiniMap = "UI/Elements/MiniMap";
         public const string WeaponStatsViewer = "UI/Elements/RangedWeaponStatsViewer";
         public const string PowerupDropTablePath = "StaticData/Loot/Drop Tables/Powerup Drop Table";
         public const string InteractableWeaponPath = "Interactables/InteractableWeapon";
@@ -20,5 +19,7 @@ namespace Roguelike.Infrastructure.AssetManagement
         public const string SoundPrefabPath = "Audio/SoundPrefab";
         public const string AudioTickTimerPath = "Audio/AudioTickTimer";
         public const string EnhancementWidgetPath = "UI/Elements/PlayerEnhancementWidget";
+        public const string MusicStaticDataPath = "StaticData/Audio/MusicStaticData";
+        public const string BackgroundMusicPath = "Audio/BackgroundMusic";
     }
 }

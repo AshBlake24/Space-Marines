@@ -1,18 +1,31 @@
 using System;
 using Roguelike.Audio.Logic;
 using Roguelike.Infrastructure.AssetManagement;
+using Roguelike.Infrastructure.Services.PersistentData;
+using Roguelike.Infrastructure.Services.StaticData;
+using Roguelike.StaticData.Audio;
+using Roguelike.StaticData.Levels;
+using Roguelike.Utilities;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Roguelike.Audio.Factory
 {
     public class AudioFactory : IAudioFactory
     {
         private readonly IAssetProvider _assetProvider;
+        private readonly IPersistentDataService _progressData;
+        private readonly IStaticDataService _staticData;
 
         private Transform _audioRoot;
 
-        public AudioFactory(IAssetProvider assetProvider) => 
+        public AudioFactory(IAssetProvider assetProvider, IPersistentDataService progressData, 
+            IStaticDataService staticData)
+        {
             _assetProvider = assetProvider;
+            _progressData = progressData;
+            _staticData = staticData;
+        }
 
         public Sound CreateAudioSource()
         {
@@ -27,7 +40,41 @@ namespace Roguelike.Audio.Factory
         public void CreateAudioRoot()
         {
             _audioRoot = new GameObject("AudioRoot").transform;
+            InitBackgroundMusic();
             CreateAudioTickTimer();
+        }
+
+        private void InitBackgroundMusic()
+        {
+            switch (EnumExtensions.GetCurrentLevelId())
+            {
+                case LevelId.MainMenu:
+                    CreateBackgroundMusic(MusicId.MainMenu);
+                    break;
+                case LevelId.Hub:
+                    CreateBackgroundMusic(MusicId.Hub);
+                    break;
+                case LevelId.Dungeon:
+                    CreateBackgroundMusic(MusicId.Dungeon);
+                    break;
+            }
+        }
+
+        private void CreateBackgroundMusic(MusicId id)
+        {
+            MusicConfig musicConfig = _staticData.GetDataById<MusicId, MusicConfig>(id);
+
+            GameObject instance = _assetProvider.Instantiate(AssetPath.BackgroundMusicPath);
+
+            if (instance.TryGetComponent(out AudioSource audioSource))
+            {
+                audioSource.clip = musicConfig.Music;
+                audioSource.Play();
+            }
+            else
+            {
+                throw new ArgumentNullException(nameof(instance), $"Instance doesn't contain {nameof(AudioSource)}");
+            }
         }
 
         private void CreateAudioTickTimer() => 

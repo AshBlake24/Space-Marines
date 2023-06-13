@@ -4,6 +4,8 @@ using System.Linq;
 using Roguelike.Infrastructure.AssetManagement;
 using Roguelike.Infrastructure.Services.Windows;
 using Roguelike.StaticData;
+using Roguelike.StaticData.Audio;
+using Roguelike.StaticData.Levels;
 using Roguelike.StaticData.Player;
 using Roguelike.StaticData.Windows;
 using UnityEngine;
@@ -62,6 +64,7 @@ namespace Roguelike.Infrastructure.Services.StaticData
         {
             LoadData();
             LoadWindows();
+            LoadMusic();
             LoadPlayer();
             LoadGameConfig();
         }
@@ -79,6 +82,15 @@ namespace Roguelike.Infrastructure.Services.StaticData
                 .ToDictionary(config => config.WindowId as Enum, config => config as IStaticData);
 
             _data.Add(typeof(WindowId), data);
+        }
+        
+        private void LoadMusic()
+        {
+            Dictionary<Enum, IStaticData> data = Resources.Load<MusicStaticData>(AssetPath.MusicStaticDataPath)
+                .Configs
+                .ToDictionary(config => config.LevelId as Enum, config => config as IStaticData);
+
+            _data.Add(typeof(MusicId), data);
         }
     }
 }

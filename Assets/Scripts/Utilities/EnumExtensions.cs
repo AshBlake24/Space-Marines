@@ -3,11 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Roguelike.StaticData.Levels;
+using UnityEngine.SceneManagement;
 
 namespace Roguelike.Utilities
 {
     public static class EnumExtensions
     {
+        public static LevelId GetCurrentLevelId()
+        {
+            Enum.TryParse(SceneManager.GetActiveScene().name, true, out LevelId activeScene);
+
+            return activeScene;
+        }
+        
         public static string ToLabel(this StageId stageId) => 
             ParseCurrentStage(stageId);
         
