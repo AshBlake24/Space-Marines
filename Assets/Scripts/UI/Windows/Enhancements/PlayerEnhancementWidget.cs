@@ -25,7 +25,7 @@ namespace Roguelike.UI.Windows.Enhancements
             _description = enhancementData.Description;
             _icon.sprite = enhancementData.Icon;
             _currentTier = enhancementProgress.Tier.ToString();
-            _currentValue = enhancementData.Tiers[enhancementProgress.Tier].Value.ToString();
+            _currentValue = enhancementData.Tiers[enhancementProgress.Tier - 1].Value.ToString();
         }
 
         public void OnPointerEnter(PointerEventData eventData) => Show();

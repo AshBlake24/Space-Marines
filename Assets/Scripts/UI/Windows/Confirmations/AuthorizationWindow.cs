@@ -1,9 +1,13 @@
+using System;
+using Agava.YandexGames;
+
 namespace Roguelike.UI.Windows.Confirmations
 {
     public class AuthorizationWindow : ConfirmationWindow
     {
         protected override void Initialize()
         {
+            
 #if UNITY_WEBGL && !UNITY_EDITOR
             if (YandexGamesSdk.IsInitialized)
                 Destroy(gameObject);
