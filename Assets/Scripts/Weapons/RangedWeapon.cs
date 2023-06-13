@@ -48,8 +48,8 @@ namespace Roguelike.Weapons
         public override void ReadProgress(PlayerProgress progress) => 
             AmmoData = TryGetAmmoData(progress);
 
-        public bool TryReload(float ammoAmountMultiplier) => 
-            AmmoData.Reload(ammoAmountMultiplier);
+        public bool TryReload() => 
+            AmmoData.Reload(_stats.ReloadingAmmoAmountMultiplier);
 
         public void Enhance(float chanceToNotConsumeAmmo) => 
             _chanceToConsumeAmmo = DefaultChanceToConsumeAmmo - chanceToNotConsumeAmmo;

@@ -1,8 +1,5 @@
-using Roguelike.Data;
-using Roguelike.Logic;
 using Roguelike.StaticData.Projectiles;
 using Roguelike.StaticData.Weapons;
-using UnityEngine;
 
 namespace Roguelike.Weapons.Stats
 {
@@ -13,6 +10,7 @@ namespace Roguelike.Weapons.Stats
         private readonly float _horizontalSpread;
         private readonly float _verticalSpread;
         private readonly float _projectileStartSpeed;
+        private readonly float _reloadingAmmoAmountMultiplier;
         private readonly ProjectileStaticData _projectileData;
 
         public RangedWeaponStats(RangedWeaponStaticData weaponData) : base(weaponData)
@@ -23,6 +21,7 @@ namespace Roguelike.Weapons.Stats
             _verticalSpread = weaponData.VerticalSpread;
             _projectileStartSpeed = weaponData.ProjectileStartSpeed;
             _projectileData = weaponData.Projectile;
+            _reloadingAmmoAmountMultiplier = weaponData.ReloadingAmmoAmountMultiplier;
         }
 
         public int MaxAmmo => _maxAmmo;
@@ -31,5 +30,6 @@ namespace Roguelike.Weapons.Stats
         public float HorizontalSpread => _horizontalSpread;
         public float VerticalSpread => _verticalSpread;
         public float ProjectileStartSpeed => _projectileStartSpeed;
+        public float ReloadingAmmoAmountMultiplier => _reloadingAmmoAmountMultiplier;
     }
 }

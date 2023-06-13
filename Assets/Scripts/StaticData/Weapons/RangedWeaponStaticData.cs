@@ -14,6 +14,7 @@ namespace Roguelike.StaticData.Weapons
         public int MaxAmmo;
         public float ProjectileStartSpeed;
         public ProjectileStaticData Projectile;
+        [Range(0.01f, 1f)] public float ReloadingAmmoAmountMultiplier;
 
         [Header("Audio")] 
         public AudioClip Clip;

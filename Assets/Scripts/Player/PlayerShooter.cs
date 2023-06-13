@@ -120,23 +120,15 @@ namespace Roguelike.Player
             return _weapons[nextWeaponIndex];
         }
 
-        public IWeapon TryGetPreviousWeapon()
+        public bool TryAddWeapon(WeaponId weaponId)
         {
-            if (_weapons.Length <= 1)
-                return null;
+            if (WeaponExists(weaponId, out IWeapon availableWeapon))
+            {
+                if (availableWeapon is RangedWeapon rangedWeapon)
+                    return rangedWeapon.TryReload();
 
-            int nextWeaponIndex = _currentWeaponIndex - 1;
-
-            if (nextWeaponIndex < 0)
-                nextWeaponIndex = _weapons.Length - 1;
-
-            return _weapons[nextWeaponIndex];
-        }
-
-        public bool TryAddWeapon(WeaponId weaponId, Transform weaponPosition)
-        {
-            if (WeaponExists(weaponId))
                 return false;
+            }
 
             if (HasEmptySlots(out int emptySlot) == false)
                 emptySlot = DropWeapon();
@@ -151,17 +143,15 @@ namespace Roguelike.Player
 
         private int DropWeapon()
         {
-            int weaponIndexToDrop = _currentWeaponIndex == 0
-                ? _weapons.Length - 1
-                : _currentWeaponIndex;
+            int weaponIndexToDrop = _currentWeaponIndex;
 
             DroppedWeapon?.Invoke(_weapons[weaponIndexToDrop]);
 
             GameObject droppedWeapon = _lootFactory.CreateConcreteWeapon(
                 _weapons[weaponIndexToDrop].Stats.ID,
                 transform.position + transform.forward);
+            
             droppedWeapon.transform.rotation = transform.rotation;
-
             _weapons[weaponIndexToDrop] = null;
 
             return weaponIndexToDrop;
@@ -248,12 +238,12 @@ namespace Roguelike.Player
                 _currentWeaponIndex = _weapons.Length - 1;
         }
 
-        private bool WeaponExists(WeaponId weaponId)
+        private bool WeaponExists(WeaponId weaponId, out IWeapon availableWeapon)
         {
-            IWeapon weapon = _weapons.Where(weapon => weapon != null)
+            availableWeapon = _weapons.Where(weapon => weapon != null)
                 .SingleOrDefault(weapon => weapon.Stats.ID == weaponId);
 
-            return weapon != null;
+            return availableWeapon != null;
         }
 
         private bool HasEmptySlots(out int emptySlot)

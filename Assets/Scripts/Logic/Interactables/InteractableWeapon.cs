@@ -26,7 +26,7 @@ namespace Roguelike.Logic.Interactables
         {
             if (interactor.TryGetComponent(out PlayerShooter playerShooter))
             {
-                if (playerShooter.TryAddWeapon(Id, transform))
+                if (playerShooter.TryAddWeapon(Id))
                 {
                     IsActive = false;
                     interactor.GetComponent<PlayerInteraction>().Cleanup();
