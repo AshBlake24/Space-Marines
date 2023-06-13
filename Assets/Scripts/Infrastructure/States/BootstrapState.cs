@@ -56,7 +56,7 @@ namespace Roguelike.Infrastructure.States
             _services.RegisterSingle<ITimeService>(new TimeService());
             _services.RegisterSingle<IInputService>(GetInputService());
             _services.RegisterSingle<IPersistentDataService>(new PersistentDataService(
-                _services.Single<IStaticDataService>()));
+                _services.Single<IStaticDataService>(), _stateMachine));
 
             _services.RegisterSingle<ISaveLoadService>(new SaveLoadService(
                 _services.Single<IPersistentDataService>()));

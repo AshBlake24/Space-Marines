@@ -33,7 +33,7 @@ namespace Roguelike.Infrastructure.States
                     services.Single<IStaticDataService>(), services.Single<IAudioService>()),
 
                 [typeof(GameLoopState)] = new GameLoopState(this, services.Single<ISaveLoadService>(), 
-                    services.Single<ITimeService>()),
+                    services.Single<ITimeService>(), services.Single<IPersistentDataService>()),
                 
                 [typeof(ExitGameState)] = new ExitGameState(this)
             };
