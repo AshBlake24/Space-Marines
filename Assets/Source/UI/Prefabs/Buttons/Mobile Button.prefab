@@ -153,7 +153,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9ce765d9c1041198e20eef3126cb707, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _button: {fileID: 1198920005024474033}
+  Button: {fileID: 1198920005024474033}
 --- !u!114 &5913206696146115005
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -169,6 +169,8 @@ MonoBehaviour:
   _iconImage: {fileID: 6623357824612657834}
   _fireIcon: {fileID: 21300000, guid: 74da115eede011a448b67c0c44a73a67, type: 3}
   _interactionIcon: {fileID: 21300000, guid: 4de6756420e7e324e81ec5685165a9d8, type: 3}
+  _fireColor: {r: 0.8509804, g: 0.42352942, b: 0.42352942, a: 1}
+  _interactionColor: {r: 0.8509804, g: 0.73333335, b: 0.42352942, a: 1}
 --- !u!1 &7383262438938860261
 GameObject:
   m_ObjectHideFlags: 0
@@ -304,7 +306,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.9, g: 0.9, b: 0.9, a: 1}
+  m_Color: {r: 0.8509804, g: 0.42352942, b: 0.42352942, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1

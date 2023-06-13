@@ -6,7 +6,6 @@ namespace Roguelike.UI.Elements.Observers
 {
     public class ActiveSkillObserver : MonoBehaviour
     {
-        [SerializeField] private Image _icon;
         [SerializeField] private Image _cooldownMask;
 
         private PlayerSkill _playerSkill;
@@ -14,10 +13,9 @@ namespace Roguelike.UI.Elements.Observers
         private float _cooldownDurationNormilized;
         private bool _cooldown;
 
-        public void Construct(PlayerSkill playerSkill, Sprite skillIcon)
+        public void Construct(PlayerSkill playerSkill)
         {
             _playerSkill = playerSkill;
-            _icon.sprite = skillIcon;
             _cooldownMask.fillAmount = 0f;
             _cooldown = false;
 

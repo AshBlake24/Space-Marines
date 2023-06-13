@@ -9,6 +9,8 @@ namespace Roguelike.UI.Buttons
         [SerializeField] private Image _iconImage;
         [SerializeField] private Sprite _fireIcon;
         [SerializeField] private Sprite _interactionIcon;
+        [SerializeField] private Color _fireColor;
+        [SerializeField] private Color _interactionColor;
         
         private PlayerInteraction _playerInteraction;
 
@@ -26,10 +28,16 @@ namespace Roguelike.UI.Buttons
             _playerInteraction.LostInteractable -= OnLostInteractable;
         }
 
-        private void OnGotInteractable() => 
+        private void OnGotInteractable()
+        {
             _iconImage.sprite = _interactionIcon;
+            _iconImage.color = _interactionColor;
+        }
 
-        private void OnLostInteractable() => 
+        private void OnLostInteractable()
+        {
             _iconImage.sprite = _fireIcon;
+            _iconImage.color = _fireColor;
+        }
     }
 }

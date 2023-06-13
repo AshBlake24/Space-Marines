@@ -137,10 +137,13 @@ namespace Roguelike.Infrastructure.Factory
                 .Construct(characterData.Icon);
 
             hud.GetComponentInChildren<ActiveSkillObserver>()
-                .Construct(player.GetComponent<PlayerSkill>(), skillData.Icon);
+                .Construct(player.GetComponent<PlayerSkill>());
             
             hud.GetComponentInChildren<CoinsObserver>()
                 .Construct(_persistentData.PlayerProgress.Balance);
+
+            if (deviceType == EnvironmentType.Mobile)
+                InitMobileButtons(hud, player);
 
             MobileActionButton mobileActionButton = hud.GetComponentInChildren<MobileActionButton>();
 
@@ -193,6 +196,12 @@ namespace Roguelike.Infrastructure.Factory
             else
                 throw new ArgumentNullException(nameof(Camera),
                     "Camera is missing a component of CharacterSelectionMode");
+        }
+
+        private void InitMobileButtons(GameObject hud, GameObject player)
+        {
+            hud.GetComponentInChildren<UseSkillButton>()
+                .Construct(_inputService, player.GetComponent<PlayerSkill>());
         }
 
         private GameObject CreateCharacter(CharacterId id, GameObject player)
