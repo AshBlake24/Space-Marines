@@ -88,7 +88,8 @@ namespace Roguelike.Infrastructure.States
             _services.RegisterSingle<IEnemyFactory>(new EnemyFactory(
                 _services.Single<IStaticDataService>(),
                 _services.Single<ILootFactory>(),
-                _services.Single<IRandomService>()));
+                _services.Single<IRandomService>(),
+                _services.Single<IAudioFactory>()));
 
             _services.RegisterSingle<ISkillFactory>(new SkillFactory(
                 _coroutineRunner,

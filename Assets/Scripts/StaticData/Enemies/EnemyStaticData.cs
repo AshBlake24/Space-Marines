@@ -26,6 +26,9 @@ namespace Roguelike.StaticData.Enemies
         [Header("Mine enemy stats")]
         public float LifeTime;
 
+        [Header("Audio")] 
+        public AudioClip Sound;
+
         public Enum Key => Id;
     }
 }

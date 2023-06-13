@@ -1,7 +1,5 @@
-﻿
+﻿using System;
 using Roguelike.Roguelike.Enemies.Animators;
-using System.Collections;
-using System.Security.Cryptography.X509Certificates;
 using UnityEngine;
 
 namespace Roguelike.Enemies.EnemyStates
@@ -9,6 +7,8 @@ namespace Roguelike.Enemies.EnemyStates
     public class ExplosionState : EnemyState
     {
         [SerializeField] private ParticleSystem _effects;
+
+        public event Action Exploded;
 
         public override void Enter(Enemy enemy, EnemyAnimator enemyAnimator)
         {
@@ -22,6 +22,7 @@ namespace Roguelike.Enemies.EnemyStates
             EnemyHealth health = GetComponentInChildren<EnemyHealth>();
             health.TakeDamage(health.MaxHealth);
 
+            Exploded?.Invoke();
             enemy.Target.TakeDamage(enemy.Damage);
 
             if (_effects != null)
