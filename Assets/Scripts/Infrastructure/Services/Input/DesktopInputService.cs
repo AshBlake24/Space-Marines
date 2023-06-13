@@ -1,4 +1,3 @@
-using Roguelike.Infrastructure.AssetManagement;
 using Roguelike.Utilities;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -35,7 +34,11 @@ namespace Roguelike.Infrastructure.Services.Input
 
         private void OnSkillUsed() => UseSkill();
 
-        private void OnInteracted() => Interact();
+        private void OnInteracted()
+        {
+            if (Helpers.IsOverUI() == false)
+                Interact();
+        }
 
         public override bool IsAttackButtonUp() =>
             _playerInput.Player.Attack.phase == InputActionPhase.Performed

@@ -12,15 +12,15 @@ namespace Roguelike.UI.Elements
         [SerializeField] private LayoutElement _layoutElement;
         [SerializeField] private int _characterWrapLimit;
         
-        public void SetText(string content, string header, string currentTier)
+        public void SetText(string content, string header, string currentTier, string currentValue)
         {
             SetHeader(header, currentTier);
-            SetContent(content);
+            SetContent(content, currentValue);
             InitLayoutElement();
         }
 
-        private void SetContent(string content) => 
-            _content.text = content;
+        private void SetContent(string content, string currentValue) => 
+            _content.text = $"{content} by {currentValue}";
 
         private void SetHeader(string header, string currentTier)
         {

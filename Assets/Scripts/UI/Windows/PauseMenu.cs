@@ -1,4 +1,3 @@
-using System;
 using Roguelike.Data;
 using Roguelike.Infrastructure.Factory;
 using Roguelike.UI.Elements;
@@ -20,7 +19,7 @@ namespace Roguelike.UI.Windows
         
         protected override void Initialize()
         {
-            TimeService.PauseGame();
+            TimeService.PauseGame(this);
             InitEnhancementWidgets();
             _tooltip.gameObject.SetActive(false);
         }

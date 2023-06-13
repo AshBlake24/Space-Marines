@@ -15,6 +15,7 @@ namespace Roguelike.UI.Windows.Enhancements
         private string _name;
         private string _description;
         private string _currentTier;
+        private string _currentValue;
 
         public void Construct(EnhancementTooltip tooltip, EnhancementStaticData enhancementData, 
             EnhancementData enhancementProgress)
@@ -24,6 +25,7 @@ namespace Roguelike.UI.Windows.Enhancements
             _description = enhancementData.Description;
             _icon.sprite = enhancementData.Icon;
             _currentTier = enhancementProgress.Tier.ToString();
+            _currentValue = enhancementData.Tiers[enhancementProgress.Tier].Value.ToString();
         }
 
         public void OnPointerEnter(PointerEventData eventData) => Show();
@@ -37,7 +39,7 @@ namespace Roguelike.UI.Windows.Enhancements
         private void Show()
         {
             _tooltip.gameObject.SetActive(true);
-            _tooltip.SetText(_description, _name, _currentTier);
+            _tooltip.SetText(_description, _name, _currentTier, _currentValue);
         }
 
         private void Hide()

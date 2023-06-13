@@ -1,7 +1,6 @@
 using Roguelike.Infrastructure.Services.Input;
 using Roguelike.Infrastructure.Services.Windows;
 using Roguelike.Logic.Pause;
-using Roguelike.UI.Windows;
 using UnityEngine;
 
 namespace Roguelike.Player.Observers
@@ -11,7 +10,6 @@ namespace Roguelike.Player.Observers
         private IWindowService _windowService;
         private IInputService _inputService;
         private ITimeService _timeService;
-        private BaseWindow _pauseWindow;
 
         public void Construct(IWindowService windowService, IInputService inputService, ITimeService timeService)
         {
@@ -26,10 +24,10 @@ namespace Roguelike.Player.Observers
 
         private void OnPausePressed()
         {
-            if (_timeService.IsPaused == false && _pauseWindow == null)
-                _pauseWindow = _windowService.Open(WindowId.PauseMenu);
-            else if (_pauseWindow != null)
-                _pauseWindow.Close();
+            if (_timeService.IsPaused == false && _timeService.PauseMenu == null)
+                _windowService.Open(WindowId.PauseMenu);
+            else if (_timeService.PauseMenu != null)
+                _timeService.PauseMenu.Close();
         }
     }
 }

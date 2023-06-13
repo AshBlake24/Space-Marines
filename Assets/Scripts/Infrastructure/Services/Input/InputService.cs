@@ -1,5 +1,4 @@
 using System;
-using Roguelike.Infrastructure.AssetManagement;
 using UnityEngine;
 
 namespace Roguelike.Infrastructure.Services.Input
