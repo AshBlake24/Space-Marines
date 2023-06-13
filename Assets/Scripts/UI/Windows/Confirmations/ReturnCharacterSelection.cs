@@ -1,4 +1,4 @@
-namespace Roguelike.UI.Windows
+namespace Roguelike.UI.Windows.Confirmations
 {
     public class ReturnCharacterSelection : ConfirmationWindow
     {

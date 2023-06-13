@@ -16,6 +16,7 @@ using Roguelike.UI.Buttons;
 using Roguelike.UI.Elements;
 using Roguelike.UI.Elements.Audio;
 using Roguelike.UI.Windows;
+using Roguelike.UI.Windows.Confirmations;
 using Roguelike.UI.Windows.Enhancements;
 using Roguelike.UI.Windows.Regions;
 using UnityEngine;

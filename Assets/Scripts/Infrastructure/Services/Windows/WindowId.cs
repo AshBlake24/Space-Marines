@@ -15,6 +15,7 @@ namespace Roguelike.Infrastructure.Services.Windows
         Authorization = 10,
         RangedWeaponStatsWindow = 11,
         RegionSelectionWindow = 12,
-        EnhancementShop = 13
+        EnhancementShop = 13,
+        ResetProgressWindow = 14
     }
 }

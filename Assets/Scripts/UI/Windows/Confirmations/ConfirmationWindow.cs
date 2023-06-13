@@ -4,7 +4,7 @@ using Roguelike.Infrastructure.Services.StaticData;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Roguelike.UI.Windows
+namespace Roguelike.UI.Windows.Confirmations
 {
     public abstract class ConfirmationWindow : BaseWindow
     {
