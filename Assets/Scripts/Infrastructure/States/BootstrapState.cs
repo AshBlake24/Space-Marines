@@ -101,7 +101,8 @@ namespace Roguelike.Infrastructure.States
                 _services.Single<ISaveLoadService>(),
                 _services.Single<IProjectileFactory>(),
                 _services.Single<IRandomService>(),
-                _services.Single<IAudioFactory>()));
+                _services.Single<IAudioFactory>(),
+                _services.Single<IPersistentDataService>()));
 
             _services.RegisterSingle<IUIFactory>(new UIFactory(
                 _services.Single<IAssetProvider>(),

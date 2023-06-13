@@ -29,13 +29,14 @@ namespace Roguelike.Weapons
         public override WeaponStats Stats => _stats;
         public AmmoData AmmoData { get; private set; }
 
-        public void Construct(RangedWeaponStats stats, IProjectileFactory projectileFactory, IRandomService randomService)
+        public void Construct(RangedWeaponStats stats, AmmoData ammoData, IProjectileFactory projectileFactory,
+            IRandomService randomService)
         {
             _stats = stats;
             _random = randomService;
             _projectileFactory = projectileFactory;
             _chanceToConsumeAmmo = DefaultChanceToConsumeAmmo;
-            AmmoData = new AmmoData(infinityAmmo: false, stats.MaxAmmo, stats.MaxAmmo);
+            AmmoData = ammoData ?? new AmmoData(infinityAmmo: false, stats.MaxAmmo, stats.MaxAmmo);
             TotalDamage = stats.Damage;
 
             CreateProjectilesPool();

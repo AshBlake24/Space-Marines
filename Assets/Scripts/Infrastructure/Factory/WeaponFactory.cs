@@ -1,6 +1,9 @@
 using System;
+using System.Linq;
 using Roguelike.Audio.Factory;
 using Roguelike.Audio.Sounds;
+using Roguelike.Data;
+using Roguelike.Infrastructure.Services.PersistentData;
 using Roguelike.Infrastructure.Services.Random;
 using Roguelike.Infrastructure.Services.SaveLoad;
 using Roguelike.Infrastructure.Services.StaticData;
@@ -19,15 +22,18 @@ namespace Roguelike.Infrastructure.Factory
         private readonly IProjectileFactory _projectileFactory;
         private readonly IRandomService _randomService;
         private readonly IAudioFactory _audioFactory;
+        private readonly IPersistentDataService _persistentData;
 
         public WeaponFactory(IStaticDataService staticDataService, ISaveLoadService saveLoadService,
-            IProjectileFactory projectileFactory, IRandomService randomService, IAudioFactory audioFactory)
+            IProjectileFactory projectileFactory, IRandomService randomService, IAudioFactory audioFactory, 
+            IPersistentDataService persistentData)
         {
             _staticDataService = staticDataService;
             _saveLoadService = saveLoadService;
             _projectileFactory = projectileFactory;
             _randomService = randomService;
             _audioFactory = audioFactory;
+            _persistentData = persistentData;
         }
 
         public IWeapon CreateWeapon(WeaponId id, Transform parent)
@@ -56,7 +62,10 @@ namespace Roguelike.Infrastructure.Factory
                 : Object.Instantiate(weaponData.WeaponPrefab, parent.position, Quaternion.identity, parent)
                     .GetComponent<RangedWeapon>();
 
-            weapon.Construct(InitializeRangedWeaponStats(weaponData), _projectileFactory, _randomService);
+            AmmoData ammoData = _persistentData.PlayerProgress.PlayerWeapons.RangedWeaponsData
+                .SingleOrDefault(data => data.ID == weaponData.Id)?.AmmoData;
+            
+            weapon.Construct(InitializeRangedWeaponStats(weaponData), ammoData, _projectileFactory, _randomService);
             weapon.transform.localPosition = weapon.PositionOffset;
             weapon.transform.localRotation = Quaternion.Euler(weapon.RotationOffset);
             weapon.GetComponent<AudioPlayer>().Construct(_audioFactory, weaponData.Clip);
