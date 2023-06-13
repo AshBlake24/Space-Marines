@@ -6,7 +6,7 @@ namespace Roguelike.UI.Buttons
 {
     public class MobileActionButton : MonoBehaviour
     {
-        [SerializeField] private Image _buttonImage;
+        [SerializeField] private Image _iconImage;
         [SerializeField] private Sprite _fireIcon;
         [SerializeField] private Sprite _interactionIcon;
         
@@ -15,7 +15,7 @@ namespace Roguelike.UI.Buttons
         public void Construct(PlayerInteraction playerInteraction)
         {
             _playerInteraction = playerInteraction;
-            _buttonImage.sprite = _fireIcon;
+            _iconImage.sprite = _fireIcon;
             _playerInteraction.GotInteractable += OnGotInteractable;
             _playerInteraction.LostInteractable += OnLostInteractable;
         }
@@ -27,9 +27,9 @@ namespace Roguelike.UI.Buttons
         }
 
         private void OnGotInteractable() => 
-            _buttonImage.sprite = _interactionIcon;
+            _iconImage.sprite = _interactionIcon;
 
         private void OnLostInteractable() => 
-            _buttonImage.sprite = _fireIcon;
+            _iconImage.sprite = _fireIcon;
     }
 }
