@@ -25,11 +25,11 @@ namespace Roguelike.Audio.Service
             _mixer = Resources.Load<AudioMixer>(AssetPath.AudioMixerPath);
         }
 
+        public bool IsChannelMuted(AudioChannel channel) =>
+            _audioSettings[channel].IsMuted;
+
         public float GetChannelVolumeLinear(AudioChannel channel) =>
             _audioSettings[channel].Value;
-
-        public bool GetChannelMute(AudioChannel channel) =>
-            _audioSettings[channel].IsMuted;
 
         public void SetChannelVolume(AudioChannel channel, float value)
         {
@@ -55,7 +55,12 @@ namespace Roguelike.Audio.Service
                 .ToDictionary(settings => settings.Channel);
 
             foreach (AudioChannel audioChannel in _audioSettings.Keys)
-                _mixer.SetFloat(audioChannel.ToString(), ConvertToLogVolume(_audioSettings[audioChannel].Value));
+            {
+                _mixer.SetFloat(audioChannel.ToString(),
+                    IsChannelMuted(audioChannel)
+                        ? ConvertToLogVolume(MinLinearValue)
+                        : ConvertToLogVolume(_audioSettings[audioChannel].Value));
+            }
         }
 
         private static float ConvertToLogVolume(float value) =>

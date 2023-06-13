@@ -20,7 +20,7 @@ namespace Roguelike.UI.Elements.Audio
         public void Init(IAudioService audioService)
         {
             _audioService = audioService;
-            _toggle.isOn = _audioService.GetChannelMute(_audioChannel);
+            _toggle.isOn = !_audioService.IsChannelMuted(_audioChannel);
             OnToggleValueChanged(_toggle.isOn);
         }
 
