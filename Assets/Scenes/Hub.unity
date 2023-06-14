@@ -1271,8 +1271,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 762724475035088149, guid: f5b8e81f02a915d4fb4be69b6257ca89, type: 3}
       propertyPath: m_Volume
-      value: 0.3
+      value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 762724475035088149, guid: f5b8e81f02a915d4fb4be69b6257ca89, type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: c7ed01b860940934283c9d6fee1c9d89, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f5b8e81f02a915d4fb4be69b6257ca89, type: 3}
 --- !u!4 &1138118006 stripped
@@ -4960,11 +4964,15 @@ PrefabInstance:
     - target: {fileID: 8079448463673158537, guid: 094ef69d4803ddf48ad56dc5d59a3ea8, type: 3}
       propertyPath: _openDoorSound
       value: 
-      objectReference: {fileID: 8300000, guid: 7f4bebffd7a7ae041959c2acd1456e0e, type: 3}
+      objectReference: {fileID: 8300000, guid: be7db0e71c7d8bb4ea6f32624a38083e, type: 3}
     - target: {fileID: 8079448463673158537, guid: 094ef69d4803ddf48ad56dc5d59a3ea8, type: 3}
       propertyPath: _openStateTime
       value: 1.5
       objectReference: {fileID: 0}
+    - target: {fileID: 8079448463673158537, guid: 094ef69d4803ddf48ad56dc5d59a3ea8, type: 3}
+      propertyPath: _closeDoorSound
+      value: 
+      objectReference: {fileID: 8300000, guid: be7db0e71c7d8bb4ea6f32624a38083e, type: 3}
     - target: {fileID: 8079448463673158537, guid: 094ef69d4803ddf48ad56dc5d59a3ea8, type: 3}
       propertyPath: _animationDuration
       value: 0.4

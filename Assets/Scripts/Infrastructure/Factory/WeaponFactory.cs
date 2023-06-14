@@ -62,9 +62,12 @@ namespace Roguelike.Infrastructure.Factory
                 : Object.Instantiate(weaponData.WeaponPrefab, parent.position, Quaternion.identity, parent)
                     .GetComponent<RangedWeapon>();
 
-            AmmoData ammoData = _persistentData.PlayerProgress.PlayerWeapons.RangedWeaponsData
-                .SingleOrDefault(data => data.ID == weaponData.Id)?.AmmoData;
-            
+            AmmoData ammoData = null;
+
+            if (_persistentData.PlayerProgress != null)
+                ammoData = _persistentData.PlayerProgress.PlayerWeapons.RangedWeaponsData
+                    .SingleOrDefault(data => data.ID == weaponData.Id)?.AmmoData;
+
             weapon.Construct(InitializeRangedWeaponStats(weaponData), ammoData, _projectileFactory, _randomService);
             weapon.transform.localPosition = weapon.PositionOffset;
             weapon.transform.localRotation = Quaternion.Euler(weapon.RotationOffset);
