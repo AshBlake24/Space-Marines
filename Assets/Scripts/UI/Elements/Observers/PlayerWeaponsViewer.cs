@@ -37,7 +37,10 @@ namespace Roguelike.UI.Elements.Observers
             _rarityColors = rarityColors;
             _currentWeaponDefaultPosition = _currentWeaponRectTransform.anchoredPosition;
             _nextWeaponPosition = _nextWeaponRectTransform.anchoredPosition - _currentWeaponDefaultPosition;
-
+            
+            InitSwapAnimationSequence();
+            SetCurrentWeapon();
+            
             _playerShooter.WeaponChanged += OnWeaponChanged;
         }
 
@@ -57,8 +60,8 @@ namespace Roguelike.UI.Elements.Observers
                 return;
             }
             
-            _swapAnimationSequence.Kill();
-            InitSwapAnimationSequence();
+            _swapAnimationSequence.Restart();
+            _swapAnimationSequence.Play();
         }
 
         private void InitSwapAnimationSequence()
@@ -75,6 +78,8 @@ namespace Roguelike.UI.Elements.Observers
             _swapAnimationSequence.Append(_currentWeaponRectTransform
                 .DOAnchorPos(_currentWeaponDefaultPosition, _swapDuration)
                 .SetEase(Ease.OutQuad));
+            
+            _swapAnimationSequence.SetAutoKill(false);
         }
 
         private void SetCurrentWeapon()

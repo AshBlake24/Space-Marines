@@ -1,3 +1,4 @@
+using System;
 using Roguelike.Infrastructure.Services.StaticData;
 using Roguelike.StaticData.Characters;
 using Roguelike.StaticData.Levels;
@@ -24,38 +25,19 @@ namespace Roguelike.UI.Windows
         {
             LevelId currentLevel = ProgressService.PlayerProgress.WorldData.CurrentLevel;
 
-            if (currentLevel == LevelId.Dungeon)
-            {
-                Sprite characterIcon = _staticData
-                    .GetDataById<CharacterId, CharacterStaticData>(ProgressService.PlayerProgress.Character)
-                    .Icon;
+            if (currentLevel != LevelId.Dungeon)
+                throw new ArgumentOutOfRangeException(nameof(currentLevel), "Player died out of the dungeon");
+            
+            Sprite characterIcon = _staticData
+                .GetDataById<CharacterId, CharacterStaticData>(ProgressService.PlayerProgress.Character)
+                .Icon;
                 
-                RegionStaticData regionStaticData = _staticData.GetDataById<LevelId, RegionStaticData>(currentLevel);
-                int stagesCount = regionStaticData.StagesCount;
-                
-                (int stage, string label) = GetLevelInfo(currentLevel);
-                
-                GetComponentInChildren<GameOverStageViewer>()
-                    .Construct(stage, label, stagesCount, characterIcon);
-            }
-        }
+            int stagesCount = _staticData.GetDataById<LevelId, RegionStaticData>(currentLevel).StagesCount;
+            int stage = (int) ProgressService.PlayerProgress.WorldData.CurrentStage;
+            string label = ProgressService.PlayerProgress.WorldData.CurrentStage.ToLabel();
 
-        private (int, string) GetLevelInfo(LevelId currentLevel)
-        {
-            (int stage, string label) levelInfo;
-
-            if (currentLevel == LevelId.Hub)
-            {
-                levelInfo.label = "Hub";
-                levelInfo.stage = 0;
-            }
-            else
-            {
-                levelInfo.label = ProgressService.PlayerProgress.WorldData.CurrentStage.ToLabel();
-                levelInfo.stage = (int) ProgressService.PlayerProgress.WorldData.CurrentStage;
-            }
-
-            return levelInfo;
+            GetComponentInChildren<GameOverStageViewer>()
+                .Construct(stage, label, stagesCount, characterIcon);
         }
     }
 }

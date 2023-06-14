@@ -1,3 +1,4 @@
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -36,9 +37,9 @@ namespace Roguelike.UI.Elements.GameOver
         {
             _currentLevelViewer.SetActive(true);
             _slider.maxValue = _stagesCount;
-            _slider.value = currentStage;
             _characterIcon.sprite = characterIcon;
             _stageLabel.text = stageLabel;
+            _slider.value = currentStage;
         }
 
         private void ConstructStructure()
