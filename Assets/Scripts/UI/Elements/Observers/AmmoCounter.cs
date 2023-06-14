@@ -19,13 +19,13 @@ namespace Roguelike.UI.Elements.Observers
         public void Construct(PlayerShooter playerShooter)
         {
             _playerShooter = playerShooter;
-            _playerShooter.WeaponChanged += OnWeaponChaged;
+            _playerShooter.WeaponChanged += OnWeaponChanged;
         }
 
         private void OnDestroy() =>
-            _playerShooter.WeaponChanged -= OnWeaponChaged;
+            _playerShooter.WeaponChanged -= OnWeaponChanged;
 
-        private void OnWeaponChaged()
+        private void OnWeaponChanged()
         {
             UnsubscribeWeapon();
 

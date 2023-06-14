@@ -207,21 +207,21 @@ namespace Roguelike.Player
 
         private void OnWeaponChanged(bool switchToNext)
         {
-            if (Time.time > _lastWeaponSwitchTime + _weaponSwitchCooldown)
-            {
-                int weaponsCount = _weapons.Count(weapon => weapon != null);
+            if ((Time.time > (_lastWeaponSwitchTime + _weaponSwitchCooldown)) == false) 
+                return;
+            
+            int weaponsCount = _weapons.Count(weapon => weapon != null);
 
-                if (weaponsCount <= 1)
-                    return;
+            if (weaponsCount <= 1)
+                return;
 
-                do
-                    SwitchWeaponIndex(switchToNext);
-                while (_weapons[_currentWeaponIndex] == null);
+            do
+                SwitchWeaponIndex(switchToNext);
+            while (_weapons[_currentWeaponIndex] == null);
 
-                SetWeapon();
+            SetWeapon();
 
-                _lastWeaponSwitchTime = Time.time;
-            }
+            _lastWeaponSwitchTime = Time.time;
         }
 
         private void SwitchWeaponIndex(bool switchToNext)
