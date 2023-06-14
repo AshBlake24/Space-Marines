@@ -107,13 +107,16 @@ namespace Roguelike.Infrastructure.Factory
             return player;
         }
 
-        public GameObject CreateHud(GameObject player)
+        public GameObject CreateHud(GameObject player, bool createMinimap)
         {
             EnvironmentType deviceType = _environmentService.GetDeviceType();
 
             GameObject hud = _assetProvider.InstantiateRegistered(deviceType == EnvironmentType.Desktop
                 ? AssetPath.DesktopHudPath
                 : AssetPath.MobileHudPath);
+            
+            if (createMinimap)
+                Object.Instantiate(Resources.Load(AssetPath.MiniMapPath), hud.transform);
 
             PlayerShooter playerShooter = player.GetComponent<PlayerShooter>();
             CharacterStaticData characterData = _staticDataService

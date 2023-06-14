@@ -125,7 +125,7 @@ namespace Roguelike.Logic.CharacterSelection
 
         private void InitHud(GameObject player)
         {
-            GameObject hud = _gameFactory.CreateHud(player);
+            GameObject hud = _gameFactory.CreateHud(player, createMiniMap: false);
             Button button = Instantiate(_characterSelectionButton, hud.transform);
             
             if (button.TryGetComponent(out OpenWindowButton openWindowButton))

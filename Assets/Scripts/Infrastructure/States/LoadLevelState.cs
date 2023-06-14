@@ -135,7 +135,7 @@ namespace Roguelike.Infrastructure.States
         }
 
         private void InitHud(GameObject player) =>
-            _gameFactory.CreateHud(player);
+            _gameFactory.CreateHud(player, createMiniMap: true);
 
         private void InitCamera(GameObject player) => 
             _gameFactory.CreatePlayerCamera(player);
