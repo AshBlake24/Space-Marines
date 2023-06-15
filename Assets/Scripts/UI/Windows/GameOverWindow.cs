@@ -1,4 +1,5 @@
 using System;
+using Roguelike.Animations.UI;
 using Roguelike.Infrastructure.Services.StaticData;
 using Roguelike.StaticData.Characters;
 using Roguelike.StaticData.Levels;
@@ -10,6 +11,8 @@ namespace Roguelike.UI.Windows
 {
     public class GameOverWindow : BaseWindow
     {
+        [SerializeField] private GameOverWindowAnimations _gameOverWindowAnimations;
+        
         private IStaticDataService _staticData;
 
         public void Construct(IStaticDataService staticData) => 
@@ -37,7 +40,10 @@ namespace Roguelike.UI.Windows
             string label = ProgressService.PlayerProgress.WorldData.CurrentStage.ToLabel();
 
             GetComponentInChildren<GameOverStageViewer>()
-                .Construct(stage, label, stagesCount, characterIcon);
+                .Construct(label, stagesCount, characterIcon);
+            
+            _gameOverWindowAnimations.Init(stage);
+            _gameOverWindowAnimations.Play();
         }
     }
 }

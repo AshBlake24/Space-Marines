@@ -1,4 +1,3 @@
-using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -7,14 +6,13 @@ namespace Roguelike.UI.Elements.GameOver
 {
     public class GameOverStageViewer : MonoBehaviour
     {
-        [Header("View")]
+        [Header("Content")]
         [SerializeField] private StageView _hubView;
         [SerializeField] private StageView _stageView;
         [SerializeField] private StageView _bossStageView;
         [SerializeField] private RectTransform _parent;
 
         [Header("Current Stage Viewer")] 
-        [SerializeField] private GameObject _currentLevelViewer;
         [SerializeField] private Slider _slider;
         [SerializeField] private Image _characterIcon;
         [SerializeField] private TextMeshProUGUI _stageLabel;
@@ -23,23 +21,20 @@ namespace Roguelike.UI.Elements.GameOver
         private float _elementsSpacing;
         private Vector3 _currentElementPosition;
         
-        public void Construct(int currentStage, string stageLabel, int stagesCount, Sprite characterIcon)
+        public void Construct(string stageLabel, int stagesCount, Sprite characterIcon)
         {
             _stagesCount = stagesCount;
-            _parent.sizeDelta = new Vector2(_parent.rect.width, _hubView.RectTransform.rect.height);
 
             CalculateSpacing();
             ConstructStructure();
-            InitCurrentStageViewer(currentStage, characterIcon, stageLabel);
+            InitCurrentStageViewer(characterIcon, stageLabel);
         }
 
-        private void InitCurrentStageViewer(int currentStage, Sprite characterIcon, string stageLabel)
+        private void InitCurrentStageViewer(Sprite characterIcon, string stageLabel)
         {
-            _currentLevelViewer.SetActive(true);
             _slider.maxValue = _stagesCount;
             _characterIcon.sprite = characterIcon;
             _stageLabel.text = stageLabel;
-            _slider.value = currentStage;
         }
 
         private void ConstructStructure()

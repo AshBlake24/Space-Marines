@@ -1,3 +1,4 @@
+using DG.Tweening;
 using Roguelike.Audio.Factory;
 using Roguelike.Audio.Service;
 using Roguelike.Infrastructure.AssetManagement;
@@ -34,6 +35,7 @@ namespace Roguelike.Infrastructure.States
             _coroutineRunner = coroutineRunner;
 
             RegisterServices();
+            DOTween.Init();
         }
 
         public void Enter() =>

@@ -22,5 +22,7 @@ namespace Roguelike.Infrastructure.AssetManagement
         public const string MusicStaticDataPath = "StaticData/Audio/MusicStaticData";
         public const string BackgroundMusicPath = "Audio/BackgroundMusic";
         public const string MiniMapPath = "UI/Elements/Minimap";
+        public const string EnhancementViewPath = "UI/Elements/EnhancementView";
+        public const string WeaponViewPath = "UI/Elements/WeaponView";
     }
 }

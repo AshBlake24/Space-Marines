@@ -1,4 +1,7 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using Roguelike.Animations.UI;
 using Roguelike.Audio.Service;
 using Roguelike.Data;
 using Roguelike.Infrastructure.AssetManagement;
@@ -10,11 +13,13 @@ using Roguelike.Infrastructure.Services.Windows;
 using Roguelike.Logic.Pause;
 using Roguelike.Player;
 using Roguelike.StaticData.Enhancements;
+using Roguelike.StaticData.Loot.Rarity;
 using Roguelike.StaticData.Weapons;
 using Roguelike.StaticData.Windows;
 using Roguelike.UI.Buttons;
 using Roguelike.UI.Elements;
 using Roguelike.UI.Elements.Audio;
+using Roguelike.UI.Elements.Views;
 using Roguelike.UI.Windows;
 using Roguelike.UI.Windows.Confirmations;
 using Roguelike.UI.Windows.Enhancements;
@@ -69,7 +74,7 @@ namespace Roguelike.Infrastructure.Factory
 
                     break;
                 case GameOverWindow gameOverWindow:
-                    gameOverWindow.Construct(_staticData);
+                    InitGameOverWindow(gameOverWindow);
 
                     break;
                 case RegionSelectionWindow regionSelectionWindow:
@@ -144,6 +149,80 @@ namespace Roguelike.Infrastructure.Factory
 
         public void CreateUIRoot() =>
             _uiRoot = _assetProvider.Instantiate(AssetPath.UIRootPath).transform;
+
+        private void InitGameOverWindow(GameOverWindow gameOverWindow)
+        {
+            gameOverWindow.Construct(_staticData);
+            
+            if (gameOverWindow.TryGetComponent(out GameOverWindowAnimations gameOverWindowAnimations))
+            {
+                GameObject[] weapons = 
+                    CreateWeaponViews(gameOverWindowAnimations.WeaponsContent);
+                
+                GameObject[] enhancements = 
+                    CreateEnhancementViews(gameOverWindowAnimations.EnhancementsContent);
+                
+                gameOverWindowAnimations.Construct(weapons, enhancements);
+            }
+        }
+
+        private GameObject[] CreateEnhancementViews(Transform parent)
+        {
+            List<GameObject> enhancements = new();
+            List<EnhancementData> playerEnhancements = _progressService.PlayerProgress.State.Enhancements;
+
+            foreach (EnhancementData enhancementData in playerEnhancements)
+            {
+                EnhancementStaticData staticData = _staticData
+                    .GetDataById<EnhancementId, EnhancementStaticData>(enhancementData.Id);
+
+                GameObject instance = _assetProvider.Instantiate(AssetPath.EnhancementViewPath, parent);
+
+                if (instance.TryGetComponent(out EnhancementView view) == false)
+                {
+                    throw new ArgumentNullException(nameof(instance), 
+                        $"Instance does not contain {nameof(EnhancementView)} component");
+                }
+                
+                view.Construct(staticData.Icon, enhancementData.Tier);
+                instance.transform.localScale = Vector2.zero;
+                enhancements.Add(instance);
+            }
+
+            return enhancements.ToArray();
+        }
+
+        private GameObject[] CreateWeaponViews(Transform parent)
+        {
+            List<GameObject> weapons = new();
+            WeaponId[] availableWeapons = _progressService.PlayerProgress.PlayerWeapons.Weapons;
+
+            foreach (WeaponId weaponId in availableWeapons)
+            {
+                if (weaponId == WeaponId.Unknow)
+                    continue;
+                
+                WeaponStaticData staticData = _staticData
+                    .GetDataById<WeaponId, WeaponStaticData>(weaponId);
+                
+                Dictionary<RarityId, Color> rarityColors = _staticData.GetAllDataByType<RarityId, RarityStaticData>()
+                    .ToDictionary(data => data.Id, data => data.Color);
+                
+                GameObject instance = _assetProvider.Instantiate(AssetPath.WeaponViewPath, parent);
+                
+                if (instance.TryGetComponent(out WeaponView view) == false)
+                {
+                    throw new ArgumentNullException(nameof(instance), 
+                        $"Instance does not contain {nameof(WeaponView)} component");
+                }
+                
+                view.Construct(staticData.Icon, rarityColors[staticData.Rarity]);
+                instance.transform.localScale = Vector2.zero;
+                weapons.Add(instance);
+            }
+
+            return weapons.ToArray();
+        }
 
         private void InitOptionsMenu(OptionsMenu optionsMenu)
         {
