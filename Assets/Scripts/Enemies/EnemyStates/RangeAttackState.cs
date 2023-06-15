@@ -89,24 +89,18 @@ namespace Roguelike.Enemies.EnemyStates
         private void OnTakeFromPool(Projectile projectile)
         {
             Vector3 direction;
-            projectile.transform.SetPositionAndRotation(_shotPoint.position, _shotPoint.rotation);
+            projectile.transform.SetPositionAndRotation(_shotPoint.position, Quaternion.identity);
             projectile.gameObject.SetActive(true);
             if (_shotPoints.Count <= 1)
             {
                 direction = (enemy.Target.transform.position - transform.position).normalized;
-                projectile.ClearVFX();
-                projectile.Init(enemy.Damage, _projectileSpeed, direction);
             }
             else
             {
-                foreach (var point in _shotPoints)
-                {
-                    _shotPoint = point;
-                    direction = (_shotPoint.transform.position - _point.transform.position).normalized;
-                    projectile.ClearVFX();
-                    projectile.Init(enemy.Damage, _projectileSpeed, direction);
-                }
+                 direction = (_shotPoint.transform.position - _point.transform.position).normalized;
             }
+            projectile.ClearVFX();
+            projectile.Init(enemy.Damage, _projectileSpeed, direction);
         }
 
         private void OnReleaseToPool(Projectile bullet) =>
