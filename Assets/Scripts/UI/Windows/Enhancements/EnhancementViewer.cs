@@ -122,6 +122,7 @@ namespace Roguelike.UI.Windows.Enhancements
 
         private void OnSellButtonClick()
         {
+            _progressService.PlayerProgress.Statistics.EnhancementsBought++;
             _progressService.PlayerProgress.Balance.WithdrawCoins(_enhancementData.Tiers[_enhancementProgress.Tier].Price);
 
             if (_playerEnhancements.EnhancementExist(_enhancementData.Id) == false)
@@ -134,7 +135,8 @@ namespace Roguelike.UI.Windows.Enhancements
         }
 
         private bool PlayerHasMoney() =>
-            _progressService.PlayerProgress.Balance.Coins >= _enhancementData.Tiers[_enhancementProgress.Tier].Price;
+            _progressService.PlayerProgress.Balance.Coins >= 
+            _enhancementData.Tiers[_enhancementProgress.Tier].Price;
 
         private bool CurrentTierIsMax() =>
             _enhancementProgress.Tier >= _enhancementData.Tiers.Length;

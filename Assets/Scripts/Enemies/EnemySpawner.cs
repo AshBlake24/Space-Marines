@@ -4,7 +4,6 @@ using Roguelike.Player;
 using Roguelike.StaticData.Levels.Spawner;
 using System.Collections.Generic;
 using Roguelike.Data;
-using Roguelike.Infrastructure.Services.PersistentData;
 using UnityEngine;
 
 namespace Roguelike.Enemies
@@ -22,8 +21,8 @@ namespace Roguelike.Enemies
         private Room _room;
         private List<SpawnPoint> _readySpawnPoints;
         private PlayerHealth _player;
-        private IEnemyFactory _enemyFactory;
         private PlayerProgress _playerProgress;
+        private IEnemyFactory _enemyFactory;
 
         private void OnDisable()
         {
@@ -112,7 +111,7 @@ namespace Roguelike.Enemies
             if (_enemiesInRoom.Count == 0)
                 _room.OpenDoor();
 
-            _playerProgress.KillData.CurrentKillData.AddKill();
+            _playerProgress.Statistics.KillData.CurrentKillData.AddKill();
             _playerProgress.Balance.AddCoins(enemyHealth.GetComponentInParent<EnemyStateMachine>().Enemy.Coins);
         }
 

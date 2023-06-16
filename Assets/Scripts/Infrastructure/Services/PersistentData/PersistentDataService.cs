@@ -25,7 +25,7 @@ namespace Roguelike.Infrastructure.Services.PersistentData
         {
             PlayerProgress.State.Reset();
             PlayerProgress.Balance.Reset();
-            PlayerProgress.KillData.CurrentKillData.Reset();
+            PlayerProgress.Statistics.KillData.CurrentKillData.Reset();
             PlayerProgress.WorldData = new WorldData(
                 _staticData.GameConfig.StartPlayerLevel,
                 _staticData.GameConfig.StartPlayerStage);

@@ -76,8 +76,6 @@ namespace Roguelike.Player
 
         private void SwitchComponents(bool isOn)
         {
-            Debug.Log("Switch to " + isOn);
-
             for (int i = 0; i < _componentsToDeactivate.Length; i++) 
                 _componentsToDeactivate[i].enabled = isOn;
         }

@@ -13,7 +13,7 @@ namespace Roguelike.Data
         public WorldData WorldData;
         public PlayerWeapons PlayerWeapons;
         public Settings Settings;
-        public KillData KillData;
+        public Statistics Statistics;
         public CharacterId Character;
 
         public PlayerProgress(LevelId startLevel, StageId startStage = StageId.Unknown)
@@ -23,7 +23,7 @@ namespace Roguelike.Data
             WorldData = new WorldData(startLevel, startStage);
             PlayerWeapons = new PlayerWeapons(null, 0);
             Settings = new Settings();
-            KillData = new KillData();
+            Statistics = new Statistics();
         }
     }
 }
