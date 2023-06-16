@@ -16,16 +16,14 @@ namespace Roguelike.Data
         public KillData KillData;
         public CharacterId Character;
 
-        public PlayerProgress(LevelId startLevel, StageId startStage, CharacterId startCharacter, IWeapon startWeapon,
-            int maxWeaponsCount)
+        public PlayerProgress(LevelId startLevel, StageId startStage = StageId.Unknown)
         {
             State = new State();
             Balance = new Balance();
             WorldData = new WorldData(startLevel, startStage);
-            PlayerWeapons = new PlayerWeapons(startWeapon, maxWeaponsCount);
+            PlayerWeapons = new PlayerWeapons(null, 0);
             Settings = new Settings();
             KillData = new KillData();
-            Character = startCharacter;
         }
     }
 }

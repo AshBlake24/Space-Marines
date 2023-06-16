@@ -39,6 +39,9 @@ namespace Roguelike.Data
 
         private void InitStartWeapon(IWeapon startWeapon)
         {
+            if (startWeapon == null)
+                return;
+            
             Weapons[0] = startWeapon.Stats.ID;
             CurrentWeapon = startWeapon.Stats.ID;
             

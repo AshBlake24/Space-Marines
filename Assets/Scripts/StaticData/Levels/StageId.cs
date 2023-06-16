@@ -11,6 +11,7 @@
         Level23 = 6,
         Level31 = 7,
         Level32 = 8,
-        Level33 = 9
+        Level33 = 9,
+        Unknown
     }
 }

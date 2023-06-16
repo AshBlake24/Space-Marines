@@ -51,24 +51,7 @@ namespace Roguelike.Infrastructure.States
             _audioService.LoadVolumeSettings();
         }
 
-        private PlayerProgress CreateNewProgress()
-        {
-            IWeapon startWeapon = _weaponFactory.CreateWeapon(_staticDataService.Player.StartCharacter.StartWeapon);
-            int maxWeaponsCount = _staticDataService
-                .GetDataById<CharacterId, CharacterStaticData>(_staticDataService.Player.StartCharacter.Id)
-                .MaxWeaponsCount;
-
-            PlayerProgress playerProgress = new(
-                _staticDataService.GameConfig.StartPlayerLevel,
-                _staticDataService.GameConfig.StartPlayerStage,
-                _staticDataService.Player.StartCharacter.Id,
-                startWeapon,
-                maxWeaponsCount);
-
-            playerProgress.State.MaxHealth = _staticDataService.Player.StartCharacter.MaxHealth;
-            playerProgress.State.Reset();
-
-            return playerProgress;
-        }
+        private PlayerProgress CreateNewProgress() => 
+            new(_staticDataService.GameConfig.StartPlayerLevel);
     }
 }
