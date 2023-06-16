@@ -3,6 +3,8 @@ using Roguelike.Level;
 using Roguelike.Player;
 using Roguelike.StaticData.Levels.Spawner;
 using System.Collections.Generic;
+using Roguelike.Data;
+using Roguelike.Infrastructure.Services.PersistentData;
 using UnityEngine;
 
 namespace Roguelike.Enemies
@@ -15,12 +17,13 @@ namespace Roguelike.Enemies
 
         private float _encounterComplexity;
         private EnterTriger _enterPoint;
-        private SpawnerStaticData _data; 
+        private SpawnerStaticData _data;
         private List<EnemyHealth> _enemiesInRoom;
         private Room _room;
         private List<SpawnPoint> _readySpawnPoints;
         private PlayerHealth _player;
         private IEnemyFactory _enemyFactory;
+        private CurrentKillData _currentKillData;
 
         private void OnDisable()
         {
@@ -32,9 +35,11 @@ namespace Roguelike.Enemies
             }
         }
 
-        public void Init(IEnemyFactory enemyFactory, float minEncounterComplexity, float maxEncounerComplexity, SpawnerStaticData data)
+        public void Init(IEnemyFactory enemyFactory, CurrentKillData currentKillData,
+            float minEncounterComplexity, float maxEncounerComplexity, SpawnerStaticData data)
         {
             _enemyFactory = enemyFactory;
+            _currentKillData = currentKillData;
             _encounterComplexity = data.Complexity * Random.Range(minEncounterComplexity, maxEncounerComplexity);
 
             _data = data;
@@ -56,7 +61,8 @@ namespace Roguelike.Enemies
 
         private GameObject GenerateEnemy(Transform spawnPosition, PlayerHealth target)
         {
-            GameObject enemyPrefab = _enemyFactory.CreateEnemy(spawnPosition, _data.Enemies[Random.Range(0, _data.Enemies.Count)], target);
+            GameObject enemyPrefab = _enemyFactory.CreateEnemy(spawnPosition,
+                _data.Enemies[Random.Range(0, _data.Enemies.Count)], target);
 
             enemyPrefab.SetActive(false);
 
@@ -80,7 +86,7 @@ namespace Roguelike.Enemies
             if (_data.MinSpawnPointsInWave < _readySpawnPoints.Count)
                 spawnPointsCount = Random.Range(_data.MinSpawnPointsInWave, _readySpawnPoints.Count + 1);
 
-            for (int i =0; i < spawnPointsCount; i++)
+            for (int i = 0; i < spawnPointsCount; i++)
             {
                 Spawn();
 
@@ -106,6 +112,8 @@ namespace Roguelike.Enemies
 
             if (_enemiesInRoom.Count == 0)
                 _room.OpenDoor();
+
+            _currentKillData.AddKill();
         }
 
         private void OnEnemySpawned(SpawnPoint spawnpoint, GameObject enemyPrefab)

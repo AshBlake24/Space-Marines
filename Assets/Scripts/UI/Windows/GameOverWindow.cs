@@ -22,6 +22,7 @@ namespace Roguelike.UI.Windows
         {
             TimeService.PauseGame();
             InitStageViewer();
+            UpdateStatistics();
         }
 
         private void InitStageViewer()
@@ -41,9 +42,19 @@ namespace Roguelike.UI.Windows
 
             GetComponentInChildren<GameOverStageViewer>()
                 .Construct(label, stagesCount, characterIcon);
+
+            int kills = ProgressService.PlayerProgress.KillData.CurrentKillData.Kills;
             
-            _gameOverWindowAnimations.Init(stage);
+            _gameOverWindowAnimations.Init(stage, 100, kills);
             _gameOverWindowAnimations.Play();
+        }
+
+        private void UpdateStatistics()
+        {
+            LevelId levelId = EnumExtensions.GetCurrentLevelId();
+            int kills = ProgressService.PlayerProgress.KillData.CurrentKillData.Kills;
+
+            ProgressService.PlayerProgress.KillData.TrySaveOverallKills(levelId, kills);
         }
     }
 }

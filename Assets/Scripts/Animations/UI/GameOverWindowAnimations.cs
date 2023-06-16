@@ -25,13 +25,15 @@ namespace Roguelike.Animations.UI
         [SerializeField] private float _popupDuration = 1f;
 
         [Header("Statistics")] 
-        [SerializeField] private NumberCounter _coins;
-        [SerializeField] private NumberCounter _kills;
+        [SerializeField] private NumberCounter _coinsCounter;
+        [SerializeField] private NumberCounter _killsCounter;
         [SerializeField] private float _delayBetweenCounters;
-        
-        private float _currentStage;
+
         private GameObject[] _playerWeapons;
         private GameObject[] _playerEnhancements;
+        private float _currentStage;
+        private int _coins;
+        private int _kills;
 
         public Transform WeaponsContent => _weaponsContent;
         public Transform EnhancementsContent => _enhancementsContent;
@@ -41,19 +43,21 @@ namespace Roguelike.Animations.UI
             _playerWeapons = weapons;
             _playerEnhancements = enhancements;
 
-            _coins.NumberReached += OnNumberReached;
-            _kills.NumberReached += OnNumberReached;
+            _coinsCounter.NumberReached += OnNumberReached;
+            _killsCounter.NumberReached += OnNumberReached;
         }
 
         private void OnDestroy()
         {
-            _coins.NumberReached -= OnNumberReached;
-            _kills.NumberReached -= OnNumberReached;
+            _coinsCounter.NumberReached -= OnNumberReached;
+            _killsCounter.NumberReached -= OnNumberReached;
         }
 
-        public void Init(int stage)
+        public void Init(int stage, int coins, int kills)
         {
             _currentStage = stage;
+            _coins = coins;
+            _kills = kills;
         }
 
         public void Play()
@@ -112,9 +116,9 @@ namespace Roguelike.Animations.UI
             }
         }
 
-        private void SetCoinsField() => _coins.UpdateText(100);
+        private void SetCoinsField() => _coinsCounter.UpdateText(_coins);
 
-        private void SetKillsField() => _kills.UpdateText(666);
+        private void SetKillsField() => _killsCounter.UpdateText(_kills);
 
         private void OnNumberReached(TextMeshProUGUI counter) =>
             counter.transform.DOScale(Vector2.one * _punchSize, _punchDuration)
