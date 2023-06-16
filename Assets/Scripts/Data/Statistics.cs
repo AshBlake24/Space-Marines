@@ -8,6 +8,7 @@ namespace Roguelike.Data
         public KillData KillData;
         public int CoinsCollected;
         public int EnhancementsBought;
+        public int ChestsOpened;
 
         public Statistics()
         {

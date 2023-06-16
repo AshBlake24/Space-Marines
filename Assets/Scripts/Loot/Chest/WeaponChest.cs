@@ -2,6 +2,7 @@ using System;
 using Roguelike.Infrastructure.Factory;
 using Roguelike.Infrastructure.Services;
 using Roguelike.Logic.Interactables;
+using Roguelike.Player;
 using UnityEngine;
 
 namespace Roguelike.Loot.Chest
@@ -33,6 +34,9 @@ namespace Roguelike.Loot.Chest
                 Outline.enabled = false;
                 GameObject weapon = _lootFactory.CreateRandomWeapon(transform.position);
                 weapon.transform.rotation = transform.rotation;
+                
+                if (interactor.TryGetComponent(out PlayerStatisticsObserver playerStatistics))
+                    playerStatistics.OnChestOpened();
             }
         }
     }

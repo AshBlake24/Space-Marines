@@ -96,6 +96,9 @@ namespace Roguelike.Infrastructure.Factory
             
             player.GetComponent<PlayerInteraction>()
                 .Construct(_windowService, _inputService);
+
+            player.GetComponent<PlayerStatisticsObserver>()
+                .Construct(_persistentData.PlayerProgress);
             
             player.AddComponent<PlayerPauseObserver>()
                 .Construct(_windowService, _inputService, _timeService);
