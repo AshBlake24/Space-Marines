@@ -17,7 +17,7 @@ namespace Roguelike.Player
         [SerializeField] private float _delayBeforeResurrectionScreen = 1.5f;
         [SerializeField] private PlayerHealth _health;
         [SerializeField] private PlayerAnimator _animator;
-        [SerializeField] private List<MonoBehaviour> _componentsToDeactivate;
+        [SerializeField] private MonoBehaviour[] _componentsToDeactivate;
 
         private IWindowService _windowService;
         private ISaveLoadService _saveLoadService;
@@ -71,16 +71,18 @@ namespace Roguelike.Player
             _saveLoadService.SaveProgress();
             Died?.Invoke();
 
-            StartCoroutine(OpenRessurectionWindowAfterDelay());
+            StartCoroutine(OpenResurrectionWindowAfterDelay());
         }
 
         private void SwitchComponents(bool isOn)
         {
-            foreach (MonoBehaviour component in _componentsToDeactivate)
-                component.enabled = isOn;
+            Debug.Log("Switch to " + isOn);
+
+            for (int i = 0; i < _componentsToDeactivate.Length; i++) 
+                _componentsToDeactivate[i].enabled = isOn;
         }
 
-        private IEnumerator OpenRessurectionWindowAfterDelay()
+        private IEnumerator OpenResurrectionWindowAfterDelay()
         {
             yield return Helpers.GetTime(_delayBeforeResurrectionScreen);
 

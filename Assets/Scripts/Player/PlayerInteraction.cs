@@ -46,6 +46,10 @@ namespace Roguelike.Player
             _windowService.WindowClosed += OnWindowClosed;
         }
 
+        private void OnDisable() => _isActive = false;
+
+        private void OnEnable() => _isActive = true;
+
         private void OnDestroy() =>
             _input.Interacted -= OnInteracted;
 
