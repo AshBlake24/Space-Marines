@@ -12,7 +12,7 @@ namespace Roguelike.Data
         public bool HasResurrected;
         public bool Dead;
 
-        public void ResetState()
+        public void Reset()
         {
             Enhancements = new List<EnhancementData>();
             CurrentHealth = MaxHealth;

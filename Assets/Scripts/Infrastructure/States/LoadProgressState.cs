@@ -66,7 +66,7 @@ namespace Roguelike.Infrastructure.States
                 maxWeaponsCount);
 
             playerProgress.State.MaxHealth = _staticDataService.Player.StartCharacter.MaxHealth;
-            playerProgress.State.ResetState();
+            playerProgress.State.Reset();
 
             return playerProgress;
         }
