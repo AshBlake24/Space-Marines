@@ -55,6 +55,7 @@ namespace Roguelike.UI.Windows
             int kills = ProgressService.PlayerProgress.KillData.CurrentKillData.Kills;
 
             ProgressService.PlayerProgress.KillData.TrySaveOverallKills(levelId, kills);
+            ProgressService.PlayerProgress.Balance.UpdateOverallCoins();
         }
     }
 }

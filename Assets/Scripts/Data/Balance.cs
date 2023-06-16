@@ -5,6 +5,7 @@ namespace Roguelike.Data
     [Serializable]
     public class Balance
     {
+        public int OverallCoinsCollected;
         public int Coins;
 
         public Balance()
@@ -36,5 +37,11 @@ namespace Roguelike.Data
         }
 
         public void Reset() => Coins = 0;
+
+        public void UpdateOverallCoins()
+        {
+            if (Coins > 0)
+                OverallCoinsCollected += Coins;
+        }
     }
 }

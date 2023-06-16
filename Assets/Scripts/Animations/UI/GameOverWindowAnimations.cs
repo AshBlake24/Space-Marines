@@ -31,6 +31,7 @@ namespace Roguelike.Animations.UI
 
         private GameObject[] _playerWeapons;
         private GameObject[] _playerEnhancements;
+        private Sequence _stageSequence;
         private float _currentStage;
         private int _coins;
         private int _kills;
@@ -49,6 +50,9 @@ namespace Roguelike.Animations.UI
 
         private void OnDestroy()
         {
+            if (_stageSequence.IsActive())
+                _stageSequence.Kill();
+            
             _coinsCounter.NumberReached -= OnNumberReached;
             _killsCounter.NumberReached -= OnNumberReached;
         }
@@ -67,17 +71,17 @@ namespace Roguelike.Animations.UI
 
         private void PlayStageViewerAnimation()
         {
-            Sequence sequence = DOTween.Sequence();
+            _stageSequence = DOTween.Sequence();
 
-            sequence.Append(_slider.DOValue(_currentStage, _slideDuration)
+            _stageSequence.Append(_slider.DOValue(_currentStage, _slideDuration)
                 .SetEase(_slideEase));
 
-            sequence.Append(_stagePointer
+            _stageSequence.Append(_stagePointer
                 .DOScale(Vector2.one * _punchSize, _punchDuration)
                 .SetLoops(2, LoopType.Yoyo)
                 .SetEase(_punchEase));
 
-            sequence.OnComplete(PlayStatisticsAnimation);
+            _stageSequence.OnComplete(PlayStatisticsAnimation);
         }
 
         private void PlayStatisticsAnimation()
