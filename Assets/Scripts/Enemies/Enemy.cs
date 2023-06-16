@@ -7,6 +7,7 @@ namespace Roguelike.Enemies
     public class Enemy
     {
         private int _maxBulletInBurst;
+        public EnemyId Id { get; private set; }
         public int Damage { get; private set; }
         public float Danger { get; private set; }
         public float Speed { get; private set; }
@@ -24,6 +25,7 @@ namespace Roguelike.Enemies
 
         public Enemy(EnemyStaticData data, EnemyHealth health, PlayerHealth target) 
         {
+            Id = data.Id;
             Damage = data.Damage;
             Danger = data.Danger;
             AttackColldown = data.AttackCooldown;

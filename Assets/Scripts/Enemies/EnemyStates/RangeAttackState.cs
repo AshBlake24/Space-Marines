@@ -44,6 +44,9 @@ namespace Roguelike.Enemies.EnemyStates
 
         public void Shoot()
         {
+            if (enemy == null)
+                return;
+
             if (enemy.BulletInBurst > 0)
             {
                 foreach (var point in _shotPoints)

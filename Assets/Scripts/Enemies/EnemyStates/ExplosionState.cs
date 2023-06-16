@@ -6,6 +6,8 @@ namespace Roguelike.Enemies.EnemyStates
 {
     public class ExplosionState : EnemyState
     {
+        private const EnemyId Mine = EnemyId.Mine;
+
         [SerializeField] private ParticleSystem _effects;
 
         public event Action Exploded;
@@ -14,7 +16,10 @@ namespace Roguelike.Enemies.EnemyStates
         {
             base.Enter(enemy, enemyAnimator);
 
-            animator.PlayAttack();
+            if (enemy.Id == Mine)
+                Explosion();
+            else
+                animator.PlayAttack();
         }
 
         public void Explosion()

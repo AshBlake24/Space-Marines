@@ -10,6 +10,7 @@ namespace Roguelike.Roguelike.Enemies.Animators
         private static readonly int s_attack = Animator.StringToHash("Attack");
         private static readonly int s_died = Animator.StringToHash("Died");
         private static readonly int s_hit = Animator.StringToHash("Hit");
+        private static readonly int s_typeAttack = Animator.StringToHash("TypeAttack");
 
         private Animator _animator;
 
@@ -31,5 +32,7 @@ namespace Roguelike.Roguelike.Enemies.Animators
         public void PlayDie() => _animator.SetTrigger(s_died);
 
         public void SetClipSpeed(float speed) => _animator.SetFloat(s_clipSpeed, speed);
+
+        public void SetTypeAttack(int type) => _animator.SetInteger(s_typeAttack, type);
     }
 }

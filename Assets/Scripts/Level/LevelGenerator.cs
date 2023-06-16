@@ -21,7 +21,7 @@ namespace Roguelike.Level
         private IPersistentDataService _persistentDataService;
         private StageStaticData _data;
         private Transform _roomContainer;
-        private FinishLevelTriger _enterTriger;
+        private FinishRoom _finishRoom;
         private ExitPoint _connectingPoint;
         private Room _currentCorridor;
         private Room _currentRoom;
@@ -130,8 +130,12 @@ namespace Roguelike.Level
 
             _currentRoom = CreateRoom(_currentCorridor, _data.TransitionRoom);
 
-            _enterTriger = _currentRoom.gameObject.GetComponentInChildren<FinishLevelTriger>();
-            _enterTriger.Construct(_data.NextStageId, _persistentDataService);
+            _finishRoom = _currentRoom.GetComponent<FinishRoom>();
+            _finishRoom.SetNextLevel(_data.NextStageId, _persistentDataService);
+
+            _finishRoom.PlayerFinishedLevel += GenerateNextLevel;
+            //_enterTriger = _currentRoom.gameObject.GetComponentInChildren<FinishLevelTriger>();
+            //_enterTriger.Construct(_data.NextStageId, _persistentDataService);
 
             if (_currentRoom.TryGetComponent<BossSpawner>(out BossSpawner spawner))
             {
@@ -139,12 +143,12 @@ namespace Roguelike.Level
                 _currentRoom.OpenDoor();
             }
 
-            _enterTriger.PlayerHasEntered += GenerateNextLevel;
+            //_enterTriger.PlayerHasEntered += GenerateNextLevel;
         }
 
-        private void GenerateNextLevel(PlayerHealth player)
+        private void GenerateNextLevel()
         {
-            _enterTriger.PlayerHasEntered -= GenerateNextLevel;
+            _finishRoom.PlayerFinishedLevel -= GenerateNextLevel;
             _sceneLoadingService.Load(_persistentDataService.PlayerProgress.WorldData.CurrentLevel);
         }
 

@@ -543,7 +543,7 @@ MonoBehaviour:
   - {fileID: 8580979468301926012}
   _miniMapIcon: {fileID: 532700681446258583}
   _spawnWeight: 100
-  _enterTriger: {fileID: 6388609254424532797}
+  _enterTriger: {fileID: 3800511588413692141}
 --- !u!114 &5963930858928000668
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -676,6 +676,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _spawnPoint: {fileID: 1867429062629522922}
+  _finishLevelzone: {fileID: 3352061709721837172}
   _boosId: 5
 --- !u!1 &7293206013930391253
 GameObject:
@@ -721,7 +722,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1867429062629522922}
-  - component: {fileID: 2340886211008861538}
   m_Layer: 0
   m_Name: SpawnPoint
   m_TagString: Untagged
@@ -744,18 +744,6 @@ Transform:
   m_Father: {fileID: 7144997929936821832}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2340886211008861538
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7637828784643284509}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 35ad468ae3ce1334e8227e7aa00eebe6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &8094616101767332724
 GameObject:
   m_ObjectHideFlags: 0
