@@ -742,6 +742,7 @@ GameObject:
   - component: {fileID: 7285517064716008133}
   - component: {fileID: 6485839507109678314}
   - component: {fileID: 3209465285247991658}
+  - component: {fileID: 7933820851632783590}
   m_Layer: 5
   m_Name: Kills
   m_TagString: Untagged
@@ -809,6 +810,21 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &7933820851632783590
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4588130429034794878}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1a5eaa3fe9144b39cf567a16d4d7dfa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _number: {fileID: 6920289525146224357}
+  _countFPS: 30
+  _duration: 3
 --- !u!1 &4597528273147014460
 GameObject:
   m_ObjectHideFlags: 0
@@ -820,6 +836,7 @@ GameObject:
   - component: {fileID: 1745958470419863803}
   - component: {fileID: 7929979674922027898}
   - component: {fileID: 8924812323360356520}
+  - component: {fileID: 2839352131187331414}
   m_Layer: 5
   m_Name: Coins
   m_TagString: Untagged
@@ -887,6 +904,21 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &2839352131187331414
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4597528273147014460}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1a5eaa3fe9144b39cf567a16d4d7dfa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _number: {fileID: 5343310215486413604}
+  _countFPS: 30
+  _duration: 3
 --- !u!1 &4791949763761966140
 GameObject:
   m_ObjectHideFlags: 0
@@ -2259,15 +2291,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _slider: {fileID: 6931468279040602817}
-  _slideDuration: 2
-  _delayBeforeSlide: 0.25
-  _slideEase: 8
   _stagePointer: {fileID: 6931468278380726708}
-  _punchSize: 1.15
+  _slideDuration: 2
   _punchDuration: 0.4
+  _punchSize: 1.15
+  _slideEase: 8
   _punchEase: 6
   _weaponsContent: {fileID: 7490006505771670467}
   _enhancementsContent: {fileID: 6486943619881189444}
+  _popupDelay: 0.3
+  _popupDuration: 1
+  _coins: {fileID: 2839352131187331414}
+  _kills: {fileID: 7933820851632783590}
+  _delayBetweenCounters: 0.5
 --- !u!1 &6931468279040602819
 GameObject:
   m_ObjectHideFlags: 0

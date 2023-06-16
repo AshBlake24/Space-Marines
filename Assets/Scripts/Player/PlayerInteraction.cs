@@ -136,7 +136,7 @@ namespace Roguelike.Player
             if (_weaponStatsViewer != null)
                 Destroy(_weaponStatsViewer);
 
-            if (_currentTargetInteractable != null)
+            if (_currentTargetInteractable != null && _currentTargetInteractable.Outline != null)
             {
                 _currentTargetInteractable.Outline.enabled = false;
                 _currentTargetInteractable = null;
