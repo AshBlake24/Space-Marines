@@ -83,7 +83,7 @@ namespace Roguelike.Level
             Room arenaRoom = GetValidArenaRoom();
 
             if (arenaRoom.gameObject.TryGetComponent<EnemySpawner>(out EnemySpawner enemySpawner))
-                enemySpawner.Init(_enemyFactory, _persistentDataService.PlayerProgress.KillData.CurrentKillData,
+                enemySpawner.Init(_enemyFactory, _persistentDataService.PlayerProgress, 
                     _data.MinComplexityMultiplication, _data.MaxComplexityMultiplication, _data.Spawner);
 
             _currentRoom.HideExit();

@@ -9,12 +9,12 @@ namespace Roguelike.Data
 
         public Balance()
         {
-            Coins = 5000;
+            Coins = 0;
         }
 
         public event Action Changed;
 
-        public void Add(int coins)
+        public void AddCoins(int coins)
         {
             if (coins < 0)
                 throw new ArgumentOutOfRangeException(nameof(coins));
@@ -23,7 +23,7 @@ namespace Roguelike.Data
             Changed?.Invoke();
         }
 
-        public void Withdraw(int coins)
+        public void WithdrawCoins(int coins)
         {
             if (coins < 0)
                 throw new ArgumentOutOfRangeException(nameof(coins));
@@ -34,5 +34,7 @@ namespace Roguelike.Data
             Coins -= coins;
             Changed?.Invoke();
         }
+
+        public void Reset() => Coins = 0;
     }
 }

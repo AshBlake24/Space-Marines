@@ -23,7 +23,7 @@ namespace Roguelike.Enemies
         private List<SpawnPoint> _readySpawnPoints;
         private PlayerHealth _player;
         private IEnemyFactory _enemyFactory;
-        private CurrentKillData _currentKillData;
+        private PlayerProgress _playerProgress;
 
         private void OnDisable()
         {
@@ -35,11 +35,11 @@ namespace Roguelike.Enemies
             }
         }
 
-        public void Init(IEnemyFactory enemyFactory, CurrentKillData currentKillData,
+        public void Init(IEnemyFactory enemyFactory, PlayerProgress playerProgress,
             float minEncounterComplexity, float maxEncounerComplexity, SpawnerStaticData data)
         {
             _enemyFactory = enemyFactory;
-            _currentKillData = currentKillData;
+            _playerProgress = playerProgress;
             _encounterComplexity = data.Complexity * Random.Range(minEncounterComplexity, maxEncounerComplexity);
 
             _data = data;
@@ -100,20 +100,20 @@ namespace Roguelike.Enemies
             _room.CloseDoor();
         }
 
-        private void OnEnemyDied(EnemyHealth enemy)
+        private void OnEnemyDied(EnemyHealth enemyHealth)
         {
-            enemy.Died -= OnEnemyDied;
+            enemyHealth.Died -= OnEnemyDied;
 
-            _enemiesInRoom.Remove(enemy);
+            _enemiesInRoom.Remove(enemyHealth);
 
             if (_encounterComplexity > 0)
                 Spawn();
 
-
             if (_enemiesInRoom.Count == 0)
                 _room.OpenDoor();
 
-            _currentKillData.AddKill();
+            _playerProgress.KillData.CurrentKillData.AddKill();
+            _playerProgress.Balance.AddCoins(enemyHealth.GetComponentInParent<EnemyStateMachine>().Enemy.Coins);
         }
 
         private void OnEnemySpawned(SpawnPoint spawnpoint, GameObject enemyPrefab)

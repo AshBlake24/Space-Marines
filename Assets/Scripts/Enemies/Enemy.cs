@@ -14,6 +14,7 @@ namespace Roguelike.Enemies
         public float AttackColldown { get; private set; }
         public float LifeTime { get; private set; }
         public int BulletInBurst { get; private set; }
+        public int Coins { get; private set; }
 
         public EnemyHealth Health {get; private set;}
 
@@ -33,6 +34,7 @@ namespace Roguelike.Enemies
             Speed = data.Speed;
             Health = health;
             Target = target;
+            Coins = data.Coins;
         }
 
         public void RangeAttack()

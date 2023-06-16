@@ -1,6 +1,5 @@
 using System;
 using Roguelike.Logic;
-using Roguelike.Player;
 using Roguelike.Roguelike.Enemies.Animators;
 using Roguelike.StaticData.Enemies;
 using UnityEngine;

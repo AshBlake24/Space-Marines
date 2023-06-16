@@ -16,6 +16,7 @@ namespace Roguelike.StaticData.Enemies
         public int Damage;
         public float Speed;
         public float AttackCooldown;
+        public int Coins;
 
         [Header("Range enemy stats")]
         public int BulletInBurst;
