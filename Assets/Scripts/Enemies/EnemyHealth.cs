@@ -51,12 +51,12 @@ namespace Roguelike.Enemies
 
             _currentHealth = Mathf.Max(_currentHealth - damage, 0);
 
-            _enemyAnimator.PlayHit();
+            if (_enemyAnimator != null)
+                _enemyAnimator.PlayHit();
 
             if (_currentHealth <= 0)
             {
                 Died?.Invoke(this);
-                Destroy(gameObject);
             }
         }
 

@@ -32,6 +32,8 @@ namespace Roguelike.Enemies.EnemyStates
 
             if (_effects != null)
                 _effects.Play();
+
+            enemy.Health.TakeDamage(enemy.Health.MaxHealth);
         }
     }
 }
