@@ -5,6 +5,7 @@ using Roguelike.StaticData.Projectiles;
 using Roguelike.Utilities;
 using Roguelike.Weapons.Projectiles;
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Pool;
 
@@ -14,8 +15,10 @@ namespace Roguelike.Enemies.EnemyStates
     {
         [SerializeField] private float _projectileSpeed;
         [SerializeField] private ProjectileStaticData _bullet;
-        [SerializeField] private Transform _shotPoint;
+        [SerializeField] private List<Transform> _shotPoints;
+        [SerializeField] private Transform _point;
 
+        private Transform _shotPoint;
         private IProjectileFactory _factory;
         private IObjectPool<Projectile> _projectilesPool;
 
@@ -41,10 +44,17 @@ namespace Roguelike.Enemies.EnemyStates
 
         public void Shoot()
         {
+            if (enemy == null)
+                return;
+
             if (enemy.BulletInBurst > 0)
             {
-                _projectilesPool.Get();
-                enemy.RangeAttack();
+                foreach (var point in _shotPoints)
+                {
+                    _shotPoint = point;
+                    _projectilesPool.Get();
+                    enemy.RangeAttack();
+                }
             }
             else
             {
@@ -81,9 +91,17 @@ namespace Roguelike.Enemies.EnemyStates
 
         private void OnTakeFromPool(Projectile projectile)
         {
-            projectile.transform.SetPositionAndRotation(_shotPoint.position, _shotPoint.rotation);
+            Vector3 direction;
+            projectile.transform.SetPositionAndRotation(_shotPoint.position, Quaternion.identity);
             projectile.gameObject.SetActive(true);
-            Vector3 direction = (enemy.Target.transform.position - transform.position).normalized;
+            if (_shotPoints.Count <= 1)
+            {
+                direction = (enemy.Target.transform.position - transform.position).normalized;
+            }
+            else
+            {
+                 direction = (_shotPoint.transform.position - _point.transform.position).normalized;
+            }
             projectile.ClearVFX();
             projectile.Init(enemy.Damage, _projectileSpeed, direction);
         }

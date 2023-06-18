@@ -26,7 +26,7 @@ namespace Roguelike.StaticData.Levels
         public List<Room> Arenas;
         public List<Room> Corridor;
         public List<Room> BonusRoom;
-        
+
         public Enum Key => Id;
     }
 }

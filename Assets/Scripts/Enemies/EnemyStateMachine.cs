@@ -1,6 +1,7 @@
 using UnityEngine;
 using Roguelike.Enemies.EnemyStates;
 using Roguelike.Roguelike.Enemies.Animators;
+using Roguelike.StaticData.Enemies;
 
 namespace Roguelike.Enemies
 {
@@ -47,9 +48,10 @@ namespace Roguelike.Enemies
             }
 
             _currentState = state;
-            state.Enter(_enemy, _animator);
 
             _currentState.StateFinished += SwitchState;
+
+            state.Enter(_enemy, _animator);
         }
 
         private void OnEnemyDead(EnemyHealth enemy)

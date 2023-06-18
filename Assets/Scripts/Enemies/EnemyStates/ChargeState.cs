@@ -1,5 +1,4 @@
 ﻿using Roguelike.Roguelike.Enemies.Animators;
-using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -7,25 +6,13 @@ namespace Roguelike.Enemies.EnemyStates
 {
     public class ChargeState : EnemyState
     {
-        private static readonly float ClipDuration = 2.1f;
-
-        [SerializeField, Range(0.5f, 3f)] private float _delayForAnimation;
         [SerializeField] private ParticleSystem _effects;
 
         private NavMeshAgent _agent;
-        private Coroutine _delayCoroutine;
 
         private void Awake()
         {
             _agent = GetComponent<NavMeshAgent>();
-        }
-
-        protected override void OnDisable()
-        {
-            base.OnDisable();
-
-            if (_delayCoroutine != null)
-                StopCoroutine(_delayCoroutine);
         }
 
         public override void Enter(Enemy curentEnemy, EnemyAnimator enemyAnimator)
@@ -35,9 +22,6 @@ namespace Roguelike.Enemies.EnemyStates
             _agent.SetDestination(enemy.Target.transform.position);
             _agent.speed = enemy.Speed * enemy.ChargeSpeedMultiplication;
 
-            _delayCoroutine = StartCoroutine(Charge());
-
-            animator.SetClipSpeed(ClipDuration / _delayForAnimation);
             animator.Move(_agent.speed, false);
         }
 
@@ -52,17 +36,8 @@ namespace Roguelike.Enemies.EnemyStates
             base.Exit(nextState);
         }
 
-        private IEnumerator Charge()
+        public void Charge()
         {
-            float duration = _delayForAnimation;
-
-            while (duration > 0)
-            {
-                duration -= Time.deltaTime;
-
-                yield return null;
-            }
-
             _agent.SetDestination(enemy.Target.transform.position);
             _agent.isStopped = false;
 
