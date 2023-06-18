@@ -1,5 +1,6 @@
 ﻿using System;
 using Roguelike.Roguelike.Enemies.Animators;
+using Roguelike.StaticData.Enemies;
 using UnityEngine;
 
 namespace Roguelike.Enemies.EnemyStates
@@ -24,9 +25,6 @@ namespace Roguelike.Enemies.EnemyStates
 
         public void Explosion()
         {
-            EnemyHealth health = GetComponentInChildren<EnemyHealth>();
-            health.TakeDamage(health.MaxHealth);
-
             Exploded?.Invoke();
             enemy.Target.TakeDamage(enemy.Damage);
 

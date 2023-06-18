@@ -576,9 +576,11 @@ MonoBehaviour:
   _transitions:
   - {fileID: 8730740193893415860}
   - {fileID: 6359569578129523273}
-  _projectileSpeed: 10
-  _bullet: {fileID: 11400000, guid: 07ef5254fe0327840b572eb02c58f306, type: 2}
-  _shotPoint: {fileID: 448458854987062874}
+  _projectileSpeed: 8
+  _bullet: {fileID: 11400000, guid: 50c52f560dfe7404691370b645dd4bb1, type: 2}
+  _shotPoints:
+  - {fileID: 448458854987062874}
+  _point: {fileID: 0}
 --- !u!114 &1859723059104517635
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -645,7 +647,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _transitions: []
-  _delayForAnimation: 1.5
 --- !u!1 &3730292728845120798
 GameObject:
   m_ObjectHideFlags: 0

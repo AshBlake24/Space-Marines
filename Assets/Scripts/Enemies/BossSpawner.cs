@@ -34,7 +34,7 @@ namespace Roguelike.Assets.Scripts.Enemies
             _room = GetComponent<Room>();
             _enterPoint = _room.EntryPoint.GetComponent<EnterTriger>();
 
-            if(_finishLevelzone.activeSelf)
+            if(_finishLevelzone != null)
                 _finishLevelzone.SetActive(false);
 
             _enterPoint.PlayerHasEntered += OnPlayerHasEntered;
