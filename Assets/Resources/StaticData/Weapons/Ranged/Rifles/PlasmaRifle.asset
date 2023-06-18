@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7aad5e3325f48a1b72e5ee59fd2f45f, type: 3}
+  m_Name: PlasmaRifle
+  m_EditorClassIdentifier: 
+  Id: 18
+  Type: 0
+  Size: 3
+  Rarity: 2
+  WeaponPrefab: {fileID: 158687082760361867, guid: 0333c9fdccb9ded48a33cbf2853467e3, type: 3}
+  InteractableWeaponPrefab: {fileID: 7251063097488846721, guid: 4bcf601ef3bc99b4489e2b2b611be524, type: 3}
+  Icon: {fileID: 21300000, guid: 81ff00f6a2a10c349beb6aaedb03bf3f, type: 3}
+  Name: Plasma Rifle
+  Damage: 245
+  AttackRate: 0.8
+  BulletsPerShot: 1
+  HorizontalSpread: 0.02
+  VerticalSpread: 0.015
+  MaxAmmo: 75
+  ProjectileStartSpeed: 45
+  Projectile: {fileID: 11400000, guid: 44acee6049d6fcf468656b66e167092e, type: 2}
+  ReloadingAmmoAmountMultiplier: 0.25
+  Clip: {fileID: 8300000, guid: f90a266b299a2b045911e7e2594e5461, type: 3}

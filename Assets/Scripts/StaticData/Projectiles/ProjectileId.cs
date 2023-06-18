@@ -5,6 +5,8 @@ namespace Roguelike.StaticData.Projectiles
         StandartBullet,
         SniperBullet,
         Rocket,
-        EnemyBullet
+        EnemyBullet,
+        Laser,
+        Plasma
     }
 }

@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7aad5e3325f48a1b72e5ee59fd2f45f, type: 3}
+  m_Name: LaserPistol
+  m_EditorClassIdentifier: 
+  Id: 15
+  Type: 0
+  Size: 2
+  Rarity: 0
+  WeaponPrefab: {fileID: 3152250029723598271, guid: 5dbb69be97623624fb57193dff2cda35, type: 3}
+  InteractableWeaponPrefab: {fileID: 1607659002217383297, guid: 510923a3d078e2e439d9c915322cc072, type: 3}
+  Icon: {fileID: 21300000, guid: 1bc3c77a2abc1a9418d5a0deabcd3ed7, type: 3}
+  Name: Laser Pistol
+  Damage: 16
+  AttackRate: 0.26
+  BulletsPerShot: 1
+  HorizontalSpread: 0.06
+  VerticalSpread: 0.04
+  MaxAmmo: 240
+  ProjectileStartSpeed: 25
+  Projectile: {fileID: 11400000, guid: 46d199cfa797d044e9ba1db74f7e2bad, type: 2}
+  ReloadingAmmoAmountMultiplier: 0.25
+  Clip: {fileID: 8300000, guid: 57d168e98a87c594596ea5c39d7c3c7f, type: 3}

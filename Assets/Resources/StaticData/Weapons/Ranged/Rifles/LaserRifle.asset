@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7aad5e3325f48a1b72e5ee59fd2f45f, type: 3}
+  m_Name: LaserRifle
+  m_EditorClassIdentifier: 
+  Id: 16
+  Type: 0
+  Size: 3
+  Rarity: 1
+  WeaponPrefab: {fileID: 4247944779307406661, guid: 3937e302fcab88f49a0fe59ea65ab5c5, type: 3}
+  InteractableWeaponPrefab: {fileID: 5349476699540208076, guid: 9359330ee9b46ec4fbfaac0a7f67dfc9, type: 3}
+  Icon: {fileID: 21300000, guid: 517d96de68f5d6b499b372094a6bab9e, type: 3}
+  Name: Laser Rifle
+  Damage: 41
+  AttackRate: 0.2
+  BulletsPerShot: 1
+  HorizontalSpread: 0.043
+  VerticalSpread: 0.04
+  MaxAmmo: 240
+  ProjectileStartSpeed: 30
+  Projectile: {fileID: 11400000, guid: 46d199cfa797d044e9ba1db74f7e2bad, type: 2}
+  ReloadingAmmoAmountMultiplier: 0.25
+  Clip: {fileID: 8300000, guid: 57d168e98a87c594596ea5c39d7c3c7f, type: 3}

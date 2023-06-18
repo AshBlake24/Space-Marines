@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7aad5e3325f48a1b72e5ee59fd2f45f, type: 3}
+  m_Name: SniperRifleModern
+  m_EditorClassIdentifier: 
+  Id: 19
+  Type: 0
+  Size: 3
+  Rarity: 3
+  WeaponPrefab: {fileID: 6509482102127864695, guid: 8fa92fe236b3ecd4d9865a0591b7a14a, type: 3}
+  InteractableWeaponPrefab: {fileID: 6962119468007976599, guid: 802c58f18eb690d4e980334a78a8588e, type: 3}
+  Icon: {fileID: 21300000, guid: e3c6f220181255f4db9180b598e35ea7, type: 3}
+  Name: Modern Sniper Rifle
+  Damage: 400
+  AttackRate: 1
+  BulletsPerShot: 1
+  HorizontalSpread: 0.01
+  VerticalSpread: 0.01
+  MaxAmmo: 50
+  ProjectileStartSpeed: 70
+  Projectile: {fileID: 11400000, guid: 44acee6049d6fcf468656b66e167092e, type: 2}
+  ReloadingAmmoAmountMultiplier: 0.25
+  Clip: {fileID: 8300000, guid: f90a266b299a2b045911e7e2594e5461, type: 3}

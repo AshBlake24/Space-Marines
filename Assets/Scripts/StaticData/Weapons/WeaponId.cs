@@ -17,6 +17,11 @@ namespace Roguelike.StaticData.Weapons
         BoltRifle,
         SniperRifle,
         MachineGun,
-        RocketLauncher
+        RocketLauncher,
+        LaserPistol,
+        LaserRifle,
+        PlasmaShotgun,
+        PlasmaRifle,
+        ModernSniperRifle
     }
 }
