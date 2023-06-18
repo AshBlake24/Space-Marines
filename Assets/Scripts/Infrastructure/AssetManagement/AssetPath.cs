@@ -24,5 +24,6 @@ namespace Roguelike.Infrastructure.AssetManagement
         public const string MiniMapPath = "UI/Elements/Minimap";
         public const string EnhancementViewPath = "UI/Elements/EnhancementView";
         public const string WeaponViewPath = "UI/Elements/WeaponView";
+        public const string LocalizationPath = "Localization/Localization";
     }
 }
