@@ -12,10 +12,12 @@ namespace Roguelike.Level
 
         private ExitPoint _entryPoint;
         private List<ExitPoint> _doors = new List<ExitPoint>();
+        private List<ExitPoint> _validExits = new List<ExitPoint>();
 
         public ExitPoint EntryPoint => _entryPoint;
         public int SpawnWeight => _spawnWeight;
         public int ExitCount => _exitPoints.Count;
+        public int ValidExitCount => _validExits.Count;
 
         public void Init(ExitPoint connectingPoint)
         {
@@ -39,6 +41,8 @@ namespace Roguelike.Level
 
             transform.position =
             Vector3.MoveTowards(transform.position, _entryPoint.transform.position, -GetShiftDistance());
+
+            FillValidExits();
         }
 
         public ExitPoint SelectExitPoint()
@@ -116,6 +120,17 @@ namespace Roguelike.Level
             _exitPoints.Remove(point);
 
             return point;
+        }
+
+        private void FillValidExits()
+        {
+            foreach (var exit in _exitPoints)
+            {
+                if (exit.IsNextZoneFull(this) == false)
+                {
+                    _validExits.Add(exit);
+                }
+            }
         }
     }
 }

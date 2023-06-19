@@ -14,7 +14,7 @@ namespace Roguelike.Level
     public class LevelGenerator : MonoBehaviour
     {
         private const string ContainerName = "Rooms";
-        private const int MinExitCount = 2;
+        private const int MinExitCount = 3;
 
         private IEnemyFactory _enemyFactory;
         private ISceneLoadingService _sceneLoadingService;
@@ -51,7 +51,7 @@ namespace Roguelike.Level
                 ConnectCorridor();
                 ConnectArenaRoom();
 
-                while (_currentRoom.ExitCount > 1)
+                while (_currentRoom.ExitCount > 1 && _currentRoom.ValidExitCount > 1)
                 {
                     if (_bonusRoomCount > 0)
                     {
@@ -110,6 +110,9 @@ namespace Roguelike.Level
                     }
                 }
 
+                if (validRoom.Count == 0)
+                    return CreateRoom(_currentCorridor, _data.Arenas);
+
                 return CreateRoom(_currentCorridor, validRoom);
             }
         }
@@ -134,16 +137,12 @@ namespace Roguelike.Level
             _finishRoom.SetNextLevel(_data.NextStageId, _persistentDataService);
 
             _finishRoom.PlayerFinishedLevel += GenerateNextLevel;
-            //_enterTriger = _currentRoom.gameObject.GetComponentInChildren<FinishLevelTriger>();
-            //_enterTriger.Construct(_data.NextStageId, _persistentDataService);
 
             if (_currentRoom.TryGetComponent<BossSpawner>(out BossSpawner spawner))
             {
                 spawner.Init(_enemyFactory);
                 _currentRoom.OpenDoor();
             }
-
-            //_enterTriger.PlayerHasEntered += GenerateNextLevel;
         }
 
         private void GenerateNextLevel()
