@@ -13,6 +13,7 @@ using Roguelike.Infrastructure.Services.Random;
 using Roguelike.Infrastructure.Services.SaveLoad;
 using Roguelike.Infrastructure.Services.StaticData;
 using Roguelike.Infrastructure.Services.Windows;
+using Roguelike.Localization;
 using Roguelike.Logic.Pause;
 
 namespace Roguelike.Infrastructure.States
@@ -135,6 +136,8 @@ namespace Roguelike.Infrastructure.States
                 _services.Single<IEnhancementFactory>(),
                 _services.Single<IInputService>(),
                 _services.Single<ITimeService>()));
+            
+            LocalizationSystem.Construct(_services.Single<IPersistentDataService>());
         }
 
         private void RegisterStaticData()

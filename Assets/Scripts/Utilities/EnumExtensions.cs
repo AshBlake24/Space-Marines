@@ -19,8 +19,8 @@ namespace Roguelike.Utilities
         public static string ToLabel(this StageId stageId) => 
             ParseCurrentStage(stageId);
         
-        public static IEnumerable<T> GetValues<T>() => 
-            Enum.GetValues(typeof(T)).Cast<T>();
+        public static T[] GetValues<T>() => 
+            (T[])Enum.GetValues(typeof(T));
 
         private static string ParseCurrentStage(StageId stageId)
         {

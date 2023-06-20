@@ -2,22 +2,25 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Text.RegularExpressions;
-using Roguelike.Infrastructure.AssetManagement;
+using Roguelike.Utilities;
 using UnityEngine;
 
 namespace Roguelike.Localization
 {
     public class CSVLoader
     {
+        private readonly char _lineSeparator = '\n';
+        private readonly char _fieldSurround = '"';
+        private readonly string[] _fieldSeparator = {"\",\""};
+        private readonly Regex _csvParser = new(",(?(:[^\"]*\"[^\"]*\")(?![^\"]*\"))");
+        
         private TextAsset _csvFile;
-        private char _lineSeparator = '\n';
-        private char _fieldSurround = '"';
-        private string[] _fieldSeparator = {"\",\""};
 
-        public void LoadCSV()
+        public void LoadCSV(string csvPath)
         {
-            _csvFile = Resources.Load<TextAsset>(AssetPath.LocalizationPath);
+            _csvFile = Resources.Load<TextAsset>(csvPath);
         }
 
         public Dictionary<string, string> GetDictionaryValues(string attributeId)
@@ -36,13 +39,11 @@ namespace Roguelike.Localization
                     break;
                 }
             }
-
-            Regex csvParser = new(",(?(:[^\"]*\"[^\"]*\")(?![^\"]*\"))");
-
+            
             for (int i = 1; i < lines.Length; i++)
             {
                 string line = lines[i];
-                string[] fields = csvParser.Split(line);
+                string[] fields = _csvParser.Split(line);
 
                 for (int j = 0; j < fields.Length; j++)
                 {
@@ -67,15 +68,22 @@ namespace Roguelike.Localization
         }
 
 #if UNITY_EDITOR
-        public void Add(string key, string value)
+        public void Add(string filePath, string key, string value)
         {
-            string appended = string.Format("\n\"{0}\",\"{1}\",\"\",\"\"", key, value);
-            File.AppendAllText("Assets/Resources/Localization/Localization.csv", appended);
+            StringBuilder stringBuilder = new();
+            stringBuilder.Append($"\n\"{key}\",\"{value}\"");
+            
+            Language[] languages = EnumExtensions.GetValues<Language>();
+
+            for (int i = 1; i < languages.Length; i++) 
+                stringBuilder.Append(",\"\"");
+
+            File.AppendAllText(filePath, stringBuilder.ToString());
 
             UnityEditor.AssetDatabase.Refresh();
         }
 
-        public void Remove(string key)
+        public void Remove(string filePath, string key)
         {
             string[] lines = _csvFile.text.Split(_lineSeparator);
             string[] keys = new string[lines.Length];
@@ -101,14 +109,14 @@ namespace Roguelike.Localization
             {
                 string[] newLines = lines.Where(s => s != lines[index]).ToArray();
                 string replaced = string.Join(_lineSeparator.ToString(), newLines);
-                File.WriteAllText("Assets/Resources/Localization/Localization.csv", replaced);
+                File.WriteAllText(filePath, replaced);
             }
         }
 
-        public void Edit(string key, string value)
+        public void Edit(string filePath, string key, string value)
         {
-            Remove(key);
-            Add(key, value);
+            Remove(filePath, key);
+            Add(filePath, key, value);
         }
 #endif
     }
