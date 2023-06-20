@@ -7,11 +7,11 @@ namespace Roguelike.Localization
     public class TextLocalizerUI : MonoBehaviour
     {
         [SerializeField] private TextMeshProUGUI _textField;
-        public LocalizedString localizedString;
+        [SerializeField] public LocalizedString _localizedString;
 
         private void Start()
         {
-            _textField.text = localizedString.Value;
+            _textField.text = _localizedString.Value;
         }
     }
 }

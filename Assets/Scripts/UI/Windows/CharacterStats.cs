@@ -72,13 +72,13 @@ namespace Roguelike.UI.Windows
             _characterName.text = _characterData.Id.ToString();
             _characterIcon.sprite = _characterData.Icon;
             _health.SetValue(_characterData.MaxHealth, _characterData.MaxHealth);
-            _description.text = _characterData.Desctription;
+            _description.text = _characterData.Description.Value;
         }
 
         private void InitWeapon(WeaponStaticData startWeaponData)
         {
             _startWeaponIcon.sprite = startWeaponData.Icon;
-            _weaponName.text = startWeaponData.Name;
+            _weaponName.text = startWeaponData.Name.Value;
             _attackRate.text = $"Attack Rate: {startWeaponData.AttackRate}s";
             _damage.text = $"Damage: {startWeaponData.Damage}";
 
@@ -89,8 +89,8 @@ namespace Roguelike.UI.Windows
         private void InitSkill(SkillStaticData skillData)
         {
             _skillIcon.sprite = skillData.Icon;
-            _skillName.text = skillData.Id.ToString();
-            _skillDescription.text = skillData.Description;
+            _skillName.text = skillData.Name.Value;
+            _skillDescription.text = skillData.Description.Value;
             _cooldown.text = $"Cooldown: {skillData.SkillCooldown}s";
         }
 

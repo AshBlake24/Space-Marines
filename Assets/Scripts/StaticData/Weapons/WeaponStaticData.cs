@@ -1,5 +1,6 @@
 using System;
 using Roguelike.Infrastructure.Services.StaticData;
+using Roguelike.Localization;
 using Roguelike.StaticData.Loot.Rarity;
 using UnityEngine;
 
@@ -19,7 +20,7 @@ namespace Roguelike.StaticData.Weapons
         
         [Header("Stats")]
         public Sprite Icon;
-        public string Name;
+        public LocalizedString Name;
         public int Damage;
         public float AttackRate;
         

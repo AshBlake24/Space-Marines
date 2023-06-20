@@ -39,7 +39,7 @@ namespace Roguelike.Editor
             position.x += 15;
             position.width -= 15;
 
-            SerializedProperty key = property.FindPropertyRelative("key");
+            SerializedProperty key = property.FindPropertyRelative("_key");
             key.stringValue = EditorGUI.TextField(position, key.stringValue);
 
             position.x += position.width + 2;

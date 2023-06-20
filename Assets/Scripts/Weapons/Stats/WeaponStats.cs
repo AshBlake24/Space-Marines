@@ -18,7 +18,7 @@ namespace Roguelike.Weapons.Stats
 
         protected WeaponStats(WeaponStaticData weaponData)
         {
-            _name = weaponData.Name;
+            _name = weaponData.Name.Value;
             _attackRate = weaponData.AttackRate;
             _damage = weaponData.Damage;
             _weaponSize = weaponData.Size;

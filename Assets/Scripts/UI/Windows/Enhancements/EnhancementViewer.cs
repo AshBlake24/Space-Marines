@@ -73,8 +73,8 @@ namespace Roguelike.UI.Windows.Enhancements
         private void InitMainInfoFields()
         {
             _icon.sprite = _enhancementData.Icon;
-            _name.text = _enhancementData.Name;
-            _description.text = _enhancementData.Description;
+            _name.text = _enhancementData.Name.Value;
+            _description.text = _enhancementData.Description.Value;
         }
 
         private void InitCurrentTierField()

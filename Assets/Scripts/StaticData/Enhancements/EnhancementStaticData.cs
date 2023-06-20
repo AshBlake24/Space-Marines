@@ -1,5 +1,6 @@
 using System;
 using Roguelike.Infrastructure.Services.StaticData;
+using Roguelike.Localization;
 using UnityEngine;
 
 namespace Roguelike.StaticData.Enhancements
@@ -16,8 +17,8 @@ namespace Roguelike.StaticData.Enhancements
 
         [Header("Info")] 
         public Sprite Icon;
-        public string Name;
-        public string Description;
+        public LocalizedString Name;
+        public LocalizedString Description;
 
         public Enum Key => Id;
     }

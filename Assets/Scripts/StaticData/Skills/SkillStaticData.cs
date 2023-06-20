@@ -1,5 +1,6 @@
 using System;
 using Roguelike.Infrastructure.Services.StaticData;
+using Roguelike.Localization;
 using UnityEngine;
 
 namespace Roguelike.StaticData.Skills
@@ -8,7 +9,8 @@ namespace Roguelike.StaticData.Skills
     {
         public SkillId Id;
         public Sprite Icon;
-        public string Description;
+        public LocalizedString Name;
+        public LocalizedString Description;
         [Range(5, 60)] public float SkillCooldown;
 
         [Header("VFX")] 

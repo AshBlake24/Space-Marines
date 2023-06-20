@@ -30,7 +30,7 @@ namespace Roguelike.UI.Windows.Regions
         private void InitRegionViewer()
         {
             _toggle.isOn = false;
-            _name.text = RegionData.Name;
+            _name.text = RegionData.Name.Value;
             _icon.sprite = RegionData.Icon;
             _floorsCount.text = RegionData.Floors.Length.ToString();
             _stagesCount.text = RegionData.Floors[0].Stages.Length.ToString();

@@ -1,16 +1,18 @@
-﻿namespace Roguelike.Localization
+﻿using UnityEngine;
+
+namespace Roguelike.Localization
 {
     [System.Serializable]
     public struct LocalizedString
     {
-        public string key;
+        [SerializeField] private string _key;
 
         public LocalizedString(string key)
         {
-            this.key = key;
+            _key = key;
         }
 
-        public string Value => LocalizationSystem.GetLocalizedValue(key);
+        public string Value => LocalizationSystem.GetLocalizedValue(_key);
 
         public static implicit operator LocalizedString(string key)
         {

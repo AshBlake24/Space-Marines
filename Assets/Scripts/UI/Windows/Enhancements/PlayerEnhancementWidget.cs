@@ -21,8 +21,8 @@ namespace Roguelike.UI.Windows.Enhancements
             EnhancementData enhancementProgress)
         {
             _tooltip = tooltip;
-            _name = enhancementData.Name;
-            _description = enhancementData.Description;
+            _name = enhancementData.Name.Value;
+            _description = enhancementData.Description.Value;
             _icon.sprite = enhancementData.Icon;
             _currentTier = enhancementProgress.Tier.ToString();
             _currentValue = enhancementData.Tiers[enhancementProgress.Tier - 1].Value.ToString();
