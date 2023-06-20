@@ -1,5 +1,5 @@
-﻿using Roguelike.Localization;
-using Roguelike.Localization.Service;
+﻿using Roguelike.Infrastructure.AssetManagement;
+using Roguelike.Localization;
 using UnityEditor;
 using UnityEngine;
 
@@ -39,35 +39,37 @@ namespace Roguelike.Editor
             position.x += 15;
             position.width -= 15;
 
-            SerializedProperty key = property.FindPropertyRelative("Key");
+            SerializedProperty key = property.FindPropertyRelative("key");
             key.stringValue = EditorGUI.TextField(position, key.stringValue);
 
             position.x += position.width + 2;
             position.width = 17;
             position.height = 17;
 
-            GUIContent searchContent = new();
+            Texture searchIcon = (Texture) Resources.Load(AssetPath.SearchIconPath);
+            GUIContent searchContent = new(searchIcon);
 
-            if (GUI.Button(position, searchContent))
+            if (GUI.Button(position, searchContent, new GUIStyle()))
             {
-                
+                TextLocaliserSearchWindow.Open();
             }
 
             position.x += position.width + 2;
             
-            GUIContent storeContent = new();
+            Texture storeIcon = (Texture) Resources.Load(AssetPath.AddIconPath);
+            GUIContent storeContent = new(storeIcon);
 
-            if (GUI.Button(position, storeContent))
+            if (GUI.Button(position, storeContent, new GUIStyle()))
             {
-                
+                TextLocalizerEditWindow.Open(key.stringValue);
             }
 
             if (_dropdown)
             {
-                string value = LocalizationService.GetLocalisedValue(key.stringValue);
+                string value = LocalizationSystem.GetLocalizedValue(key.stringValue);
                 GUIStyle style = GUI.skin.box;
                 _height = style.CalcHeight(new GUIContent(value), valueRect.width);
-
+            
                 valueRect.height = _height;
                 valueRect.y += 21;
                 EditorGUI.LabelField(valueRect, value, EditorStyles.wordWrappedLabel);

@@ -3,29 +3,79 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
+using Roguelike.Infrastructure.AssetManagement;
 using UnityEngine;
 
 namespace Roguelike.Localization
 {
     public class CSVLoader
     {
-        private readonly char _lineSeparator = '\n';
-        private readonly char _textSurroundings = '"';
-        private readonly string[] _fieldSeparator = {"\",\""};
-
         private TextAsset _csvFile;
+        private char _lineSeparator = '\n';
+        private char _fieldSurround = '"';
+        private string[] _fieldSeparator = {"\",\""};
 
-        #region Editor
+        public void LoadCSV()
+        {
+            _csvFile = Resources.Load<TextAsset>(AssetPath.LocalizationPath);
+        }
+
+        public Dictionary<string, string> GetDictionaryValues(string attributeId)
+        {
+            Dictionary<string, string> dictionary = new();
+
+            string[] lines = _csvFile.text.Split(_lineSeparator);
+            string[] headers = lines[0].Split(_fieldSeparator, StringSplitOptions.None);
+            int attributeIndex = -1;
+
+            for (int i = 0; i < headers.Length; i++)
+            {
+                if (headers[i].Contains(attributeId))
+                {
+                    attributeIndex = i;
+                    break;
+                }
+            }
+
+            Regex csvParser = new(",(?(:[^\"]*\"[^\"]*\")(?![^\"]*\"))");
+
+            for (int i = 1; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                string[] fields = csvParser.Split(line);
+
+                for (int j = 0; j < fields.Length; j++)
+                {
+                    fields[j] = fields[j].TrimStart(' ', _fieldSurround);
+                    fields[j] = fields[j].TrimEnd(_fieldSurround);
+                }
+
+                if (fields.Length > attributeIndex)
+                {
+                    string key = fields[0];
+
+                    if (dictionary.ContainsKey(key))
+                        continue;
+
+                    string value = fields[attributeIndex];
+
+                    dictionary.Add(key, value);
+                }
+            }
+
+            return dictionary;
+        }
+
 #if UNITY_EDITOR
-        public void Add(string csvPath, string key, string value)
+        public void Add(string key, string value)
         {
             string appended = string.Format("\n\"{0}\",\"{1}\",\"\",\"\"", key, value);
-            File.AppendAllText(csvPath, appended);
-            
+            File.AppendAllText("Assets/Resources/Localization/Localization.csv", appended);
+
             UnityEditor.AssetDatabase.Refresh();
         }
 
-        public void Remove(string csvPath, string key)
+        public void Remove(string key)
         {
             string[] lines = _csvFile.text.Split(_lineSeparator);
             string[] keys = new string[lines.Length];
@@ -51,85 +101,15 @@ namespace Roguelike.Localization
             {
                 string[] newLines = lines.Where(s => s != lines[index]).ToArray();
                 string replaced = string.Join(_lineSeparator.ToString(), newLines);
-                
-                File.WriteAllText(csvPath, replaced);
+                File.WriteAllText("Assets/Resources/Localization/Localization.csv", replaced);
             }
         }
 
-        public void Edit(string csvPath, string key, string value)
+        public void Edit(string key, string value)
         {
-            Remove(csvPath, key);
-            Add(csvPath, key, value);
+            Remove(key);
+            Add(key, value);
         }
 #endif
-        #endregion
-        
-        public void LoadCSV(string csvPath) => 
-            _csvFile = Resources.Load<TextAsset>(csvPath);
-
-        public Dictionary<string, string> GetDictionaryValues(string attributeId)
-        {
-            string[] lines = _csvFile.text.Split(_lineSeparator);
-            string[] headers = lines[0].Split(_fieldSeparator, StringSplitOptions.None);
-            int attributeIndex = GetAttributeIndex(attributeId, headers);
-
-            if (attributeIndex == -1)
-                throw new ArgumentOutOfRangeException(nameof(attributeId), $"Attribute \"{attributeId}\" not found");
-
-            Dictionary<string, string> dictionary = ParseTextToDictionary(lines, attributeIndex);
-
-            return dictionary;
-        }
-
-        private static int GetAttributeIndex(string attributeId, string[] headers)
-        {
-            int attributeIndex = -1;
-            
-            for (int i = 0; i < headers.Length; i++)
-            {
-                if (headers[i].Contains(attributeId))
-                {
-                    attributeIndex = i;
-                    break;
-                }
-            }
-
-            return attributeIndex;
-        }
-
-        private static void TryAddValue(Dictionary<string, string> dictionary, string[] fields, int attributeIndex)
-        {
-            string key = fields[0];
-
-            if (dictionary.ContainsKey(key))
-                return;
-
-            string value = fields[attributeIndex];
-
-            dictionary.Add(key, value);
-        }
-
-        private Dictionary<string, string> ParseTextToDictionary(string[] lines, int attributeIndex)
-        {
-            Dictionary<string, string> dictionary = new();
-            Regex csvParser = new(",(?(:[^\"]*\"[^\"]*\")(?![^\"]*\"))");
-
-            for (int i = 1; i < lines.Length; i++)
-            {
-                string line = lines[i];
-                string[] fields = csvParser.Split(line);
-
-                for (int j = 0; j < fields.Length; j++)
-                {
-                    fields[j] = fields[j].TrimStart(' ', _textSurroundings);
-                    fields[j] = fields[j].TrimEnd(_textSurroundings);
-                }
-
-                if (fields.Length > attributeIndex) 
-                    TryAddValue(dictionary, fields, attributeIndex);
-            }
-
-            return dictionary;
-        }
     }
 }

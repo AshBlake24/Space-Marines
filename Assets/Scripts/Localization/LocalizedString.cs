@@ -1,18 +1,16 @@
-﻿using Roguelike.Localization.Service;
-
-namespace Roguelike.Localization
+﻿namespace Roguelike.Localization
 {
     [System.Serializable]
     public struct LocalizedString
     {
+        public string key;
+
         public LocalizedString(string key)
         {
-            Key = key;
+            this.key = key;
         }
-        
-        public string Key { get; }
 
-        public string Value => LocalizationService.GetLocalisedValue(Key);
+        public string Value => LocalizationSystem.GetLocalizedValue(key);
 
         public static implicit operator LocalizedString(string key)
         {
