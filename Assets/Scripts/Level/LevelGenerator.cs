@@ -143,6 +143,8 @@ namespace Roguelike.Level
                 spawner.Init(_enemyFactory);
                 _currentRoom.OpenDoor();
             }
+
+            _currentRoom.HideExit();
         }
 
         private void GenerateNextLevel()

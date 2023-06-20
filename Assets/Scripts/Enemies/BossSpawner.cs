@@ -60,6 +60,8 @@ namespace Roguelike.Assets.Scripts.Enemies
             _boss = enemyPrefab.GetComponentInChildren<EnemyHealth>();
             _boss.Died += OnBossDied;
 
+            _room.CloseDoor();
+
             return enemyPrefab.transform;
         }
 
@@ -67,6 +69,8 @@ namespace Roguelike.Assets.Scripts.Enemies
         {
             _finishLevelzone.SetActive(true);
             _boss.Died -= OnBossDied;
+
+            _room.OpenDoor();
 
             BossDied?.Invoke();
         }
