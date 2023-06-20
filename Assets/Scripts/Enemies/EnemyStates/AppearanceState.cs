@@ -1,5 +1,6 @@
 ﻿using Cinemachine;
 using Roguelike.Roguelike.Enemies.Animators;
+using Roguelike.UI.Elements;
 using System;
 using UnityEngine;
 
@@ -8,6 +9,7 @@ namespace Roguelike.Enemies.EnemyStates
     public class AppearanceState : EnemyState
     {
         [SerializeField] CinemachineVirtualCamera _bossCamera;
+        [SerializeField] ActorUI _bossUI;
         [SerializeField] Transform _cameraPoint;
 
         private CinemachineVirtualCamera _currentCamera;
@@ -35,6 +37,13 @@ namespace Roguelike.Enemies.EnemyStates
             ReturnCamera();
 
             base.Exit(nextState);
+        }
+
+        private void CreateBossHealthBar()
+        {
+            GameObject hud = FindObjectOfType<ActorUI>().gameObject;
+
+            Instantiate(_bossUI, hud.transform).Construct(enemy.Health);
         }
 
         private void ReturnCamera()
