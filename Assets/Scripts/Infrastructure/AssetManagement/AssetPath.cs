@@ -25,5 +25,8 @@ namespace Roguelike.Infrastructure.AssetManagement
         public const string EnhancementViewPath = "UI/Elements/EnhancementView";
         public const string WeaponViewPath = "UI/Elements/WeaponView";
         public const string LocalizationPath = "Localization/Localization";
+        public const string AddIconPath = "Icons/Icon_Add";
+        public const string CancelIconPath = "Icons/Icon_Cancel";
+        public const string SearchIconPath = "Icons/Icon_Search";
     }
 }
