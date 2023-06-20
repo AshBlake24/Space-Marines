@@ -13,6 +13,7 @@ using Roguelike.Infrastructure.Services.Random;
 using Roguelike.Infrastructure.Services.SaveLoad;
 using Roguelike.Infrastructure.Services.StaticData;
 using Roguelike.Infrastructure.Services.Windows;
+using Roguelike.Localization.Service;
 using Roguelike.Logic.Pause;
 
 namespace Roguelike.Infrastructure.States
@@ -59,13 +60,14 @@ namespace Roguelike.Infrastructure.States
             _services.RegisterSingle<IInputService>(GetInputService());
             _services.RegisterSingle<IPersistentDataService>(new PersistentDataService(
                 _services.Single<IStaticDataService>(), _stateMachine));
+            
+            RegisterLocalizationService();
 
             _services.RegisterSingle<ISaveLoadService>(new SaveLoadService(
                 _services.Single<IPersistentDataService>()));
 
             _services.RegisterSingle<IAssetProvider>(new AssetProvider(
                 _services.Single<ISaveLoadService>()));
-
 
             _services.RegisterSingle<IAudioService>(new AudioService(
                 _services.Single<IPersistentDataService>()));
@@ -136,6 +138,15 @@ namespace Roguelike.Infrastructure.States
                 _services.Single<IEnhancementFactory>(),
                 _services.Single<IInputService>(),
                 _services.Single<ITimeService>()));
+        }
+
+        private void RegisterLocalizationService()
+        {
+            ILocalizationService localizationService = new LocalizationService(
+                _services.Single<IPersistentDataService>());
+            
+            _services.RegisterSingle(localizationService);
+            localizationService.Init();
         }
 
         private void RegisterStaticData()

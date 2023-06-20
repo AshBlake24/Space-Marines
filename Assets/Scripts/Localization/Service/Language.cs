@@ -1,4 +1,4 @@
-﻿namespace Roguelike.Localization
+﻿namespace Roguelike.Localization.Service
 {
     public enum Language
     {

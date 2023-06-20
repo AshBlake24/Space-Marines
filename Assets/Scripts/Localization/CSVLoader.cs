@@ -9,8 +9,7 @@ namespace Roguelike.Localization
     {
         private readonly char _lineSeparator = '\n';
         private readonly char _textSurroundings = '"';
-        private readonly string[] _fieldSeparator = { "\",\""};
-        private readonly Regex _csvParser = new(",(?(:[^\"]*\"[^\"]*\")*(?![^\"]*\"))");
+        private readonly string[] _fieldSeparator = {"\",\""};
 
         private TextAsset _csvFile;
 
@@ -62,11 +61,12 @@ namespace Roguelike.Localization
         private Dictionary<string, string> ParseTextToDictionary(string[] lines, int attributeIndex)
         {
             Dictionary<string, string> dictionary = new();
-            
+            Regex csvParser = new(",(?(:[^\"]*\"[^\"]*\")(?![^\"]*\"))");
+
             for (int i = 1; i < lines.Length; i++)
             {
                 string line = lines[i];
-                string[] fields = _csvParser.Split(line);
+                string[] fields = csvParser.Split(line);
 
                 for (int j = 0; j < fields.Length; j++)
                 {
