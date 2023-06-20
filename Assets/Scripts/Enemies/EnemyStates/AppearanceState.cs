@@ -36,14 +36,14 @@ namespace Roguelike.Enemies.EnemyStates
         {
             ReturnCamera();
 
+            _bossUI.gameObject.SetActive(true);
+
             base.Exit(nextState);
         }
 
-        private void CreateBossHealthBar()
+        public void SetUI(ActorUI bossUI)
         {
-            GameObject hud = FindObjectOfType<ActorUI>().gameObject;
-
-            Instantiate(_bossUI, hud.transform).Construct(enemy.Health);
+            _bossUI= bossUI;
         }
 
         private void ReturnCamera()

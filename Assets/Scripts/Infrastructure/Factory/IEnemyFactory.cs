@@ -10,6 +10,6 @@ namespace Roguelike.Infrastructure.Factory
     {
         public GameObject CreateEnemy(Transform spawnPoint, EnemyId id, PlayerHealth target);
 
-        public GameObject CreateEnemy(Transform spawnPoint, EnemyId id, PlayerHealth target, ActorUI bossUI);
+        public GameObject CreateEnemy(Transform spawnPoint, EnemyId id, PlayerHealth target, ref ActorUI bossUI);
     }
 }

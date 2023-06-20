@@ -33,14 +33,28 @@ namespace Roguelike.Infrastructure.Factory
 
         public GameObject CreateEnemy(Transform spawnPoint, EnemyId id, PlayerHealth target)
         {
-            EnemyConsctruct(spawnPoint, id, target);
+            EnemyConstruct(spawnPoint, id, target);
 
             _enemy.Health.Init(_enemyData);
 
             return _enemyPrefab;
         }
 
-        private void EnemyConsctruct(Transform spawnPoint, EnemyId id, PlayerHealth target)
+        public GameObject CreateEnemy(Transform spawnPoint, EnemyId id, PlayerHealth target, ref ActorUI bossUI)
+        {
+            EnemyConstruct(spawnPoint, id, target);
+
+            GameObject hud = Object.FindObjectOfType<ActorUI>().gameObject;
+
+            bossUI = Object.Instantiate(bossUI, hud.transform);
+            bossUI.Construct(_enemy.Health);
+
+            _enemy.Health.Init(_enemyData);
+
+            return _enemyPrefab;
+        }
+
+        private void EnemyConstruct(Transform spawnPoint, EnemyId id, PlayerHealth target)
         {
             _enemyData = _staticDataService.GetDataById<EnemyId, EnemyStaticData>(id);
             _enemyPrefab = Object.Instantiate(_enemyData.Prefab, spawnPoint);
@@ -53,19 +67,6 @@ namespace Roguelike.Infrastructure.Factory
 
             if (_enemyPrefab.TryGetComponent(out AudioPlayer audioPlayer))
                 audioPlayer.Construct(_audioFactory, _enemyData.Sound);
-        }
-
-        public GameObject CreateEnemy(Transform spawnPoint, EnemyId id, PlayerHealth target, ActorUI bossUI)
-        {
-            EnemyConsctruct(spawnPoint, id, target);
-
-            GameObject hud = Object.FindObjectOfType<ActorUI>().gameObject;
-
-            Object.Instantiate(bossUI, hud.transform).Construct(_enemy.Health);
-
-            _enemy.Health.Init(_enemyData);
-
-            return _enemyPrefab;
         }
     }
 }

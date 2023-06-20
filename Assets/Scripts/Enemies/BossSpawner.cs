@@ -1,4 +1,5 @@
 ﻿using Roguelike.Enemies;
+using Roguelike.Enemies.EnemyStates;
 using Roguelike.Infrastructure.Factory;
 using Roguelike.Level;
 using Roguelike.Player;
@@ -49,7 +50,10 @@ namespace Roguelike.Assets.Scripts.Enemies
 
         private Transform Spawn(Transform spawnPosition, PlayerHealth target)
         {
-            GameObject enemyPrefab = _enemyFactory.CreateEnemy(spawnPosition, _boosId, target, _bossUI);
+            GameObject enemyPrefab = _enemyFactory.CreateEnemy(spawnPosition, _boosId, target, ref _bossUI);
+
+            _bossUI.gameObject.SetActive(false);
+            enemyPrefab.GetComponent<AppearanceState>().SetUI(_bossUI);
 
             enemyPrefab.GetComponent<EnemyStateMachine>().enabled = true;
 
