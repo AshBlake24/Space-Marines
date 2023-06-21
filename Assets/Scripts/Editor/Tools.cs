@@ -1,8 +1,10 @@
 using System.IO;
 using Roguelike.Data;
+using Roguelike.Infrastructure.AssetManagement;
 using Roguelike.Infrastructure.Services;
 using Roguelike.Infrastructure.Services.PersistentData;
 using Roguelike.Infrastructure.Services.SaveLoad;
+using Roguelike.Localization;
 using UnityEditor;
 using UnityEngine;
 
@@ -36,6 +38,14 @@ namespace Roguelike.Editor
             SaveToFile(dataToStore);
             
             Debug.Log("Progress Saved");
+        }
+
+        [MenuItem("Tools/Sort Localization CSV")]
+        public static void SortLocalizationCSV()
+        {
+            CSVLoader csvLoader = new();
+            csvLoader.LoadCSV(AssetPath.LocalizationPath);
+            csvLoader.SortByKeyNames(LocalizationSystem.LocalizationFilePath);
         }
         
         private static void SaveToFile(string dataToStore)

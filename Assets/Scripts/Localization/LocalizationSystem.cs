@@ -7,7 +7,7 @@ namespace Roguelike.Localization
 {
     public static class LocalizationSystem
     {
-        private const string LocalizationFilePath = "Assets/Resources/Localization/Localization.csv";
+        public const string LocalizationFilePath = "Assets/Resources/Localization/Localization.csv";
 
         private static Language s_currentLanguage;
         private static IPersistentDataService s_persistentDataService;
@@ -39,9 +39,16 @@ namespace Roguelike.Localization
 
             string value = key;
 
-            s_currentLanguage = Application.isPlaying
-                ? s_persistentDataService.PlayerProgress.Settings.CurrentLanguage 
-                : Language.English;
+            if (Application.isPlaying)
+            {
+                s_currentLanguage = s_persistentDataService.PlayerProgress != null 
+                    ? s_persistentDataService.PlayerProgress.Settings.CurrentLanguage 
+                    : Language.English;
+            }
+            else
+            {
+                s_currentLanguage = Language.English;
+            }
 
             switch (s_currentLanguage)
             {

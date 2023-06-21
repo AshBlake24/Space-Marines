@@ -118,6 +118,19 @@ namespace Roguelike.Localization
             Remove(filePath, key);
             Add(filePath, key, value);
         }
+
+        public void SortByKeyNames(string filePath)
+        {
+            string[] lines = _csvFile.text.Split(_lineSeparator);
+            
+            IEnumerable<string> data = lines
+                .Skip(1)
+                .Select(line => new {Fields = _csvParser.Split(line), Line = line})
+                .OrderBy(x => x.Fields[0])
+                .Select(x => x.Line);
+            
+            File.WriteAllLines(filePath, lines.Take(1).Concat(data));
+        }
 #endif
     }
 }
