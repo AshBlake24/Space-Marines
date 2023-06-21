@@ -2,10 +2,10 @@ namespace Roguelike.StaticData.Projectiles
 {
     public enum ProjectileId
     {
-        StandartBullet,
+        StandardBullet,
         SniperBullet,
         Rocket,
-        EnemyBullet,
+        EnemyProjectile,
         Laser,
         Plasma
     }
