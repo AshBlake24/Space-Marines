@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Roguelike.Infrastructure.AssetManagement;
 using Roguelike.Infrastructure.Services.PersistentData;
+using UnityEngine;
 
 namespace Roguelike.Localization
 {
@@ -38,12 +39,10 @@ namespace Roguelike.Localization
 
             string value = key;
 
-#if UNITY_EDITOR
-            s_currentLanguage = Language.English;
-#else
-            s_currentLanguage = s_persistentDataService.PlayerProgress.Settings.CurrentLanguage;
-#endif
-            
+            s_currentLanguage = Application.isPlaying
+                ? s_persistentDataService.PlayerProgress.Settings.CurrentLanguage 
+                : Language.English;
+
             switch (s_currentLanguage)
             {
                 case Language.English:

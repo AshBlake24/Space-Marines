@@ -14,7 +14,7 @@ namespace Roguelike.Data
 
         public Settings()
         {
-            CurrentLanguage = Language.English;
+            CurrentLanguage = Language.Russian;
             AudioSettings = new List<AudioSettingsData>();
             
             foreach (AudioChannel audioChannel in EnumExtensions.GetValues<AudioChannel>())
