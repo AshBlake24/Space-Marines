@@ -23,6 +23,7 @@ namespace Roguelike.Enemies.EnemyStates
         private IObjectPool<Projectile> _projectilesPool;
 
         public event Action NeedReloaded;
+        public event Action Fired;
 
         private void Update()
         {
@@ -54,6 +55,7 @@ namespace Roguelike.Enemies.EnemyStates
                     _shotPoint = point;
                     _projectilesPool.Get();
                     enemy.RangeAttack();
+                    Fired?.Invoke();
                 }
             }
             else
