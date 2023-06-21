@@ -6,10 +6,10 @@ namespace Roguelike.StaticData.Skills
     public class RageSkillStaticData : SkillStaticData
     {
         [Header("Rage Stats")]
-        [Range(1f, 2f)] public float AttackSpeedMultiplier;
+        [Range(0, 1f)] public float AttackSpeedMultiplier;
         [Range(1f, 30f)] public float SkillDuration;
         
         public override string GetLocalizedDescription() => 
-            $"{Description.Value}{AttackSpeedMultiplier}%";
+            string.Format(Description.Value, AttackSpeedMultiplier * 100);
     }
 }

@@ -1,4 +1,4 @@
-using Roguelike.Player.Skills;
+using Roguelike.Localization;
 using UnityEngine;
 
 namespace Roguelike.StaticData.Skills
@@ -13,6 +13,6 @@ namespace Roguelike.StaticData.Skills
         [Range(1f, 5f)] public float CooldownBetweenTicks;
 
         public override string GetLocalizedDescription() => 
-            string.Format("{Description.Value}", HealthPerTick, CooldownBetweenTicks);
+            string.Format(Description.Value, HealthPerTick, CooldownBetweenTicks, LocalizedConstants.TimeInSeconds.Value);
     }
 }
