@@ -46,6 +46,7 @@ namespace Roguelike.Editor
             CSVLoader csvLoader = new();
             csvLoader.LoadCSV(AssetPath.LocalizationPath);
             csvLoader.SortByKeyNames(LocalizationSystem.LocalizationFilePath);
+            AssetDatabase.Refresh();
         }
         
         private static void SaveToFile(string dataToStore)

@@ -91,7 +91,7 @@ namespace Roguelike.Editor
                 {
                     EditorGUILayout.BeginHorizontal("Box");
                     Texture cancelIcon = (Texture) Resources.Load(AssetPath.CancelIconPath);
-                    GUIContent content = new GUIContent(cancelIcon);
+                    GUIContent content = new(cancelIcon);
 
                     if (GUILayout.Button(content, new GUIStyle(), GUILayout.MaxWidth(20), GUILayout.MaxHeight(20)))
                     {

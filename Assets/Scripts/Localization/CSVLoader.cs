@@ -13,8 +13,8 @@ namespace Roguelike.Localization
     {
         private readonly char _lineSeparator = '\n';
         private readonly char _fieldSurround = '"';
-        private readonly string[] _fieldSeparator = {"\",\""};
-        private readonly Regex _csvParser = new(",(?(:[^\"]*\"[^\"]*\")(?![^\"]*\"))");
+        private readonly char _fieldEnding = '\r';
+        private readonly string _fieldSeparator = "\",\"";
         
         private TextAsset _csvFile;
 
@@ -28,7 +28,7 @@ namespace Roguelike.Localization
             Dictionary<string, string> dictionary = new();
 
             string[] lines = _csvFile.text.Split(_lineSeparator);
-            string[] headers = lines[0].Split(_fieldSeparator, StringSplitOptions.None);
+            string[] headers = lines[0].Split(_fieldSeparator);
             int attributeIndex = -1;
 
             for (int i = 0; i < headers.Length; i++)
@@ -43,12 +43,12 @@ namespace Roguelike.Localization
             for (int i = 1; i < lines.Length; i++)
             {
                 string line = lines[i];
-                string[] fields = _csvParser.Split(line);
+                string[] fields = line.Split(_fieldSeparator);
 
                 for (int j = 0; j < fields.Length; j++)
                 {
                     fields[j] = fields[j].TrimStart(' ', _fieldSurround);
-                    fields[j] = fields[j].TrimEnd(_fieldSurround);
+                    fields[j] = fields[j].TrimEnd(_fieldSurround, _fieldEnding);
                 }
 
                 if (fields.Length > attributeIndex)
@@ -122,10 +122,16 @@ namespace Roguelike.Localization
         public void SortByKeyNames(string filePath)
         {
             string[] lines = _csvFile.text.Split(_lineSeparator);
-            
+
+            lines = lines
+                .Select(line => new Regex(@"\r*")
+                .Replace(line, string.Empty))
+                .ToArray();
+
             IEnumerable<string> data = lines
+                .Where(line => string.IsNullOrEmpty(line) == false)
                 .Skip(1)
-                .Select(line => new {Fields = _csvParser.Split(line), Line = line})
+                .Select(line => new {Fields = line.Split(_fieldSeparator), Line = line})
                 .OrderBy(x => x.Fields[0])
                 .Select(x => x.Line);
             
