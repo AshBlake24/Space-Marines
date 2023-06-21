@@ -1,6 +1,7 @@
 using System.Linq;
 using Roguelike.Data;
 using Roguelike.Infrastructure.Services.PersistentData;
+using Roguelike.Localization;
 using Roguelike.StaticData.Weapons;
 using TMPro;
 using UnityEngine;
@@ -36,15 +37,22 @@ namespace Roguelike.UI.Elements
         private void InitWeaponStats()
         {
             _weaponName.text = _weaponData.Name.Value;
-            _attackRate.text = $"{_weaponData.AttackRate}";
+            _attackRate.text = $"{_weaponData.AttackRate}{LocalizedConstants.TimeInSeconds.Value}";
             _damage.text = $"{_weaponData.Damage}x{_weaponData.BulletsPerShot}";
 
             AmmoData ammoData = _progressData.PlayerProgress.PlayerWeapons.RangedWeaponsData
                 .SingleOrDefault(data => data.ID == _weaponData.Id)?.AmmoData;
 
-            _ammo.text = ammoData != null
-                ? $"{ammoData.CurrentAmmo}/{ammoData.MaxAmmo}"
-                : $"{_weaponData.MaxAmmo}/{_weaponData.MaxAmmo}";
+            if (ammoData != null)
+            {
+                _ammo.text = ammoData.InfinityAmmo 
+                    ? $"{LocalizedConstants.Infinity.Value}" 
+                    : $"{ammoData.CurrentAmmo}/{ammoData.MaxAmmo}";
+            }
+            else
+            {
+                _ammo.text = $"{_weaponData.MaxAmmo}/{_weaponData.MaxAmmo}";
+            }
         }
     }
 }
