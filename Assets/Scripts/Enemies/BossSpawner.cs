@@ -6,6 +6,7 @@ using Roguelike.Player;
 using Roguelike.StaticData.Enemies;
 using Roguelike.UI.Elements;
 using System;
+using Unity.Mathematics;
 using UnityEngine;
 
 namespace Roguelike.Assets.Scripts.Enemies
@@ -39,6 +40,8 @@ namespace Roguelike.Assets.Scripts.Enemies
 
             if(_finishLevelzone != null)
                 _finishLevelzone.SetActive(false);
+
+            _spawnPoint.rotation = Quaternion.Euler(0, _room.EntryPoint.transform.rotation.eulerAngles.y, 0);
 
             _enterPoint.PlayerHasEntered += OnPlayerHasEntered;
         }
