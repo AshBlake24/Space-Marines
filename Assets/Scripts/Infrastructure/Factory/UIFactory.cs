@@ -228,6 +228,9 @@ namespace Roguelike.Infrastructure.Factory
         {
             optionsMenu.GetComponentInChildren<AudioSettingsWindow>()
                 .Construct(_audioService);
+            
+            optionsMenu.GetComponentInChildren<LanguageSelector>()
+                .Construct(_progressService.PlayerProgress.Settings);
         }
     }
 }

@@ -12,8 +12,9 @@ GameObject:
   - component: {fileID: 6667448269632673017}
   - component: {fileID: 3663825142291384756}
   - component: {fileID: 6431517899896859105}
+  - component: {fileID: 8543374008631225364}
   m_Layer: 5
-  m_Name: Dropdown
+  m_Name: Language Selector
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -140,6 +141,19 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_AlphaFadeSpeed: 0.15
+--- !u!114 &8543374008631225364
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 724558910495216064}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f74715e1afaf4b678954b36fb2210173, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _dropdown: {fileID: 6431517899896859105}
 --- !u!1 &1022899480031499750
 GameObject:
   m_ObjectHideFlags: 0
@@ -622,8 +636,8 @@ RectTransform:
   - {fileID: 5685763296012235608}
   - {fileID: 5685763295049228003}
   - {fileID: 6553036473373371776}
-  - {fileID: 6533827503350939625}
   - {fileID: 4909971885308660269}
+  - {fileID: 6533827503350939625}
   - {fileID: 907468573290278447}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -1501,7 +1515,7 @@ RectTransform:
   m_Children:
   - {fileID: 3597260969722373049}
   m_Father: {fileID: 5685763295282953090}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.3002077, y: 0.043278724}
   m_AnchorMax: {x: 0.6997924, y: 0.1254181}
@@ -1895,7 +1909,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5685763295282953090}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.07440256, y: 0.1716968}
   m_AnchorMax: {x: 0.4424026, y: 0.23430322}
