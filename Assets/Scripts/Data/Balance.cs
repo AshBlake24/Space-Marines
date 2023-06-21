@@ -35,6 +35,6 @@ namespace Roguelike.Data
             Changed?.Invoke();
         }
 
-        public void Reset() => Coins = 0;
+        public void Reset() => Coins = 1000;
     }
 }

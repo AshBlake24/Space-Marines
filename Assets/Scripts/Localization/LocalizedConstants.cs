@@ -9,5 +9,6 @@
         public static readonly LocalizedString Damage = new("constants_damage");
         public static readonly LocalizedString Ammo = new("constants_ammo");
         public static readonly LocalizedString Continue = new("constants_continue");
+        public static readonly LocalizedString Tier = new("ui_text_label_tier");
     }
 }

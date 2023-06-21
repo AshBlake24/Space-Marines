@@ -134,7 +134,7 @@ namespace Roguelike.Localization
                 .Select(line => new {Fields = line.Split(_fieldSeparator), Line = line})
                 .OrderBy(x => x.Fields[0])
                 .Select(x => x.Line);
-            
+
             File.WriteAllLines(filePath, lines.Take(1).Concat(data));
         }
 #endif

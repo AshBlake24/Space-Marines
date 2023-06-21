@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Roguelike.Infrastructure.AssetManagement;
 using Roguelike.Infrastructure.Services.PersistentData;
 using UnityEngine;
@@ -61,6 +62,8 @@ namespace Roguelike.Localization
                 case Language.Turkish:
                     s_localizedTurkish.TryGetValue(key, out value);
                     break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(Language));
             }
 
             return value;
@@ -84,42 +87,38 @@ namespace Roguelike.Localization
 #if UNITY_EDITOR
         public static void Add(string key, string value)
         {
-            if (value.Contains("\""))
-                value.Replace('"', '\"');
-
-            s_csvLoader ??= new CSVLoader();
-
-            s_csvLoader.LoadCSV(AssetPath.LocalizationPath);
-            s_csvLoader.Add(LocalizationFilePath, key, value);
-            s_csvLoader.LoadCSV(AssetPath.LocalizationPath);
-
-            UpdateDictionaries();
+            TrimValue(value);
+            UpdateCSV(() => s_csvLoader.Add(LocalizationFilePath, key, value));
         }
 
         public static void Replace(string key, string value)
         {
-            if (value.Contains("\""))
-                value.Replace('"', '\"');
-
-            s_csvLoader ??= new CSVLoader();
-
-            s_csvLoader.LoadCSV(AssetPath.LocalizationPath);
-            s_csvLoader.Edit(LocalizationFilePath, key, value);
-            s_csvLoader.LoadCSV(AssetPath.LocalizationPath);
-
-            UpdateDictionaries();
+            TrimValue(value);
+            UpdateCSV(() => s_csvLoader.Edit(LocalizationFilePath, key, value));
         }
 
         public static void Remove(string key)
         {
-            s_csvLoader ??= new CSVLoader();
+            UpdateCSV(() => s_csvLoader.Remove(LocalizationFilePath, key));
+        }
 
+        private static void TrimValue(string value)
+        {
+            if (value.Contains("\""))
+                value.Replace('"', '\"');
+        }
+
+        private static void UpdateCSV(Action action)
+        {
+            s_csvLoader ??= new CSVLoader();
+            
             s_csvLoader.LoadCSV(AssetPath.LocalizationPath);
-            s_csvLoader.Remove(LocalizationFilePath, key);
+            action.Invoke();
             s_csvLoader.LoadCSV(AssetPath.LocalizationPath);
 
             UpdateDictionaries();
         }
+
 #endif
     }
 }

@@ -1,3 +1,4 @@
+using Roguelike.Localization;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -25,7 +26,7 @@ namespace Roguelike.UI.Elements
         private void SetHeader(string header, string currentTier)
         {
             _header.text = header;
-            _tier.text = $"Tier {currentTier}";
+            _tier.text = $"{LocalizedConstants.Tier.Value} {currentTier}";
         }
 
         private void InitLayoutElement()

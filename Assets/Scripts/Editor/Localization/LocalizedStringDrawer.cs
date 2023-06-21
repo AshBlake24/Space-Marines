@@ -3,7 +3,7 @@ using Roguelike.Localization;
 using UnityEditor;
 using UnityEngine;
 
-namespace Roguelike.Editor
+namespace Roguelike.Editor.Localization
 {
     [CustomPropertyDrawer(typeof(LocalizedString))]
     public class LocalizedStringDrawer : PropertyDrawer
