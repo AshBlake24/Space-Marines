@@ -7,8 +7,12 @@ namespace Roguelike.Localization
     [RequireComponent(typeof(TextMeshProUGUI))]
     public class TextLocalizerUI : MonoBehaviour
     {
-        [SerializeField] private TextMeshProUGUI _textField;
-        [SerializeField] public LocalizedString _localizedString;
+        [SerializeField] private LocalizedString _localizedString;
+        
+        private TextMeshProUGUI _textField;
+
+        private void Awake() => 
+            _textField = GetComponent<TextMeshProUGUI>();
 
         private void OnEnable() => 
             Settings.LanguageChanged += OnLanguageChanged;

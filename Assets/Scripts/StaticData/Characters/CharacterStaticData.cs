@@ -15,6 +15,7 @@ namespace Roguelike.StaticData.Characters
         public GameObject Prefab;
         public WeaponId StartWeapon;
         public SkillId Skill;
+        public LocalizedString Name;
         public LocalizedString Description;
         [Range(1, 10)] public int MaxHealth;
         [Range(1, 5)] public int MaxWeaponsCount;

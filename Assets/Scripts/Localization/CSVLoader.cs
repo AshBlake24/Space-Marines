@@ -76,7 +76,7 @@ namespace Roguelike.Localization
             Language[] languages = EnumExtensions.GetValues<Language>();
 
             for (int i = 1; i < languages.Length; i++) 
-                stringBuilder.Append(",\"\"");
+                stringBuilder.Append(",");
 
             File.AppendAllText(filePath, stringBuilder.ToString());
 

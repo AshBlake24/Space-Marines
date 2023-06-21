@@ -1,11 +1,9 @@
 using Roguelike.Data;
 using Roguelike.Infrastructure.Factory;
 using Roguelike.Infrastructure.Services.StaticData;
-using Roguelike.Logic;
+using Roguelike.Localization;
 using Roguelike.Logic.CharacterSelection;
-using Roguelike.Logic.Interactables;
 using Roguelike.StaticData.Characters;
-using Roguelike.StaticData.Projectiles;
 using Roguelike.StaticData.Skills;
 using Roguelike.StaticData.Weapons;
 using Roguelike.UI.Buttons;
@@ -59,8 +57,8 @@ namespace Roguelike.UI.Windows
             SkillStaticData skillData = _staticData.GetDataById<SkillId, SkillStaticData>(_characterData.Skill);
 
             InitCharacter();
-            InitWeapon(startWeaponData);
             InitSkill(skillData);
+            InitWeapon(startWeaponData);
 
             _selectCharacterButton = GetComponentInChildren<SelectCharacterButton>();
             _selectCharacterButton.Construct(_characterData, ProgressService);
@@ -69,21 +67,10 @@ namespace Roguelike.UI.Windows
 
         private void InitCharacter()
         {
-            _characterName.text = _characterData.Id.ToString();
+            _characterName.text = _characterData.Name.Value;
             _characterIcon.sprite = _characterData.Icon;
             _health.SetValue(_characterData.MaxHealth, _characterData.MaxHealth);
             _description.text = _characterData.Description.Value;
-        }
-
-        private void InitWeapon(WeaponStaticData startWeaponData)
-        {
-            _startWeaponIcon.sprite = startWeaponData.Icon;
-            _weaponName.text = startWeaponData.Name.Value;
-            _attackRate.text = $"Attack Rate: {startWeaponData.AttackRate}s";
-            _damage.text = $"Damage: {startWeaponData.Damage}";
-
-            if (startWeaponData is RangedWeaponStaticData rangedWeaponData)
-                _ammo.text = $"Ammo: {rangedWeaponData.MaxAmmo}";
         }
 
         private void InitSkill(SkillStaticData skillData)
@@ -91,7 +78,18 @@ namespace Roguelike.UI.Windows
             _skillIcon.sprite = skillData.Icon;
             _skillName.text = skillData.Name.Value;
             _skillDescription.text = skillData.Description.Value;
-            _cooldown.text = $"Cooldown: {skillData.SkillCooldown}s";
+            _cooldown.text = $"{LocalizedConstants.Cooldown.Value}: {skillData.SkillCooldown}{LocalizedConstants.TimeInSeconds.Value}";
+        }
+
+        private void InitWeapon(WeaponStaticData startWeaponData)
+        {
+            _startWeaponIcon.sprite = startWeaponData.Icon;
+            _weaponName.text = startWeaponData.Name.Value;
+            _attackRate.text = $"{LocalizedConstants.AttackRate.Value}: {startWeaponData.AttackRate}{LocalizedConstants.TimeInSeconds.Value}";
+            _damage.text = $"{LocalizedConstants.Damage.Value}: {startWeaponData.Damage}";
+
+            if (startWeaponData is RangedWeaponStaticData rangedWeaponData)
+                _ammo.text = $"{LocalizedConstants.Ammo.Value}: {rangedWeaponData.MaxAmmo}";
         }
 
         private void OnCharacterSelected()
