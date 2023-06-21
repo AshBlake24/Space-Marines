@@ -1,4 +1,5 @@
-﻿using TMPro;
+﻿using Roguelike.Data;
+using TMPro;
 using UnityEngine;
 
 namespace Roguelike.Localization
@@ -9,9 +10,15 @@ namespace Roguelike.Localization
         [SerializeField] private TextMeshProUGUI _textField;
         [SerializeField] public LocalizedString _localizedString;
 
-        private void Start()
-        {
+        private void OnEnable() => 
+            Settings.LanguageChanged += OnLanguageChanged;
+
+        private void OnDisable() => 
+            Settings.LanguageChanged -= OnLanguageChanged;
+
+        private void Start() => OnLanguageChanged();
+
+        private void OnLanguageChanged() => 
             _textField.text = _localizedString.Value;
-        }
     }
 }
