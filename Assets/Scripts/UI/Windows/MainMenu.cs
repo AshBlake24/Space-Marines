@@ -1,6 +1,7 @@
 using Roguelike.Data;
 using Roguelike.Infrastructure.Services.Loading;
 using Roguelike.Infrastructure.Services.StaticData;
+using Roguelike.Localization;
 using Roguelike.StaticData.Levels;
 using Roguelike.Utilities;
 using TMPro;
@@ -29,11 +30,15 @@ namespace Roguelike.UI.Windows
             InitContinueButton();
         }
 
+        protected override void SubscribeUpdates() => 
+            Settings.LanguageChanged += OnLanguageChanged;
+
         protected override void Cleanup()
         {
             base.Cleanup();
             _newGameButton.onClick.RemoveAllListeners();
             _continueButton.onClick.RemoveAllListeners();
+            Settings.LanguageChanged -= OnLanguageChanged;
         }
 
         private void InitContinueButton()
@@ -46,13 +51,13 @@ namespace Roguelike.UI.Windows
             if (ProgressService.PlayerProgress.WorldData.CurrentLevel == LevelId.Dungeon)
             {
                 string currentStage = ProgressService.PlayerProgress.WorldData.CurrentStage.ToLabel();
-                continueButtonText.text = $"Continue\n({currentStage})";
+                continueButtonText.text = $"{LocalizedConstants.Continue.Value}\n({currentStage})";
                 _continueButton.interactable = true;
                 _continueButton.onClick.AddListener(OnContinueGame);
             }
             else
             {
-                continueButtonText.text = "Continue";
+                continueButtonText.text = $"{LocalizedConstants.Continue.Value}";
                 _continueButton.interactable = false;
             }
         }
@@ -70,6 +75,9 @@ namespace Roguelike.UI.Windows
             
             LoadLevel();
         }
+        
+        private void OnLanguageChanged() => 
+            InitContinueButton();
 
         private void OnContinueGame() => 
             LoadLevel();

@@ -11,5 +11,8 @@ namespace Roguelike.StaticData.Skills
         [Header("Regeneration Stats")]
         [Range(1, 3)] public int TicksCount;
         [Range(1f, 5f)] public float CooldownBetweenTicks;
+
+        public override string GetLocalizedDescription() => 
+            string.Format("{Description.Value}", HealthPerTick, CooldownBetweenTicks);
     }
 }

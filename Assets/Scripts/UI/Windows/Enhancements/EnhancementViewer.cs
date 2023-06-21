@@ -82,7 +82,7 @@ namespace Roguelike.UI.Windows.Enhancements
             if (_enhancementProgress.Tier == _enhancementData.Tiers.Length)
                 _currentTier.color = Color.red;
 
-            _currentTier.text = $"{_enhancementProgress.Tier.ToString()}/{_enhancementData.Tiers.Length}";
+            _currentTier.text = $"{_enhancementProgress.Tier}/{_enhancementData.Tiers.Length}";
         }
 
         private void InitNewStatsFields()

@@ -77,7 +77,7 @@ namespace Roguelike.UI.Windows
         {
             _skillIcon.sprite = skillData.Icon;
             _skillName.text = skillData.Name.Value;
-            _skillDescription.text = skillData.Description.Value;
+            _skillDescription.text = skillData.GetLocalizedDescription();
             _cooldown.text = $"{LocalizedConstants.Cooldown.Value}: {skillData.SkillCooldown}{LocalizedConstants.TimeInSeconds.Value}";
         }
 

@@ -8,5 +8,6 @@
         public static readonly LocalizedString AttackRate = new("constants_attack_rate");
         public static readonly LocalizedString Damage = new("constants_damage");
         public static readonly LocalizedString Ammo = new("constants_ammo");
+        public static readonly LocalizedString Continue = new("constants_continue");
     }
 }

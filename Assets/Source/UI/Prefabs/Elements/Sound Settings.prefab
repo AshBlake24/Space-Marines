@@ -71,6 +71,7 @@ GameObject:
   - component: {fileID: 4475248031354309077}
   - component: {fileID: 7900587664712625182}
   - component: {fileID: 8369405696319456407}
+  - component: {fileID: 5037563448957841145}
   m_Layer: 5
   m_Name: Title
   m_TagString: Untagged
@@ -173,12 +174,12 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 50
+  m_fontSize: 40
   m_fontSizeBase: 50
   m_fontWeight: 400
-  m_enableAutoSizing: 0
-  m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_enableAutoSizing: 1
+  m_fontSizeMin: 40
+  m_fontSizeMax: 50
   m_fontStyle: 16
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
@@ -215,6 +216,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &5037563448957841145
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3657193062326013376}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7550751635eb44b798f86c1139c88f34, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _localizedString:
+    _key: ui_text_label_music
 --- !u!1 &4022130376162689010
 GameObject:
   m_ObjectHideFlags: 0
@@ -227,6 +242,7 @@ GameObject:
   - component: {fileID: 2581770434900033067}
   - component: {fileID: 4875335901239527054}
   - component: {fileID: 7999304424442958848}
+  - component: {fileID: 7581420879140372288}
   m_Layer: 5
   m_Name: Title
   m_TagString: Untagged
@@ -329,12 +345,12 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 50
+  m_fontSize: 40
   m_fontSizeBase: 50
   m_fontWeight: 400
-  m_enableAutoSizing: 0
-  m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_enableAutoSizing: 1
+  m_fontSizeMin: 40
+  m_fontSizeMax: 50
   m_fontStyle: 16
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
@@ -371,6 +387,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &7581420879140372288
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4022130376162689010}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7550751635eb44b798f86c1139c88f34, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _localizedString:
+    _key: ui_text_label_sound
 --- !u!1 &4699019018592318130
 GameObject:
   m_ObjectHideFlags: 0
@@ -442,6 +472,7 @@ GameObject:
   - component: {fileID: 4044300547413443189}
   - component: {fileID: 4826480193275060915}
   - component: {fileID: 7639285371283895945}
+  - component: {fileID: 1802572430085071948}
   m_Layer: 5
   m_Name: Title
   m_TagString: Untagged
@@ -544,12 +575,12 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 50
+  m_fontSize: 40
   m_fontSizeBase: 50
   m_fontWeight: 400
-  m_enableAutoSizing: 0
-  m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_enableAutoSizing: 1
+  m_fontSizeMin: 40
+  m_fontSizeMax: 50
   m_fontStyle: 16
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
@@ -586,6 +617,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &1802572430085071948
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6229034066314065889}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7550751635eb44b798f86c1139c88f34, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _localizedString:
+    _key: ui_text_label_sound
 --- !u!1 &6387288523139351828
 GameObject:
   m_ObjectHideFlags: 0
@@ -891,6 +936,7 @@ GameObject:
   - component: {fileID: 8755447114345323143}
   - component: {fileID: 1230179260990310524}
   - component: {fileID: 7760423784443715019}
+  - component: {fileID: 4833462257722684628}
   m_Layer: 5
   m_Name: Title
   m_TagString: Untagged
@@ -993,12 +1039,12 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 50
+  m_fontSize: 40
   m_fontSizeBase: 50
   m_fontWeight: 400
-  m_enableAutoSizing: 0
-  m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_enableAutoSizing: 1
+  m_fontSizeMin: 40
+  m_fontSizeMax: 50
   m_fontStyle: 16
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
@@ -1035,6 +1081,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &4833462257722684628
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7999514173532000617}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7550751635eb44b798f86c1139c88f34, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _localizedString:
+    _key: ui_text_label_music
 --- !u!1 &8176751664566742321
 GameObject:
   m_ObjectHideFlags: 0

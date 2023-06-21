@@ -8,5 +8,8 @@ namespace Roguelike.StaticData.Skills
         [Header("Rage Stats")]
         [Range(1f, 2f)] public float AttackSpeedMultiplier;
         [Range(1f, 30f)] public float SkillDuration;
+        
+        public override string GetLocalizedDescription() => 
+            $"{Description.Value}{AttackSpeedMultiplier}%";
     }
 }

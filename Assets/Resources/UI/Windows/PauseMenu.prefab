@@ -1178,6 +1178,7 @@ GameObject:
   - component: {fileID: 4908110001681493055}
   - component: {fileID: 4908110001681492993}
   - component: {fileID: 4908110001681492992}
+  - component: {fileID: 5416950960421733009}
   m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
@@ -1202,8 +1203,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.000030517578, y: 5}
-  m_SizeDelta: {x: 0, y: -10}
+  m_AnchoredPosition: {x: 0, y: 5}
+  m_SizeDelta: {x: -30, y: -10}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4908110001681492993
 CanvasRenderer:
@@ -1260,10 +1261,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 74
+  m_fontSize: 71.1
   m_fontSizeBase: 74
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 16
@@ -1302,6 +1303,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &5416950960421733009
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4908110001681493054}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7550751635eb44b798f86c1139c88f34, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _localizedString:
+    _key: ui_text_button_play
 --- !u!1 &4908110001815882908
 GameObject:
   m_ObjectHideFlags: 0
@@ -1376,6 +1391,7 @@ GameObject:
   - component: {fileID: 4908110002180057421}
   - component: {fileID: 4908110002180057423}
   - component: {fileID: 4908110002180057422}
+  - component: {fileID: 8073929709197801386}
   m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
@@ -1500,6 +1516,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &8073929709197801386
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4908110002180057420}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7550751635eb44b798f86c1139c88f34, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _localizedString:
+    _key: ui_text_label_pause
 --- !u!1 &4908110002374611732
 GameObject:
   m_ObjectHideFlags: 0

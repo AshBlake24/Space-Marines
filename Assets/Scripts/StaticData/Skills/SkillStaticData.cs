@@ -17,5 +17,7 @@ namespace Roguelike.StaticData.Skills
         public ParticleSystem SkillEffect;
         
         public Enum Key => Id;
+
+        public abstract string GetLocalizedDescription();
     }
 }
