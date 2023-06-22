@@ -10,6 +10,9 @@ namespace Roguelike.Data
     {
         public List<OverallKillData> OverallKillData;
         public CurrentKillData CurrentKillData;
+
+        public int OverallKilledMonsters => OverallKillData.Sum(x => x.KilledMonsters);
+        public int OverallKilledBosses => OverallKillData.Sum(x => x.KilledBosses);
         
         public KillData()
         {
@@ -26,7 +29,7 @@ namespace Roguelike.Data
             OverallKillData killData = OverallKillData.SingleOrDefault(data => data.Id == levelId);
 
             if (killData != null)
-                killData.Kills += kills;
+                killData.KilledMonsters += kills;
         }
 
         private void InitLevelsKillData()

@@ -7,7 +7,8 @@ namespace Roguelike.Data
     public class OverallKillData
     {
         public LevelId Id;
-        public int Kills;
+        public int KilledMonsters;
+        public int KilledBosses;
 
         public OverallKillData(LevelId id)
         {
