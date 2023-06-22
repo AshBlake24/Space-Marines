@@ -6,19 +6,18 @@ namespace Roguelike.Data
     public class Statistics
     {
         public KillData KillData;
-        public int CoinsCollected;
-        public int EnhancementsBought;
-        public int ChestsOpened;
+        public CollectablesData CollectablesData;
+        public FavouriteWeapons FavouriteWeapons;
+        public FavouriteCharacters FavouriteCharacters;
+        public FavouriteEnhancements FavouriteEnhancements;
 
         public Statistics()
         {
             KillData = new KillData();
-        }
-
-        public void AddCoins(int coins)
-        {
-            if (coins > 0)
-                CoinsCollected += coins;
+            CollectablesData = new CollectablesData();
+            FavouriteWeapons = new FavouriteWeapons();
+            FavouriteCharacters = new FavouriteCharacters();
+            FavouriteEnhancements = new FavouriteEnhancements();
         }
     }
 }
