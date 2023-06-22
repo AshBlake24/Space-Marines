@@ -1,8 +1,15 @@
-﻿namespace Roguelike.UI.Windows
+﻿using Roguelike.UI.Windows.Panels;
+
+namespace Roguelike.UI.Windows
 {
     public class StatisticsWindow : BaseWindow
     {
-        protected override void Initialize() => 
+        protected override void Initialize()
+        {
             TimeService.PauseGame();
+            
+            GetComponentInChildren<StatisticsPanel>()
+                .Construct(ProgressService);
+        }
     }
 }

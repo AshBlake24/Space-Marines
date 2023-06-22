@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 namespace Roguelike.UI.Windows.Panels
 {
-    public class StatisticPanel : MonoBehaviour
+    public class StatisticsPanel : MonoBehaviour
     {
         [Header("Statistics")]
         [SerializeField] private StatisticsField _monstersKilled;
