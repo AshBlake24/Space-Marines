@@ -7,9 +7,8 @@ namespace Roguelike.UI.Windows.Confirmations
     {
         protected override void Initialize()
         {
-            
 #if UNITY_WEBGL && !UNITY_EDITOR
-            if (YandexGamesSdk.IsInitialized)
+            if (PlayerAccount.IsAuthorized)
                 Destroy(gameObject);
 #endif
         }

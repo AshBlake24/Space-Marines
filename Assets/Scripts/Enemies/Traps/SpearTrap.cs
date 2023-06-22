@@ -8,7 +8,7 @@ namespace Roguelike.Enemies.Traps
         [SerializeField] private Spear[] _spears;
         [SerializeField] private int _damage = 1;
         [SerializeField] private float _depth = 1.75f;
-        [SerializeField] private float _switchTimer = 2f;
+        [SerializeField] private float _switchTimer = 1.5f;
         [SerializeField] private float _switchingAnimationDuration = 0.25f;
 
         private Vector3 _onPosition;

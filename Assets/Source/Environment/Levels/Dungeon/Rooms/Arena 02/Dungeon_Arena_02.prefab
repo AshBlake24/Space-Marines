@@ -330,7 +330,7 @@ GameObject:
   - component: {fileID: 1478148948927113428}
   - component: {fileID: 1085078617194871803}
   m_Layer: 25
-  m_Name: Minimap Icon
+  m_Name: Minimap Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1240,6 +1240,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _collider: {fileID: 8211190266278537672}
+  _bloodEffect: {fileID: 198138027695693824, guid: 8a500fe83a3ff9f4ab2f460a2c4dd265, type: 3}
 --- !u!65 &1362090973209080982 stripped
 BoxCollider:
   m_CorrespondingSourceObject: {fileID: 4581225017541773814, guid: ddab06a012412364e95f135ec33ff59d, type: 3}
@@ -1263,6 +1264,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _collider: {fileID: 6527414918391765233}
+  _bloodEffect: {fileID: 198138027695693824, guid: 8a500fe83a3ff9f4ab2f460a2c4dd265, type: 3}
 --- !u!65 &6527414918391765233 stripped
 BoxCollider:
   m_CorrespondingSourceObject: {fileID: 8638695936991880593, guid: ddab06a012412364e95f135ec33ff59d, type: 3}
@@ -1291,6 +1293,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _collider: {fileID: 8422503352687731816}
+  _bloodEffect: {fileID: 198138027695693824, guid: 8a500fe83a3ff9f4ab2f460a2c4dd265, type: 3}
 --- !u!1 &8209691556761798832 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6672777321933370832, guid: ddab06a012412364e95f135ec33ff59d, type: 3}
@@ -1350,6 +1353,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _collider: {fileID: 1362090973209080982}
+  _bloodEffect: {fileID: 198138027695693824, guid: 8a500fe83a3ff9f4ab2f460a2c4dd265, type: 3}
 --- !u!1001 &3275481868001813674
 PrefabInstance:
   m_ObjectHideFlags: 0
