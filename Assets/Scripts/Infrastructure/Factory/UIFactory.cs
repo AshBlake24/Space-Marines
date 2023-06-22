@@ -23,6 +23,7 @@ using Roguelike.UI.Elements.Views;
 using Roguelike.UI.Windows;
 using Roguelike.UI.Windows.Confirmations;
 using Roguelike.UI.Windows.Enhancements;
+using Roguelike.UI.Windows.Panels;
 using Roguelike.UI.Windows.Regions;
 using UnityEngine;
 using Object = UnityEngine.Object;
@@ -88,6 +89,10 @@ namespace Roguelike.Infrastructure.Factory
                 case PauseMenu pauseMenu:
                     pauseMenu.Construct(this);
 
+                    break;
+                case StatisticsWindow statisticsWindow:
+                    InitStatisticsWindow(statisticsWindow);
+                    
                     break;
             }
 
@@ -231,6 +236,13 @@ namespace Roguelike.Infrastructure.Factory
             
             optionsMenu.GetComponentInChildren<LanguageSelector>()
                 .Construct(_progressService.PlayerProgress.Settings);
+        }
+        
+        private void InitStatisticsWindow(StatisticsWindow statisticsWindow)
+        {
+            StatisticsPanel statisticsPanel = statisticsWindow.GetComponentInChildren<StatisticsPanel>();
+            statisticsPanel.Construct(_progressService, _staticData);
+            statisticsWindow.Construct(statisticsPanel);
         }
     }
 }
