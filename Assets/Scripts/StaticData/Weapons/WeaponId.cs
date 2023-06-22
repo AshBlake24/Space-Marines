@@ -2,7 +2,7 @@ namespace Roguelike.StaticData.Weapons
 {
     public enum WeaponId
     {
-        Unknow = -1,
+        Unknown = -1,
         SmallPistol,
         Glock,
         Revolver,

@@ -34,7 +34,7 @@ namespace Roguelike.Data
             Weapons = new WeaponId[maxWeaponsCount];
 
             for (int i = 0; i < Weapons.Length; i++)
-                Weapons[i] = WeaponId.Unknow;
+                Weapons[i] = WeaponId.Unknown;
         }
 
         private void InitStartWeapon(IWeapon startWeapon)
