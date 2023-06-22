@@ -7,9 +7,6 @@ namespace Roguelike.UI.Windows
         protected override void Initialize()
         {
             TimeService.PauseGame();
-            
-            GetComponentInChildren<StatisticsPanel>()
-                .Construct(ProgressService);
         }
     }
 }

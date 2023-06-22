@@ -13,6 +13,6 @@ namespace Roguelike.Player
         }
 
         public void OnChestOpened() => 
-            _progressService.Statistics.ChestsOpened++;
+            _progressService.Statistics.CollectablesData.ChestsOpened++;
     }
 }

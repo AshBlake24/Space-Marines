@@ -5,7 +5,6 @@ using Roguelike.Infrastructure.AssetManagement;
 using Roguelike.Infrastructure.Services.Windows;
 using Roguelike.StaticData;
 using Roguelike.StaticData.Audio;
-using Roguelike.StaticData.Levels;
 using Roguelike.StaticData.Player;
 using Roguelike.StaticData.Windows;
 using UnityEngine;

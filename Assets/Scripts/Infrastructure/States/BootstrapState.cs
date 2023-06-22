@@ -85,6 +85,7 @@ namespace Roguelike.Infrastructure.States
                 _services.Single<IParticlesPoolService>(),
                 _services.Single<IStaticDataService>(),
                 _services.Single<IAudioFactory>(),
+                _services.Single<IPersistentDataService>(),
                 _coroutineRunner));
 
             _services.RegisterSingle<IEnemyFactory>(new EnemyFactory(

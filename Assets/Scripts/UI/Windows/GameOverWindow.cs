@@ -57,7 +57,7 @@ namespace Roguelike.UI.Windows
             LevelId levelId = EnumExtensions.GetCurrentLevelId();
 
             ProgressService.PlayerProgress.Statistics.KillData.TrySaveOverallKills(levelId, _kills);
-            ProgressService.PlayerProgress.Statistics.AddCoins(_coins);
+            ProgressService.PlayerProgress.Statistics.CollectablesData.AddCoins(_coins);
         }
     }
 }

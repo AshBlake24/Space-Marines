@@ -122,8 +122,11 @@ namespace Roguelike.UI.Windows.Enhancements
 
         private void OnSellButtonClick()
         {
-            _progressService.PlayerProgress.Statistics.EnhancementsBought++;
-            _progressService.PlayerProgress.Balance.WithdrawCoins(_enhancementData.Tiers[_enhancementProgress.Tier].Price);
+            int price = _enhancementData.Tiers[_enhancementProgress.Tier].Price;
+            
+            _progressService.PlayerProgress.Statistics.CollectablesData.EnhancementsBought++;
+            _progressService.PlayerProgress.Statistics.CollectablesData.AddCoinsForEnhancements(price);
+            _progressService.PlayerProgress.Balance.WithdrawCoins(price);
 
             if (_playerEnhancements.EnhancementExist(_enhancementData.Id) == false)
                 _playerEnhancements.AddEnhancement(_enhancementData.Id, ++_enhancementProgress.Tier);

@@ -1,5 +1,7 @@
 using System;
+using Roguelike.Data;
 using Roguelike.Infrastructure.Services.Pools;
+using Roguelike.StaticData.Loot.Powerups;
 using Roguelike.Weapons;
 using UnityEngine;
 
@@ -7,8 +9,10 @@ namespace Roguelike.Loot.Powerups
 {
     public class Powerup : MonoBehaviour
     {
+        private PowerupId _id;
         private IParticlesPoolService _particlesPool;
         private PowerupEffect _powerupEffect;
+        private Statistics _statistics;
         private ParticleSystem _vfx;
         private bool _collected;
         private string _vfxKey;
@@ -18,10 +22,13 @@ namespace Roguelike.Loot.Powerups
         private void OnDestroy() => 
             Destroy(gameObject);
 
-        public void Construct(IParticlesPoolService particlesPool, PowerupEffect powerupDataEffect, ParticleSystem vfx)
+        public void Construct(IParticlesPoolService particlesPool, PowerupId id, PowerupEffect powerupDataEffect, 
+            Statistics statistics, ParticleSystem vfx)
         {
-            _powerupEffect = powerupDataEffect;
+            _id = id;
+            _statistics = statistics;
             _vfxKey = vfx.gameObject.name;
+            _powerupEffect = powerupDataEffect;
             CreateVFXPool(particlesPool, vfx);
         }
 
@@ -37,6 +44,7 @@ namespace Roguelike.Loot.Powerups
         {
             if (_powerupEffect.TryApply(target))
             {
+                _statistics.CollectablesData.CollectPowerup(_id);
                 _collected = true;
                 Collected?.Invoke();
                 SpawnVFX(target.transform);
