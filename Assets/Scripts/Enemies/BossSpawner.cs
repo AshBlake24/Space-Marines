@@ -1,12 +1,10 @@
 ﻿using Roguelike.Enemies;
-using Roguelike.Enemies.EnemyStates;
 using Roguelike.Infrastructure.Factory;
 using Roguelike.Level;
 using Roguelike.Player;
 using Roguelike.StaticData.Enemies;
 using Roguelike.UI.Elements;
 using System;
-using Unity.Mathematics;
 using UnityEngine;
 
 namespace Roguelike.Assets.Scripts.Enemies
@@ -54,11 +52,6 @@ namespace Roguelike.Assets.Scripts.Enemies
         private Transform Spawn(Transform spawnPosition, PlayerHealth target)
         {
             GameObject enemyPrefab = _enemyFactory.CreateEnemy(spawnPosition, _boosId, target, ref _bossUI);
-
-            _bossUI.gameObject.SetActive(false);
-            enemyPrefab.GetComponent<AppearanceState>().SetUI(_bossUI);
-
-            enemyPrefab.GetComponent<EnemyStateMachine>().enabled = true;
 
             _boss = enemyPrefab.GetComponentInChildren<EnemyHealth>();
             _boss.Died += OnBossDied;

@@ -1,6 +1,7 @@
 ﻿using Roguelike.Audio.Factory;
 using Roguelike.Audio.Sounds;
 using Roguelike.Enemies;
+using Roguelike.Enemies.EnemyStates;
 using Roguelike.Infrastructure.Services.Random;
 using Roguelike.Infrastructure.Services.StaticData;
 using Roguelike.Player;
@@ -49,7 +50,12 @@ namespace Roguelike.Infrastructure.Factory
             bossUI = Object.Instantiate(bossUI, hud.transform);
             bossUI.Construct(_enemy.Health);
 
+            bossUI.gameObject.SetActive(false);
+            _enemyPrefab.GetComponentInChildren<AppearanceState>().SetUI(bossUI);
+
             _enemy.Health.Init(_enemyData);
+
+            _enemyPrefab.GetComponent<BossStage>().Init(_enemy);
 
             return _enemyPrefab;
         }
@@ -61,7 +67,7 @@ namespace Roguelike.Infrastructure.Factory
 
             _enemy = new Enemy(_enemyData, _enemyPrefab.GetComponentInChildren<EnemyHealth>(), target);
 
-            _enemyPrefab.GetComponent<EnemyStateMachine>().Init(_enemy);
+            _enemyPrefab.GetComponentInChildren<EnemyStateMachine>().Init(_enemy);
             _enemyPrefab.GetComponentInChildren<EnemyLootSpawner>()
                 .Construct(_lootFactory, _randomService);
 
