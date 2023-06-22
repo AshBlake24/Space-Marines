@@ -32,6 +32,7 @@ namespace Roguelike.UI.Buttons
         {
             _progressService.PlayerProgress.Character = _characterData.Id;
             _progressService.PlayerProgress.State.MaxHealth = _characterData.MaxHealth;
+            _progressService.PlayerProgress.Statistics.Favourites.AddCharacter(_characterData.Id);
             _progressService.Reset();
             
             CharacterSelected?.Invoke();

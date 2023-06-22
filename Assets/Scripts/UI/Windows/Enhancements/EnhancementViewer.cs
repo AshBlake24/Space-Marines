@@ -126,6 +126,7 @@ namespace Roguelike.UI.Windows.Enhancements
             
             _progressService.PlayerProgress.Statistics.CollectablesData.EnhancementsBought++;
             _progressService.PlayerProgress.Statistics.CollectablesData.AddCoinsForEnhancements(price);
+            _progressService.PlayerProgress.Statistics.Favourites.AddEnhancement(_enhancementData.Id);
             _progressService.PlayerProgress.Balance.WithdrawCoins(price);
 
             if (_playerEnhancements.EnhancementExist(_enhancementData.Id) == false)

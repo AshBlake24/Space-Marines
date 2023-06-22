@@ -48,45 +48,55 @@ namespace Roguelike.UI.Windows.Panels
         public void InitStats()
         {
             InitStatisticsData();
-            // InitFavouriteWeapon();
-            // InitFavouriteCharacter();
-            // InitFavouriteEnhancement();
+            InitFavouriteWeapon();
+            InitFavouriteCharacter();
+            InitFavouriteEnhancement();
         }
+        
+        private void InitFavouriteWeapon()
+        {
+            WeaponId favouriteWeaponId = _statistics.Favourites.FavouriteWeapon;
+            
+            if (favouriteWeaponId != WeaponId.Unknown)
+            {
+                WeaponStaticData weaponData = _staticDataService
+                    .GetDataById<WeaponId, WeaponStaticData>(favouriteWeaponId);
+        
+                _weaponIcon.sprite = weaponData.Icon;
+                _weaponRarity.color = _rarityColors[weaponData.Rarity];
+            }
+            else
+            {
+                _weaponIcon.gameObject.SetActive(false);
+                _weaponRarity.gameObject.SetActive(false);
+            }
+        }
+        
+        private void InitFavouriteEnhancement()
+        {
+            EnhancementId favouriteEnhancementId = _statistics.Favourites.FavouriteEnhancement;
 
-        // private void InitFavouriteEnhancement()
-        // {
-        //     if (_statistics.Favourites.Enhancement != null)
-        //     {
-        //         EnhancementStaticData enhancementData = _staticDataService
-        //             .GetDataById<EnhancementId, EnhancementStaticData>(_statistics.Favourites.Enhancement);
-        //
-        //         _characterIcon.sprite = enhancementData.Icon;
-        //     }
-        // }
-        //
-        // private void InitFavouriteCharacter()
-        // {
-        //     if (_statistics.Favourites.Character != null)
-        //     {
-        //         CharacterStaticData characterData = _staticDataService
-        //             .GetDataById<CharacterId, CharacterStaticData>(_statistics.Favourites.Character);
-        //
-        //         _characterIcon.sprite = characterData.Icon;
-        //     }
-        // }
-        //
-        // private void InitFavouriteWeapon()
-        // {
-        //     if (_statistics.Favourites.Weapon != null)
-        //     {
-        //         WeaponStaticData weaponData = _staticDataService
-        //             .GetDataById<WeaponId, WeaponStaticData>(_statistics.Favourites.Weapon);
-        //
-        //         _weaponIcon.sprite = weaponData.Icon;
-        //         _weaponRarity.color = _rarityColors[weaponData.Rarity];
-        //     }
-        // }
-
+            if (favouriteEnhancementId != EnhancementId.Unknown)
+            {
+                EnhancementStaticData enhancementData = _staticDataService
+                    .GetDataById<EnhancementId, EnhancementStaticData>(favouriteEnhancementId);
+        
+                _enhancementIcon.sprite = enhancementData.Icon;
+            }
+            else
+            {
+                _enhancementIcon.gameObject.SetActive(false);
+            }
+        }
+        
+        private void InitFavouriteCharacter()
+        {
+            CharacterStaticData characterData = _staticDataService
+                .GetDataById<CharacterId, CharacterStaticData>(_statistics.Favourites.FavouriteCharacter);
+        
+            _characterIcon.sprite = characterData.Icon;
+        }
+        
         private void InitStatisticsData()
         {
             _monstersKilled.SetStatsValue(_statistics.KillData.OverallKilledMonsters);

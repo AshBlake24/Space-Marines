@@ -58,6 +58,8 @@ namespace Roguelike.UI.Windows
 
             ProgressService.PlayerProgress.Statistics.KillData.TrySaveOverallKills(levelId, _kills);
             ProgressService.PlayerProgress.Statistics.CollectablesData.AddCoins(_coins);
+            ProgressService.PlayerProgress.Statistics.Favourites
+                .AddWeapons(ProgressService.PlayerProgress.PlayerWeapons.Weapons);
         }
     }
 }

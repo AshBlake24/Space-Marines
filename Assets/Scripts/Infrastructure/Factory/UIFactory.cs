@@ -199,7 +199,7 @@ namespace Roguelike.Infrastructure.Factory
 
             foreach (WeaponId weaponId in availableWeapons)
             {
-                if (weaponId == WeaponId.Unknow)
+                if (weaponId == WeaponId.Unknown)
                     continue;
                 
                 WeaponStaticData staticData = _staticData

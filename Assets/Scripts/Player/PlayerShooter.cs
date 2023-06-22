@@ -87,7 +87,7 @@ namespace Roguelike.Player
         {
             WeaponId[] weaponsId = _weapons
                 .Select(weapon => weapon == null
-                    ? WeaponId.Unknow
+                    ? WeaponId.Unknown
                     : weapon.Stats.ID)
                 .ToArray();
 

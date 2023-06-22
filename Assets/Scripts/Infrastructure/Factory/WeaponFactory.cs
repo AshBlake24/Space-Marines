@@ -38,7 +38,7 @@ namespace Roguelike.Infrastructure.Factory
 
         public IWeapon CreateWeapon(WeaponId id, Transform parent)
         {
-            if (id == WeaponId.Unknow)
+            if (id == WeaponId.Unknown)
                 return null;
 
             WeaponStaticData weaponData = _staticDataService.GetDataById<WeaponId, WeaponStaticData>(id);
