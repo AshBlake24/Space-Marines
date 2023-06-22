@@ -46,6 +46,7 @@ namespace Roguelike.Enemies
                 _firstStage.enabled = false;
 
                 _nextStage.gameObject.SetActive(true);
+                _nextStage.transform.position = _firstStage.transform.position;
                 _enemyHealth.transform.SetParent(_nextStage.transform);
                 _cameraPoint.transform.SetParent(_nextStage.transform);
                 _enemyHealth.transform.localPosition = Vector3.zero;

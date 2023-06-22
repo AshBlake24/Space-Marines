@@ -18,7 +18,6 @@ namespace Roguelike.Enemies.EnemyStates
 
         private NavMeshAgent _agent;
         private CinemachineVirtualCamera _currentCamera;
-        private Transform _previousCameraFollower;
 
         private void Update()
         {
@@ -30,8 +29,7 @@ namespace Roguelike.Enemies.EnemyStates
                     animator.Move(0, _agent.isStopped);
 
                     _portal.SetActive(false);
-
-                    Debug.Log("Выход");
+                    _agent = null;
                 }
             }
         }
@@ -41,9 +39,12 @@ namespace Roguelike.Enemies.EnemyStates
             base.Enter(curentEnemy, enemyAnimator);
 
             _currentCamera = Instantiate(_bossCamera);
-            _portal = Instantiate(_portal, _portalSpawnPoint.position, _portal.transform.rotation);
 
-            Move();
+            if (_portal != null)
+            {
+                _portal = Instantiate(_portal, _portalSpawnPoint.position, _portal.transform.rotation);
+                Move();
+            }
 
             if (_currentCamera != null)
             {
@@ -60,7 +61,8 @@ namespace Roguelike.Enemies.EnemyStates
         {
             ReturnCamera();
 
-            _bossUI.gameObject.SetActive(true);
+            if (_bossUI != null)
+                _bossUI.gameObject.SetActive(true);
 
             base.Exit(nextState);
         }
@@ -72,7 +74,7 @@ namespace Roguelike.Enemies.EnemyStates
 
         private void ReturnCamera()
         {
-            _currentCamera.gameObject.SetActive(false);
+            Destroy(_currentCamera);
         }
 
         private void Move()
