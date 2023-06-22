@@ -6,6 +6,8 @@ namespace Roguelike.Data
     [Serializable]
     public class CollectablesData
     {
+        public const float CoinsScoreMultiplicator = 0.1f;
+        
         public int CoinsCollected;
         public int CoinsSpentOnEnhancements;
         public int PowerupsCollected;

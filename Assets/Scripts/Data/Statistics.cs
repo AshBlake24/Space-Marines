@@ -14,5 +14,23 @@ namespace Roguelike.Data
             KillData = new KillData();
             CollectablesData = new CollectablesData();
         }
+
+        public int PlayerScore
+        {
+            get
+            {
+                int score = 0;
+
+                foreach (OverallKillData killData in KillData.OverallKillData)
+                {
+                    score += killData.KilledMonsters;
+                    score += killData.KilledBosses * OverallKillData.BossScoreMultiplicator;
+                }
+
+                score += (int)Math.Floor(CollectablesData.CoinsCollected * CollectablesData.CoinsScoreMultiplicator);
+
+                return score;
+            }
+        }
     }
 }
