@@ -1,7 +1,6 @@
 using UnityEngine;
 using Roguelike.Enemies.EnemyStates;
 using Roguelike.Roguelike.Enemies.Animators;
-using Roguelike.StaticData.Enemies;
 
 namespace Roguelike.Enemies
 {
@@ -24,7 +23,7 @@ namespace Roguelike.Enemies
             SwitchState(_startState);
         }
 
-        public void Init (Enemy enemy) 
+        public virtual void Init (Enemy enemy) 
         {
             _enemy = enemy;
             _enemyHealth = _enemy.Health;

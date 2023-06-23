@@ -9,15 +9,15 @@ namespace Roguelike.Enemies.EnemyStates
 {
     public class AppearanceState : EnemyState
     {
-        [SerializeField] CinemachineVirtualCamera _bossCamera;
-        [SerializeField] ActorUI _bossUI;
-        [SerializeField] Transform _cameraPoint;
-        [SerializeField] GameObject _portal;
-        [SerializeField] Transform _portalSpawnPoint;
-        [SerializeField] Transform _appearanceStopPosition;
+        [SerializeField] private GameObject _portal;
+        [SerializeField] private Transform _portalSpawnPoint;
+        [SerializeField] private Transform _appearanceStopPosition;
 
+        private Transform _cameraPoint;
+        private ActorUI _healthBar;
+        private CinemachineVirtualCamera _bossCamera;
+        private BossStateMachine _stateMashine;
         private NavMeshAgent _agent;
-        private CinemachineVirtualCamera _currentCamera;
 
         private void Update()
         {
@@ -38,7 +38,7 @@ namespace Roguelike.Enemies.EnemyStates
         {
             base.Enter(curentEnemy, enemyAnimator);
 
-            _currentCamera = Instantiate(_bossCamera);
+            _stateMashine = GetComponent<BossStateMachine>();
 
             if (_portal != null)
             {
@@ -46,10 +46,26 @@ namespace Roguelike.Enemies.EnemyStates
                 Move();
             }
 
-            if (_currentCamera != null)
+            HideHealthBar();
+            ActivateCamera();
+        }
+
+        private void HideHealthBar()
+        {
+            _healthBar = _stateMashine.BossRoot.HealthBar;
+            _healthBar.gameObject.SetActive(false);
+        }
+
+        private void ActivateCamera()
+        {
+            _bossCamera = _stateMashine.BossRoot.Camera;
+            _cameraPoint = _stateMashine.BossRoot.CameraPoint;
+            _bossCamera.gameObject.SetActive(true);
+
+            if (_bossCamera != null)
             {
-                _currentCamera.Follow = _cameraPoint;
-                _currentCamera.LookAt = _cameraPoint;
+                _bossCamera.Follow = _cameraPoint;
+                _bossCamera.LookAt = _cameraPoint;
             }
             else
             {
@@ -61,20 +77,15 @@ namespace Roguelike.Enemies.EnemyStates
         {
             ReturnCamera();
 
-            if (_bossUI != null)
-                _bossUI.gameObject.SetActive(true);
+            if (_healthBar != null)
+                _healthBar.gameObject.SetActive(true);
 
             base.Exit(nextState);
         }
 
-        public void SetUI(ActorUI bossUI)
-        {
-            _bossUI= bossUI;
-        }
-
         private void ReturnCamera()
         {
-            Destroy(_currentCamera);
+            _bossCamera.gameObject.SetActive(false);
         }
 
         private void Move()

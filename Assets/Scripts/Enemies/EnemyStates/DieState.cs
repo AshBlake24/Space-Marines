@@ -1,6 +1,4 @@
 ﻿using Roguelike.Roguelike.Enemies.Animators;
-using Roguelike.StaticData.Enemies;
-using UnityEngine;
 
 namespace Roguelike.Enemies.EnemyStates
 {
@@ -14,7 +12,7 @@ namespace Roguelike.Enemies.EnemyStates
             animator.PlayDie();
         }
 
-        public void Die()
+        public virtual void Die()
         {
             Destroy(gameObject);
         }

@@ -334,6 +334,7 @@ GameObject:
   - component: {fileID: 4526463827110206}
   - component: {fileID: 7941100081284443458}
   - component: {fileID: 6772495193564012792}
+  - component: {fileID: 2300085313930347947}
   m_Layer: 0
   m_Name: Boss_Golem
   m_TagString: Untagged
@@ -389,9 +390,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _healthPersentForNextStage: 50
-  _firstStage: {fileID: 8806356069827198351}
-  _nextStage: {fileID: 6311351551507271636}
+  _firstStage: {fileID: 8979661015496915187}
+  _nextStage: {fileID: 4610495531695145777}
   _enemyHealth: {fileID: 7682680761281646648}
+  _cameraPoint: {fileID: 3507857070789148804}
+--- !u!114 &2300085313930347947
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1170732337855516}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d9d4af3b3d55d04f823a4dfabd5df57, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _bossCamera: {fileID: 165384099285869408, guid: b4a0e0f193e25d644b9ed3015e29a959, type: 3}
+  _healthBar: {fileID: 4465411882296480232, guid: 41abbb9839b69654c96e59bf0d7204dd, type: 3}
   _cameraPoint: {fileID: 3507857070789148804}
 --- !u!1 &1188154518482354
 GameObject:
@@ -1814,8 +1830,8 @@ GameObject:
   - component: {fileID: 3686696223043358018}
   - component: {fileID: 8136189021494510668}
   - component: {fileID: 5487358910891633581}
+  - component: {fileID: 4610495531695145777}
   - component: {fileID: 8520125544536425072}
-  - component: {fileID: 6311351551507271636}
   - component: {fileID: 390553552029977921}
   - component: {fileID: 6929616101871976879}
   - component: {fileID: 2381595831491014016}
@@ -1823,9 +1839,9 @@ GameObject:
   - component: {fileID: 6958716644533283904}
   - component: {fileID: 7977941037352218045}
   - component: {fileID: 3683924727674060448}
-  - component: {fileID: 469052426671427923}
   - component: {fileID: 8106292490207540795}
   - component: {fileID: 1693212683205468520}
+  - component: {fileID: 6449975034452872651}
   m_Layer: 0
   m_Name: SecondStage
   m_TagString: Untagged
@@ -1896,6 +1912,21 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &4610495531695145777
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 80945993303591164}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f2eb749aec87fc46aa451d114b52df2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _startState: {fileID: 8106292490207540795}
+  _dieState: {fileID: 6449975034452872651}
+  _bossRoot: {fileID: 2300085313930347947}
 --- !u!114 &8520125544536425072
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1908,20 +1939,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7129ee7981dfce24f85519fc427541f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &6311351551507271636
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 80945993303591164}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 38c5c59b35f4a0b488703a85f9928c3a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _startState: {fileID: 8106292490207540795}
-  _dieState: {fileID: 469052426671427923}
 --- !u!114 &390553552029977921
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2035,19 +2052,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetState: {fileID: 6929616101871976879}
---- !u!114 &469052426671427923
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 80945993303591164}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b50597bda3428ea4e84562791a5be6cc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _transitions: []
 --- !u!114 &8106292490207540795
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2062,9 +2066,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _transitions:
   - {fileID: 1693212683205468520}
-  _bossCamera: {fileID: 165384099285869408, guid: b4a0e0f193e25d644b9ed3015e29a959, type: 3}
-  _bossUI: {fileID: 0}
-  _cameraPoint: {fileID: 3507857070789148804}
   _portal: {fileID: 0}
   _portalSpawnPoint: {fileID: 0}
   _appearanceStopPosition: {fileID: 0}
@@ -2081,6 +2082,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetState: {fileID: 390553552029977921}
+--- !u!114 &6449975034452872651
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 80945993303591164}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9903dc9727f213a409390bac9e81e6a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _transitions: []
 --- !u!1 &193410436557551547
 GameObject:
   m_ObjectHideFlags: 0
@@ -8300,15 +8314,15 @@ GameObject:
   - component: {fileID: 679734284041410033}
   - component: {fileID: 8357123019862883027}
   - component: {fileID: 3070049064434453105}
+  - component: {fileID: 8979661015496915187}
   - component: {fileID: 5511349774932697275}
-  - component: {fileID: 8806356069827198351}
   - component: {fileID: 6437778850583401663}
   - component: {fileID: 5974116270417810828}
   - component: {fileID: 5712241078377102800}
   - component: {fileID: 758158914805077352}
-  - component: {fileID: 2574566924315234093}
   - component: {fileID: 3295445015876718794}
   - component: {fileID: 1765505008223170956}
+  - component: {fileID: 2201322245692594683}
   m_Layer: 0
   m_Name: FirstStage
   m_TagString: Untagged
@@ -8376,6 +8390,21 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &8979661015496915187
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5183745336891813070}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f2eb749aec87fc46aa451d114b52df2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _startState: {fileID: 6437778850583401663}
+  _dieState: {fileID: 2201322245692594683}
+  _bossRoot: {fileID: 2300085313930347947}
 --- !u!114 &5511349774932697275
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8388,20 +8417,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7129ee7981dfce24f85519fc427541f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &8806356069827198351
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5183745336891813070}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 38c5c59b35f4a0b488703a85f9928c3a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _startState: {fileID: 6437778850583401663}
-  _dieState: {fileID: 2574566924315234093}
 --- !u!114 &6437778850583401663
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8416,9 +8431,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _transitions:
   - {fileID: 5974116270417810828}
-  _bossCamera: {fileID: 165384099285869408, guid: b4a0e0f193e25d644b9ed3015e29a959, type: 3}
-  _bossUI: {fileID: 4465411882296480232, guid: 41abbb9839b69654c96e59bf0d7204dd, type: 3}
-  _cameraPoint: {fileID: 3507857070789148804}
   _portal: {fileID: 4036867441706624213, guid: 3e7b94f91486eff4b8b5032dd12cb495, type: 3}
   _portalSpawnPoint: {fileID: 1496299519802943949}
   _appearanceStopPosition: {fileID: 5345616657263632705}
@@ -8462,19 +8474,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetState: {fileID: 3295445015876718794}
---- !u!114 &2574566924315234093
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5183745336891813070}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b50597bda3428ea4e84562791a5be6cc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _transitions: []
 --- !u!114 &3295445015876718794
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8509,6 +8508,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetState: {fileID: 5712241078377102800}
+--- !u!114 &2201322245692594683
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5183745336891813070}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9903dc9727f213a409390bac9e81e6a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _transitions: []
 --- !u!1 &5282328335223071968
 GameObject:
   m_ObjectHideFlags: 0

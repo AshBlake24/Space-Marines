@@ -45,13 +45,7 @@ namespace Roguelike.Infrastructure.Factory
         {
             EnemyConstruct(spawnPoint, id, target);
 
-            GameObject hud = Object.FindObjectOfType<ActorUI>().gameObject;
-
-            bossUI = Object.Instantiate(bossUI, hud.transform);
-            bossUI.Construct(_enemy.Health);
-
-            bossUI.gameObject.SetActive(false);
-            _enemyPrefab.GetComponentInChildren<AppearanceState>().SetUI(bossUI);
+            _enemyPrefab.GetComponent<BossRoot>().Init(_enemy);
 
             _enemy.Health.Init(_enemyData);
 
