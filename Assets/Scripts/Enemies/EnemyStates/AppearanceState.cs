@@ -59,7 +59,12 @@ namespace Roguelike.Enemies.EnemyStates
         private void ActivateCamera()
         {
             _bossCamera = _stateMashine.BossRoot.Camera;
-            _cameraPoint = _stateMashine.BossRoot.CameraPoint;
+
+            if (_portal != null)
+                _cameraPoint = _portalSpawnPoint;
+            else
+                _cameraPoint = _stateMashine.BossRoot.CameraPoint;
+
             _bossCamera.gameObject.SetActive(true);
 
             if (_bossCamera != null)

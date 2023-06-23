@@ -54,9 +54,10 @@ namespace Roguelike.Enemies.EnemyStates
                 {
                     _shotPoint = point;
                     _projectilesPool.Get();
-                    enemy.RangeAttack();
-                    Fired?.Invoke();
                 }
+
+                enemy.RangeAttack();
+                Fired?.Invoke();
             }
             else
             {
