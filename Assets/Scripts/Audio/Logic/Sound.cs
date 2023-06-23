@@ -30,7 +30,7 @@ namespace Roguelike.Audio.Logic
         private void InitLifetime()
         {
             float clipLength = AudioSource.clip.length / AudioSource.pitch;
-            _lifetimeTicks = Mathf.Ceil(clipLength / AudioTickTimer.TickTime);
+            _lifetimeTicks = Mathf.Ceil(clipLength / AudioTickTimer.TickTime) + 1;
         }
 
         private void OnTick()

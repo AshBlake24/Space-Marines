@@ -8,6 +8,7 @@ using Roguelike.StaticData.Levels;
 using Roguelike.Utilities;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Object = UnityEngine.Object;
 
 namespace Roguelike.Audio.Factory
 {
@@ -18,6 +19,8 @@ namespace Roguelike.Audio.Factory
         private readonly IStaticDataService _staticData;
 
         private Transform _audioRoot;
+        private AudioSource _backgroundMusic;
+        private LevelId _previousLevelId;
 
         public AudioFactory(IAssetProvider assetProvider, IPersistentDataService progressData, 
             IStaticDataService staticData)
@@ -25,6 +28,8 @@ namespace Roguelike.Audio.Factory
             _assetProvider = assetProvider;
             _progressData = progressData;
             _staticData = staticData;
+            _previousLevelId = LevelId.Unknown;
+            CreateMusicRoot();
         }
 
         public Sound CreateAudioSource()
@@ -40,13 +45,28 @@ namespace Roguelike.Audio.Factory
         public void CreateAudioRoot()
         {
             _audioRoot = new GameObject("AudioRoot").transform;
+            
             InitBackgroundMusic();
             CreateAudioTickTimer();
         }
 
+        private void CreateMusicRoot()
+        {
+            if (_backgroundMusic == null)
+            {
+                _backgroundMusic = _assetProvider.Instantiate(AssetPath.BackgroundMusicPath).GetComponent<AudioSource>();
+                Object.DontDestroyOnLoad(_backgroundMusic);
+            }
+        }
+
         private void InitBackgroundMusic()
         {
-            switch (EnumExtensions.GetCurrentLevelId())
+            LevelId currentLevelId = EnumExtensions.GetCurrentLevelId();
+            
+            if (_previousLevelId == currentLevelId)
+                return;
+            
+            switch (currentLevelId)
             {
                 case LevelId.MainMenu:
                     CreateBackgroundMusic(MusicId.MainMenu);
@@ -58,23 +78,16 @@ namespace Roguelike.Audio.Factory
                     CreateBackgroundMusic(MusicId.Dungeon);
                     break;
             }
+
+            _previousLevelId = currentLevelId;
         }
 
         private void CreateBackgroundMusic(MusicId id)
         {
             MusicConfig musicConfig = _staticData.GetDataById<MusicId, MusicConfig>(id);
 
-            GameObject instance = _assetProvider.Instantiate(AssetPath.BackgroundMusicPath);
-
-            if (instance.TryGetComponent(out AudioSource audioSource))
-            {
-                audioSource.clip = musicConfig.Music;
-                audioSource.Play();
-            }
-            else
-            {
-                throw new ArgumentNullException(nameof(instance), $"Instance doesn't contain {nameof(AudioSource)}");
-            }
+            _backgroundMusic.clip = musicConfig.Music;
+            _backgroundMusic.Play();
         }
 
         private void CreateAudioTickTimer() => 
