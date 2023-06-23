@@ -425,6 +425,7 @@ GameObject:
   - component: {fileID: 4489269004311192860}
   - component: {fileID: 378985825552115733}
   - component: {fileID: 3600318856920001207}
+  - component: {fileID: 7804673631906451450}
   m_Layer: 12
   m_Name: Mine
   m_TagString: Untagged
@@ -616,6 +617,21 @@ CapsuleCollider:
   m_Height: 2.0040393
   m_Direction: 1
   m_Center: {x: 0, y: 0.8037002, z: -0.08973092}
+--- !u!114 &7804673631906451450
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3730292728815792999}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 099644cc439d4285bb753d699c68b6bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _outputChannel: {fileID: 1546162254496470490, guid: 3d1c4eef8a71bd741ad58d6de9521292, type: 2}
+  _pitchMultiplier: 1.2
+  _explosionState: {fileID: 9109506704565381627}
 --- !u!1 &3730292728845120798
 GameObject:
   m_ObjectHideFlags: 0
