@@ -9,8 +9,6 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: HubSkybox
   m_Shader: {fileID: 4800000, guid: e32cae2a5bbfb41888ef2ba8391ab87d, type: 3}
-  m_Parent: {fileID: 0}
-  m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
   m_InvalidKeywords: []
   m_LightmapFlags: 4
@@ -19,7 +17,6 @@ Material:
   m_CustomRenderQueue: -1
   stringTagMap: {}
   disabledShaderPasses: []
-  m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
@@ -64,14 +61,14 @@ Material:
     - _BumpScale: 1
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
-    - _DirectionPitch: 0
-    - _DirectionYaw: 0
+    - _DirectionPitch: 90
+    - _DirectionYaw: 180
     - _DstBlend: 0
-    - _Exponent: 1.08
+    - _Exponent: 2
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
-    - _Intensity: 0.87
+    - _Intensity: 0.3
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
@@ -83,8 +80,8 @@ Material:
     - _ZWrite: 1
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _Color1: {r: 0.048059814, g: 0.17033505, b: 0.2264151, a: 0}
-    - _Color2: {r: 0.21845269, g: 0.14509805, b: 0.28235295, a: 0}
-    - _Direction: {r: 0, g: 1, b: 0, a: 0}
+    - _Color1: {r: 0.16842107, g: 0.1, b: 0.2, a: 0}
+    - _Color2: {r: 0.75686276, g: 0.56599164, b: 0.3411765, a: 0}
+    - _Direction: {r: -0.00000008742278, g: -0.00000004371139, b: -1, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
   m_BuildTextureStacks: []
