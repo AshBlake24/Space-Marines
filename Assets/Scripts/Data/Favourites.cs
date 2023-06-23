@@ -38,7 +38,7 @@ namespace Roguelike.Data
         {
             get
             {
-                return WeaponsUsageData.Count switch
+                return CharactersUsageData.Count switch
                 {
                     < 2 => CharactersUsageData[0].Id,
                     _ => CharactersUsageData.Aggregate((i1, i2) => i1.UsedTimes > i2.UsedTimes ? i1 : i2).Id
@@ -50,7 +50,7 @@ namespace Roguelike.Data
         {
             get
             {
-                return WeaponsUsageData.Count switch
+                return EnhancementsUsageData.Count switch
                 {
                     < 1 => EnhancementId.Unknown,
                     < 2 => EnhancementsUsageData[0].Id,
@@ -68,7 +68,7 @@ namespace Roguelike.Data
 
                 if (weaponUsageData != null)
                     weaponUsageData.UsedTimes++;
-                else
+                else if (weaponId != WeaponId.Unknown)
                     WeaponsUsageData.Add(new WeaponUsageData(weaponId));
             }
         }

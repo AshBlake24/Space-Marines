@@ -111,7 +111,7 @@ namespace Roguelike.Enemies
             if (_enemiesInRoom.Count == 0)
                 _room.OpenDoor();
 
-            _playerProgress.Statistics.KillData.CurrentKillData.AddKill();
+            _playerProgress.Statistics.KillData.CurrentKillData.OnMonsterKilled();
             _playerProgress.Balance.AddCoins(enemyHealth.GetComponentInParent<EnemyStateMachine>().Enemy.Coins);
         }
 

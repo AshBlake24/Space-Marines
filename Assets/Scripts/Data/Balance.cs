@@ -6,6 +6,7 @@ namespace Roguelike.Data
     public class Balance
     {
         public int Coins;
+        public int BufferedCoins;
 
         public Balance()
         {
@@ -35,6 +36,18 @@ namespace Roguelike.Data
             Changed?.Invoke();
         }
 
-        public void Reset() => Coins = 1000;
+        public int GetCoinsToStatistics()
+        {
+            int coins = Coins - BufferedCoins;
+            BufferedCoins += coins;
+            
+            return coins;
+        }
+
+        public void Reset()
+        {
+            Coins = 0;
+            BufferedCoins = 0;
+        }
     }
 }

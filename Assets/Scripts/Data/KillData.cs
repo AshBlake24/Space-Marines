@@ -18,23 +18,26 @@ namespace Roguelike.Data
         {
             CurrentKillData = new CurrentKillData();
             OverallKillData = new List<OverallKillData>();
-            InitLevelsKillData();
         }
 
-        public void TrySaveOverallKills(LevelId levelId, int kills)
+        public void TrySaveOverallKills(LevelId levelId)
         {
-            if (kills <= 0)
+            if (CurrentKillData.KilledMonsters <= 0 && CurrentKillData.KilledBosses <= 0)
                 return;
             
             OverallKillData killData = OverallKillData.SingleOrDefault(data => data.Id == levelId);
 
-            if (killData != null)
-                killData.KilledMonsters += kills;
-        }
-
-        private void InitLevelsKillData()
-        {
-            OverallKillData.Add(new OverallKillData(LevelId.Dungeon));
+            if (killData == null)
+            {
+                OverallKillData.Add(new OverallKillData(levelId, CurrentKillData.KilledMonsters, CurrentKillData.KilledBosses));
+            }
+            else
+            {
+                killData.KilledMonsters += CurrentKillData.KilledMonsters;
+                killData.KilledBosses += CurrentKillData.KilledBosses;
+            }
+            
+            CurrentKillData.Reset();
         }
     }
 }

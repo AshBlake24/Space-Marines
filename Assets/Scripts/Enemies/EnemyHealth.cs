@@ -48,9 +48,6 @@ namespace Roguelike.Enemies
         {
             if (damage < 0)
                 throw new ArgumentOutOfRangeException(nameof(damage), "Damage must not be less than 0");
-            
-            Debug.Log("Current: " + CurrentHealth);
-            Debug.Log("Max: " + MaxHealth);
 
             _currentHealth = Mathf.Max(_currentHealth - damage, 0);
 

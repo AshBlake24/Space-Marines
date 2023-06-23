@@ -16,6 +16,7 @@ namespace Roguelike.UI.Windows.Panels
     public class StatisticsPanel : MonoBehaviour
     {
         [Header("Statistics")]
+        [SerializeField] private StatisticsField _totalPlayerScore;
         [SerializeField] private StatisticsField _monstersKilled;
         [SerializeField] private StatisticsField _bossesKilled;
         [SerializeField] private StatisticsField _coinsCollected;
@@ -99,6 +100,7 @@ namespace Roguelike.UI.Windows.Panels
         
         private void InitStatisticsData()
         {
+            _totalPlayerScore.SetStatsValue(_statistics.PlayerScore);
             _monstersKilled.SetStatsValue(_statistics.KillData.OverallKilledMonsters);
             _bossesKilled.SetStatsValue(_statistics.KillData.OverallKilledBosses);
             _coinsCollected.SetStatsValue(_statistics.CollectablesData.CoinsCollected);

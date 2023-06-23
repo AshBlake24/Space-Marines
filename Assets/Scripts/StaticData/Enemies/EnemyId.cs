@@ -6,7 +6,7 @@ namespace Roguelike.StaticData.Enemies
         Kamikadze,
         Shaman,
         Taran,
-        Ghost,
+        Bomber,
         Mine,
         Golem
     }

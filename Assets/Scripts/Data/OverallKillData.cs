@@ -12,9 +12,11 @@ namespace Roguelike.Data
         public int KilledMonsters;
         public int KilledBosses;
 
-        public OverallKillData(LevelId id)
+        public OverallKillData(LevelId id, int killedMonsters, int killedBosses)
         {
             Id = id;
+            KilledMonsters = killedMonsters;
+            KilledBosses = killedBosses;
         }
     }
 }

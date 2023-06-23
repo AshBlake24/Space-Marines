@@ -3,6 +3,8 @@ using Agava.YandexGames;
 using Roguelike.Data;
 using Roguelike.Infrastructure.Services.PersistentData;
 using Roguelike.Leaderboard;
+using Roguelike.StaticData.Levels;
+using Roguelike.Utilities;
 using UnityEngine;
 
 namespace Roguelike.Infrastructure.Services.SaveLoad
@@ -27,6 +29,8 @@ namespace Roguelike.Infrastructure.Services.SaveLoad
 
         public void SaveProgress()
         {
+            UpdateStatistics();
+            
             foreach (IProgressWriter progressWriter in ProgressWriters)
                 progressWriter.WriteProgress(_progressService.PlayerProgress);
 
@@ -103,6 +107,16 @@ namespace Roguelike.Infrastructure.Services.SaveLoad
                 if (result == null || result.score < playerScore)
                     Agava.YandexGames.Leaderboard.SetScore(LeaderboardView.LeaderboardName, playerScore);
             });
+        }
+        
+        private void UpdateStatistics()
+        {
+            LevelId levelId = EnumExtensions.GetCurrentLevelId();
+
+            int coins = _progressService.PlayerProgress.Balance.GetCoinsToStatistics();
+
+            _progressService.PlayerProgress.Statistics.KillData.TrySaveOverallKills(levelId);
+            _progressService.PlayerProgress.Statistics.CollectablesData.AddCoins(coins);
         }
     }
 }

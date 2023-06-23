@@ -14,8 +14,6 @@ namespace Roguelike.UI.Windows
         [SerializeField] private GameOverWindowAnimations _gameOverWindowAnimations;
         
         private IStaticDataService _staticData;
-        private int _kills;
-        private int _coins;
 
         public void Construct(IStaticDataService staticData) => 
             _staticData = staticData;
@@ -24,7 +22,6 @@ namespace Roguelike.UI.Windows
         {
             TimeService.PauseGame();
             InitStageViewer();
-            UpdateStatistics();
         }
 
         private void InitStageViewer()
@@ -45,19 +42,12 @@ namespace Roguelike.UI.Windows
             GetComponentInChildren<GameOverStageViewer>()
                 .Construct(label, stagesCount, characterIcon);
 
-            _kills = ProgressService.PlayerProgress.Statistics.KillData.CurrentKillData.Kills;
-            _coins = ProgressService.PlayerProgress.Balance.Coins;
+            int killedMonsters = ProgressService.PlayerProgress.Statistics.KillData.CurrentKillData.KilledMonsters;
+            int coins = ProgressService.PlayerProgress.Balance.Coins;
             
-            _gameOverWindowAnimations.Init(stage, _coins, _kills);
+            _gameOverWindowAnimations.Init(stage, coins, killedMonsters);
             _gameOverWindowAnimations.Play();
-        }
-
-        private void UpdateStatistics()
-        {
-            LevelId levelId = EnumExtensions.GetCurrentLevelId();
-
-            ProgressService.PlayerProgress.Statistics.KillData.TrySaveOverallKills(levelId, _kills);
-            ProgressService.PlayerProgress.Statistics.CollectablesData.AddCoins(_coins);
+            
             ProgressService.PlayerProgress.Statistics.Favourites
                 .AddWeapons(ProgressService.PlayerProgress.PlayerWeapons.Weapons);
         }
