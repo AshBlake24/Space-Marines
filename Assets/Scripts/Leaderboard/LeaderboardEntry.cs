@@ -20,7 +20,7 @@ namespace Roguelike.Leaderboard
 
             SetName(entry.player.publicName);
             Score = entry.score.ToString();
-            Rank = entry.rank.ToString();
+            Rank = $"{entry.rank}.";
         }
 
         private void SetName(string name)

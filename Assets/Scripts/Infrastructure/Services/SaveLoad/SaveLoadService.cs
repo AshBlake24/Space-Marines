@@ -32,14 +32,13 @@ namespace Roguelike.Infrastructure.Services.SaveLoad
 
             string dataToStore = _progressService.PlayerProgress.ToJson();
             PlayerPrefs.SetString(PlayerProgressKey, dataToStore);
-
+            PlayerPrefs.Save();
+            
 #if UNITY_WEBGL && !UNITY_EDITOR
             if (PlayerAccount.IsAuthorized)
             {
                 PlayerAccount.SetPlayerData(dataToStore);
-
-                Agava.YandexGames.Leaderboard.SetScore(LeaderboardView.LeaderboardName, 
-                    _progressService.PlayerProgress.Statistics.PlayerScore);
+                SetPlayerScore();
             }
 #endif
         }
@@ -93,6 +92,17 @@ namespace Roguelike.Infrastructure.Services.SaveLoad
                 _progressWriters.Add(progressWriter);
             
             _progressReaders.Add(progressReader);
+        }
+
+        private void SetPlayerScore()
+        {
+            Agava.YandexGames.Leaderboard.GetPlayerEntry(LeaderboardView.LeaderboardName, (result) =>
+            {
+                int playerScore = _progressService.PlayerProgress.Statistics.PlayerScore;
+
+                if (result == null || result.score < playerScore)
+                    Agava.YandexGames.Leaderboard.SetScore(LeaderboardView.LeaderboardName, playerScore);
+            });
         }
     }
 }
