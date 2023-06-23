@@ -48,7 +48,12 @@ namespace Roguelike.Enemies
                 _nextStage.gameObject.SetActive(true);
                 _nextStage.transform.position = _firstStage.transform.position;
                 _enemyHealth.transform.SetParent(_nextStage.transform);
+
+                Vector3 position = _cameraPoint.localPosition;
                 _cameraPoint.transform.SetParent(_nextStage.transform);
+                _cameraPoint.transform.localPosition = new Vector3(0, position.y, 0);
+                _cameraPoint.transform.localRotation = Quaternion.identity;
+
                 _enemyHealth.transform.localPosition = Vector3.zero;
 
                 _nextStage.Init(_enemy);
