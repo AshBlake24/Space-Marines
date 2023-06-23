@@ -84,7 +84,7 @@ namespace Roguelike.UI.Elements.Observers
 
         private void SetCurrentWeapon()
         {
-            _currentWeapon.sprite = _playerShooter.CurrentWeapon.Stats.Icon;
+            _currentWeapon.sprite = _playerShooter.CurrentWeapon.Stats.IconFullsize;
             _currentWeaponRarityShadow.color = _rarityColors[_playerShooter.CurrentWeapon.Stats.Rarity];
         }
 

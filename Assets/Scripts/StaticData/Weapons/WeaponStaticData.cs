@@ -19,7 +19,8 @@ namespace Roguelike.StaticData.Weapons
         public GameObject InteractableWeaponPrefab;
         
         [Header("Stats")]
-        public Sprite Icon;
+        public Sprite FullsizeIcon;
+        public Sprite SquareIcon;
         public LocalizedString Name;
         public int Damage;
         public float AttackRate;

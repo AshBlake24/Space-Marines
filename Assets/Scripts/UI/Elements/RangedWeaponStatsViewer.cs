@@ -30,7 +30,7 @@ namespace Roguelike.UI.Elements
 
         private void Initialize()
         {
-            _weaponIcon.sprite = _weaponData.Icon;
+            _weaponIcon.sprite = _weaponData.SquareIcon;
             InitWeaponStats();
         }
 

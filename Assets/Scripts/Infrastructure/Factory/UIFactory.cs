@@ -221,7 +221,7 @@ namespace Roguelike.Infrastructure.Factory
                         $"Instance does not contain {nameof(WeaponView)} component");
                 }
                 
-                view.Construct(staticData.Icon, rarityColors[staticData.Rarity]);
+                view.Construct(staticData.FullsizeIcon, rarityColors[staticData.Rarity]);
                 instance.transform.localScale = Vector2.zero;
                 weapons.Add(instance);
             }
