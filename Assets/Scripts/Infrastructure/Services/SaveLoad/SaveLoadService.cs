@@ -1,6 +1,8 @@
 using System.Collections.Generic;
+using Agava.YandexGames;
 using Roguelike.Data;
 using Roguelike.Infrastructure.Services.PersistentData;
+using Roguelike.Leaderboard;
 using UnityEngine;
 
 namespace Roguelike.Infrastructure.Services.SaveLoad
@@ -30,6 +32,16 @@ namespace Roguelike.Infrastructure.Services.SaveLoad
 
             string dataToStore = _progressService.PlayerProgress.ToJson();
             PlayerPrefs.SetString(PlayerProgressKey, dataToStore);
+
+#if UNITY_WEBGL && !UNITY_EDITOR
+            if (PlayerAccount.IsAuthorized)
+            {
+                PlayerAccount.SetPlayerData(dataToStore);
+
+                Agava.YandexGames.Leaderboard.SetScore(LeaderboardView.LeaderboardName, 
+                    _progressService.PlayerProgress.Statistics.PlayerScore);
+            }
+#endif
         }
 
         public void InformProgressReaders()
@@ -38,9 +50,30 @@ namespace Roguelike.Infrastructure.Services.SaveLoad
                 progressReader.ReadProgress(_progressService.PlayerProgress);
         }
 
-        public PlayerProgress LoadProgress() => 
-            PlayerPrefs.GetString(PlayerProgressKey)
+        public PlayerProgress LoadProgress()
+        {
+            PlayerProgress playerProgress = null;
+            
+#if UNITY_WEBGL && !UNITY_EDITOR
+            if (PlayerAccount.IsAuthorized)
+            {
+                PlayerAccount.GetPlayerData((data) =>
+                {
+                    playerProgress = data.FromJson<PlayerProgress>();
+                });
+            }
+            else
+            {
+                playerProgress = PlayerPrefs.GetString(PlayerProgressKey)
+                    ?.FromJson<PlayerProgress>();
+            }
+#else
+            playerProgress = PlayerPrefs.GetString(PlayerProgressKey)
                 ?.FromJson<PlayerProgress>();
+#endif
+            
+            return playerProgress;
+        }
 
         public void Cleanup()
         {

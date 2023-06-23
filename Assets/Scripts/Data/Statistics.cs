@@ -12,6 +12,7 @@ namespace Roguelike.Data
         public Statistics()
         {
             KillData = new KillData();
+            Favourites = new Favourites();
             CollectablesData = new CollectablesData();
         }
 

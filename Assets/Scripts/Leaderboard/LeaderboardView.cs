@@ -5,7 +5,7 @@ namespace Roguelike.Leaderboard
 {
     public class LeaderboardView : MonoBehaviour
     {
-        private const string LeaderboardName = "Leaderboard";
+        public const string LeaderboardName = "Leaderboard";
 
         [SerializeField] private LeaderboardEntryView[] _entries;
 

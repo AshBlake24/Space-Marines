@@ -36,8 +36,16 @@ namespace Roguelike.Infrastructure
             
             if (YandexGamesSdk.IsInitialized == false)
                 throw new ArgumentNullException(nameof(YandexGamesSdk), "Yandex SDK didn't initialize correctly");
+            else
+                RequestData();
             
             InitGame();
+        }
+        
+        private void RequestData()
+        {
+            if (PlayerAccount.HasPersonalProfileDataPermission == false)
+                PlayerAccount.RequestPersonalProfileDataPermission();
         }
     }
 }
