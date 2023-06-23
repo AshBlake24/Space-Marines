@@ -1,7 +1,6 @@
 using Roguelike.Enemies;
 using Roguelike.Infrastructure.Factory;
 using Roguelike.Infrastructure.Services.PersistentData;
-using Roguelike.Player;
 using Roguelike.StaticData.Levels;
 using System.Collections.Generic;
 using Roguelike.Infrastructure.Services.Loading;
@@ -143,6 +142,8 @@ namespace Roguelike.Level
                 spawner.Init(_enemyFactory);
                 _currentRoom.OpenDoor();
             }
+
+            _currentRoom.HideExit();
         }
 
         private void GenerateNextLevel()

@@ -1,10 +1,12 @@
 ﻿using Roguelike.Audio.Factory;
 using Roguelike.Audio.Sounds;
 using Roguelike.Enemies;
+using Roguelike.Enemies.EnemyStates;
 using Roguelike.Infrastructure.Services.Random;
 using Roguelike.Infrastructure.Services.StaticData;
 using Roguelike.Player;
 using Roguelike.StaticData.Enemies;
+using Roguelike.UI.Elements;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
@@ -17,6 +19,10 @@ namespace Roguelike.Infrastructure.Factory
         private readonly IRandomService _randomService;
         private readonly IAudioFactory _audioFactory;
 
+        private EnemyStaticData _enemyData;
+        private GameObject _enemyPrefab;
+        private Enemy _enemy;
+
         public EnemyFactory(IStaticDataService staticDataService, ILootFactory lootFactory,
             IRandomService randomService, IAudioFactory audioFactory)
         {
@@ -28,21 +34,39 @@ namespace Roguelike.Infrastructure.Factory
 
         public GameObject CreateEnemy(Transform spawnPoint, EnemyId id, PlayerHealth target)
         {
-            EnemyStaticData enemyData = _staticDataService.GetDataById<EnemyId, EnemyStaticData>(id);
-            GameObject enemyPrefab = Object.Instantiate(enemyData.Prefab, spawnPoint);
+            EnemyConstruct(spawnPoint, id, target);
 
-            Enemy enemy = new Enemy(enemyData, enemyPrefab.GetComponentInChildren<EnemyHealth>(), target);
+            _enemy.Health.Init(_enemyData);
 
-            enemy.Health.Init(enemyData);
+            return _enemyPrefab;
+        }
 
-            enemyPrefab.GetComponent<EnemyStateMachine>().Init(enemy);
-            enemyPrefab.GetComponentInChildren<EnemyLootSpawner>()
+        public GameObject CreateEnemy(Transform spawnPoint, EnemyId id, PlayerHealth target, ref ActorUI bossUI)
+        {
+            EnemyConstruct(spawnPoint, id, target);
+
+            _enemyPrefab.GetComponent<BossRoot>().Init(_enemy);
+
+            _enemy.Health.Init(_enemyData);
+
+            _enemyPrefab.GetComponent<BossStage>().Init(_enemy);
+
+            return _enemyPrefab;
+        }
+
+        private void EnemyConstruct(Transform spawnPoint, EnemyId id, PlayerHealth target)
+        {
+            _enemyData = _staticDataService.GetDataById<EnemyId, EnemyStaticData>(id);
+            _enemyPrefab = Object.Instantiate(_enemyData.Prefab, spawnPoint);
+
+            _enemy = new Enemy(_enemyData, _enemyPrefab.GetComponentInChildren<EnemyHealth>(), target);
+
+            _enemyPrefab.GetComponentInChildren<EnemyStateMachine>().Init(_enemy);
+            _enemyPrefab.GetComponentInChildren<EnemyLootSpawner>()
                 .Construct(_lootFactory, _randomService);
-            
-            if (enemyPrefab.TryGetComponent(out AudioPlayer audioPlayer))
-                audioPlayer.Construct(_audioFactory, enemyData.Sound);
 
-            return enemyPrefab;
+            if (_enemyPrefab.TryGetComponent(out AudioPlayer audioPlayer))
+                audioPlayer.Construct(_audioFactory, _enemyData.Sound);
         }
     }
 }

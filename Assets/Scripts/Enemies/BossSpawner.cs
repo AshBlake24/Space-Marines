@@ -3,6 +3,7 @@ using Roguelike.Infrastructure.Factory;
 using Roguelike.Level;
 using Roguelike.Player;
 using Roguelike.StaticData.Enemies;
+using Roguelike.UI.Elements;
 using System;
 using UnityEngine;
 
@@ -13,6 +14,7 @@ namespace Roguelike.Assets.Scripts.Enemies
         [SerializeField] private Transform _spawnPoint;
         [SerializeField] private GameObject _finishLevelzone;
         [SerializeField] private EnemyId _boosId;
+        [SerializeField] private ActorUI _bossUI;
 
         private Room _room;
         private EnemyHealth _boss;
@@ -37,6 +39,8 @@ namespace Roguelike.Assets.Scripts.Enemies
             if(_finishLevelzone != null)
                 _finishLevelzone.SetActive(false);
 
+            _spawnPoint.rotation = Quaternion.Euler(0, _room.EntryPoint.transform.rotation.eulerAngles.y, 0);
+
             _enterPoint.PlayerHasEntered += OnPlayerHasEntered;
         }
 
@@ -47,12 +51,12 @@ namespace Roguelike.Assets.Scripts.Enemies
 
         private Transform Spawn(Transform spawnPosition, PlayerHealth target)
         {
-            GameObject enemyPrefab = _enemyFactory.CreateEnemy(spawnPosition, _boosId, target);
-
-            enemyPrefab.GetComponent<EnemyStateMachine>().enabled = true;
+            GameObject enemyPrefab = _enemyFactory.CreateEnemy(spawnPosition, _boosId, target, ref _bossUI);
 
             _boss = enemyPrefab.GetComponentInChildren<EnemyHealth>();
             _boss.Died += OnBossDied;
+
+            _room.CloseDoor();
 
             return enemyPrefab.transform;
         }
@@ -61,6 +65,8 @@ namespace Roguelike.Assets.Scripts.Enemies
         {
             _finishLevelzone.SetActive(true);
             _boss.Died -= OnBossDied;
+
+            _room.OpenDoor();
 
             BossDied?.Invoke();
         }

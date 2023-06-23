@@ -42,6 +42,8 @@ namespace Roguelike.Enemies
         {
             _maxHealth = enemyData.Health;
             _currentHealth = _maxHealth;
+
+            HealthChanged?.Invoke();
         }
 
         public void TakeDamage(int damage)
@@ -49,14 +51,15 @@ namespace Roguelike.Enemies
             if (damage < 0)
                 throw new ArgumentOutOfRangeException(nameof(damage), "Damage must not be less than 0");
 
-            _currentHealth = Mathf.Max(_currentHealth - damage, 0);
+            CurrentHealth = Mathf.Max(CurrentHealth - damage, 0);
 
             if (_enemyAnimator != null)
                 _enemyAnimator.PlayHit();
 
-            if (_currentHealth <= 0)
+            if (CurrentHealth <= 0)
             {
                 Died?.Invoke(this);
+                Destroy(gameObject);
             }
         }
 
