@@ -13,8 +13,8 @@ namespace Roguelike.Loot.Powerups
         order = 1)]
     public class AttackSpeedBooster : PowerupEffect, ILastingEffect
     {
-        [SerializeField, Range(1f,2f)] private float _speedMultiplier;
-        [SerializeField, Range(1f,60f)] private float _duration;
+        [SerializeField, Range(0f, 1f)] private float _speedMultiplier;
+        [SerializeField, Range(1f, 60f)] private float _duration;
         
         private ICoroutineRunner _coroutineRunner;
         

@@ -165,8 +165,8 @@ namespace Roguelike.Player
             if (CurrentWeapon == null)
                 return;
 
-            float attackRate = CurrentWeapon.Stats.AttackRate * _attackSpeedMultiplier;
-
+            float attackRate = CurrentWeapon.Stats.AttackRate / _attackSpeedMultiplier;
+            
             if (Time.time < (attackRate + _lastShotTime))
                 return;
 
