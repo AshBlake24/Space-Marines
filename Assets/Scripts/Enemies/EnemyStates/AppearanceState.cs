@@ -61,7 +61,7 @@ namespace Roguelike.Enemies.EnemyStates
             _bossCamera = _stateMashine.BossRoot.Camera;
 
             if (_portal != null)
-                _cameraPoint = _portalSpawnPoint;
+                _cameraPoint = _appearanceStopPosition;
             else
                 _cameraPoint = _stateMashine.BossRoot.CameraPoint;
 
