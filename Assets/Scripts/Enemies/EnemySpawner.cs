@@ -119,7 +119,7 @@ namespace Roguelike.Enemies
         {
             _readySpawnPoints.Add(spawnpoint);
 
-            spawnpoint.EnemySpawned += OnEnemySpawned;
+            spawnpoint.EnemySpawned -= OnEnemySpawned;
         }
 
         private SpawnPoint GetRandomSpawnPoint()
