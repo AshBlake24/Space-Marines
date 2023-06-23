@@ -18,12 +18,12 @@ namespace Roguelike.Enemies
 
         public int CurrentHealth
         {
-            get => _maxHealth;
+            get => _currentHealth;
             private set
             {
-                if (_maxHealth != value)
+                if (_currentHealth != value)
                 {
-                    _maxHealth = value;
+                    _currentHealth = value;
                     HealthChanged?.Invoke();
                 }
             }
@@ -31,8 +31,8 @@ namespace Roguelike.Enemies
 
         public int MaxHealth
         {
-            get => _currentHealth;
-            private set => _currentHealth = value;
+            get => _maxHealth;
+            private set => _maxHealth = value;
         }
 
         private void Start() => 
@@ -48,6 +48,9 @@ namespace Roguelike.Enemies
         {
             if (damage < 0)
                 throw new ArgumentOutOfRangeException(nameof(damage), "Damage must not be less than 0");
+            
+            Debug.Log("Current: " + CurrentHealth);
+            Debug.Log("Max: " + MaxHealth);
 
             _currentHealth = Mathf.Max(_currentHealth - damage, 0);
 

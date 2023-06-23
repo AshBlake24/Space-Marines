@@ -65,6 +65,9 @@ namespace Roguelike.Player
                 if (collider.gameObject.TryGetComponent(out EnemyHealth enemyHealth)
                     && LineOfFireIsFree(enemyHealth.transform.position))
                 {
+                    if (enemyHealth.CurrentHealth <= 0)
+                        continue;
+                    
                     float distanceToEnemy = Vector3.Distance(transform.position, enemyHealth.transform.position);
 
                     if (distanceToEnemy < closestEnemyDistance)
