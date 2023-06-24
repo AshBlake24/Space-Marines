@@ -18,6 +18,7 @@ namespace Roguelike.Level
         private IEnemyFactory _enemyFactory;
         private ISceneLoadingService _sceneLoadingService;
         private IPersistentDataService _persistentDataService;
+        private List<Room> _arenas;
         private StageStaticData _data;
         private Transform _roomContainer;
         private FinishRoom _finishRoom;
@@ -25,7 +26,7 @@ namespace Roguelike.Level
         private Room _currentCorridor;
         private Room _currentRoom;
         private int _arenaRoomsCount;
-        private int _bonusRoomCount;
+        private int _bonusRoomMaxCount;
         private int _totalWeightRoom;
 
         public void Construct(StageStaticData stageData, IPersistentDataService persistentDataService,
@@ -33,7 +34,7 @@ namespace Roguelike.Level
         {
             _data = stageData;
             _arenaRoomsCount = stageData.ArenasCount;
-            _bonusRoomCount = stageData.TreasureRoomsCount;
+            _bonusRoomMaxCount = stageData.BonusRoomsMaxCount;
             _sceneLoadingService = sceneLoadingService;
             _persistentDataService = persistentDataService;
             _enemyFactory = enemyFactory;
@@ -41,35 +42,53 @@ namespace Roguelike.Level
 
         public void BuildLevel()
         {
+            _arenas = new List<Room>();
             _roomContainer = new GameObject(ContainerName).transform;
 
             ConnectStartRoom();
+            ConnectArenaRoom();
 
+            GenerateArenas();
+
+            ConnectFinishRoom();
+            GenerateBonusRoom();
+
+        }
+
+        private void GenerateBonusRoom()
+        {
+            while (_arenas.Count > 0)
+            {
+                if (_bonusRoomMaxCount > 0)
+                {
+                    _currentRoom = _arenas[Random.Range(0, _arenas.Count)];
+
+                    _currentRoom.UpdateValidExits();
+
+                    if (_currentRoom.ValidExitCount > 0)
+                        ConnectBonusRoom();
+                    else
+                        _arenas.Remove(_currentRoom);
+                }
+                else
+                {
+                    break;
+                }
+            }
+        }
+
+        private void GenerateArenas()
+        {
             while (_arenaRoomsCount > 0)
             {
-                ConnectCorridor();
-                ConnectArenaRoom();
-
-                while (_currentRoom.ExitCount > 1 && _currentRoom.ValidExitCount > 1)
+                while (_currentRoom.ValidExitCount > 0)
                 {
-                    if (_bonusRoomCount > 0)
-                    {
-                        ConnectCorridor();
-                        ConnectBonusRoom();
+                    ConnectArenaRoom();
 
-                        _bonusRoomCount--;
-                    }
-                    else
-                    {
+                    if (_arenaRoomsCount <= 0)
                         break;
-                    }
                 }
-
-                _arenaRoomsCount--;
             }
-
-            ConnectCorridor();
-            ConnectFinishRoom();
         }
 
         private void ConnectCorridor()
@@ -80,20 +99,29 @@ namespace Roguelike.Level
 
         private void ConnectArenaRoom()
         {
-            Room arenaRoom = GetValidArenaRoom();
+            ConnectCorridor();
+
+            Room arenaRoom = CreateRoom(_currentCorridor, _data.Arenas);
 
             if (arenaRoom.gameObject.TryGetComponent<EnemySpawner>(out EnemySpawner enemySpawner))
-                enemySpawner.Init(_enemyFactory, _persistentDataService.PlayerProgress, 
+                enemySpawner.Init(_enemyFactory, _persistentDataService.PlayerProgress,
                     _data.MinComplexityMultiplication, _data.MaxComplexityMultiplication, _data.Spawner);
 
-            _currentRoom.HideExit();
+            _arenas.Add(arenaRoom);
 
-            _currentRoom = arenaRoom;
+            if (_currentRoom.ValidExitCount <= 0)
+            {
+                _currentRoom.HideExit();
+
+                _currentRoom = arenaRoom;
+            }
+
+            _arenaRoomsCount--;
         }
 
         private Room GetValidArenaRoom()
         {
-            if (_bonusRoomCount < _arenaRoomsCount)
+            if (_bonusRoomMaxCount < _arenaRoomsCount)
             {
                 return CreateRoom(_currentCorridor, _data.Arenas);
             }
@@ -118,16 +146,22 @@ namespace Roguelike.Level
 
         private void ConnectBonusRoom()
         {
+            ConnectCorridor();
             CreateRoom(_currentCorridor, _data.BonusRoom);
+
+            _bonusRoomMaxCount--;
         }
 
         private void ConnectStartRoom()
         {
             _currentRoom = Instantiate(_data.StartRoom, _roomContainer);
+            _currentRoom.FillValidExits();
         }
 
         private void ConnectFinishRoom()
         {
+            ConnectCorridor();
+
             _currentRoom.HideExit();
 
             _currentRoom = CreateRoom(_currentCorridor, _data.TransitionRoom);
