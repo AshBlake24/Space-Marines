@@ -17,6 +17,7 @@ namespace Roguelike.UI.Tabs
         {
             Text = GetComponent<TextMeshProUGUI>();
             _tabGroup.Subscribe(this);
+            OnDeselected();
         }
 
         public void OnPointerEnter(PointerEventData eventData) => 
