@@ -738,7 +738,6 @@ MonoBehaviour:
   _spawnPoint: {fileID: 1867429062629522922}
   _finishLevelzone: {fileID: 5056125216056929896}
   _boosId: 5
-  _bossUI: {fileID: 4465411882296480232, guid: 41abbb9839b69654c96e59bf0d7204dd, type: 3}
 --- !u!1 &7293206013930391253
 GameObject:
   m_ObjectHideFlags: 0
@@ -783,6 +782,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1867429062629522922}
+  - component: {fileID: 3062621360563517824}
   m_Layer: 0
   m_Name: SpawnPoint
   m_TagString: Untagged
@@ -805,6 +805,19 @@ Transform:
   m_Father: {fileID: 7144997929936821832}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3062621360563517824
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7637828784643284509}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9d0bba149c4b984a8bf4c58037ba26d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _spawnEffect: {fileID: 0}
 --- !u!1 &8094616101767332724
 GameObject:
   m_ObjectHideFlags: 0

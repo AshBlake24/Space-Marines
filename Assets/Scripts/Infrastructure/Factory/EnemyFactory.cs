@@ -32,18 +32,18 @@ namespace Roguelike.Infrastructure.Factory
             _audioFactory = audioFactory;
         }
 
-        public GameObject CreateEnemy(Transform spawnPoint, EnemyId id, PlayerHealth target)
+        public GameObject CreateMinion(Transform spawnPoint, EnemyId id, PlayerHealth target)
         {
-            EnemyConstruct(spawnPoint, id, target);
+            CreateEnemy(spawnPoint, id, target);
 
             _enemy.Health.Init(_enemyData);
 
             return _enemyPrefab;
         }
 
-        public GameObject CreateEnemy(Transform spawnPoint, EnemyId id, PlayerHealth target, ref ActorUI bossUI)
+        public GameObject CreateBoss(Transform spawnPoint, EnemyId id, PlayerHealth target)
         {
-            EnemyConstruct(spawnPoint, id, target);
+            CreateEnemy(spawnPoint, id, target);
 
             _enemyPrefab.GetComponent<BossRoot>().Init(_enemy);
 
@@ -54,7 +54,7 @@ namespace Roguelike.Infrastructure.Factory
             return _enemyPrefab;
         }
 
-        private void EnemyConstruct(Transform spawnPoint, EnemyId id, PlayerHealth target)
+        private void CreateEnemy(Transform spawnPoint, EnemyId id, PlayerHealth target)
         {
             _enemyData = _staticDataService.GetDataById<EnemyId, EnemyStaticData>(id);
             _enemyPrefab = Object.Instantiate(_enemyData.Prefab, spawnPoint);

@@ -60,7 +60,7 @@ namespace Roguelike.Enemies
 
         private GameObject GenerateEnemy(Transform spawnPosition, PlayerHealth target)
         {
-            GameObject enemyPrefab = _enemyFactory.CreateEnemy(spawnPosition,
+            GameObject enemyPrefab = _enemyFactory.CreateMinion(spawnPosition,
                 _data.Enemies[Random.Range(0, _data.Enemies.Count)], target);
 
             enemyPrefab.SetActive(false);

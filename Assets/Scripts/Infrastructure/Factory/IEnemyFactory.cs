@@ -8,8 +8,8 @@ namespace Roguelike.Infrastructure.Factory
 {
     public interface IEnemyFactory : IService
     {
-        public GameObject CreateEnemy(Transform spawnPoint, EnemyId id, PlayerHealth target);
+        public GameObject CreateMinion(Transform spawnPoint, EnemyId id, PlayerHealth target);
 
-        public GameObject CreateEnemy(Transform spawnPoint, EnemyId id, PlayerHealth target, ref ActorUI bossUI);
+        public GameObject CreateBoss(Transform spawnPoint, EnemyId id, PlayerHealth target);
     }
 }

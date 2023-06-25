@@ -1,7 +1,10 @@
 ﻿using Cinemachine;
+using Roguelike.Level;
+using Roguelike.Player;
 using Roguelike.Roguelike.Enemies.Animators;
 using Roguelike.UI.Elements;
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -18,6 +21,7 @@ namespace Roguelike.Enemies.EnemyStates
         private CinemachineVirtualCamera _bossCamera;
         private BossStateMachine _stateMashine;
         private NavMeshAgent _agent;
+        private List<MonoBehaviour> _playerComponents;
 
         private void Update()
         {
@@ -40,20 +44,55 @@ namespace Roguelike.Enemies.EnemyStates
 
             _stateMashine = GetComponent<BossStateMachine>();
 
+            _playerComponents = new List<MonoBehaviour>();
+
             if (_portal != null)
             {
-                _portal = Instantiate(_portal, _portalSpawnPoint.position, _portal.transform.rotation);
+                SpawnPoint spawn = GetComponentInParent<SpawnPoint>();
+                _portal = Instantiate(_portal, spawn.transform);
+                _portal.transform.position = _portalSpawnPoint.transform.position;
                 Move();
             }
 
             HideHealthBar();
             ActivateCamera();
+            ActivatePlayerInput(false);
+        }
+
+        public override void Exit(EnemyState nextState)
+        {
+            ReturnCamera();
+
+            if (_healthBar != null)
+                _healthBar.gameObject.SetActive(true);
+
+            ActivatePlayerInput(true);
+
+            base.Exit(nextState);
         }
 
         private void HideHealthBar()
         {
             _healthBar = _stateMashine.BossRoot.HealthBar;
             _healthBar.gameObject.SetActive(false);
+        }
+
+        private void ActivatePlayerInput(bool enabled)
+        {
+            PlayerHealth player = enemy.Target;
+
+            if (_playerComponents.Count == 0)
+            {
+                _playerComponents.Add(player.GetComponent<PlayerInteraction>());
+                _playerComponents.Add(player.GetComponent<PlayerSkill>());
+                _playerComponents.Add(player.GetComponent<PlayerMovement>());
+                _playerComponents.Add(player.GetComponent<PlayerShooter>());
+            }
+
+            foreach (var component in _playerComponents)
+            {
+                component.enabled = enabled;
+            }
         }
 
         private void ActivateCamera()
@@ -76,16 +115,6 @@ namespace Roguelike.Enemies.EnemyStates
             {
                 throw new ArgumentNullException(nameof(CinemachineVirtualCamera));
             }
-        }
-
-        public override void Exit(EnemyState nextState)
-        {
-            ReturnCamera();
-
-            if (_healthBar != null)
-                _healthBar.gameObject.SetActive(true);
-
-            base.Exit(nextState);
         }
 
         private void ReturnCamera()
