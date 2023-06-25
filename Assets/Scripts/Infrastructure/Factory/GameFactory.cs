@@ -48,6 +48,8 @@ namespace Roguelike.Infrastructure.Factory
         private readonly IEnhancementFactory _enhancementFactory;
         private readonly IInputService _inputService;
         private readonly ITimeService _timeService;
+        
+        public static CinemachineVirtualCamera PlayerCamera;
 
         public GameFactory(IAssetProvider assetProvider,
             IPersistentDataService persistentData,
@@ -165,12 +167,12 @@ namespace Roguelike.Infrastructure.Factory
         public void CreatePlayerCamera(GameObject player)
         {
             GameObject camera = _assetProvider.Instantiate(AssetPath.PlayerCameraPath);
-            CinemachineVirtualCamera playerCamera = camera.GetComponent<CinemachineVirtualCamera>();
+            PlayerCamera = camera.GetComponent<CinemachineVirtualCamera>();
 
-            if (playerCamera != null)
+            if (PlayerCamera != null)
             {
-                playerCamera.Follow = player.transform;
-                playerCamera.LookAt = player.transform;
+                PlayerCamera.Follow = player.transform;
+                PlayerCamera.LookAt = player.transform;
             }
             else
             {

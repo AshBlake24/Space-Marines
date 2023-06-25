@@ -4,6 +4,7 @@ using Roguelike.Player;
 using Roguelike.StaticData.Levels.Spawner;
 using System.Collections.Generic;
 using Roguelike.Data;
+using Roguelike.Logic.Popups;
 using UnityEngine;
 
 namespace Roguelike.Enemies
@@ -22,6 +23,7 @@ namespace Roguelike.Enemies
         private List<SpawnPoint> _readySpawnPoints;
         private PlayerHealth _player;
         private PlayerProgress _playerProgress;
+        private DamagePopupViewer _damagePopupViewer;
         private IEnemyFactory _enemyFactory;
 
         private void OnDisable()
@@ -54,6 +56,7 @@ namespace Roguelike.Enemies
             _room = GetComponent<Room>();
 
             _enterPoint = _room.EntryPoint.GetComponent<EnterTriger>();
+            _damagePopupViewer = GetComponentInChildren<DamagePopupViewer>();
 
             _enterPoint.PlayerHasEntered += OnPlayerHasEntered;
         }
@@ -69,6 +72,7 @@ namespace Roguelike.Enemies
 
             EnemyHealth enemy = enemyPrefab.GetComponentInChildren<EnemyHealth>();
 
+            _damagePopupViewer.SubscribeToEnemy(enemy);
             _enemiesInRoom.Add(enemy);
 
             enemy.Died += OnEnemyDied;

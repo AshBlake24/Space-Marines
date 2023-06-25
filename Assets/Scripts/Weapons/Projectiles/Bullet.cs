@@ -9,7 +9,6 @@ namespace Roguelike.Weapons.Projectiles
     public class Bullet : Projectile
     {
         private BulletStats _stats;
-        private IHealth _cashedHealth;
 
         protected override ProjectileStats Stats => _stats;
 
@@ -21,12 +20,13 @@ namespace Roguelike.Weapons.Projectiles
 
         private void OnCollisionEnter(Collision collision)
         {
-            if (collision.gameObject.TryGetComponent<IHealth>(out _cashedHealth))
-                _cashedHealth.TakeDamage(Damage);
-
-            OnImpacted();
-            SpawnVFX(ImpactVFXKey);
-            ReturnToPool();
+            if (collision.gameObject.TryGetComponent(out IHealth health))
+            {
+                health.TakeDamage(Damage);
+                OnImpacted();
+                SpawnVFX(ImpactVFXKey);
+                ReturnToPool();
+            }
         }
         
         private void InitializeBulletStats<TStats>(TStats stats)

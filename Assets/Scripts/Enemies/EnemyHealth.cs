@@ -14,6 +14,7 @@ namespace Roguelike.Enemies
         private int _currentHealth;
 
         public event Action HealthChanged;
+        public event Action<int, Transform> DamageTook;
         public event Action<EnemyHealth> Died;
 
         public int CurrentHealth
@@ -52,6 +53,7 @@ namespace Roguelike.Enemies
                 throw new ArgumentOutOfRangeException(nameof(damage), "Damage must not be less than 0");
 
             CurrentHealth = Mathf.Max(CurrentHealth - damage, 0);
+            DamageTook?.Invoke(damage, transform);
 
             if (_enemyAnimator != null)
                 _enemyAnimator.PlayHit();
