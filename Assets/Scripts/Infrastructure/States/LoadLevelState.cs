@@ -7,7 +7,6 @@ using Roguelike.Logic;
 using Roguelike.StaticData.Levels;
 using Roguelike.Utilities;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace Roguelike.Infrastructure.States
 {
@@ -115,6 +114,7 @@ namespace Roguelike.Infrastructure.States
         private void InitDungeon()
         {
             _gameFactory.GenerateLevel();
+            _uiFactory.ShowStageName();
             InitWorld();
         }
 

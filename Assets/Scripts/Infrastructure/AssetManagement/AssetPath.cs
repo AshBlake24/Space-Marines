@@ -28,5 +28,6 @@ namespace Roguelike.Infrastructure.AssetManagement
         public const string AddIconPath = "Icons/Icon_Add";
         public const string CancelIconPath = "Icons/Icon_Cancel";
         public const string SearchIconPath = "Icons/Icon_Search";
+        public const string StageNameViewerPath = "UI/Elements/StageNameViewer";
     }
 }

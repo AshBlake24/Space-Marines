@@ -20,5 +20,6 @@ namespace Roguelike.Infrastructure.Factory
         void CreateEnhancementWidget(EnhancementData enhancementProgress, Transform parent, 
             EnhancementTooltip tooltip);
         void CreateUIRoot();
+        void ShowStageName();
     }
 }

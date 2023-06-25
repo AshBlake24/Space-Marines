@@ -9,9 +9,9 @@ namespace Roguelike.UI.Windows
     {
         private const float FadeValue = 0.25f;
         
-        [SerializeField] private Button _ressurectButton;
+        [SerializeField] private Button _resurrectButton;
         
-        private Image[] _ressurectButtonImages;
+        private Image[] _resurrectButtonImages;
         private PlayerDeath _playerDeath;
 
         public void Construct(PlayerDeath playerDeath) => 
@@ -25,18 +25,18 @@ namespace Roguelike.UI.Windows
         protected override void Cleanup()
         {
             base.Cleanup();
-            _ressurectButton.onClick.RemoveAllListeners();
+            _resurrectButton.onClick.RemoveAllListeners();
         }
 
         private void InitResurrect()
         {
-            _ressurectButtonImages = _ressurectButton.GetComponentsInChildren<Image>();
+            _resurrectButtonImages = _resurrectButton.GetComponentsInChildren<Image>();
             
             if (ProgressService.PlayerProgress.State.HasResurrected)
             {
-                _ressurectButton.interactable = false;
+                _resurrectButton.interactable = false;
 
-                foreach (Image image in _ressurectButtonImages)
+                foreach (Image image in _resurrectButtonImages)
                 {
                     image.color = new Color(
                         image.color.r - FadeValue,
@@ -47,8 +47,8 @@ namespace Roguelike.UI.Windows
             }
             else
             {
-                _ressurectButton.interactable = true;
-                _ressurectButton.onClick.AddListener(OnResurrect);
+                _resurrectButton.interactable = true;
+                _resurrectButton.onClick.AddListener(OnResurrect);
             }
         }
 

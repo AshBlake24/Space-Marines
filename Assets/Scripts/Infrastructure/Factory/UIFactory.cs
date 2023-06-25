@@ -25,6 +25,7 @@ using Roguelike.UI.Windows.Confirmations;
 using Roguelike.UI.Windows.Enhancements;
 using Roguelike.UI.Windows.Panels;
 using Roguelike.UI.Windows.Regions;
+using Roguelike.Utilities;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
@@ -154,6 +155,15 @@ namespace Roguelike.Infrastructure.Factory
 
         public void CreateUIRoot() =>
             _uiRoot = _assetProvider.Instantiate(AssetPath.UIRootPath).transform;
+
+        public void ShowStageName()
+        {
+            string stageLabel = _progressService.PlayerProgress.WorldData.CurrentStage.ToLabel();
+
+            _assetProvider.Instantiate(AssetPath.StageNameViewerPath, _uiRoot)
+                .GetComponent<StageNameViewer>()
+                .Show(stageLabel);
+        }
 
         private void InitGameOverWindow(GameOverWindow gameOverWindow)
         {
