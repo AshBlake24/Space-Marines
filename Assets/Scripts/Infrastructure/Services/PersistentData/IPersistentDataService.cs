@@ -6,6 +6,7 @@ namespace Roguelike.Infrastructure.Services.PersistentData
     {
         PlayerProgress PlayerProgress { get; set; }
         bool IsResetting { get; }
+        void UpdateStatistics();
         void Reset();
         void ResetAllProgress();
     }

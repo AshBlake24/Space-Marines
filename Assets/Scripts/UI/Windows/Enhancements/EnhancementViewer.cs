@@ -90,7 +90,7 @@ namespace Roguelike.UI.Windows.Enhancements
             _price.text = _enhancementData.Tiers[_enhancementProgress.Tier].Price.ToString();
             _currentValue.text = _noValueMark;
             _nextValue.text = _enhancementProgress.Tier < _enhancementData.Tiers.Length
-                ? _enhancementData.Tiers[_enhancementProgress.Tier + 1].Value.ToString()
+                ? _enhancementData.Tiers[_enhancementProgress.Tier].Value.ToString()
                 : _noValueMark;
         }
 

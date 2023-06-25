@@ -1,6 +1,8 @@
 using Roguelike.Data;
 using Roguelike.Infrastructure.Services.StaticData;
 using Roguelike.Infrastructure.States;
+using Roguelike.StaticData.Levels;
+using Roguelike.Utilities;
 using UnityEngine;
 
 namespace Roguelike.Infrastructure.Services.PersistentData
@@ -20,6 +22,15 @@ namespace Roguelike.Infrastructure.Services.PersistentData
         }
 
         public PlayerProgress PlayerProgress { get; set; }
+        
+        public void UpdateStatistics()
+        {
+            LevelId levelId = EnumExtensions.GetCurrentLevelId();
+            int coins = PlayerProgress.Balance.GetCoinsToStatistics();
+            
+            PlayerProgress.Statistics.KillData.TrySaveOverallKills(levelId);
+            PlayerProgress.Statistics.CollectablesData.AddCoins(coins);
+        }
 
         public void Reset()
         {

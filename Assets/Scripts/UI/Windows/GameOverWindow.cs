@@ -22,6 +22,7 @@ namespace Roguelike.UI.Windows
         {
             TimeService.PauseGame();
             InitStageViewer();
+            ProgressService.UpdateStatistics();
         }
 
         private void InitStageViewer()
