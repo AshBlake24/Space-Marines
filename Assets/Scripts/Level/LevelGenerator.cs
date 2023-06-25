@@ -46,9 +46,12 @@ namespace Roguelike.Level
             _roomContainer = new GameObject(ContainerName).transform;
 
             ConnectStartRoom();
-            ConnectArenaRoom();
 
-            GenerateArenas();
+            if (_arenaRoomsCount > 0)
+            {
+                ConnectArenaRoom();
+                GenerateArenas();
+            }
 
             ConnectFinishRoom();
             GenerateBonusRoom();
