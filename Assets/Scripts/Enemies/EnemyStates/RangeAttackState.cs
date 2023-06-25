@@ -38,7 +38,8 @@ namespace Roguelike.Enemies.EnemyStates
 
             _factory = AllServices.Container.Single<IProjectileFactory>();
 
-            CreateProjectilesPool();
+            if (_projectilesPool == null)
+                CreateProjectilesPool();
 
             animator.PlayAttack();
         }
