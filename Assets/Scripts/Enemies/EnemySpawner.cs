@@ -32,7 +32,7 @@ namespace Roguelike.Enemies
 
             foreach (var enemy in _enemiesInRoom)
             {
-                enemy.OnDied -= OnEnemyDied;
+                enemy.Died -= OnEnemyDied;
             }
         }
 
@@ -75,7 +75,7 @@ namespace Roguelike.Enemies
             _damagePopupViewer.SubscribeToEnemy(enemy);
             _enemiesInRoom.Add(enemy);
 
-            enemy.OnDied += OnEnemyDied;
+            enemy.Died += OnEnemyDied;
 
             return enemyPrefab;
         }
@@ -105,7 +105,7 @@ namespace Roguelike.Enemies
 
         private void OnEnemyDied(EnemyHealth enemyHealth)
         {
-            enemyHealth.OnDied -= OnEnemyDied;
+            enemyHealth.Died -= OnEnemyDied;
 
             _enemiesInRoom.Remove(enemyHealth);
 

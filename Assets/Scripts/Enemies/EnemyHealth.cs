@@ -60,7 +60,7 @@ namespace Roguelike.Enemies
 
             if (CurrentHealth <= 0)
             {
-                OnDied?.Invoke(this);
+                Died?.Invoke(this);
                 Destroy(gameObject);
             }
         }

@@ -23,15 +23,17 @@ namespace Roguelike.Enemies.EnemyStates
 
             DestroyHealthBar();
             AvtivateCamera();
-            ActivatePlayerInput(false);
 
             base.Enter(curentEnemy, enemyAnimator);
+
+            ActivatePlayerInput(false);
         }
 
         public override void Die()
         {
             Destroy(_bossCamera);
             ActivatePlayerInput(true);
+
             base.Die();
         }
 

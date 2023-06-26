@@ -34,7 +34,7 @@ namespace Roguelike.Enemies
             _playerDeath = _enemy.Target.GetComponent<PlayerDeath>();
             _animator = GetComponent<EnemyAnimator>();
 
-            _enemyHealth.OnDied += OnEnemyDead;
+            _enemyHealth.Died += OnEnemyDead;
             _playerDeath.Died += OnPlayerDead;
         }
 
@@ -61,14 +61,14 @@ namespace Roguelike.Enemies
 
         private void OnEnemyDead(EnemyHealth enemy)
         {
-            enemy.OnDied -= OnEnemyDead;
+            enemy.Died -= OnEnemyDead;
 
             _currentState.Exit(_dieState);
         }
 
         private void OnPlayerDead()
         {
-            if (_enemy.Health.CurrentHealth > 0)
+            if (_enemy != null && _enemy.Health.CurrentHealth > 0)
                 _currentState.Exit(_playerDieState);
         }
     }

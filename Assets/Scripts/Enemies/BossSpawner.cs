@@ -27,7 +27,7 @@ namespace Roguelike.Assets.Scripts.Enemies
         private void OnDisable()
         {
             if (_boss != null)
-                _boss.OnDied -= OnBossDied;
+                _boss.Died -= OnBossDied;
         }
 
         public void Init(IEnemyFactory enemyFactory, IPersistentDataService persistentDataService)
@@ -58,7 +58,7 @@ namespace Roguelike.Assets.Scripts.Enemies
             GameObject enemyPrefab = _enemyFactory.CreateBoss(spawnPosition, _boosId, target);
 
             _boss = enemyPrefab.GetComponentInChildren<EnemyHealth>();
-            _boss.OnDied += OnBossDied;
+            _boss.Died += OnBossDied;
 
             _room.CloseDoor();
 
@@ -68,7 +68,7 @@ namespace Roguelike.Assets.Scripts.Enemies
         private void OnBossDied(EnemyHealth enemy)
         {
             _finishLevelzone.SetActive(true);
-            _boss.OnDied -= OnBossDied;
+            _boss.Died -= OnBossDied;
 
             _room.OpenDoor();
             
