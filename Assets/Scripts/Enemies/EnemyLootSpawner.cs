@@ -19,7 +19,7 @@ namespace Roguelike.Enemies
         }
 
         private void Start() =>
-            _health.Died += OnDied;
+            _health.OnDied += OnDied;
 
         private void OnDied(EnemyHealth enemy) =>
             TrySpawnLoot();

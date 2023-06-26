@@ -56,6 +56,10 @@ namespace Roguelike.Level
             ConnectFinishRoom();
             GenerateBonusRoom();
 
+            foreach (var arena in _arenas)
+            {
+                arena.HideExit();
+            }
         }
 
         private void GenerateBonusRoom()

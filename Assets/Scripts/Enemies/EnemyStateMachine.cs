@@ -1,6 +1,7 @@
 using UnityEngine;
 using Roguelike.Enemies.EnemyStates;
 using Roguelike.Roguelike.Enemies.Animators;
+using Roguelike.Player;
 
 namespace Roguelike.Enemies
 {
@@ -10,11 +11,13 @@ namespace Roguelike.Enemies
     {
         [SerializeField] private EnemyState _startState;
         [SerializeField] private EnemyState _dieState;
+        [SerializeField] private EnemyState _playerDieState;
 
         private EnemyHealth _enemyHealth;
         private Enemy _enemy;
         private EnemyState _currentState;
         private EnemyAnimator _animator;
+        private PlayerDeath _playerDeath;
 
         public Enemy Enemy => _enemy;
 
@@ -28,14 +31,17 @@ namespace Roguelike.Enemies
             _enemy = enemy;
             _enemyHealth = _enemy.Health;
 
+            _playerDeath = _enemy.Target.GetComponent<PlayerDeath>();
             _animator = GetComponent<EnemyAnimator>();
 
-            _enemyHealth.Died += OnEnemyDead;
+            _enemyHealth.OnDied += OnEnemyDead;
+            _playerDeath.Died += OnPlayerDead;
         }
 
         private void OnDisable()
         {
             _currentState.StateFinished -= SwitchState;
+            _playerDeath.Died -= OnPlayerDead;
         }
 
         private void SwitchState(EnemyState state)
@@ -55,9 +61,15 @@ namespace Roguelike.Enemies
 
         private void OnEnemyDead(EnemyHealth enemy)
         {
-            enemy.Died -= OnEnemyDead;
+            enemy.OnDied -= OnEnemyDead;
 
             _currentState.Exit(_dieState);
+        }
+
+        private void OnPlayerDead()
+        {
+            if (_enemy.Health.CurrentHealth > 0)
+                _currentState.Exit(_playerDieState);
         }
     }
 }

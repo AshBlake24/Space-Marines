@@ -482,9 +482,11 @@ GameObject:
   - component: {fileID: 4270375268436888670}
   - component: {fileID: 3783201635016216175}
   - component: {fileID: 6095422460904431471}
+  - component: {fileID: -3283378541756422176}
   - component: {fileID: 3730292728815793008}
   - component: {fileID: 7695795051017055042}
   - component: {fileID: 845877862575499697}
+  - component: {fileID: 6897637951030096689}
   - component: {fileID: 349157260650858972}
   m_Layer: 12
   m_Name: Kamikadze new
@@ -583,6 +585,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _startState: {fileID: 4270375268436888670}
   _dieState: {fileID: 6095422460904431471}
+  _playerDieState: {fileID: -3283378541756422176}
 --- !u!114 &4270375268436888670
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -624,6 +627,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _transitions: []
+--- !u!114 &-3283378541756422176
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3730292728815792999}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0970da6ed953a84697695ffeec750e0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _transitions:
+  - {fileID: 6897637951030096689}
 --- !u!114 &3730292728815793008
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -663,6 +680,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetState: {fileID: 3783201635016216175}
+--- !u!114 &6897637951030096689
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3730292728815792999}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13b8d1d1f222dd945987033a895efeb2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetState: {fileID: 4270375268436888670}
 --- !u!114 &349157260650858972
 MonoBehaviour:
   m_ObjectHideFlags: 0
