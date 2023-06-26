@@ -1,7 +1,9 @@
 using System;
 using Roguelike.Assets.Scripts.Enemies;
 using Roguelike.Data;
+using Roguelike.Infrastructure.Services;
 using Roguelike.Infrastructure.Services.PersistentData;
+using Roguelike.Infrastructure.Services.Windows;
 using Roguelike.Player;
 using Roguelike.StaticData.Levels;
 using UnityEngine;
@@ -16,9 +18,15 @@ namespace Roguelike.Level
 
         private StageId _nextStageId;
         private IPersistentDataService _persistentDataService;
+        private IWindowService _windowService;
         private bool _isBossRoom;
 
         public event Action PlayerFinishedLevel;
+
+        private void Awake()
+        {
+            _windowService = AllServices.Container.Single<IWindowService>();
+        }
 
         private void OnEnable()
         {
@@ -43,15 +51,18 @@ namespace Roguelike.Level
 
         private void OnPlayerHasEntered(PlayerHealth player)
         {
+            if (_isBossRoom)
+            {
+                _windowService.Open(WindowId.GameComplete);
+                return;
+            }
+            
             WriteProgress(_persistentDataService.PlayerProgress);
             PlayerFinishedLevel?.Invoke();
         }
 
         public void WriteProgress(PlayerProgress progress)
         {
-            if (_isBossRoom)
-                progress.WorldData.CurrentLevel = hub;
-
             progress.WorldData.CurrentStage = _nextStageId;
         }
 

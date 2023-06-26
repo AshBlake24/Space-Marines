@@ -176,7 +176,7 @@ namespace Roguelike.Level
 
             if (_currentRoom.TryGetComponent<BossSpawner>(out BossSpawner spawner))
             {
-                spawner.Init(_enemyFactory);
+                spawner.Init(_enemyFactory, _persistentDataService);
                 _currentRoom.OpenDoor();
             }
 

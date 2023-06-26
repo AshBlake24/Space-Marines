@@ -5,6 +5,7 @@ using Roguelike.Player;
 using Roguelike.StaticData.Enemies;
 using Roguelike.UI.Elements;
 using System;
+using Roguelike.Infrastructure.Services.PersistentData;
 using UnityEngine;
 
 namespace Roguelike.Assets.Scripts.Enemies
@@ -19,6 +20,7 @@ namespace Roguelike.Assets.Scripts.Enemies
         private EnemyHealth _boss;
         private EnterTriger _enterPoint;
         private IEnemyFactory _enemyFactory;
+        private IPersistentDataService _persistentData;
 
         public event Action BossDied; 
 
@@ -28,9 +30,10 @@ namespace Roguelike.Assets.Scripts.Enemies
                 _boss.Died -= OnBossDied;
         }
 
-        public void Init(IEnemyFactory enemyFactory)
+        public void Init(IEnemyFactory enemyFactory, IPersistentDataService persistentDataService)
         {
             _enemyFactory = enemyFactory;
+            _persistentData = persistentDataService;
 
             _room = GetComponent<Room>();
             _enterPoint = _room.EntryPoint.GetComponent<EnterTriger>();
@@ -68,6 +71,13 @@ namespace Roguelike.Assets.Scripts.Enemies
             _boss.Died -= OnBossDied;
 
             _room.OpenDoor();
+            
+            int coins = enemy.GetComponentInParent<BossRoot>()
+                .GetComponentInChildren<BossStateMachine>().Enemy.Coins;
+            
+            _persistentData.PlayerProgress.Statistics.KillData.CurrentKillData.OnBossKilled();
+            _persistentData.PlayerProgress.Statistics.KillData.CurrentKillData.OnMonsterKilled();
+            _persistentData.PlayerProgress.Balance.AddCoins(coins);
 
             BossDied?.Invoke();
         }
