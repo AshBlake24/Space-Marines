@@ -2,7 +2,6 @@ using System;
 using JetBrains.Annotations;
 using Roguelike.Infrastructure.Services;
 using Roguelike.Infrastructure.Services.Pools;
-using Roguelike.Player.Enhancements;
 using Roguelike.Weapons.Projectiles.Stats;
 using UnityEngine;
 using UnityEngine.Pool;
@@ -12,7 +11,10 @@ namespace Roguelike.Weapons.Projectiles
     [RequireComponent(typeof(Rigidbody))]
     public abstract class Projectile : MonoBehaviour
     {
+        private const string BloodVFXKey = nameof(BloodVFXKey);
+        
         [SerializeField] protected Rigidbody Rigidbody;
+        [SerializeField, CanBeNull] private ParticleSystem _bloodVFX;
 
         protected int Damage;
         protected string ImpactVFXKey;
@@ -55,11 +57,13 @@ namespace Roguelike.Weapons.Projectiles
                 _trailRenderer.Clear();
         }
 
-        protected void SpawnVFX(string key)
+        protected void SpawnImpactVFX(string key) => 
+            SpawnVFX(key);
+
+        protected void SpawnBloodVFX()
         {
-            ParticleSystem particles = _particlesPool.GetInstance(key);
-            particles.transform.SetPositionAndRotation(transform.position, transform.rotation);
-            particles.Play();
+            if (_bloodVFX != null) 
+                SpawnVFX(BloodVFXKey);
         }
 
         protected void OnImpacted() => 
@@ -69,6 +73,13 @@ namespace Roguelike.Weapons.Projectiles
         {
             Rigidbody.velocity = Vector3.zero;
             _projectilesPool.Release(this);
+        }
+        
+        private void SpawnVFX(string key)
+        {
+            ParticleSystem particles = _particlesPool.GetInstance(key);
+            particles.transform.SetPositionAndRotation(transform.position, transform.rotation);
+            particles.Play();
         }
 
         private void InitProjectile(int damage, float startSpeed, Vector3 direction)
@@ -100,6 +111,7 @@ namespace Roguelike.Weapons.Projectiles
         {
             ImpactVFXKey = Stats.ProjectileVFX.gameObject.name;
             _particlesPool.CreateNewPool(ImpactVFXKey, Stats.ImpactVFX);
+            _particlesPool.CreateNewPool(BloodVFXKey, _bloodVFX);
         }
 
         private void CreateProjectileVFX()

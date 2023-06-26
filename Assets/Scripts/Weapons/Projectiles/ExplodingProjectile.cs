@@ -31,7 +31,7 @@ namespace Roguelike.Weapons.Projectiles
             }
 
             OnImpacted();
-            SpawnVFX(ImpactVFXKey);
+            SpawnImpactVFX(ImpactVFXKey);
             ReturnToPool();
         }
 

@@ -23,10 +23,12 @@ namespace Roguelike.Weapons.Projectiles
             if (collision.gameObject.TryGetComponent(out IHealth health))
             {
                 health.TakeDamage(Damage);
-                OnImpacted();
-                SpawnVFX(ImpactVFXKey);
-                ReturnToPool();
+                SpawnBloodVFX();
             }
+            
+            OnImpacted();
+            SpawnImpactVFX(ImpactVFXKey);
+            ReturnToPool();
         }
         
         private void InitializeBulletStats<TStats>(TStats stats)
