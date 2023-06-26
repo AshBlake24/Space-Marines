@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 namespace Roguelike.Animations.UI
 {
-    public class GameOverWindowAnimations : MonoBehaviour
+    public class GameCompleteWindowAnimations : MonoBehaviour
     {
         [Header("Stage Viewer")] 
         [SerializeField] private Slider _slider;

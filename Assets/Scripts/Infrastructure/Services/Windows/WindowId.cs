@@ -11,7 +11,7 @@ namespace Roguelike.Infrastructure.Services.Windows
         ReturnHome = 6,
         ReturnCharacterSelection = 7,
         Resurrection = 8,
-        GameOver = 9,
+        GameComplete = 9,
         Authorization = 10,
         RangedWeaponStatsWindow = 11,
         RegionSelectionWindow = 12,

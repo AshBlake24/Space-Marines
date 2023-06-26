@@ -75,7 +75,7 @@ namespace Roguelike.Infrastructure.Factory
                     confirmationWindow.Construct(_staticData, _sceneLoadingService);
 
                     break;
-                case GameOverWindow gameOverWindow:
+                case GameCompleteWindow gameOverWindow:
                     InitGameOverWindow(gameOverWindow);
 
                     break;
@@ -165,11 +165,11 @@ namespace Roguelike.Infrastructure.Factory
                 .Show(stageLabel);
         }
 
-        private void InitGameOverWindow(GameOverWindow gameOverWindow)
+        private void InitGameOverWindow(GameCompleteWindow gameCompleteWindow)
         {
-            gameOverWindow.Construct(_staticData);
+            gameCompleteWindow.Construct(_staticData);
             
-            if (gameOverWindow.TryGetComponent(out GameOverWindowAnimations gameOverWindowAnimations))
+            if (gameCompleteWindow.TryGetComponent(out GameCompleteWindowAnimations gameOverWindowAnimations))
             {
                 GameObject[] weapons = 
                     CreateWeaponViews(gameOverWindowAnimations.WeaponsContent);

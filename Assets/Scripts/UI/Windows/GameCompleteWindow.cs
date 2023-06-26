@@ -1,17 +1,20 @@
 using System;
 using Roguelike.Animations.UI;
 using Roguelike.Infrastructure.Services.StaticData;
+using Roguelike.Localization;
 using Roguelike.StaticData.Characters;
 using Roguelike.StaticData.Levels;
 using Roguelike.UI.Elements.GameOver;
 using Roguelike.Utilities;
+using TMPro;
 using UnityEngine;
 
 namespace Roguelike.UI.Windows
 {
-    public class GameOverWindow : BaseWindow
+    public class GameCompleteWindow : BaseWindow
     {
-        [SerializeField] private GameOverWindowAnimations _gameOverWindowAnimations;
+        [SerializeField] private TextMeshProUGUI _title;
+        [SerializeField] private GameCompleteWindowAnimations _gameCompleteWindowAnimations;
         
         private IStaticDataService _staticData;
 
@@ -27,6 +30,10 @@ namespace Roguelike.UI.Windows
 
         private void InitStageViewer()
         {
+            _title.text = ProgressService.PlayerProgress.State.Dead 
+                ? LocalizedConstants.GameOver.Value 
+                : LocalizedConstants.RegionCleared.Value;
+            
             LevelId currentLevel = ProgressService.PlayerProgress.WorldData.CurrentLevel;
 
             if (currentLevel != LevelId.Dungeon)
@@ -46,8 +53,8 @@ namespace Roguelike.UI.Windows
             int killedMonsters = ProgressService.PlayerProgress.Statistics.KillData.CurrentKillData.KilledMonsters;
             int coins = ProgressService.PlayerProgress.Balance.Coins;
             
-            _gameOverWindowAnimations.Init(stage, coins, killedMonsters);
-            _gameOverWindowAnimations.Play();
+            _gameCompleteWindowAnimations.Init(stage, coins, killedMonsters);
+            _gameCompleteWindowAnimations.Play();
             
             ProgressService.PlayerProgress.Statistics.Favourites
                 .AddWeapons(ProgressService.PlayerProgress.PlayerWeapons.Weapons);

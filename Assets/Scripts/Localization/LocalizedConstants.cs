@@ -10,5 +10,7 @@
         public static readonly LocalizedString Ammo = new("constants_ammo");
         public static readonly LocalizedString Continue = new("constants_continue");
         public static readonly LocalizedString Tier = new("ui_text_label_tier");
+        public static readonly LocalizedString GameOver = new("ui_text_label_game_over");
+        public static readonly LocalizedString RegionCleared = new("ui_text_label_region_cleared");
     }
 }
