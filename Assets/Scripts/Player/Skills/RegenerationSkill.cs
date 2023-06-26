@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using Roguelike.Infrastructure;
 using Roguelike.Logic;
+using Roguelike.StaticData.Skills;
 using Roguelike.Utilities;
 using UnityEngine;
 
@@ -28,6 +29,8 @@ namespace Roguelike.Player.Skills
             _ticksCount = ticksCount;
             _cooldownBetweenTicks = cooldownBetweenTicks;
         }
+
+        public override SkillId Id => SkillId.Regeneration;
 
         public override event Action Performed;
 

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using Roguelike.Infrastructure;
+using Roguelike.StaticData.Skills;
 using Roguelike.Utilities;
 using UnityEngine;
 
@@ -25,10 +26,11 @@ namespace Roguelike.Player.Skills
             _skillDuration = skillDuration;
         }
 
+        public override SkillId Id => SkillId.Rage;
         public override bool Boosted => _playerShooter.Boosted;
-        
-        public override event Action Performed;
 
+        public override event Action Performed;
+        
         public override void UseSkill() => 
             CoroutineRunner.StartCoroutine(Rage());
 

@@ -145,7 +145,7 @@ namespace Roguelike.Infrastructure.Factory
                 .Construct(characterData.Icon);
 
             hud.GetComponentInChildren<ActiveSkillObserver>()
-                .Construct(player.GetComponent<PlayerSkill>());
+                .Construct(player.GetComponent<PlayerSkill>(), skillData.Icon);
             
             hud.GetComponentInChildren<CoinsObserver>()
                 .Construct(_persistentData.PlayerProgress.Balance);

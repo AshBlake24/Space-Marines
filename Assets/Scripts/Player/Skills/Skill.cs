@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using Roguelike.Infrastructure;
+using Roguelike.StaticData.Skills;
 using Roguelike.Utilities;
 using UnityEngine;
 
@@ -23,7 +24,8 @@ namespace Roguelike.Player.Skills
         }
 
         public abstract event Action Performed;
-
+        
+        public abstract SkillId Id { get; }
         public ParticleSystem VFX { get; }
         public float Cooldown { get; }
         public bool IsActive { get; protected set; }
