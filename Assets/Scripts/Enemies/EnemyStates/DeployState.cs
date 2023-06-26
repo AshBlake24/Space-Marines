@@ -88,7 +88,7 @@ namespace Roguelike.Enemies.EnemyStates
 
         public void Spawn()
         {
-            GameObject mine = _factory.CreateEnemy(transform, _mine, enemy.Target);
+            GameObject mine = _factory.CreateMinion(transform, _mine, enemy.Target);
 
             mine.transform.SetParent(_parent.transform);
 
