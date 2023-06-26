@@ -1,11 +1,14 @@
 using System;
 using Roguelike.StaticData.Enhancements;
+using UnityEngine;
+using Object = System.Object;
 
 namespace Roguelike.Player.Enhancements
 {
     public sealed class MovementSpeedEnhancement : Enhancement
     {
         private readonly IEnhanceable<int> _playerMovement;
+        private ParticleSystem _playerEffect;
 
         public MovementSpeedEnhancement(EnhancementStaticData enhancementStaticData, int tier,
             PlayerMovement playerMovement) : 

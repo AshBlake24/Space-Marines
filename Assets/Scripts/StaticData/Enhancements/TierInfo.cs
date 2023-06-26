@@ -1,4 +1,5 @@
 using System;
+using UnityEngine;
 
 namespace Roguelike.StaticData.Enhancements
 {
@@ -7,5 +8,6 @@ namespace Roguelike.StaticData.Enhancements
     {
         public int Value;
         public int Price;
+        public ParticleSystem PlayerEffect;
     }
 }

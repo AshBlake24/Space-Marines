@@ -272,7 +272,7 @@ namespace Roguelike.Infrastructure.Factory
         private void InitEnhancementsComponent(GameObject player)
         {
             PlayerEnhancements playerEnhancements = player.GetComponent<PlayerEnhancements>();
-            playerEnhancements.Construct(_enhancementFactory);
+            playerEnhancements.Construct(_enhancementFactory, _staticDataService);
 
             player.AddComponent<EnhancementsObserver>().Construct(_persistentData, playerEnhancements);
         }
