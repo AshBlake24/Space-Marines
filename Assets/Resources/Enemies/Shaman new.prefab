@@ -511,6 +511,8 @@ GameObject:
   - component: {fileID: 3730292728815793008}
   - component: {fileID: 7695795051017055042}
   - component: {fileID: 6095422460904431471}
+  - component: {fileID: 1128145681561109545}
+  - component: {fileID: 6948019964571993908}
   - component: {fileID: -8574170245464637317}
   m_Layer: 12
   m_Name: Shaman new
@@ -594,6 +596,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _startState: {fileID: 205440278100546389}
   _dieState: {fileID: 6095422460904431471}
+  _playerDieState: {fileID: 1128145681561109545}
 --- !u!114 &205440278100546389
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -733,6 +736,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _transitions: []
+--- !u!114 &1128145681561109545
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3730292728815792999}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0970da6ed953a84697695ffeec750e0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _transitions:
+  - {fileID: 6948019964571993908}
+--- !u!114 &6948019964571993908
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3730292728815792999}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13b8d1d1f222dd945987033a895efeb2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetState: {fileID: 205440278100546389}
 --- !u!114 &-8574170245464637317
 MonoBehaviour:
   m_ObjectHideFlags: 0

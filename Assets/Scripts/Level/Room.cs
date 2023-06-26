@@ -43,7 +43,6 @@ namespace Roguelike.Level
             Vector3.MoveTowards(transform.position, _entryPoint.transform.position, -GetShiftDistance());
 
             FillValidExits();
-            OpenDoor();
         }
 
         public ExitPoint SelectExitPoint()

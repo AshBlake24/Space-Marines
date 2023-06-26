@@ -10,8 +10,6 @@ namespace Roguelike.Enemies.Transitions
         private void OnEnable()
         {
             _enemy = GetComponent<EnemyStateMachine>().Enemy;
-
-            _accumulatedTime = 0;
         }
         private void Update()
         {

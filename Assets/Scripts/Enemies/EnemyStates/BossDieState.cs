@@ -1,7 +1,9 @@
 ﻿using Cinemachine;
+using Roguelike.Player;
 using Roguelike.Roguelike.Enemies.Animators;
 using Roguelike.UI.Elements;
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Roguelike.Enemies.EnemyStates
@@ -12,21 +14,25 @@ namespace Roguelike.Enemies.EnemyStates
         private ActorUI _healthBar;
         private CinemachineVirtualCamera _bossCamera;
         private BossStateMachine _stateMashine;
+        private List<MonoBehaviour> _playerComponents;
 
         public override void Enter(Enemy curentEnemy, EnemyAnimator enemyAnimator)
         {
             _stateMashine = GetComponent<BossStateMachine>();
+            _playerComponents = new List<MonoBehaviour>();
 
             DestroyHealthBar();
-
             AvtivateCamera();
 
             base.Enter(curentEnemy, enemyAnimator);
+
+            ActivatePlayerInput(false);
         }
 
         public override void Die()
         {
             Destroy(_bossCamera);
+            ActivatePlayerInput(true);
 
             base.Die();
         }
@@ -53,6 +59,24 @@ namespace Roguelike.Enemies.EnemyStates
             else
             {
                 throw new ArgumentNullException(nameof(CinemachineVirtualCamera));
+            }
+        }
+
+        private void ActivatePlayerInput(bool enabled)
+        {
+            PlayerHealth player = enemy.Target;
+
+            if (_playerComponents.Count == 0)
+            {
+                _playerComponents.Add(player.GetComponent<PlayerInteraction>());
+                _playerComponents.Add(player.GetComponent<PlayerSkill>());
+                _playerComponents.Add(player.GetComponent<PlayerMovement>());
+                _playerComponents.Add(player.GetComponent<PlayerShooter>());
+            }
+
+            foreach (var component in _playerComponents)
+            {
+                component.enabled = enabled;
             }
         }
     }
