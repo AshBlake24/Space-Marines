@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using DG.Tweening;
+﻿using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -50,9 +48,7 @@ namespace Roguelike.Animations.UI
 
         private void OnDestroy()
         {
-            if (_stageSequence.IsActive())
-                _stageSequence.Kill();
-            
+            _stageSequence.Kill();
             _coinsCounter.NumberReached -= OnNumberReached;
             _killsCounter.NumberReached -= OnNumberReached;
         }

@@ -19,12 +19,14 @@ namespace Roguelike.UI.Windows
 
         protected override void Initialize()
         {
+            TimeService.PauseGame();
             InitResurrect();
         }
 
         protected override void Cleanup()
         {
             base.Cleanup();
+            TimeService.ResumeGame();
             _resurrectButton.onClick.RemoveAllListeners();
         }
 
