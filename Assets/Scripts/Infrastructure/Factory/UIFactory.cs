@@ -167,7 +167,7 @@ namespace Roguelike.Infrastructure.Factory
 
         private void InitGameOverWindow(GameCompleteWindow gameCompleteWindow)
         {
-            gameCompleteWindow.Construct(_staticData);
+            gameCompleteWindow.Construct(_staticData, _sceneLoadingService);
             
             if (gameCompleteWindow.TryGetComponent(out GameCompleteWindowAnimations gameOverWindowAnimations))
             {

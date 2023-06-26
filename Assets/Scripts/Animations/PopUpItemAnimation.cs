@@ -11,6 +11,8 @@ namespace Roguelike.Animations
         [SerializeField] private float _landingDuration;
         [SerializeField] private float _jumpPower;
         [SerializeField] private float _jumpDistance;
+
+        private Sequence _sequence;
         
         private void Start()
         {
@@ -19,6 +21,8 @@ namespace Roguelike.Animations
             
             PlayAnimation(defaultScale, jumpDistance);
         }
+
+        private void OnDisable() => _sequence.Kill();
 
         private Vector3 CalculateGroundPosition(Vector3 currentPosition)
         {
@@ -37,12 +41,17 @@ namespace Roguelike.Animations
 
         private void PlayAnimation(Vector3 defaultScale, Vector3 jumpDistance)
         {
-            transform.DOScale(defaultScale, _scalingDuration)
-                .From(Vector3.zero);
+            _sequence = DOTween.Sequence();
 
-            transform.DOJump(transform.position + jumpDistance, _jumpPower, 1, _jumpDuration)
-                .SetEase(Ease.InQuad)
-                .onComplete = LandObjectToGround;
+            _sequence.Append(transform
+                .DOScale(defaultScale, _scalingDuration)
+                .From(Vector3.zero));
+
+            _sequence.Insert(0, transform
+                .DOJump(transform.position + jumpDistance, _jumpPower, 1, _jumpDuration)
+                .SetEase(Ease.InQuad));
+
+            _sequence.onComplete = LandObjectToGround;
         }
 
         private void LandObjectToGround()

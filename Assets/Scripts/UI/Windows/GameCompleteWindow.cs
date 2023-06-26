@@ -1,5 +1,6 @@
 using System;
 using Roguelike.Animations.UI;
+using Roguelike.Infrastructure.Services.Loading;
 using Roguelike.Infrastructure.Services.StaticData;
 using Roguelike.Localization;
 using Roguelike.StaticData.Characters;
@@ -8,24 +9,41 @@ using Roguelike.UI.Elements.GameOver;
 using Roguelike.Utilities;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Roguelike.UI.Windows
 {
     public class GameCompleteWindow : BaseWindow
     {
+        [SerializeField] private Button _homeButton;
         [SerializeField] private TextMeshProUGUI _title;
         [SerializeField] private GameCompleteWindowAnimations _gameCompleteWindowAnimations;
-        
-        private IStaticDataService _staticData;
 
-        public void Construct(IStaticDataService staticData) => 
+        private IStaticDataService _staticData;
+        private ISceneLoadingService _sceneLoadingService;
+
+        public void Construct(IStaticDataService staticData, ISceneLoadingService sceneLoadingService)
+        {
             _staticData = staticData;
+            _sceneLoadingService = sceneLoadingService;
+        }
 
         protected override void Initialize()
         {
             TimeService.PauseGame();
             InitStageViewer();
-            ProgressService.UpdateStatistics();
+            UpdateProgress();
+        }
+
+        protected override void SubscribeUpdates()
+        {
+            _homeButton.onClick.AddListener(OnConfirm);
+        }
+
+        protected override void Cleanup()
+        {
+            base.Cleanup();
+            _homeButton.onClick.RemoveListener(OnConfirm);
         }
 
         private void InitStageViewer()
@@ -55,9 +73,18 @@ namespace Roguelike.UI.Windows
             
             _gameCompleteWindowAnimations.Init(stage, coins, killedMonsters);
             _gameCompleteWindowAnimations.Play();
-            
+        }
+
+        private void UpdateProgress()
+        {
             ProgressService.PlayerProgress.Statistics.Favourites
                 .AddWeapons(ProgressService.PlayerProgress.PlayerWeapons.Weapons);
+            
+            ProgressService.UpdateStatistics();
+            ProgressService.Reset();
         }
+
+        private void OnConfirm() => 
+            _sceneLoadingService.Load(_staticData.GameConfig.StartScene);
     }
 }

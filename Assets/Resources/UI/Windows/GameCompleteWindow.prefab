@@ -1959,7 +1959,6 @@ GameObject:
   - component: {fileID: 6931468278520992239}
   - component: {fileID: 6931468278520992240}
   - component: {fileID: 6931468278520992241}
-  - component: {fileID: 6931468278520992242}
   m_Layer: 5
   m_Name: Return Home Button
   m_TagString: Untagged
@@ -2070,20 +2069,6 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &6931468278520992242
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6931468278520992244}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d754e7b1f85a4a8e94d0f6cf76c05f72, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _button: {fileID: 6931468278520992241}
-  _windowId: 6
 --- !u!1 &6931468278619632609
 GameObject:
   m_ObjectHideFlags: 0
@@ -2248,7 +2233,7 @@ GameObject:
   - component: {fileID: 2071395544863720747}
   - component: {fileID: 1444398118770413657}
   m_Layer: 5
-  m_Name: GameFinishedWindow
+  m_Name: GameCompleteWindow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2292,6 +2277,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _closeButtons:
   - {fileID: 6931468278520992241}
+  _homeButton: {fileID: 6931468278520992241}
   _title: {fileID: 6931468279200271747}
   _gameCompleteWindowAnimations: {fileID: 1444398118770413657}
 --- !u!114 &1444398118770413657
