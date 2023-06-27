@@ -1,5 +1,6 @@
 using System;
 using Agava.YandexGames;
+using UnityEngine;
 
 namespace Roguelike.UI.Windows.Confirmations
 {
@@ -7,6 +8,7 @@ namespace Roguelike.UI.Windows.Confirmations
     {
         protected override void Initialize()
         {
+            base.Initialize();
 #if UNITY_WEBGL && !UNITY_EDITOR
             if (PlayerAccount.IsAuthorized)
                 Destroy(gameObject);
@@ -22,6 +24,7 @@ namespace Roguelike.UI.Windows.Confirmations
 
             PlayerAccount.Authorize();
 #endif
+            Destroy(gameObject);
         }
     }
 }

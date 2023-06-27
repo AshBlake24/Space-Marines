@@ -35,6 +35,7 @@ namespace Roguelike.Infrastructure.Services.SaveLoad
             string dataToStore = _progressService.PlayerProgress.ToJson();
             PlayerPrefs.SetString(PlayerProgressKey, dataToStore);
             PlayerPrefs.Save();
+            Debug.Log($"Save this: {dataToStore}");
             
 #if UNITY_WEBGL && !UNITY_EDITOR
             if (PlayerAccount.IsAuthorized)
@@ -61,12 +62,15 @@ namespace Roguelike.Infrastructure.Services.SaveLoad
                 PlayerAccount.GetPlayerData((data) =>
                 {
                     playerProgress = data.FromJson<PlayerProgress>();
+                    Debug.Log($"From cloud: {data}");
                 });
             }
             else
             {
-                playerProgress = PlayerPrefs.GetString(PlayerProgressKey)
-                    ?.FromJson<PlayerProgress>();
+                string data = PlayerPrefs.GetString(PlayerProgressKey);
+                playerProgress = data?.FromJson<PlayerProgress>();
+                
+                Debug.Log($"From prefs: {data}");
             }
 #else
             playerProgress = PlayerPrefs.GetString(PlayerProgressKey)
