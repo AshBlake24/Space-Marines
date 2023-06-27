@@ -195,25 +195,25 @@ MonoBehaviour:
     LightmapOffsetScale: {x: 0.19710322, y: 0.19710322, z: 0.7998866, w: 0.19930065}
   - Renderer: {fileID: 5018143255528144609}
     LightmapIndex: 3
-    LightmapOffsetScale: {x: 0.17751172, y: 0.17751172, z: 0.3907359, w: 0.23546244}
+    LightmapOffsetScale: {x: 0.17751172, y: 0.17751172, z: 0.21007182, w: 0.7748629}
   - Renderer: {fileID: 8009023984824724282}
     LightmapIndex: 3
-    LightmapOffsetScale: {x: 0.17750451, y: 0.17750451, z: 0.21007611, w: 0.7748672}
+    LightmapOffsetScale: {x: 0.17750451, y: 0.17750451, z: 0.39074016, w: 0.23546673}
   - Renderer: {fileID: 7668042061238287973}
     LightmapIndex: 0
     LightmapOffsetScale: {x: 0.29522917, y: 0.29522917, z: 0.34409466, w: 0.4915556}
   - Renderer: {fileID: 4541787609927083595}
     LightmapIndex: 4
-    LightmapOffsetScale: {x: 0.28093055, y: 0.28093055, z: -0.000816289, w: 0.56558996}
+    LightmapOffsetScale: {x: 0.28093055, y: 0.28093055, z: 0.28238684, w: 0.28238684}
   - Renderer: {fileID: 5721593226707226282}
     LightmapIndex: 4
-    LightmapOffsetScale: {x: 0.28093055, y: 0.28093055, z: 0.28238684, w: 0.28238684}
+    LightmapOffsetScale: {x: 0.28093055, y: 0.28093055, z: 0.28238684, w: 0.56558996}
   - Renderer: {fileID: 6336404398497491824}
     LightmapIndex: 3
-    LightmapOffsetScale: {x: 0.16599438, y: 0.16599438, z: 0.39112437, w: 0.58448374}
+    LightmapOffsetScale: {x: 0.16599438, y: 0.16599438, z: 0.5600697, w: 0.58448374}
   - Renderer: {fileID: 7087772906508577051}
-    LightmapIndex: 4
-    LightmapOffsetScale: {x: 0.16599438, y: 0.16599438, z: 0.7465931, w: 0.83324945}
+    LightmapIndex: 3
+    LightmapOffsetScale: {x: 0.16599438, y: 0.16599438, z: 0.729015, w: 0.41553843}
   _lightmaps:
   - {fileID: 2800000, guid: b896db633c34ffc4d96bacddb10a0059, type: 3}
   - {fileID: 2800000, guid: 302f3ea3a167e6646baca3b56158e29b, type: 3}
@@ -1304,6 +1304,10 @@ PrefabInstance:
       value: Dungeon_Arena_02_Spears
       objectReference: {fileID: 0}
     - target: {fileID: 6672777321933370832, guid: ddab06a012412364e95f135ec33ff59d, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6672777321933370832, guid: ddab06a012412364e95f135ec33ff59d, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
@@ -1314,7 +1318,7 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 3269218616780306290, guid: ddab06a012412364e95f135ec33ff59d, type: 3}
   m_PrefabInstance: {fileID: 3275481867814534496}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &8586844308878521994
+--- !u!114 &2573316116861524417
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1338,7 +1342,7 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1293033855260636089, guid: ddab06a012412364e95f135ec33ff59d, type: 3}
   m_PrefabInstance: {fileID: 3275481867814534496}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &7128433443246496025
+--- !u!114 &3923075399556314706
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1367,7 +1371,7 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 4637026711520641392, guid: ddab06a012412364e95f135ec33ff59d, type: 3}
   m_PrefabInstance: {fileID: 3275481867814534496}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &6303269629654265900
+--- !u!114 &280751963175690087
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1399,10 +1403,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _spears:
-  - {fileID: 2951360565082431750}
-  - {fileID: 7128433443246496025}
-  - {fileID: 6303269629654265900}
-  - {fileID: 8586844308878521994}
+  - {fileID: 8964853714863902285}
+  - {fileID: 3923075399556314706}
+  - {fileID: 280751963175690087}
+  - {fileID: 2573316116861524417}
   _damage: 1
   _depth: 1.75
   _switchTimer: 2
@@ -1427,7 +1431,7 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 5797018674344401320, guid: ddab06a012412364e95f135ec33ff59d, type: 3}
   m_PrefabInstance: {fileID: 3275481867814534496}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &2951360565082431750
+--- !u!114 &8964853714863902285
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
