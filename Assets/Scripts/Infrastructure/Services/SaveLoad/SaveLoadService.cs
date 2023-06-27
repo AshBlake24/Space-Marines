@@ -40,7 +40,7 @@ namespace Roguelike.Infrastructure.Services.SaveLoad
 #if UNITY_WEBGL && !UNITY_EDITOR
             if (PlayerAccount.IsAuthorized)
             {
-                PlayerAccount.SetPlayerData(dataToStore);
+                PlayerAccount.SetCloudSaveData(dataToStore);
                 SetPlayerScore();
             }
 #endif
@@ -57,7 +57,7 @@ namespace Roguelike.Infrastructure.Services.SaveLoad
                 .FromJson<PlayerProgress>();
 
         public void LoadProgressFromCloud(Action<PlayerProgress> onLoaded) => 
-            PlayerAccount.GetPlayerData((data) => OnDataLoaded(data, onLoaded));
+            PlayerAccount.GetCloudSaveData((data) => OnDataLoaded(data, onLoaded));
 
         public void Cleanup()
         {
