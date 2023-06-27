@@ -64,8 +64,8 @@ namespace Roguelike.Infrastructure.States
             InitUIRoot();
             InitAudioRoot();
             InitCurrentLevel();
-            InformProgressReaders();
             InitFocusController();
+            InformProgressReaders();
 
             _stateMachine.Enter<GameLoopState>();
         }

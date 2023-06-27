@@ -34,10 +34,11 @@ namespace Roguelike.Utilities
 
         private void OnFocusReturn()
         {
-            _timeService.ResumeGame();
-            
             if (_adsService.IsVideoOpen == false)
+            {
+                _timeService.ResumeGame();
                 _audioService.SetChannelMute(AudioChannel.Master, false);
+            }
         }
     }
 }

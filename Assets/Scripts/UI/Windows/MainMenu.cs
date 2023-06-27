@@ -62,8 +62,6 @@ namespace Roguelike.UI.Windows
             }
         }
 
-        
-
         private void InitNewGameButton() => 
             _newGameButton.onClick.AddListener(OnNewGame);
 

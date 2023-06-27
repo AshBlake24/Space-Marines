@@ -33,7 +33,7 @@ namespace Roguelike.Editor
             string dataToStore = AllServices.Container
                 .Single<IPersistentDataService>()
                 .PlayerProgress
-                .ToJson();
+                .ToJson(prettyPrint: true);
             
             SaveToFile(dataToStore);
             

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Agava.YandexGames;
 using Roguelike.Data;
@@ -32,10 +33,9 @@ namespace Roguelike.Infrastructure.Services.SaveLoad
             foreach (IProgressWriter progressWriter in ProgressWriters)
                 progressWriter.WriteProgress(_progressService.PlayerProgress);
 
-            string dataToStore = _progressService.PlayerProgress.ToJson();
+            string dataToStore = _progressService.PlayerProgress.ToJson(prettyPrint: false);
             PlayerPrefs.SetString(PlayerProgressKey, dataToStore);
             PlayerPrefs.Save();
-            Debug.Log($"Save this: {dataToStore}");
             
 #if UNITY_WEBGL && !UNITY_EDITOR
             if (PlayerAccount.IsAuthorized)
@@ -52,33 +52,12 @@ namespace Roguelike.Infrastructure.Services.SaveLoad
                 progressReader.ReadProgress(_progressService.PlayerProgress);
         }
 
-        public PlayerProgress LoadProgress()
-        {
-            PlayerProgress playerProgress = null;
-            
-#if UNITY_WEBGL && !UNITY_EDITOR
-            if (PlayerAccount.IsAuthorized)
-            {
-                PlayerAccount.GetPlayerData((data) =>
-                {
-                    playerProgress = data.FromJson<PlayerProgress>();
-                    Debug.Log($"From cloud: {data}");
-                });
-            }
-            else
-            {
-                string data = PlayerPrefs.GetString(PlayerProgressKey);
-                playerProgress = data?.FromJson<PlayerProgress>();
-                
-                Debug.Log($"From prefs: {data}");
-            }
-#else
-            playerProgress = PlayerPrefs.GetString(PlayerProgressKey)
-                ?.FromJson<PlayerProgress>();
-#endif
-            
-            return playerProgress;
-        }
+        public PlayerProgress LoadProgressFromPrefs() => 
+            PlayerPrefs.GetString(PlayerProgressKey)?
+                .FromJson<PlayerProgress>();
+
+        public void LoadProgressFromCloud(Action<PlayerProgress> onLoaded) => 
+            PlayerAccount.GetPlayerData((data) => OnDataLoaded(data, onLoaded));
 
         public void Cleanup()
         {
@@ -110,5 +89,10 @@ namespace Roguelike.Infrastructure.Services.SaveLoad
                     Agava.YandexGames.Leaderboard.SetScore(LeaderboardView.LeaderboardName, playerScore);
             });
         }
+
+        private void OnDataLoaded(string data, Action<PlayerProgress> onLoaded) =>
+            onLoaded.Invoke(string.IsNullOrEmpty(data)
+                ? null
+                : data?.FromJson<PlayerProgress>());
     }
 }

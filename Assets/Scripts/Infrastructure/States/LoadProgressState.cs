@@ -1,12 +1,10 @@
+using Agava.YandexGames;
 using Roguelike.Audio.Service;
 using Roguelike.Data;
-using Roguelike.Infrastructure.Factory;
 using Roguelike.Infrastructure.Services.PersistentData;
 using Roguelike.Infrastructure.Services.SaveLoad;
 using Roguelike.Infrastructure.Services.StaticData;
-using Roguelike.StaticData.Characters;
 using Roguelike.StaticData.Levels;
-using Roguelike.Weapons;
 
 namespace Roguelike.Infrastructure.States
 {
@@ -15,18 +13,15 @@ namespace Roguelike.Infrastructure.States
         private readonly GameStateMachine _stateMachine;
         private readonly IPersistentDataService _progressService;
         private readonly ISaveLoadService _saveLoadService;
-        private readonly IWeaponFactory _weaponFactory;
         private readonly IStaticDataService _staticDataService;
         private readonly IAudioService _audioService;
 
         public LoadProgressState(GameStateMachine stateMachine, IPersistentDataService progressService,
-            ISaveLoadService saveLoadService, IWeaponFactory weaponFactory, IStaticDataService staticDataService,
-            IAudioService audioService)
+            ISaveLoadService saveLoadService, IStaticDataService staticDataService, IAudioService audioService)
         {
             _stateMachine = stateMachine;
             _progressService = progressService;
             _saveLoadService = saveLoadService;
-            _weaponFactory = weaponFactory;
             _staticDataService = staticDataService;
             _audioService = audioService;
         }
@@ -34,8 +29,6 @@ namespace Roguelike.Infrastructure.States
         public void Enter()
         {
             LoadProgress();
-
-            _stateMachine.Enter<LoadLevelState, LevelId>(_staticDataService.GameConfig.StartScene);
         }
 
         public void Exit()
@@ -44,11 +37,21 @@ namespace Roguelike.Infrastructure.States
 
         private void LoadProgress()
         {
-            _progressService.PlayerProgress =
-                _saveLoadService.LoadProgress()
-                ?? CreateNewProgress();
-            
+#if UNITY_WEBGL && !UNITY_EDITOR
+            if (PlayerAccount.IsAuthorized)
+                _saveLoadService.LoadProgressFromCloud(OnDataLoaded);
+            else
+                OnDataLoaded(_saveLoadService.LoadProgressFromPrefs());
+#else
+            OnDataLoaded(_saveLoadService.LoadProgressFromPrefs());
+#endif
+        }
+
+        private void OnDataLoaded(PlayerProgress data)
+        {
+            _progressService.PlayerProgress = data ?? CreateNewProgress();
             _audioService.LoadVolumeSettings();
+            _stateMachine.Enter<LoadLevelState, LevelId>(_staticDataService.GameConfig.StartScene);
         }
 
         private PlayerProgress CreateNewProgress() => 

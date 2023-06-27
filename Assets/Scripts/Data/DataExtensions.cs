@@ -4,8 +4,8 @@ namespace Roguelike.Data
 {
     public static class DataExtensions
     {
-        public static string ToJson(this object obj) => 
-            JsonUtility.ToJson(obj, true);
+        public static string ToJson(this object obj, bool prettyPrint) => 
+            JsonUtility.ToJson(obj, prettyPrint);
 
         public static T FromJson<T>(this string json) =>
             JsonUtility.FromJson<T>(json);

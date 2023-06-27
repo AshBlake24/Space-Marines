@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Roguelike.Data;
 using Roguelike.Infrastructure.Services.PersistentData;
@@ -9,7 +10,8 @@ namespace Roguelike.Infrastructure.Services.SaveLoad
     {
         IEnumerable<IProgressReader> ProgressReaders { get; }
         IEnumerable<IProgressWriter> ProgressWriters { get; }
-        PlayerProgress LoadProgress();
+        PlayerProgress LoadProgressFromPrefs();
+        void LoadProgressFromCloud(Action<PlayerProgress> onLoaded);
         void SaveProgress();
         void InformProgressReaders();
         void RegisterProgressWatchers(GameObject gameObject);
