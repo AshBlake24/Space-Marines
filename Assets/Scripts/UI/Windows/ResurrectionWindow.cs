@@ -1,4 +1,5 @@
 using Agava.YandexGames;
+using Roguelike.Ads;
 using Roguelike.Player;
 using UnityEngine;
 using UnityEngine.UI;
@@ -10,12 +11,16 @@ namespace Roguelike.UI.Windows
         private const float FadeValue = 0.25f;
         
         [SerializeField] private Button _resurrectButton;
-        
+
         private Image[] _resurrectButtonImages;
         private PlayerDeath _playerDeath;
+        private IAdsService _adsService;
 
-        public void Construct(PlayerDeath playerDeath) => 
+        public void Construct(IAdsService adsService, PlayerDeath playerDeath)
+        {
+            _adsService = adsService;
             _playerDeath = playerDeath;
+        }
 
         protected override void Initialize()
         {
@@ -57,9 +62,14 @@ namespace Roguelike.UI.Windows
         private void OnResurrect()
         {
 #if UNITY_WEBGL && !UNITY_EDITOR
-            if (YandexGamesSdk.IsInitialized)
-                VideoAd.Show();
+            _adsService.ShowVideoAd(OnRewarded);
+#else
+            OnRewarded();
 #endif
+        }
+
+        private void OnRewarded()
+        {
             ProgressService.PlayerProgress.State.HasResurrected = true;
             _playerDeath.Resurrect();
         }

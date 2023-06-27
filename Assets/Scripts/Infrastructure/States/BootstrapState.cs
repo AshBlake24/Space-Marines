@@ -1,4 +1,5 @@
 using DG.Tweening;
+using Roguelike.Ads;
 using Roguelike.Audio.Factory;
 using Roguelike.Audio.Service;
 using Roguelike.Infrastructure.AssetManagement;
@@ -74,6 +75,9 @@ namespace Roguelike.Infrastructure.States
                 _services.Single<IAssetProvider>(), 
                 _services.Single<IPersistentDataService>(),
                 _services.Single<IStaticDataService>()));
+            
+            _services.RegisterSingle<IAdsService>(new AdsService(
+                _services.Single<IAudioService>()));
 
             _services.RegisterSingle<IProjectileFactory>(new ProjectileFactory(
                 _services.Single<IStaticDataService>(),
@@ -114,7 +118,8 @@ namespace Roguelike.Infrastructure.States
                 _services.Single<ISceneLoadingService>(),
                 _services.Single<IRandomService>(),
                 _services.Single<ITimeService>(),
-                _services.Single<IAudioService>()));
+                _services.Single<IAudioService>(),
+                _services.Single<IAdsService>()));
 
             _services.RegisterSingle<IWindowService>(new WindowService(
                 _services.Single<IUIFactory>()));
