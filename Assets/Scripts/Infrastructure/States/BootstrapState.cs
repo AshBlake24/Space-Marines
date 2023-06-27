@@ -141,7 +141,9 @@ namespace Roguelike.Infrastructure.States
                 _services.Single<ILootFactory>(),
                 _services.Single<IEnhancementFactory>(),
                 _services.Single<IInputService>(),
-                _services.Single<ITimeService>()));
+                _services.Single<ITimeService>(),
+                _services.Single<IAudioService>(),
+                _services.Single<IAdsService>()));
             
             LocalizationSystem.Construct(_services.Single<IPersistentDataService>());
         }

@@ -10,5 +10,6 @@ namespace Roguelike.Infrastructure.Factory
         void CreatePlayerCamera(GameObject player);
         GameObject GenerateLevel();
         void CreateCharacterSelectionMode();
+        void CreateFocusController();
     }
 }

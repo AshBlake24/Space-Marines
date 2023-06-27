@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Roguelike.Ads;
 using Roguelike.Animations.UI;
 using Roguelike.Audio.Service;
 using Roguelike.Data;
@@ -40,12 +41,13 @@ namespace Roguelike.Infrastructure.Factory
         private readonly IRandomService _randomService;
         private readonly ITimeService _timeService;
         private readonly IAudioService _audioService;
+        private readonly IAdsService _adsService;
 
         private Transform _uiRoot;
 
         public UIFactory(IAssetProvider assetProvider, IStaticDataService staticData,
             IPersistentDataService progressService, ISceneLoadingService sceneLoadingService,
-            IRandomService randomService, ITimeService timeService, IAudioService audioService)
+            IRandomService randomService, ITimeService timeService, IAudioService audioService, IAdsService adsService)
         {
             _assetProvider = assetProvider;
             _staticData = staticData;
@@ -54,6 +56,7 @@ namespace Roguelike.Infrastructure.Factory
             _randomService = randomService;
             _timeService = timeService;
             _audioService = audioService;
+            _adsService = adsService;
         }
 
         public BaseWindow CreateWindow(IWindowService windowService, WindowId windowId)
@@ -132,7 +135,7 @@ namespace Roguelike.Infrastructure.Factory
             BaseWindow window = CreateWindow(windowService, WindowId.Resurrection);
 
             if (window is ResurrectionWindow resurrectionWindow)
-                resurrectionWindow.Construct(playerDeath);
+                resurrectionWindow.Construct(_adsService, playerDeath);
         }
 
         public void CreateEnhancementWidget(EnhancementData enhancementProgress, Transform parent, 

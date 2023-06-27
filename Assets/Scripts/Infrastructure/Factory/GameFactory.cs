@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Cinemachine;
+using Roguelike.Ads;
+using Roguelike.Audio.Service;
 using Roguelike.Infrastructure.AssetManagement;
 using Roguelike.Infrastructure.Services.Environment;
 using Roguelike.Infrastructure.Services.Input;
@@ -28,6 +30,7 @@ using Roguelike.StaticData.Skills;
 using Roguelike.UI.Buttons;
 using Roguelike.UI.Elements.Observers;
 using Roguelike.UI.Windows;
+using Roguelike.Utilities;
 using Roguelike.Weapons.Logic;
 
 namespace Roguelike.Infrastructure.Factory
@@ -48,8 +51,11 @@ namespace Roguelike.Infrastructure.Factory
         private readonly IEnhancementFactory _enhancementFactory;
         private readonly IInputService _inputService;
         private readonly ITimeService _timeService;
-        
+        private readonly IAudioService _audioService;
+        private readonly IAdsService _adsService;
+
         public static CinemachineVirtualCamera PlayerCamera;
+        private ApplicationFocusController _focusController;
 
         public GameFactory(IAssetProvider assetProvider,
             IPersistentDataService persistentData,
@@ -64,7 +70,9 @@ namespace Roguelike.Infrastructure.Factory
             ILootFactory lootFactory,
             IEnhancementFactory enhancementFactory,
             IInputService inputService,
-            ITimeService timeService)
+            ITimeService timeService,
+            IAudioService audioService,
+            IAdsService adsService)
         {
             _assetProvider = assetProvider;
             _persistentData = persistentData;
@@ -79,6 +87,8 @@ namespace Roguelike.Infrastructure.Factory
             _enhancementFactory = enhancementFactory;
             _inputService = inputService;
             _timeService = timeService;
+            _audioService = audioService;
+            _adsService = adsService;
             _enemyFactory = enemyFactory;
         }
 
@@ -204,6 +214,19 @@ namespace Roguelike.Infrastructure.Factory
             else
                 throw new ArgumentNullException(nameof(Camera),
                     "Camera is missing a component of CharacterSelectionMode");
+        }
+
+        public void CreateFocusController()
+        {
+            if (_focusController == null)
+            {
+                _focusController = _assetProvider.Instantiate(AssetPath.FocusController)
+                    .GetComponent<ApplicationFocusController>();
+                
+                _focusController.Construct(_audioService, _timeService, _adsService);
+                
+                Object.DontDestroyOnLoad(_focusController);
+            }
         }
 
         private void InitMobileButtons(GameObject hud, GameObject player)

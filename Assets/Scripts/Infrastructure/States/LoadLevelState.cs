@@ -65,6 +65,7 @@ namespace Roguelike.Infrastructure.States
             InitAudioRoot();
             InitCurrentLevel();
             InformProgressReaders();
+            InitFocusController();
 
             _stateMachine.Enter<GameLoopState>();
         }
@@ -142,6 +143,9 @@ namespace Roguelike.Infrastructure.States
 
         private void InformProgressReaders() =>
             _saveLoadService.InformProgressReaders();
+        
+        private void InitFocusController() => 
+            _gameFactory.CreateFocusController();
 
         private void Cleanup()
         {
