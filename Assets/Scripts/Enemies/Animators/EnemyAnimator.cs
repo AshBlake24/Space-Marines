@@ -1,3 +1,4 @@
+using Roguelike.StaticData.Enemies;
 using UnityEngine;
 
 namespace Roguelike.Roguelike.Enemies.Animators
@@ -7,6 +8,7 @@ namespace Roguelike.Roguelike.Enemies.Animators
         private static readonly int s_enemySpeed = Animator.StringToHash("EnemySpeed");
         private static readonly int s_isStopped = Animator.StringToHash("IsStopped");
         private static readonly int s_isWait = Animator.StringToHash("IsWait");
+        private static readonly int s_attackOptional = Animator.StringToHash("OptionalAttack");
         private static readonly int s_attack = Animator.StringToHash("Attack");
         private static readonly int s_died = Animator.StringToHash("Died");
         private static readonly int s_hit = Animator.StringToHash("Hit");
@@ -30,6 +32,6 @@ namespace Roguelike.Roguelike.Enemies.Animators
 
         public void PlayDie() => _animator.SetTrigger(s_died);
         public void PlayIdle(bool isWait) => _animator.SetBool(s_isWait, isWait);
-
+        public void PlayOptionalAttack() => _animator.SetTrigger(s_attackOptional);
     }
 }

@@ -69,7 +69,8 @@ namespace Roguelike.Enemies
         private void OnPlayerDead()
         {
             if (_enemy != null && _enemy.Health.CurrentHealth > 0)
-                _currentState.Exit(_playerDieState);
+                if (_currentState != null)
+                    _currentState.Exit(_playerDieState);
         }
     }
 }
