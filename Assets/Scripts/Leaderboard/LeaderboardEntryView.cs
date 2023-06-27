@@ -22,7 +22,6 @@ namespace Roguelike.Leaderboard
                 throw new ArgumentNullException(nameof(entry));
 
             DownloadAvatar(entry.AvatarUrl);
-            _avatar.enabled = false;
             _rank.text = entry.Rank;
             _name.text = entry.PlayerName;
             _score.text = entry.Score;
