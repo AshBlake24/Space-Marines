@@ -77,7 +77,8 @@ namespace Roguelike.Infrastructure.States
                 _services.Single<IStaticDataService>()));
             
             _services.RegisterSingle<IAdsService>(new AdsService(
-                _services.Single<IAudioService>()));
+                _services.Single<IAudioService>(),
+                _services.Single<ITimeService>()));
 
             _services.RegisterSingle<IProjectileFactory>(new ProjectileFactory(
                 _services.Single<IStaticDataService>(),
