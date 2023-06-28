@@ -1,4 +1,5 @@
-﻿using Roguelike.Roguelike.Enemies.Animators;
+﻿using Roguelike.Enemies.Transitions;
+using Roguelike.Roguelike.Enemies.Animators;
 using UnityEngine;
 
 namespace Roguelike.Enemies.EnemyStates
@@ -8,12 +9,16 @@ namespace Roguelike.Enemies.EnemyStates
         [SerializeField] int _damageMultiplier;
         [SerializeField] float _attackRadius;
         [SerializeField] ParticleSystem _attackEffect;
+        [SerializeField] TargetNotInRange _enemyZoneCheker;
 
         public override void Enter(Enemy curentEnemy, EnemyAnimator enemyAnimator)
         {
             base.Enter(curentEnemy, enemyAnimator);
 
-            animator.PlayOptionalAttack();
+            if (_enemyZoneCheker.TryFinishState())
+                return;
+            else
+                animator.PlayOptionalAttack();
         }
 
         public void Punch()
@@ -24,6 +29,11 @@ namespace Roguelike.Enemies.EnemyStates
             {
                 enemy.Target.TakeDamage(enemy.Damage * _damageMultiplier);
             }
+        }
+
+        public void TryFinishMeleeState()
+        {
+            _enemyZoneCheker.TryFinishState();
         }
     }
 }

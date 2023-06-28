@@ -10,6 +10,7 @@ namespace Roguelike.Enemies.EnemyStates
         private const EnemyId Mine = EnemyId.Mine;
 
         [SerializeField] private ParticleSystem _effects;
+        [SerializeField] private float _explosionRadius;
 
         public event Action Exploded;
 
@@ -25,11 +26,14 @@ namespace Roguelike.Enemies.EnemyStates
 
         public void Explosion()
         {
-            Exploded?.Invoke();
-            enemy.Target.TakeDamage(enemy.Damage);
-
             if (_effects != null)
                 _effects.Play();
+
+            if (Vector3.Distance(enemy.Target.transform.position, transform.position) <= _explosionRadius)
+            {
+                Exploded?.Invoke();
+                enemy.Target.TakeDamage(enemy.Damage);
+            }
 
             enemy.Health.TakeDamage(enemy.Health.MaxHealth);
         }
