@@ -63,7 +63,7 @@ namespace Roguelike.UI.Windows.Panels
                 WeaponStaticData weaponData = _staticDataService
                     .GetDataById<WeaponId, WeaponStaticData>(favouriteWeaponId);
         
-                _weaponIcon.sprite = weaponData.FullsizeIcon;
+                _weaponIcon.sprite = weaponData.SquareIcon;
                 _weaponRarity.color = _rarityColors[weaponData.Rarity];
             }
             else

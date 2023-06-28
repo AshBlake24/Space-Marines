@@ -83,7 +83,7 @@ namespace Roguelike.UI.Windows
 
         private void InitWeapon(WeaponStaticData startWeaponData)
         {
-            _startWeaponIcon.sprite = startWeaponData.FullsizeIcon;
+            _startWeaponIcon.sprite = startWeaponData.SquareIcon;
             _weaponName.text = startWeaponData.Name.Value;
             _attackRate.text = $"{LocalizedConstants.AttackRate.Value}: {startWeaponData.AttackRate}{LocalizedConstants.TimeInSeconds.Value}";
             _damage.text = $"{LocalizedConstants.Damage.Value}: {startWeaponData.Damage}";
