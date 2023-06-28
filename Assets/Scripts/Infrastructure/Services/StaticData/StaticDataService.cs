@@ -7,6 +7,7 @@ using Roguelike.StaticData;
 using Roguelike.StaticData.Audio;
 using Roguelike.StaticData.Player;
 using Roguelike.StaticData.Windows;
+using Roguelike.Tutorials;
 using UnityEngine;
 
 namespace Roguelike.Infrastructure.Services.StaticData
@@ -76,11 +77,16 @@ namespace Roguelike.Infrastructure.Services.StaticData
 
         private void LoadWindows()
         {
-            Dictionary<Enum, IStaticData> data = Resources.Load<WindowStaticData>(AssetPath.WindowsStaticDataPath)
-                .Configs
-                .ToDictionary(config => config.WindowId as Enum, config => config as IStaticData);
+            WindowStaticData data = Resources.Load<WindowStaticData>(AssetPath.WindowsStaticDataPath);
+            
+            Dictionary<Enum, IStaticData> windows = data.WindowConfigs
+                .ToDictionary(config => config.Id as Enum, config => config as IStaticData);
+            
+            Dictionary<Enum, IStaticData> tutorials = data.TutorialConfigs
+                .ToDictionary(config => config.Id as Enum, config => config as IStaticData);
 
-            _data.Add(typeof(WindowId), data);
+            _data.Add(typeof(WindowId), windows);
+            _data.Add(typeof(TutorialId), tutorials);
         }
         
         private void LoadMusic()

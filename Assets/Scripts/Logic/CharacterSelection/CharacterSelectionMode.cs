@@ -104,7 +104,7 @@ namespace Roguelike.Logic.CharacterSelection
             _characterSelectionCamera.Follow = character;
             _characterSelectionCamera.LookAt = character;
             _topDownCamera.enabled = false;
-            _tutorialCoroutine = StartCoroutine(TryShowTutorial());
+            _tutorialCoroutine = StartCoroutine(TryShowTutorial(TutorialId.TutorialCharacterStats01));
         }
 
         private void CreateCharacterStatsWindow(SelectableCharacter character)
@@ -138,11 +138,11 @@ namespace Roguelike.Logic.CharacterSelection
                 openWindowButton.Construct(_windowService);
         }
 
-        private IEnumerator TryShowTutorial()
+        private IEnumerator TryShowTutorial(TutorialId tutorialId)
         {
             yield return Helpers.GetTime(_delayBeforeShowingTutorial);
             
-            _tutorialService.TryShowTutorial(WindowId.TutorialCharacterStats01);
+            _tutorialService.TryShowTutorial(tutorialId);
         }
     }
 }

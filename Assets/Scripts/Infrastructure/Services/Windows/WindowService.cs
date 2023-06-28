@@ -2,6 +2,7 @@ using System;
 using Roguelike.Infrastructure.Factory;
 using Roguelike.Player;
 using Roguelike.StaticData.Weapons;
+using Roguelike.Tutorials;
 using Roguelike.UI.Windows;
 using Roguelike.UI.Windows.Enhancements;
 using UnityEngine;
@@ -33,6 +34,9 @@ namespace Roguelike.Infrastructure.Services.Windows
 
             return enhancementShopWindow;
         }
+
+        public void OpenTutorial(TutorialId tutorialId) => 
+            _uiFactory.CreateWindow(this, tutorialId);
 
         public BaseWindow Open(WindowId windowId)
         {

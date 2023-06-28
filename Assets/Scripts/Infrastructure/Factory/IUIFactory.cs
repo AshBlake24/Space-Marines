@@ -1,3 +1,4 @@
+using System;
 using Roguelike.Data;
 using Roguelike.Infrastructure.Services;
 using Roguelike.Infrastructure.Services.Windows;
@@ -12,7 +13,7 @@ namespace Roguelike.Infrastructure.Factory
 {
     public interface IUIFactory : IService
     {
-        BaseWindow CreateWindow(IWindowService windowService, WindowId windowId);
+        BaseWindow CreateWindow<TKey>(IWindowService windowService, TKey windowId) where TKey : Enum;
         GameObject CreateWeaponStatsViewer(IWindowService windowService, WeaponId weaponId);
         EnhancementShopWindow CreateEnhancementShop(IWindowService windowService, PlayerEnhancements playerEnhancements);
         void CreateResurrectionWindow(IWindowService windowService, PlayerDeath playerDeath);

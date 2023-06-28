@@ -60,9 +60,9 @@ namespace Roguelike.Infrastructure.Factory
             _weaponFactory = weaponFactory;
         }
 
-        public BaseWindow CreateWindow(IWindowService windowService, WindowId windowId)
+        public BaseWindow CreateWindow<TKey>(IWindowService windowService, TKey windowId) where TKey : Enum
         {
-            WindowConfig config = _staticData.GetDataById<WindowId, WindowConfig>(windowId);
+            WindowConfig<TKey> config = _staticData.GetDataById<TKey, WindowConfig<TKey>>(windowId);
             BaseWindow window = Object.Instantiate(config.WindowPrefab, _uiRoot);
             window.Construct(_progressService, _timeService);
 
