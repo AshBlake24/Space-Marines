@@ -27,6 +27,7 @@ using Roguelike.Player.Enhancements;
 using Roguelike.Player.Observers;
 using Roguelike.StaticData.Loot.Rarity;
 using Roguelike.StaticData.Skills;
+using Roguelike.Tutorials;
 using Roguelike.UI.Buttons;
 using Roguelike.UI.Elements.Observers;
 using Roguelike.UI.Windows;
@@ -53,6 +54,7 @@ namespace Roguelike.Infrastructure.Factory
         private readonly ITimeService _timeService;
         private readonly IAudioService _audioService;
         private readonly IAdsService _adsService;
+        private readonly ITutorialService _tutorialService;
 
         public static CinemachineVirtualCamera PlayerCamera;
         private ApplicationFocusController _focusController;
@@ -72,7 +74,8 @@ namespace Roguelike.Infrastructure.Factory
             IInputService inputService,
             ITimeService timeService,
             IAudioService audioService,
-            IAdsService adsService)
+            IAdsService adsService,
+            ITutorialService tutorialService)
         {
             _assetProvider = assetProvider;
             _persistentData = persistentData;
@@ -89,6 +92,7 @@ namespace Roguelike.Infrastructure.Factory
             _timeService = timeService;
             _audioService = audioService;
             _adsService = adsService;
+            _tutorialService = tutorialService;
             _enemyFactory = enemyFactory;
         }
 
@@ -209,7 +213,8 @@ namespace Roguelike.Infrastructure.Factory
             BaseWindow characterSelectionWindow = _windowService.Open(WindowId.CharacterSelection);
 
             if (Camera.main.TryGetComponent(out CharacterSelectionMode characterSelection))
-                characterSelection.Construct(this, _windowService, _saveLoadService, characterSelectionWindow);
+                characterSelection.Construct(this, _windowService, _saveLoadService, _tutorialService, 
+                    characterSelectionWindow);
             else
                 throw new ArgumentNullException(nameof(Camera),
                     "Camera is missing a component of CharacterSelectionMode");

@@ -1,10 +1,13 @@
 using System;
+using System.Collections;
 using Cinemachine;
 using Roguelike.Infrastructure.Factory;
 using Roguelike.Infrastructure.Services.SaveLoad;
 using Roguelike.Infrastructure.Services.Windows;
+using Roguelike.Tutorials;
 using Roguelike.UI.Buttons;
 using Roguelike.UI.Windows;
+using Roguelike.Utilities;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -17,18 +20,21 @@ namespace Roguelike.Logic.CharacterSelection
         [SerializeField] private CinemachineVirtualCamera _topDownCamera;
         [SerializeField] private CinemachineVirtualCamera _characterSelectionCamera;
         [SerializeField] private Button _characterSelectionButton;
+        [SerializeField] private float _delayBeforeShowingTutorial;
 
         private IWindowService _windowService;
         private IGameFactory _gameFactory;
         private ISaveLoadService _saveLoadService;
+        private ITutorialService _tutorialService;
         private RaycastHit _raycastHit;
         private Camera _camera;
         private BaseWindow _selectionWindow;
+        private Coroutine _tutorialCoroutine;
         private bool _isActive;
         private bool _characterSelected;
 
         public void Construct(IGameFactory gameFactory, IWindowService windowService,
-            ISaveLoadService saveLoadService, BaseWindow selectionWindow)
+            ISaveLoadService saveLoadService, ITutorialService tutorialService, BaseWindow selectionWindow)
         {
             _windowService = windowService;
             _gameFactory = gameFactory;
@@ -36,7 +42,11 @@ namespace Roguelike.Logic.CharacterSelection
             _selectionWindow = selectionWindow;
             _isActive = true;
             _characterSelected = false;
+            _tutorialService = tutorialService;
         }
+
+        private void OnDestroy() => 
+            StopAllCoroutines();
 
         private void Start() =>
             _camera = Camera.main;
@@ -77,6 +87,8 @@ namespace Roguelike.Logic.CharacterSelection
 
         public void ZoomOut()
         {
+            StopCoroutine(_tutorialCoroutine);
+            
             if (_characterSelected)
                 return;
 
@@ -92,6 +104,7 @@ namespace Roguelike.Logic.CharacterSelection
             _characterSelectionCamera.Follow = character;
             _characterSelectionCamera.LookAt = character;
             _topDownCamera.enabled = false;
+            _tutorialCoroutine = StartCoroutine(TryShowTutorial());
         }
 
         private void CreateCharacterStatsWindow(SelectableCharacter character)
@@ -123,6 +136,13 @@ namespace Roguelike.Logic.CharacterSelection
             
             if (button.TryGetComponent(out OpenWindowButton openWindowButton))
                 openWindowButton.Construct(_windowService);
+        }
+
+        private IEnumerator TryShowTutorial()
+        {
+            yield return Helpers.GetTime(_delayBeforeShowingTutorial);
+            
+            _tutorialService.TryShowTutorial(WindowId.TutorialCharacterStats01);
         }
     }
 }
