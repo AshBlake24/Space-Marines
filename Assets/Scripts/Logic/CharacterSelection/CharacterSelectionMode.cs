@@ -85,7 +85,7 @@ namespace Roguelike.Logic.CharacterSelection
             GameObject player = InitPlayer(spawnPoint);
             InitHud(player);
             InitCamera(player);
-
+            
             _saveLoadService.InformProgressReaders();
             _characterSelected = true;
             enabled = false;

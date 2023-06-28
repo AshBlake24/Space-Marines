@@ -122,6 +122,7 @@ namespace Roguelike.Infrastructure.Factory
             _skillFactory.CreatePlayerSkill(player);
             
             InitEnhancementsComponent(player);
+            InitTutorialNavigation(player);
 
             return player;
         }
@@ -302,6 +303,22 @@ namespace Roguelike.Infrastructure.Factory
             playerEnhancements.Construct(_enhancementFactory, _staticDataService);
 
             player.AddComponent<EnhancementsObserver>().Construct(_persistentData, playerEnhancements);
+        }
+        
+        private void InitTutorialNavigation(GameObject player)
+        {
+            if (_persistentData.PlayerProgress.TutorialData.IsTutorialCompleted == false)
+            {
+                TutorialNavigationArrow navigationArrow = _assetProvider
+                    .Instantiate(AssetPath.TutorialNavigationArrowPath, player.transform)
+                    .GetComponent<TutorialNavigationArrow>();
+
+                List<TutorialNavigationPoint> navigationPoints = Object.FindObjectsOfType<TutorialNavigationPoint>()
+                    .OrderBy(point => point.RouteIndex)
+                    .ToList();
+                
+                navigationArrow.Construct(navigationPoints);
+            }
         }
     }
 }

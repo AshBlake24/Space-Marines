@@ -1,5 +1,4 @@
-﻿using Roguelike.Data;
-using Roguelike.Infrastructure.Services.PersistentData;
+﻿using Roguelike.Infrastructure.Services.PersistentData;
 using Roguelike.Infrastructure.Services.Windows;
 
 namespace Roguelike.Tutorials
@@ -17,18 +16,10 @@ namespace Roguelike.Tutorials
 
         public void TryShowTutorial(TutorialId tutorialId)
         {
-            Tutorial tutorial = _persistentData.PlayerProgress.TutorialData.GetTutorial(tutorialId);
-
-            if (tutorial == null)
-            {
-                tutorial = new Tutorial(tutorialId);
-                _windowService.OpenTutorial(tutorialId);
-                _persistentData.PlayerProgress.TutorialData.SetTutorial(tutorial);
-            }
-            else if (tutorial.CanShow)
-            {
-                _windowService.OpenTutorial(tutorialId);
-            }
+            if (_persistentData.PlayerProgress.TutorialData.IsTutorialCompleted)
+                return;
+            
+            _windowService.OpenTutorial(tutorialId);
         }
     }
 }
