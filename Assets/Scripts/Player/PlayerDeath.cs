@@ -17,6 +17,7 @@ namespace Roguelike.Player
         [SerializeField] private float _delayBeforeResurrectionScreen = 1.5f;
         [SerializeField] private PlayerHealth _health;
         [SerializeField] private PlayerAnimator _animator;
+        [SerializeField] private ParticleSystem _resurrectionEffect;
         [SerializeField] private MonoBehaviour[] _componentsToDeactivate;
 
         private IWindowService _windowService;
@@ -53,13 +54,21 @@ namespace Roguelike.Player
         public void Resurrect()
         {
             SwitchComponents(isOn: true);
-            
+            SpawnResurrectionVFX();
+
             _isDead = false;
             _animator.Restart();
-            
+
             Resurrected?.Invoke();
             
             _saveLoadService.SaveProgress();
+        }
+
+        private void SpawnResurrectionVFX()
+        {
+            Vector3 spawnPosition = transform.position;
+            spawnPosition.y += 0.1f;
+            Instantiate(_resurrectionEffect, spawnPosition, Quaternion.identity);
         }
 
         private void Die()
