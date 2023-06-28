@@ -1,4 +1,3 @@
-using System;
 using Roguelike.Data;
 using Roguelike.Infrastructure.Services;
 using Roguelike.Infrastructure.Services.Windows;
@@ -23,6 +22,5 @@ namespace Roguelike.Infrastructure.Factory
         void CreateUIRoot();
         void CreateTutorialRoot();
         void ShowStageName();
-        void CreateTextWindow(string text, bool isTutorial);
     }
 }

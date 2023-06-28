@@ -161,18 +161,6 @@ namespace Roguelike.Infrastructure.Factory
             }
         }
 
-        public void CreateTextWindow(string text, bool isTutorial)
-        {
-            WindowConfig config = _staticData.GetDataById<WindowId, WindowConfig>(WindowId.TextWindow);
-            BaseWindow window = Object.Instantiate(config.WindowPrefab, isTutorial ? _tutorialRoot : _uiRoot);
-
-            if (window is TextWindow textWindow)
-            {
-                textWindow.Construct(_progressService, _timeService);
-                textWindow.InitText(text);
-            }
-        }
-
         public void CreateUIRoot() =>
             _uiRoot = _assetProvider.Instantiate(AssetPath.UIRootPath).transform;
         
