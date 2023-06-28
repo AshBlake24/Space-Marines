@@ -8,6 +8,7 @@ namespace Roguelike.Data
         public KillData KillData;
         public Favourites Favourites;
         public CollectablesData CollectablesData;
+        public int CompletedStagesScore;
 
         public Statistics()
         {
@@ -27,11 +28,18 @@ namespace Roguelike.Data
                     score += killData.KilledMonsters;
                     score += killData.KilledBosses * OverallKillData.BossScoreMultiplicator;
                 }
-
+                
+                score += CompletedStagesScore;
                 score += (int)Math.Floor(CollectablesData.CoinsCollected * CollectablesData.CoinsScoreMultiplicator);
 
                 return score;
             }
+        }
+
+        public void OnStageComplete(int score)
+        {
+            if (score > 0)
+                CompletedStagesScore += score;
         }
     }
 }

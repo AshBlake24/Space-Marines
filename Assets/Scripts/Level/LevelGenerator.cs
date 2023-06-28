@@ -190,6 +190,7 @@ namespace Roguelike.Level
         private void GenerateNextLevel()
         {
             _finishRoom.PlayerFinishedLevel -= GenerateNextLevel;
+            _persistentDataService.PlayerProgress.Statistics.OnStageComplete(_data.Score);
             _sceneLoadingService.Load(_persistentDataService.PlayerProgress.WorldData.CurrentLevel);
         }
 

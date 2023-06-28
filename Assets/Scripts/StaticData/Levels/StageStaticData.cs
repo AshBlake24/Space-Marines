@@ -14,6 +14,7 @@ namespace Roguelike.StaticData.Levels
         [Header("Stats")]
         public StageId Id;
         public StageId NextStageId;
+        public int Score;
         public int ArenasCount;
         public int BonusRoomsMaxCount;
         public float MinComplexityMultiplication;
