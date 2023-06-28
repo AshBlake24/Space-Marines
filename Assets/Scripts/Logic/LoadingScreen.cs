@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using Roguelike.Localization;
 using Roguelike.Utilities;
@@ -12,11 +13,11 @@ namespace Roguelike.Logic
         [SerializeField] private TextMeshProUGUI _textField;
         [SerializeField] private LocalizedString _localizedString;
         [SerializeField] private float _fadeTime;
+        [SerializeField] private float _updateTime;
 
-        private void Awake()
-        {
-            DontDestroyOnLoad(this);
-        }
+        public static event Action Hided;
+
+        private void Awake() => DontDestroyOnLoad(this);
 
         public void Show()
         {
@@ -25,19 +26,17 @@ namespace Roguelike.Logic
             _textField.text = _localizedString.Value;
         }
 
-        public void Hide()
-        {
-            StartCoroutine(FadeOut());
-        }
+        public void Hide() => StartCoroutine(FadeOut());
 
         private IEnumerator FadeOut()
         {
             while (_canvasGroup.alpha > _fadeTime)
             {
                 _canvasGroup.alpha -= _fadeTime;
-                yield return Helpers.GetTime(_fadeTime);
+                yield return Helpers.GetTime(_updateTime);
             }
 
+            Hided?.Invoke();
             gameObject.SetActive(false);
         }
     }

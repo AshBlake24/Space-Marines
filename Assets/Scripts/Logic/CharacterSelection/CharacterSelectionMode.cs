@@ -45,10 +45,16 @@ namespace Roguelike.Logic.CharacterSelection
             _tutorialService = tutorialService;
         }
 
-        private void OnDestroy() => 
-            StopAllCoroutines();
+        private void OnEnable() => 
+            LoadingScreen.Hided += OnLoadingScreenHided;
 
-        private void Start() =>
+        private void OnDestroy()
+        {
+            StopAllCoroutines();
+            LoadingScreen.Hided -= OnLoadingScreenHided;
+        }
+
+        private void Start() => 
             _camera = Camera.main;
 
         private void Update()
@@ -104,7 +110,8 @@ namespace Roguelike.Logic.CharacterSelection
             _characterSelectionCamera.Follow = character;
             _characterSelectionCamera.LookAt = character;
             _topDownCamera.enabled = false;
-            _tutorialCoroutine = StartCoroutine(TryShowTutorial(TutorialId.TutorialCharacterStats01));
+            StopCoroutine(_tutorialCoroutine);
+            _tutorialCoroutine = StartCoroutine(TryShowTutorial(TutorialId.CharacterStats01));
         }
 
         private void CreateCharacterStatsWindow(SelectableCharacter character)
@@ -144,5 +151,8 @@ namespace Roguelike.Logic.CharacterSelection
             
             _tutorialService.TryShowTutorial(tutorialId);
         }
+        
+        private void OnLoadingScreenHided() => 
+            _tutorialCoroutine = StartCoroutine(TryShowTutorial(TutorialId.Welcome01));
     }
 }

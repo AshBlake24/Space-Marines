@@ -2,10 +2,13 @@
 {
     public enum TutorialId
     {
-        TutorialCharacterStats01,
-        TutorialCharacterStats02,
-        TutorialCharacterStats03,
-        TutorialCharacterStats04,
-        TutorialCharacterStats05
+        CharacterStats01,
+        CharacterStats02,
+        CharacterStats03,
+        CharacterStats04,
+        CharacterStats05,
+        Welcome01,
+        Welcome02,
+        Welcome03,
     }
 }

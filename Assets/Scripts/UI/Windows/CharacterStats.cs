@@ -92,8 +92,8 @@ namespace Roguelike.UI.Windows
             _attackRate.text = $"{LocalizedConstants.AttackRate.Value}: {startWeaponData.AttackRate}{LocalizedConstants.TimeInSeconds.Value}";
             _damage.text = $"{LocalizedConstants.Damage.Value}: {startWeaponData.Damage}";
 
-            if (startWeaponData is RangedWeaponStaticData rangedWeaponData)
-                _ammo.text = $"{LocalizedConstants.Ammo.Value}: {rangedWeaponData.MaxAmmo}";
+            if (startWeaponData is RangedWeaponStaticData)
+                _ammo.text = $"{LocalizedConstants.Ammo.Value}: {LocalizedConstants.Infinity.Value}";
         }
 
         private void OnCharacterSelected()
