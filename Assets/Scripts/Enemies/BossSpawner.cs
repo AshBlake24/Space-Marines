@@ -6,6 +6,7 @@ using Roguelike.StaticData.Enemies;
 using Roguelike.UI.Elements;
 using System;
 using Roguelike.Infrastructure.Services.PersistentData;
+using Roguelike.Logic.Popups;
 using UnityEngine;
 
 namespace Roguelike.Assets.Scripts.Enemies
@@ -21,6 +22,7 @@ namespace Roguelike.Assets.Scripts.Enemies
         private EnterTriger _enterPoint;
         private IEnemyFactory _enemyFactory;
         private IPersistentDataService _persistentData;
+        private DamagePopupViewer _damagePopupViewer;
 
         public event Action BossDied; 
 
@@ -44,6 +46,7 @@ namespace Roguelike.Assets.Scripts.Enemies
             Quaternion rotation = Quaternion.Euler(0, _room.EntryPoint.transform.rotation.eulerAngles.y, 0);
             _spawnPoint.rotation = rotation;
             _finishLevelzone.transform.rotation = Quaternion.identity;
+            _damagePopupViewer = GetComponentInChildren<DamagePopupViewer>();
 
             _enterPoint.PlayerHasEntered += OnPlayerHasEntered;
         }
@@ -60,6 +63,7 @@ namespace Roguelike.Assets.Scripts.Enemies
             _boss = enemyPrefab.GetComponentInChildren<EnemyHealth>();
             _boss.Died += OnBossDied;
 
+            _damagePopupViewer.SubscribeToEnemy(_boss);
             _room.CloseDoor();
 
             return enemyPrefab.transform;

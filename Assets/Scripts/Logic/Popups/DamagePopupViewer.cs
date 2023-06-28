@@ -33,7 +33,7 @@ namespace Roguelike.Logic.Popups
             enemyHealth.Died += OnEnemyDied;
         }
 
-        private void UnsubscribeToEnemy(EnemyHealth enemyHealth)
+        private void UnsubscribeFromEnemy(EnemyHealth enemyHealth)
         {
             enemyHealth.DamageTook -= OnDamageTook;
             enemyHealth.Died -= OnEnemyDied;
@@ -77,6 +77,6 @@ namespace Roguelike.Logic.Popups
             Object.Destroy(popup);
 
         private void OnEnemyDied(EnemyHealth enemyHealth) => 
-            UnsubscribeToEnemy(enemyHealth);
+            UnsubscribeFromEnemy(enemyHealth);
     }
 }
