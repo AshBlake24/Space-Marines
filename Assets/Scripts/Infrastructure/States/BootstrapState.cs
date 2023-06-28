@@ -16,7 +16,6 @@ using Roguelike.Infrastructure.Services.StaticData;
 using Roguelike.Infrastructure.Services.Windows;
 using Roguelike.Localization;
 using Roguelike.Logic.Pause;
-using Roguelike.Tutorial;
 
 namespace Roguelike.Infrastructure.States
 {
@@ -112,9 +111,6 @@ namespace Roguelike.Infrastructure.States
                 _services.Single<IRandomService>(),
                 _services.Single<IAudioFactory>(),
                 _services.Single<IPersistentDataService>()));
-
-            _services.RegisterSingle<ITutorialService>(new TutorialService(
-                _services.Single<IPersistentDataService>()));
             
             _services.RegisterSingle<IUIFactory>(new UIFactory(
                 _services.Single<IAssetProvider>(),
@@ -124,8 +120,7 @@ namespace Roguelike.Infrastructure.States
                 _services.Single<IRandomService>(),
                 _services.Single<ITimeService>(),
                 _services.Single<IAudioService>(),
-                _services.Single<IWeaponFactory>(),
-                _services.Single<ITutorialService>()));
+                _services.Single<IWeaponFactory>()));
 
             _services.RegisterSingle<IWindowService>(new WindowService(
                 _services.Single<IUIFactory>()));
@@ -150,9 +145,6 @@ namespace Roguelike.Infrastructure.States
                 _services.Single<ITimeService>(),
                 _services.Single<IAudioService>(),
                 _services.Single<IAdsService>()));
-
-            _services.Single<ITutorialService>().GetUIFactory(
-                _services.Single<IUIFactory>());
             
             LocalizationSystem.Construct(_services.Single<IPersistentDataService>());
         }

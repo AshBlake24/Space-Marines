@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Roguelike.Ads;
 using Roguelike.Animations.UI;
 using Roguelike.Audio.Service;
 using Roguelike.Data;
@@ -17,7 +16,6 @@ using Roguelike.StaticData.Enhancements;
 using Roguelike.StaticData.Loot.Rarity;
 using Roguelike.StaticData.Weapons;
 using Roguelike.StaticData.Windows;
-using Roguelike.Tutorial;
 using Roguelike.UI.Buttons;
 using Roguelike.UI.Elements;
 using Roguelike.UI.Elements.Audio;
@@ -43,7 +41,6 @@ namespace Roguelike.Infrastructure.Factory
         private readonly ITimeService _timeService;
         private readonly IAudioService _audioService;
         private readonly IWeaponFactory _weaponFactory;
-        private readonly ITutorialService _tutorialService;
 
         private Transform _uiRoot;
         private Transform _tutorialRoot;
@@ -51,7 +48,7 @@ namespace Roguelike.Infrastructure.Factory
         public UIFactory(IAssetProvider assetProvider, IStaticDataService staticData,
             IPersistentDataService progressService, ISceneLoadingService sceneLoadingService,
             IRandomService randomService, ITimeService timeService, IAudioService audioService,
-            IWeaponFactory weaponFactory, ITutorialService tutorialService)
+            IWeaponFactory weaponFactory)
         {
             _assetProvider = assetProvider;
             _staticData = staticData;
@@ -61,7 +58,6 @@ namespace Roguelike.Infrastructure.Factory
             _timeService = timeService;
             _audioService = audioService;
             _weaponFactory = weaponFactory;
-            _tutorialService = tutorialService;
         }
 
         public BaseWindow CreateWindow(IWindowService windowService, WindowId windowId)
@@ -104,13 +100,10 @@ namespace Roguelike.Infrastructure.Factory
                     
                     break;
                 case CharacterStats characterStats:
-                    characterStats.Construct(_staticData, _weaponFactory, _tutorialService);
+                    characterStats.Construct(_staticData, _weaponFactory);
                     
                     break;
             }
-            
-            if (window is IHaveTutorial tutorialWindow)
-                tutorialWindow.ShowTutorial();
 
             return window;
         }

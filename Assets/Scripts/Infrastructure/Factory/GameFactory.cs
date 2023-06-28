@@ -27,7 +27,6 @@ using Roguelike.Player.Enhancements;
 using Roguelike.Player.Observers;
 using Roguelike.StaticData.Loot.Rarity;
 using Roguelike.StaticData.Skills;
-using Roguelike.Tutorial;
 using Roguelike.UI.Buttons;
 using Roguelike.UI.Elements.Observers;
 using Roguelike.UI.Windows;
