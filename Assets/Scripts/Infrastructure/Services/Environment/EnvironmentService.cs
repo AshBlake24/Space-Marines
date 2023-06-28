@@ -1,4 +1,4 @@
-using UnityEngine;
+using Device = Agava.WebUtility.Device;
 
 namespace Roguelike.Infrastructure.Services.Environment
 {
@@ -8,11 +8,10 @@ namespace Roguelike.Infrastructure.Services.Environment
 
         public EnvironmentService()
         {
-            Debug.Log(SystemInfo.deviceType);
 #if UNITY_WEBGL && !UNITY_EDITOR
-            _environment = SystemInfo.deviceType == DeviceType.Desktop 
-                ? EnvironmentType.Desktop 
-                : EnvironmentType.Mobile;
+            _environment = Device.IsMobile 
+                ? EnvironmentType.Mobile 
+                : EnvironmentType.Desktop;
 #else
             _environment = EnvironmentType.Desktop;
 #endif
