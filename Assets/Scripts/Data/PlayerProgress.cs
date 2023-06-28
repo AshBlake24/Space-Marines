@@ -25,6 +25,7 @@ namespace Roguelike.Data
             PlayerWeapons = new PlayerWeapons(null, 0);
             Settings = new Settings();
             Statistics = new Statistics();
+            TutorialData = new TutorialData();
         }
     }
 }

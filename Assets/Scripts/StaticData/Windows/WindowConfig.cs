@@ -6,11 +6,11 @@ using Roguelike.UI.Windows;
 namespace Roguelike.StaticData.Windows
 {
     [Serializable]
-    public class WindowConfig : IStaticData
+    public class WindowConfig<TKey> : IStaticData where TKey : Enum
     {
-        public WindowId WindowId;
+        public TKey Id;
         public BaseWindow WindowPrefab;
         
-        public Enum Key => WindowId;
+        public Enum Key => Id;
     }
 }
