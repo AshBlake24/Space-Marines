@@ -4,6 +4,7 @@ using Roguelike.Infrastructure.Factory;
 using Roguelike.Infrastructure.Services.SaveLoad;
 using Roguelike.Infrastructure.Services.StaticData;
 using Roguelike.Infrastructure.Services.Windows;
+using Roguelike.Tutorial;
 using Roguelike.UI.Buttons;
 using Roguelike.UI.Windows;
 using UnityEngine;
@@ -19,10 +20,8 @@ namespace Roguelike.Logic.CharacterSelection
         [SerializeField] private CinemachineVirtualCamera _characterSelectionCamera;
         [SerializeField] private Button _characterSelectionButton;
 
-        private IStaticDataService _staticData;
         private IWindowService _windowService;
         private IGameFactory _gameFactory;
-        private IWeaponFactory _weaponFactory;
         private ISaveLoadService _saveLoadService;
         private RaycastHit _raycastHit;
         private Camera _camera;
@@ -30,13 +29,11 @@ namespace Roguelike.Logic.CharacterSelection
         private bool _isActive;
         private bool _characterSelected;
 
-        public void Construct(IGameFactory gameFactory, IStaticDataService staticData, IWindowService windowService,
-            ISaveLoadService saveLoadService, IWeaponFactory weaponFactory, BaseWindow selectionWindow)
+        public void Construct(IGameFactory gameFactory, IWindowService windowService,
+            ISaveLoadService saveLoadService, BaseWindow selectionWindow)
         {
-            _staticData = staticData;
             _windowService = windowService;
             _gameFactory = gameFactory;
-            _weaponFactory = weaponFactory;
             _saveLoadService = saveLoadService;
             _selectionWindow = selectionWindow;
             _isActive = true;
@@ -104,11 +101,9 @@ namespace Roguelike.Logic.CharacterSelection
             BaseWindow window = _windowService.Open(WindowId.CharacterStats);
 
             if (window is CharacterStats characterStats)
-                characterStats.Construct(
+                characterStats.Init(
                     character.Id,
-                    this,
-                    _staticData,
-                    _weaponFactory);
+                    this);
             else
                 throw new ArgumentNullException(nameof(window), "The necessary component is missing");
         }

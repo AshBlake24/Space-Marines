@@ -17,6 +17,7 @@ using Roguelike.StaticData.Enhancements;
 using Roguelike.StaticData.Loot.Rarity;
 using Roguelike.StaticData.Weapons;
 using Roguelike.StaticData.Windows;
+using Roguelike.Tutorial;
 using Roguelike.UI.Buttons;
 using Roguelike.UI.Elements;
 using Roguelike.UI.Elements.Audio;
@@ -41,13 +42,16 @@ namespace Roguelike.Infrastructure.Factory
         private readonly IRandomService _randomService;
         private readonly ITimeService _timeService;
         private readonly IAudioService _audioService;
-        private readonly IAdsService _adsService;
+        private readonly IWeaponFactory _weaponFactory;
+        private readonly ITutorialService _tutorialService;
 
         private Transform _uiRoot;
+        private Transform _tutorialRoot;
 
         public UIFactory(IAssetProvider assetProvider, IStaticDataService staticData,
             IPersistentDataService progressService, ISceneLoadingService sceneLoadingService,
-            IRandomService randomService, ITimeService timeService, IAudioService audioService, IAdsService adsService)
+            IRandomService randomService, ITimeService timeService, IAudioService audioService,
+            IWeaponFactory weaponFactory, ITutorialService tutorialService)
         {
             _assetProvider = assetProvider;
             _staticData = staticData;
@@ -56,7 +60,8 @@ namespace Roguelike.Infrastructure.Factory
             _randomService = randomService;
             _timeService = timeService;
             _audioService = audioService;
-            _adsService = adsService;
+            _weaponFactory = weaponFactory;
+            _tutorialService = tutorialService;
         }
 
         public BaseWindow CreateWindow(IWindowService windowService, WindowId windowId)
@@ -98,7 +103,14 @@ namespace Roguelike.Infrastructure.Factory
                     InitStatisticsWindow(statisticsWindow);
                     
                     break;
+                case CharacterStats characterStats:
+                    characterStats.Construct(_staticData, _weaponFactory, _tutorialService);
+                    
+                    break;
             }
+            
+            if (window is IHaveTutorial tutorialWindow)
+                tutorialWindow.ShowTutorial();
 
             return window;
         }
@@ -156,8 +168,23 @@ namespace Roguelike.Infrastructure.Factory
             }
         }
 
+        public void CreateTextWindow(string text, bool isTutorial)
+        {
+            WindowConfig config = _staticData.GetDataById<WindowId, WindowConfig>(WindowId.TextWindow);
+            BaseWindow window = Object.Instantiate(config.WindowPrefab, isTutorial ? _tutorialRoot : _uiRoot);
+
+            if (window is TextWindow textWindow)
+            {
+                textWindow.Construct(_progressService, _timeService);
+                textWindow.InitText(text);
+            }
+        }
+
         public void CreateUIRoot() =>
             _uiRoot = _assetProvider.Instantiate(AssetPath.UIRootPath).transform;
+        
+        public void CreateTutorialRoot() =>
+            _tutorialRoot = _assetProvider.Instantiate(AssetPath.TutorialRootPath).transform;
 
         public void ShowStageName()
         {

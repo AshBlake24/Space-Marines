@@ -14,6 +14,7 @@ namespace Roguelike.Data
         public PlayerWeapons PlayerWeapons;
         public Settings Settings;
         public Statistics Statistics;
+        public TutorialData TutorialData;
         public CharacterId Character;
 
         public PlayerProgress(LevelId startLevel, StageId startStage = StageId.Unknown)

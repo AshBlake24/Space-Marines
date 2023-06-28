@@ -19,7 +19,10 @@ namespace Roguelike.Infrastructure.Factory
         void CreateResurrectionWindow(IWindowService windowService, PlayerDeath playerDeath);
         void CreateEnhancementWidget(EnhancementData enhancementProgress, Transform parent, 
             EnhancementTooltip tooltip);
+
         void CreateUIRoot();
+        void CreateTutorialRoot();
         void ShowStageName();
+        void CreateTextWindow(string text, bool isTutorial);
     }
 }

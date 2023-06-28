@@ -31,5 +31,6 @@ namespace Roguelike.Infrastructure.AssetManagement
         public const string StageNameViewerPath = "UI/Elements/StageNameViewer";
         public const string DamagePopupPath = "UI/Elements/DamagePopup";
         public const string FocusController = "Infrastructure/FocusController";
+        public const string TutorialRootPath = "UI/Tutorial/TutorialRoot";
     }
 }

@@ -63,6 +63,7 @@ namespace Roguelike.Infrastructure.States
 
             InitUIRoot();
             InitAudioRoot();
+            InitTutorialRoot();
             InitCurrentLevel();
             InitFocusController();
             InformProgressReaders();
@@ -105,6 +106,9 @@ namespace Roguelike.Infrastructure.States
 
         private void InitAudioRoot() =>
             _audioFactory.CreateAudioRoot();
+
+        private void InitTutorialRoot() => 
+            _uiFactory.CreateTutorialRoot();
 
         private void InitMainMenu() =>
             _windowService.Open(WindowId.MainMenu);

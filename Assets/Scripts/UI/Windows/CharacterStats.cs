@@ -6,16 +6,18 @@ using Roguelike.Logic.CharacterSelection;
 using Roguelike.StaticData.Characters;
 using Roguelike.StaticData.Skills;
 using Roguelike.StaticData.Weapons;
+using Roguelike.Tutorial;
 using Roguelike.UI.Buttons;
 using Roguelike.UI.Elements;
 using Roguelike.Weapons;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Object = UnityEngine.Object;
 
 namespace Roguelike.UI.Windows
 {
-    public class CharacterStats : BaseWindow
+    public class CharacterStats : BaseWindow, IHaveTutorial
     {
         [Header("Character")]
         [SerializeField] private Image _characterIcon;
@@ -36,19 +38,33 @@ namespace Roguelike.UI.Windows
         [SerializeField] private TextMeshProUGUI _cooldown;
         [SerializeField] private TextMeshProUGUI _skillDescription;
 
+        [Header("Tutorial")] 
+        [SerializeField] private LocalizedString _tutorialText;
+
         private IWeaponFactory _weaponFactory;
         private IStaticDataService _staticData;
+        private ITutorialService _tutorialService;
         private CharacterStaticData _characterData;
         private CharacterSelectionMode _selectionMode;
         private SelectCharacterButton _selectCharacterButton;
 
-        public void Construct(CharacterId characterId, CharacterSelectionMode selectionMode,
-            IStaticDataService staticDataService, IWeaponFactory weaponFactory)
+        public void Construct(IStaticDataService staticDataService, IWeaponFactory weaponFactory,
+            ITutorialService tutorialService)
         {
-            _characterData = staticDataService.GetDataById<CharacterId, CharacterStaticData>(characterId);
-            _selectionMode = selectionMode;
             _weaponFactory = weaponFactory;
+            _tutorialService = tutorialService;
             _staticData = staticDataService;
+        }
+
+        public void Init(CharacterId characterId, CharacterSelectionMode selectionMode)
+        {
+            _characterData = _staticData.GetDataById<CharacterId, CharacterStaticData>(characterId);
+            _selectionMode = selectionMode;
+        }
+
+        public void ShowTutorial()
+        {
+            _tutorialService.TryShowTutorialWindow(_tutorialText.Value);
         }
 
         protected override void Initialize()

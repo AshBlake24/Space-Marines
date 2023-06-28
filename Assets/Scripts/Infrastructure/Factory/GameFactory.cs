@@ -27,6 +27,7 @@ using Roguelike.Player.Enhancements;
 using Roguelike.Player.Observers;
 using Roguelike.StaticData.Loot.Rarity;
 using Roguelike.StaticData.Skills;
+using Roguelike.Tutorial;
 using Roguelike.UI.Buttons;
 using Roguelike.UI.Elements.Observers;
 using Roguelike.UI.Windows;
@@ -209,8 +210,7 @@ namespace Roguelike.Infrastructure.Factory
             BaseWindow characterSelectionWindow = _windowService.Open(WindowId.CharacterSelection);
 
             if (Camera.main.TryGetComponent(out CharacterSelectionMode characterSelection))
-                characterSelection.Construct(this, _staticDataService, _windowService, _saveLoadService, _weaponFactory,
-                    characterSelectionWindow);
+                characterSelection.Construct(this, _windowService, _saveLoadService, characterSelectionWindow);
             else
                 throw new ArgumentNullException(nameof(Camera),
                     "Camera is missing a component of CharacterSelectionMode");

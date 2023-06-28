@@ -17,6 +17,7 @@ namespace Roguelike.Infrastructure.Services.Windows
         RegionSelectionWindow = 12,
         EnhancementShop = 13,
         ResetProgressWindow = 14,
-        StatisticsWindow = 15
+        StatisticsWindow = 15,
+        TextWindow = 16
     }
 }
