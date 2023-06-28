@@ -1,5 +1,3 @@
-using Agava.YandexGames;
-using Roguelike.Ads;
 using Roguelike.Player;
 using UnityEngine;
 using UnityEngine.UI;
@@ -14,11 +12,9 @@ namespace Roguelike.UI.Windows
 
         private Image[] _resurrectButtonImages;
         private PlayerDeath _playerDeath;
-        private IAdsService _adsService;
 
-        public void Construct(IAdsService adsService, PlayerDeath playerDeath)
+        public void Construct(PlayerDeath playerDeath)
         {
-            _adsService = adsService;
             _playerDeath = playerDeath;
         }
 
@@ -55,20 +51,11 @@ namespace Roguelike.UI.Windows
             else
             {
                 _resurrectButton.interactable = true;
-                _resurrectButton.onClick.AddListener(OnResurrect);
+                _resurrectButton.onClick.AddListener(OnResurrected);
             }
         }
 
-        private void OnResurrect()
-        {
-#if UNITY_WEBGL && !UNITY_EDITOR
-            _adsService.ShowVideoAd(OnRewarded);
-#else
-            OnRewarded();
-#endif
-        }
-
-        private void OnRewarded()
+        private void OnResurrected()
         {
             ProgressService.PlayerProgress.State.HasResurrected = true;
             _playerDeath.Resurrect();

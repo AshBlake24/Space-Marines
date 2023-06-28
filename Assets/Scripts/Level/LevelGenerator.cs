@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using Roguelike.Infrastructure.Services.Loading;
 using UnityEngine;
 using System.Linq;
+using Roguelike.Ads;
 using Roguelike.Assets.Scripts.Enemies;
 
 namespace Roguelike.Level
@@ -15,6 +16,7 @@ namespace Roguelike.Level
         private const string ContainerName = "Rooms";
         private const int MinExitCount = 3;
 
+        private IAdsService _adsService;
         private IEnemyFactory _enemyFactory;
         private ISceneLoadingService _sceneLoadingService;
         private IPersistentDataService _persistentDataService;
@@ -30,9 +32,10 @@ namespace Roguelike.Level
         private int _totalWeightRoom;
 
         public void Construct(StageStaticData stageData, IPersistentDataService persistentDataService,
-            ISceneLoadingService sceneLoadingService, IEnemyFactory enemyFactory)
+            ISceneLoadingService sceneLoadingService, IEnemyFactory enemyFactory, IAdsService adsService)
         {
             _data = stageData;
+            _adsService = adsService;
             _arenaRoomsCount = stageData.ArenasCount;
             _bonusRoomMaxCount = stageData.BonusRoomsMaxCount;
             _sceneLoadingService = sceneLoadingService;
@@ -176,7 +179,7 @@ namespace Roguelike.Level
             _finishRoom = _currentRoom.GetComponent<FinishRoom>();
             _finishRoom.SetNextLevel(_data.NextStageId, _persistentDataService);
 
-            _finishRoom.PlayerFinishedLevel += GenerateNextLevel;
+            _finishRoom.PlayerFinishedLevel += TryShowAd;
 
             if (_currentRoom.TryGetComponent<BossSpawner>(out BossSpawner spawner))
             {
@@ -189,7 +192,7 @@ namespace Roguelike.Level
 
         private void GenerateNextLevel()
         {
-            _finishRoom.PlayerFinishedLevel -= GenerateNextLevel;
+            _finishRoom.PlayerFinishedLevel -= TryShowAd;
             _persistentDataService.PlayerProgress.Statistics.OnStageComplete(_data.Score);
             _sceneLoadingService.Load(_persistentDataService.PlayerProgress.WorldData.CurrentLevel);
         }
@@ -214,17 +217,36 @@ namespace Roguelike.Level
         {
             _totalWeightRoom = roomType.Sum(x => x.SpawnWeight);
 
-            int rool = Random.Range(0, _totalWeightRoom);
+            int roll = Random.Range(0, _totalWeightRoom);
 
             foreach (Room room in roomType)
             {
-                rool -= room.SpawnWeight;
+                roll -= room.SpawnWeight;
 
-                if (rool <= 0)
+                if (roll <= 0)
                     return room;
             }
 
             return null;
+        }
+        
+        private void TryShowAd()
+        {
+#if UNITY_WEBGL && !UNITY_EDITOR
+            if (_persistentDataService.PlayerProgress.State.HasResurrected && 
+                _persistentDataService.PlayerProgress.State.ResurrectionAdWasShown == false)
+                _adsService.ShowVideoAd(OnAdShown);
+            else
+                GenerateNextLevel();
+#else
+            GenerateNextLevel();
+#endif 
+        }
+
+        private void OnAdShown()
+        {
+            _persistentDataService.PlayerProgress.State.ResurrectionAdWasShown = true;
+            GenerateNextLevel();
         }
     }
 }
