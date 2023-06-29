@@ -134,9 +134,14 @@ namespace Roguelike.Infrastructure.Factory
             GameObject hud = _assetProvider.InstantiateRegistered(deviceType == EnvironmentType.Desktop
                 ? AssetPath.DesktopHudPath
                 : AssetPath.MobileHudPath);
-            
+
             if (createMinimap)
-                Object.Instantiate(Resources.Load(AssetPath.MiniMapPath), hud.transform);
+            {
+                Minimap minimap = _assetProvider.Instantiate(AssetPath.MiniMapPath, hud.transform)
+                    .GetComponent<Minimap>();
+                
+                minimap.Construct(_persistentData.PlayerProgress.WorldData.CurrentStage);
+            }
 
             PlayerShooter playerShooter = player.GetComponent<PlayerShooter>();
             CharacterStaticData characterData = _staticDataService

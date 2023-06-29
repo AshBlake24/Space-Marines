@@ -68,12 +68,9 @@ namespace Roguelike.UI.Windows
                 .ToList();
 
             int stagesCount = regionData.StagesCount;
-            int stage = stagesData
-                .FindIndex(stage => stage.Id == ProgressService.PlayerProgress.WorldData.CurrentStage) + 1;
+            int stage = stagesData.FindIndex(stage => stage.Id == ProgressService.PlayerProgress.WorldData.CurrentStage) + 1;
             string label = ProgressService.PlayerProgress.WorldData.CurrentStage.ToLabel();
             
-            Debug.Log("stage index " + stage);
-
             GetComponentInChildren<GameOverStageViewer>()
                 .Construct(label, stagesCount, characterIcon);
 
