@@ -9,5 +9,6 @@ namespace Roguelike.Infrastructure.Services.PersistentData
         void UpdateStatistics();
         void Reset();
         void ResetAllProgress();
+        void ResetTutorial();
     }
 }

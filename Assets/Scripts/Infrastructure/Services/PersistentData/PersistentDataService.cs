@@ -48,5 +48,8 @@ namespace Roguelike.Infrastructure.Services.PersistentData
             PlayerPrefs.DeleteAll();
             _stateMachine.Enter<LoadProgressState>();
         }
+
+        public void ResetTutorial() => 
+            PlayerProgress.TutorialData.IsTutorialCompleted = false;
     }
 }

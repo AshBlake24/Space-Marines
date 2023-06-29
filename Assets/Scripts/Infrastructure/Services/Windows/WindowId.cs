@@ -18,5 +18,6 @@ namespace Roguelike.Infrastructure.Services.Windows
         EnhancementShop = 13,
         ResetProgressWindow = 14,
         StatisticsWindow = 15,
+        ResetTutorialWindow = 16,
     }
 }
