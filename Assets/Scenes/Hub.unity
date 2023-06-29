@@ -925,17 +925,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 9209555370473766789, guid: d16b4c392f44fca48ba1e16e4db8924d, type: 3}
   m_PrefabInstance: {fileID: 219710388559770781}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &716384630 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1700708898327373152, guid: d16b4c392f44fca48ba1e16e4db8924d, type: 3}
-  m_PrefabInstance: {fileID: 219710388559770781}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1249023815}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 07d84428a98e4ffdabacb000ae76914c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &866425856
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1522,6 +1511,30 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 9207259551096477907, guid: d16b4c392f44fca48ba1e16e4db8924d, type: 3}
   m_PrefabInstance: {fileID: 219710388559770781}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1249023816 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7547074272452958620, guid: d16b4c392f44fca48ba1e16e4db8924d, type: 3}
+  m_PrefabInstance: {fileID: 219710388559770781}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1249023815}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1249023821
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1249023815}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c30c8f52be74c62ab14daf9ae991479, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _outline: {fileID: 1249023816}
 --- !u!1 &1265527077 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2671573214025759265, guid: db77a548ee349f441a695a202dd67a74, type: 3}
@@ -4797,6 +4810,10 @@ PrefabInstance:
       propertyPath: _lootVFX
       value: 
       objectReference: {fileID: 1480450396732963379}
+    - target: {fileID: 2544495900477640652, guid: d16b4c392f44fca48ba1e16e4db8924d, type: 3}
+      propertyPath: _weaponChest
+      value: 
+      objectReference: {fileID: 1249023821}
     - target: {fileID: 7547074272452958620, guid: d16b4c392f44fca48ba1e16e4db8924d, type: 3}
       propertyPath: outlineMode
       value: 1
@@ -4885,7 +4902,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 180
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1700708898327373152, guid: d16b4c392f44fca48ba1e16e4db8924d, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: d16b4c392f44fca48ba1e16e4db8924d, type: 3}
 --- !u!199 &363114498992510414
 ParticleSystemRenderer:
@@ -14894,7 +14912,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40c95e3c8a6c4befbffba5ddefbb9f7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _chest: {fileID: 716384630}
+  _chest: {fileID: 1249023821}
   _markerEffect: {fileID: 1480450396732963379}
 --- !u!1001 &3112124662626756725
 PrefabInstance:

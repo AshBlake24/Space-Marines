@@ -13,5 +13,6 @@
         public static readonly LocalizedString GameOver = new("ui_text_label_game_over");
         public static readonly LocalizedString RegionCleared = new("ui_text_label_region_cleared");
         public static readonly LocalizedString Stage = new("ui_text_label_stage");
+        public static readonly LocalizedString Free = new("ui_text_label_free");
     }
 }

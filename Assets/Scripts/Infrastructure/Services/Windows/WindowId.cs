@@ -20,5 +20,6 @@ namespace Roguelike.Infrastructure.Services.Windows
         StatisticsWindow = 15,
         ResetTutorialWindow = 16,
         StartNewGameWindow = 17,
+        WeaponChestWindow = 18,
     }
 }

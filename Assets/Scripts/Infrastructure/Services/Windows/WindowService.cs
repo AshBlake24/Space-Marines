@@ -1,5 +1,6 @@
 using System;
 using Roguelike.Infrastructure.Factory;
+using Roguelike.Loot.Chest;
 using Roguelike.Player;
 using Roguelike.StaticData.Weapons;
 using Roguelike.Tutorials;
@@ -24,6 +25,11 @@ namespace Roguelike.Infrastructure.Services.Windows
         public void OpenResurrectionWindow(PlayerDeath playerDeath) => 
             _uiFactory.CreateResurrectionWindow(this, playerDeath);
 
+        public void OpenWeaponChestWindow(SalableWeaponChest salableWeaponChest)
+        {
+            _uiFactory.CreateWeaponChestWindow(this, salableWeaponChest);
+        }
+
         public GameObject OpenWeaponStatsViewer(WeaponId weaponId) => 
             _uiFactory.CreateWeaponStatsViewer(this, weaponId);
 
@@ -36,14 +42,14 @@ namespace Roguelike.Infrastructure.Services.Windows
         }
 
         public void OpenTutorial(TutorialId tutorialId) => 
-            _uiFactory.CreateWindow(this, tutorialId);
+            _uiFactory.CreateWindow(this, tutorialId, isTutorial: true);
 
         public BaseWindow Open(WindowId windowId)
         {
             BaseWindow window = windowId switch
             {
                 WindowId.Unknown => throw new NotImplementedException(),
-                _ => _uiFactory.CreateWindow(this, windowId)
+                _ => _uiFactory.CreateWindow(this, windowId, isTutorial: false)
             };
 
             SubscribeToWindow(window);

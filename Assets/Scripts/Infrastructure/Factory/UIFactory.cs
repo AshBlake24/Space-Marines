@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Roguelike.Ads;
 using Roguelike.Animations.UI;
 using Roguelike.Audio.Service;
 using Roguelike.Data;
@@ -11,6 +12,7 @@ using Roguelike.Infrastructure.Services.Random;
 using Roguelike.Infrastructure.Services.StaticData;
 using Roguelike.Infrastructure.Services.Windows;
 using Roguelike.Logic.Pause;
+using Roguelike.Loot.Chest;
 using Roguelike.Player;
 using Roguelike.StaticData.Enhancements;
 using Roguelike.StaticData.Loot.Rarity;
@@ -41,6 +43,7 @@ namespace Roguelike.Infrastructure.Factory
         private readonly ITimeService _timeService;
         private readonly IAudioService _audioService;
         private readonly IWeaponFactory _weaponFactory;
+        private readonly IAdsService _adsService;
 
         private Transform _uiRoot;
         private Transform _tutorialRoot;
@@ -48,7 +51,7 @@ namespace Roguelike.Infrastructure.Factory
         public UIFactory(IAssetProvider assetProvider, IStaticDataService staticData,
             IPersistentDataService progressService, ISceneLoadingService sceneLoadingService,
             IRandomService randomService, ITimeService timeService, IAudioService audioService,
-            IWeaponFactory weaponFactory)
+            IWeaponFactory weaponFactory, IAdsService adsService)
         {
             _assetProvider = assetProvider;
             _staticData = staticData;
@@ -58,12 +61,14 @@ namespace Roguelike.Infrastructure.Factory
             _timeService = timeService;
             _audioService = audioService;
             _weaponFactory = weaponFactory;
+            _adsService = adsService;
         }
 
-        public BaseWindow CreateWindow<TKey>(IWindowService windowService, TKey windowId) where TKey : Enum
+        public BaseWindow CreateWindow<TKey>(IWindowService windowService, TKey windowId, bool isTutorial) 
+            where TKey : Enum
         {
             WindowConfig<TKey> config = _staticData.GetDataById<TKey, WindowConfig<TKey>>(windowId);
-            BaseWindow window = Object.Instantiate(config.WindowPrefab, _uiRoot);
+            BaseWindow window = Object.Instantiate(config.WindowPrefab, isTutorial ? _uiRoot : _tutorialRoot);
             window.Construct(_progressService, _timeService);
 
             foreach (OpenWindowButton openWindowButton in window.GetComponentsInChildren<OpenWindowButton>())
@@ -101,7 +106,7 @@ namespace Roguelike.Infrastructure.Factory
                     break;
                 case CharacterStats characterStats:
                     characterStats.Construct(_staticData, _weaponFactory);
-                    
+
                     break;
             }
 
@@ -124,7 +129,7 @@ namespace Roguelike.Infrastructure.Factory
 
         public EnhancementShopWindow CreateEnhancementShop(IWindowService windowService, PlayerEnhancements playerEnhancements)
         {
-            BaseWindow window = CreateWindow(windowService, WindowId.EnhancementShop);
+            BaseWindow window = CreateWindow(windowService, WindowId.EnhancementShop, isTutorial: false);
 
             if (window is EnhancementShopWindow shop)
             {
@@ -137,7 +142,7 @@ namespace Roguelike.Infrastructure.Factory
 
         public void CreateResurrectionWindow(IWindowService windowService, PlayerDeath playerDeath)
         {
-            BaseWindow window = CreateWindow(windowService, WindowId.Resurrection);
+            BaseWindow window = CreateWindow(windowService, WindowId.Resurrection, isTutorial: false);
 
             if (window is ResurrectionWindow resurrectionWindow)
                 resurrectionWindow.Construct(playerDeath);
@@ -159,6 +164,14 @@ namespace Roguelike.Infrastructure.Factory
             {
                 throw new ArgumentNullException(nameof(widget));
             }
+        }
+
+        public void CreateWeaponChestWindow(WindowService windowService, SalableWeaponChest salableWeaponChest)
+        {
+            BaseWindow window = CreateWindow(windowService, WindowId.WeaponChestWindow, isTutorial: false);
+
+            if (window is WeaponChestWindow weaponChestWindow)
+                weaponChestWindow.Construct(_adsService, salableWeaponChest);
         }
 
         public void CreateUIRoot() =>

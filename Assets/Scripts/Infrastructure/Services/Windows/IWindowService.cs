@@ -1,4 +1,5 @@
 using System;
+using Roguelike.Loot.Chest;
 using Roguelike.Player;
 using Roguelike.StaticData.Weapons;
 using Roguelike.Tutorials;
@@ -18,5 +19,6 @@ namespace Roguelike.Infrastructure.Services.Windows
         GameObject OpenWeaponStatsViewer(WeaponId weaponId);
         EnhancementShopWindow CreateEnhancementShop(PlayerEnhancements playerEnhancements);
         void OpenResurrectionWindow(PlayerDeath playerDeath);
+        void OpenWeaponChestWindow(SalableWeaponChest salableWeaponChest);
     }
 }

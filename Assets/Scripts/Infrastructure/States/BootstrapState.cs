@@ -121,7 +121,8 @@ namespace Roguelike.Infrastructure.States
                 _services.Single<IRandomService>(),
                 _services.Single<ITimeService>(),
                 _services.Single<IAudioService>(),
-                _services.Single<IWeaponFactory>()));
+                _services.Single<IWeaponFactory>(),
+                _services.Single<IAdsService>()));
 
             _services.RegisterSingle<IWindowService>(new WindowService(
                 _services.Single<IUIFactory>()));
