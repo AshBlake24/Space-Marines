@@ -21,7 +21,7 @@ namespace Roguelike.Loot.Chest
                 OnInteracted();
                 IsActive = false;
                 Outline.enabled = false;
-                GameObject weapon = LootFactory.CreateRandomWeapon(transform.position);
+                GameObject weapon = LootFactory.CreateRandomWeapon(transform.position, MinimalRarity);
                 weapon.transform.rotation = transform.rotation;
             }
         }

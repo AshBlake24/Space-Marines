@@ -55,8 +55,20 @@ namespace Roguelike.Infrastructure.Factory
         public void CreateConcretePowerup(PowerupId powerupId, Vector3 position) => 
             CreatePowerup(powerupId, position);
 
-        public GameObject CreateRandomWeapon(Vector3 position) => 
-            CreateWeapon(GetDroppedWeapon(), position);
+        public GameObject CreateRandomWeapon(Vector3 position, RarityId minimalRarity)
+        {
+            WeaponId weaponId;
+            WeaponStaticData weaponData;
+            
+            do
+            {
+                weaponId = GetDroppedWeapon();
+                weaponData = _staticData.GetDataById<WeaponId, WeaponStaticData>(weaponId);
+            } 
+            while (weaponData.Rarity < minimalRarity);
+
+            return CreateWeapon(weaponId, position);
+        }
 
         public GameObject CreateConcreteWeapon(WeaponId weaponId, Vector3 position) => 
             CreateWeapon(weaponId, position);

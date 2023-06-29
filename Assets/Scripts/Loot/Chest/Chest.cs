@@ -2,12 +2,14 @@
 using Roguelike.Infrastructure.Factory;
 using Roguelike.Infrastructure.Services;
 using Roguelike.Logic.Interactables;
+using Roguelike.StaticData.Loot.Rarity;
 using UnityEngine;
 
 namespace Roguelike.Loot.Chest
 {
     public abstract class Chest : MonoBehaviour, IInteractable
     {
+        [SerializeField] protected RarityId MinimalRarity;
         [SerializeField] private Outline _outline;
 
         protected ILootFactory LootFactory;

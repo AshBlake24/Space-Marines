@@ -74,8 +74,11 @@ namespace Roguelike.Player
             _moveSpeed = _defaultMoveSpeed;
         }
 
-        private Vector3 GetDirection() =>
-            new(_inputService.Axis.x, 0, _inputService.Axis.y);
+        private Vector3 GetDirection()
+        {
+            Vector2 inputServiceAxis = _inputService.Axis;
+            return new Vector3(inputServiceAxis.x, 0, inputServiceAxis.y);
+        }
 
         private void RotateToMoveDirection() => 
             Rotate(_direction);

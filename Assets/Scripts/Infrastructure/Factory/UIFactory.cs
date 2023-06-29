@@ -68,7 +68,7 @@ namespace Roguelike.Infrastructure.Factory
             where TKey : Enum
         {
             WindowConfig<TKey> config = _staticData.GetDataById<TKey, WindowConfig<TKey>>(windowId);
-            BaseWindow window = Object.Instantiate(config.WindowPrefab, isTutorial ? _uiRoot : _tutorialRoot);
+            BaseWindow window = Object.Instantiate(config.WindowPrefab, isTutorial ?  _tutorialRoot : _uiRoot);
             window.Construct(_progressService, _timeService);
 
             foreach (OpenWindowButton openWindowButton in window.GetComponentsInChildren<OpenWindowButton>())
