@@ -81,8 +81,9 @@ namespace Roguelike.UI.Windows.Regions
             }
         }
 
-        private void OnToggleClicked(bool isActive)
+        private void OnToggleClicked(Toggle toggle, bool isActive)
         {
+            _toggleGroup.NotifyToggleOn(toggle, false);
             SetStartButtonState();
         }
 

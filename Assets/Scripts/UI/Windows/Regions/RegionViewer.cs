@@ -15,7 +15,7 @@ namespace Roguelike.UI.Windows.Regions
         [SerializeField] private Image _icon;
         [SerializeField] private RegionDangerViewer _dangerViewer;
 
-        public event Action<bool> ToggleClicked;
+        public event Action<Toggle, bool> ToggleClicked;
 
         public Toggle Toggle => _toggle;
         public RegionStaticData RegionData { get; private set; }
@@ -44,6 +44,6 @@ namespace Roguelike.UI.Windows.Regions
             _toggle.onValueChanged.RemoveListener(OnToggleClick);
 
         private void OnToggleClick(bool isActive) => 
-            ToggleClicked?.Invoke(isActive);
+            ToggleClicked?.Invoke(_toggle, isActive);
     }
 }
