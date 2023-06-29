@@ -8,5 +8,7 @@ namespace Roguelike.StaticData
     {
         public LevelId StartScene;
         public LevelId StartLevel;
+        public RegionId StartRegion;
+        public StageId StartStage;
     }
 }

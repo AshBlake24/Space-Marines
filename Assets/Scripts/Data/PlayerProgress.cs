@@ -17,11 +17,11 @@ namespace Roguelike.Data
         public TutorialData TutorialData;
         public CharacterId Character;
 
-        public PlayerProgress(LevelId startLevel, StageId startStage = StageId.Unknown)
+        public PlayerProgress(LevelId startLevel, RegionId startRegion = RegionId.Unknown, StageId startStage = StageId.Unknown)
         {
             State = new State();
             Balance = new Balance();
-            WorldData = new WorldData(startLevel, startStage);
+            WorldData = new WorldData(startLevel, startRegion, startStage);
             PlayerWeapons = new PlayerWeapons(null, 0);
             Settings = new Settings();
             Statistics = new Statistics();

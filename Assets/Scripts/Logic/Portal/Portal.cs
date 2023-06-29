@@ -42,7 +42,7 @@ namespace Roguelike.Logic.Portal
         {
             if (other.TryGetComponent(out PlayerHealth player))
             {
-                _progressService.PlayerProgress.WorldData = new WorldData(_levelId, _startStageId);
+                _progressService.PlayerProgress.WorldData = new WorldData(_levelId, _regionId, _startStageId);
                 _sceneLoadingService.Load(_levelId);
             }
         }

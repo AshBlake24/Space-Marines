@@ -55,6 +55,8 @@ namespace Roguelike.Infrastructure.States
         }
 
         private PlayerProgress CreateNewProgress() =>
-            new(_staticDataService.GameConfig.StartLevel);
+            new(_staticDataService.GameConfig.StartLevel,
+                _staticDataService.GameConfig.StartRegion,
+                _staticDataService.GameConfig.StartStage);
     }
 }
