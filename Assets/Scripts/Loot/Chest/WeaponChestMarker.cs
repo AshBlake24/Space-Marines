@@ -4,7 +4,7 @@ namespace Roguelike.Loot.Chest
 {
     public class WeaponChestMarker : MonoBehaviour
     {
-        [SerializeField] private WeaponChest _chest;
+        [SerializeField] private Chest _chest;
         [SerializeField] private ParticleSystem _markerEffect;
 
         private void OnEnable() => 

@@ -6,7 +6,7 @@ namespace Roguelike.Loot.Chest
 {
     public class WeaponChestObserver : MonoBehaviour
     {
-        [SerializeField] private WeaponChest _weaponChest;
+        [SerializeField] private Chest _weaponChest;
         
         private IPersistentDataService _progressData;
 

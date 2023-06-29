@@ -8,7 +8,7 @@ namespace Roguelike.Loot.Chest
         [SerializeField] private float _openingDuration;
         [SerializeField] private Vector3 _openAngle;
         [SerializeField] private Transform _hinge;
-        [SerializeField] private WeaponChest _weaponChest;
+        [SerializeField] private Chest _weaponChest;
 
         private void OnEnable() => 
             _weaponChest.Interacted += OnInteracted;

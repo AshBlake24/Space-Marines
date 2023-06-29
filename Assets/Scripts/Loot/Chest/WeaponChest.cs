@@ -1,38 +1,18 @@
-using System;
-using Roguelike.Infrastructure.Factory;
-using Roguelike.Infrastructure.Services;
-using Roguelike.Logic.Interactables;
 using Roguelike.Player;
 using UnityEngine;
 
 namespace Roguelike.Loot.Chest
 {
-    public class WeaponChest : MonoBehaviour, IInteractable
+    public class WeaponChest : Chest
     {
-        [SerializeField] private Outline _outline;
-        
-        private ILootFactory _lootFactory;
-
-        public event Action Interacted;
-        
-        public Outline Outline => _outline;
-        public bool IsActive { get; private set; }
-
-        private void Awake()
-        {
-            _lootFactory = AllServices.Container.Single<ILootFactory>();
-            Outline.enabled = false;
-            IsActive = true;
-        }
-
-        public void Interact(GameObject interactor)
+        public override void Interact(GameObject interactor)
         {
             if (IsActive)
             {
-                Interacted?.Invoke();
+                OnInteracted();
                 IsActive = false;
                 Outline.enabled = false;
-                GameObject weapon = _lootFactory.CreateRandomWeapon(transform.position);
+                GameObject weapon = LootFactory.CreateRandomWeapon(transform.position);
                 weapon.transform.rotation = transform.rotation;
                 
                 if (interactor.TryGetComponent(out PlayerStatisticsObserver playerStatistics))
