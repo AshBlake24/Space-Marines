@@ -87,7 +87,7 @@ namespace Roguelike.UI.Windows
         private void InitViewerAnimations(int stage)
         {
             int killedMonsters = ProgressService.PlayerProgress.Statistics.KillData.CurrentKillData.KilledMonsters;
-            int coins = ProgressService.PlayerProgress.Balance.Coins;
+            int coins = ProgressService.PlayerProgress.Balance.DungeonBalance.Coins;
 
             _gameCompleteWindowAnimations.Init(stage, coins, killedMonsters);
             _gameCompleteWindowAnimations.Play();

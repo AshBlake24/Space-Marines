@@ -81,7 +81,7 @@ namespace Roguelike.Assets.Scripts.Enemies
             
             _persistentData.PlayerProgress.Statistics.KillData.CurrentKillData.OnBossKilled();
             _persistentData.PlayerProgress.Statistics.KillData.CurrentKillData.OnMonsterKilled();
-            _persistentData.PlayerProgress.Balance.AddCoins(coins);
+            _persistentData.PlayerProgress.Balance.DungeonBalance.AddCoins(coins);
 
             BossDied?.Invoke();
         }

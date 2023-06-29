@@ -1,4 +1,5 @@
 using System;
+using Roguelike.Data.Balance;
 using Roguelike.StaticData.Characters;
 using Roguelike.StaticData.Levels;
 using Roguelike.Weapons;
@@ -9,7 +10,7 @@ namespace Roguelike.Data
     public class PlayerProgress
     {
         public State State;
-        public Balance Balance;
+        public PlayerBalance Balance;
         public WorldData WorldData;
         public PlayerWeapons PlayerWeapons;
         public Settings Settings;
@@ -20,7 +21,7 @@ namespace Roguelike.Data
         public PlayerProgress(LevelId startLevel, RegionId startRegion = RegionId.Unknown, StageId startStage = StageId.Unknown)
         {
             State = new State();
-            Balance = new Balance();
+            Balance = new PlayerBalance();
             WorldData = new WorldData(startLevel, startRegion, startStage);
             PlayerWeapons = new PlayerWeapons(null, 0);
             Settings = new Settings();

@@ -1,17 +1,11 @@
 using System;
 
-namespace Roguelike.Data
+namespace Roguelike.Data.Balance
 {
     [Serializable]
-    public class Balance
+    public abstract class Balance
     {
         public int Coins;
-        public int BufferedCoins;
-
-        public Balance()
-        {
-            Coins = 0;
-        }
 
         public event Action Changed;
 
@@ -34,20 +28,6 @@ namespace Roguelike.Data
 
             Coins -= coins;
             Changed?.Invoke();
-        }
-
-        public int GetCoinsToStatistics()
-        {
-            int coins = Coins - BufferedCoins;
-            BufferedCoins += coins;
-            
-            return coins;
-        }
-
-        public void Reset()
-        {
-            Coins = 0;
-            BufferedCoins = 0;
         }
     }
 }

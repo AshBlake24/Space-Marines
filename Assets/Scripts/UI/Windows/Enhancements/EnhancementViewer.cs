@@ -34,7 +34,7 @@ namespace Roguelike.UI.Windows.Enhancements
         private void OnDestroy()
         {
             _sellButton.onClick.RemoveAllListeners();
-            _progressService.PlayerProgress.Balance.Changed -= OnBalanceChanged;
+            _progressService.PlayerProgress.Balance.DungeonBalance.Changed -= OnBalanceChanged;
         }
 
         public void Construct(IPersistentDataService progressService, PlayerEnhancements playerEnhancements,
@@ -43,7 +43,7 @@ namespace Roguelike.UI.Windows.Enhancements
             _progressService = progressService;
             _playerEnhancements = playerEnhancements;
             _enhancementData = enhancementStaticData;
-            _progressService.PlayerProgress.Balance.Changed += OnBalanceChanged;
+            _progressService.PlayerProgress.Balance.DungeonBalance.Changed += OnBalanceChanged;
 
             InitViewer();
             OnBalanceChanged();
@@ -127,7 +127,7 @@ namespace Roguelike.UI.Windows.Enhancements
             _progressService.PlayerProgress.Statistics.CollectablesData.EnhancementsBought++;
             _progressService.PlayerProgress.Statistics.CollectablesData.AddCoinsForEnhancements(price);
             _progressService.PlayerProgress.Statistics.Favourites.AddEnhancement(_enhancementData.Id);
-            _progressService.PlayerProgress.Balance.WithdrawCoins(price);
+            _progressService.PlayerProgress.Balance.DungeonBalance.WithdrawCoins(price);
 
             if (_playerEnhancements.EnhancementExist(_enhancementData.Id) == false)
                 _playerEnhancements.AddEnhancement(_enhancementData.Id, ++_enhancementProgress.Tier);
@@ -139,7 +139,7 @@ namespace Roguelike.UI.Windows.Enhancements
         }
 
         private bool PlayerHasMoney() =>
-            _progressService.PlayerProgress.Balance.Coins >= 
+            _progressService.PlayerProgress.Balance.DungeonBalance.Coins >= 
             _enhancementData.Tiers[_enhancementProgress.Tier].Price;
 
         private bool CurrentTierIsMax() =>

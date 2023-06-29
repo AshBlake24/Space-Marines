@@ -116,7 +116,8 @@ namespace Roguelike.Enemies
                 _room.OpenDoor();
 
             _playerProgress.Statistics.KillData.CurrentKillData.OnMonsterKilled();
-            _playerProgress.Balance.AddCoins(enemyHealth.GetComponentInParent<EnemyStateMachine>().Enemy.Coins);
+            _playerProgress.Balance.DungeonBalance.AddCoins(enemyHealth
+                .GetComponentInParent<EnemyStateMachine>().Enemy.Coins);
         }
 
         private void OnEnemySpawned(SpawnPoint spawnpoint, GameObject enemyPrefab)

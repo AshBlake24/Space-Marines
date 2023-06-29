@@ -166,9 +166,8 @@ namespace Roguelike.Infrastructure.Factory
 
             hud.GetComponentInChildren<ActiveSkillObserver>()
                 .Construct(player.GetComponent<PlayerSkill>(), skillData.Icon);
-            
-            hud.GetComponentInChildren<CoinsObserver>()
-                .Construct(_persistentData.PlayerProgress.Balance);
+
+            InitHudBalance(hud);
 
             if (deviceType == EnvironmentType.Mobile)
                 InitMobileButtons(hud, player);
@@ -333,6 +332,22 @@ namespace Roguelike.Infrastructure.Factory
                 
                 navigationPoints = navigationPoints.OrderBy(point => point.RouteIndex).ToArray();
                 navigationArrow.Construct(navigationPoints);
+            }
+        }
+        
+        private void InitHudBalance(GameObject hud)
+        {
+            LevelId currentLevelId = EnumExtensions.GetCurrentLevelId();
+
+            if (currentLevelId == LevelId.Hub)
+            {
+                hud.GetComponentInChildren<CoinsObserver>()
+                    .Construct(_persistentData.PlayerProgress.Balance.HubBalance);
+            }
+            else
+            {
+                hud.GetComponentInChildren<CoinsObserver>()
+                    .Construct(_persistentData.PlayerProgress.Balance.DungeonBalance);
             }
         }
     }

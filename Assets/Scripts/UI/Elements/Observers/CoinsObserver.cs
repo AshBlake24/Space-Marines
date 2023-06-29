@@ -1,4 +1,5 @@
 using Roguelike.Data;
+using Roguelike.Data.Balance;
 using TMPro;
 using UnityEngine;
 

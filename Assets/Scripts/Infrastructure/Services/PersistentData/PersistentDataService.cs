@@ -26,19 +26,20 @@ namespace Roguelike.Infrastructure.Services.PersistentData
         public void UpdateStatistics()
         {
             LevelId levelId = EnumExtensions.GetCurrentLevelId();
-            int coins = PlayerProgress.Balance.GetCoinsToStatistics();
+            int coins = PlayerProgress.Balance.DungeonBalance.Coins;
             
             PlayerProgress.Statistics.Favourites.AddWeapons(PlayerProgress.PlayerWeapons.Weapons);
             PlayerProgress.Statistics.KillData.TrySaveOverallKills(levelId);
             PlayerProgress.Statistics.CollectablesData.AddCoins(coins);
-            
+            PlayerProgress.Balance.HubBalance.ConvertDungeonToHubCoins(coins);
+
             Reset();
         }
 
         public void Reset()
         {
             PlayerProgress.State.Reset();
-            PlayerProgress.Balance.Reset();
+            PlayerProgress.Balance.DungeonBalance.Reset();
             PlayerProgress.Statistics.KillData.CurrentKillData.Reset();
             PlayerProgress.WorldData = new WorldData(_staticData.GameConfig.StartScene);
         }

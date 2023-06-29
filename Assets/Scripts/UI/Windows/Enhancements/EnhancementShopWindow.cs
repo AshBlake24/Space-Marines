@@ -39,12 +39,12 @@ namespace Roguelike.UI.Windows.Enhancements
         }
 
         protected override void SubscribeUpdates() => 
-            ProgressService.PlayerProgress.Balance.Changed += RefreshBalance;
+            ProgressService.PlayerProgress.Balance.DungeonBalance.Changed += RefreshBalance;
 
         protected override void Cleanup()
         {
             base.Cleanup();
-            ProgressService.PlayerProgress.Balance.Changed -= RefreshBalance;
+            ProgressService.PlayerProgress.Balance.DungeonBalance.Changed -= RefreshBalance;
             TimeService.ResumeGame();
         }
 
@@ -92,6 +92,6 @@ namespace Roguelike.UI.Windows.Enhancements
         }
 
         private void RefreshBalance() => 
-            _playerBalance.text = ProgressService.PlayerProgress.Balance.Coins.ToString();
+            _playerBalance.text = ProgressService.PlayerProgress.Balance.DungeonBalance.Coins.ToString();
     }
 }
