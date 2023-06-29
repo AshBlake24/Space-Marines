@@ -9,7 +9,8 @@ namespace Roguelike.Enemies.EnemyStates
 {
     public class DeployState : EnemyState
     {
-        private const int DeployRadius = 10;
+        private const int DeployRadiusMax = 10;
+        private const int DeployRadiusMin = 8;
 
         [SerializeField] private EnemyId _mine;
 
@@ -31,7 +32,7 @@ namespace Roguelike.Enemies.EnemyStates
 
         private void Update()
         {
-            if (_agent.remainingDistance <= _agent.radius && _isReadyToDeploy)
+            if (_agent.remainingDistance <= _agent.stoppingDistance && _isReadyToDeploy)
             {
                 MineSpawn();
             }
@@ -61,10 +62,10 @@ namespace Roguelike.Enemies.EnemyStates
             {
                 NavMeshHit hit;
 
-                NavMesh.SamplePosition(Random.insideUnitSphere * DeployRadius + transform.position, out hit, DeployRadius, NavMesh.AllAreas);
+                NavMesh.SamplePosition(Random.insideUnitSphere * DeployRadiusMax + transform.position, out hit, DeployRadiusMax, NavMesh.AllAreas);
                 _randomPoint = hit.position;
 
-                if (Vector3.Distance(_randomPoint, transform.position) > (DeployRadius - 1))
+                if (Vector3.Distance(_randomPoint, transform.position) > DeployRadiusMin)
                 {
                     if (_agent.CalculatePath(_randomPoint, currentPath))
                         if (currentPath.status == NavMeshPathStatus.PathComplete)
