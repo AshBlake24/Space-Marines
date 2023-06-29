@@ -16,7 +16,6 @@ namespace Roguelike.Enemies.EnemyStates
         [SerializeField] private float _projectileSpeed;
         [SerializeField] private ProjectileStaticData _bullet;
         [SerializeField] private List<Transform> _shotPoints;
-        [SerializeField] private Transform _point;
 
         private Transform _shotPoint;
         private IProjectileFactory _factory;
