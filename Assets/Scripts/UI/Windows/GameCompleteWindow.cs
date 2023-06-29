@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using Roguelike.Animations.UI;
 using Roguelike.Infrastructure.Services.Loading;
 using Roguelike.Infrastructure.Services.StaticData;
@@ -48,29 +50,48 @@ namespace Roguelike.UI.Windows
 
         private void InitStageViewer()
         {
-            _title.text = ProgressService.PlayerProgress.State.Dead 
-                ? LocalizedConstants.GameOver.Value 
-                : LocalizedConstants.RegionCleared.Value;
+            InitTitle();
             
-            LevelId currentLevel = ProgressService.PlayerProgress.WorldData.CurrentLevel;
+            RegionId currentLevel = ProgressService.PlayerProgress.WorldData.CurrentRegion;
 
-            if (currentLevel != LevelId.Dungeon)
+            if (currentLevel == RegionId.Unknown)
                 throw new ArgumentOutOfRangeException(nameof(currentLevel), "Player died out of the dungeon");
             
             Sprite characterIcon = _staticData
                 .GetDataById<CharacterId, CharacterStaticData>(ProgressService.PlayerProgress.Character)
                 .Icon;
-                
-            int stagesCount = _staticData.GetDataById<LevelId, RegionStaticData>(currentLevel).StagesCount;
-            int stage = (int) ProgressService.PlayerProgress.WorldData.CurrentStage;
+
+            RegionStaticData regionData = _staticData.GetDataById<RegionId, RegionStaticData>(currentLevel);
+            List<StageStaticData> stagesData = regionData.Floors
+                .SelectMany(floor => floor.Stages)
+                .OrderBy(x => x.Id)
+                .ToList();
+
+            int stagesCount = regionData.StagesCount;
+            int stage = stagesData
+                .FindIndex(stage => stage.Id == ProgressService.PlayerProgress.WorldData.CurrentStage) + 1;
             string label = ProgressService.PlayerProgress.WorldData.CurrentStage.ToLabel();
+            
+            Debug.Log("stage index " + stage);
 
             GetComponentInChildren<GameOverStageViewer>()
                 .Construct(label, stagesCount, characterIcon);
 
+            InitViewerAnimations(stage);
+        }
+
+        private void InitTitle()
+        {
+            _title.text = ProgressService.PlayerProgress.State.Dead
+                ? LocalizedConstants.GameOver.Value
+                : LocalizedConstants.RegionCleared.Value;
+        }
+
+        private void InitViewerAnimations(int stage)
+        {
             int killedMonsters = ProgressService.PlayerProgress.Statistics.KillData.CurrentKillData.KilledMonsters;
             int coins = ProgressService.PlayerProgress.Balance.Coins;
-            
+
             _gameCompleteWindowAnimations.Init(stage, coins, killedMonsters);
             _gameCompleteWindowAnimations.Play();
         }
