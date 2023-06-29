@@ -13,7 +13,7 @@ namespace Roguelike.Tutorials
         
         private ITutorialService _tutorialService;
 
-        public event Action Interacted;
+        public event Action<int> Interacted;
         
         public int RouteIndex => _routeIndex;
 
@@ -30,7 +30,7 @@ namespace Roguelike.Tutorials
         private void OnInteracted()
         {
             _tutorialService.TryShowTutorial(_tutorialWindowId);
-            Interacted?.Invoke();
+            Interacted?.Invoke(_routeIndex);
         }
     }
 }

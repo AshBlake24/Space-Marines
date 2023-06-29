@@ -31,14 +31,14 @@ namespace Roguelike.Tutorials
             transform.rotation = Quaternion.LookRotation(direction, Vector3.up);
         }
 
-        private void SetNextDestination()
+        private void SetNextDestination(int routeIndex)
         {
-            _currentNavigationPointIndex++;
+            routeIndex++;
 
-            if (_currentNavigationPointIndex >= _navigationPoints.Length) 
+            if (routeIndex >= _navigationPoints.Length) 
                 Destroy(gameObject);
 
-            _currentNavigationPoint = _navigationPoints[_currentNavigationPointIndex].transform;
+            _currentNavigationPoint = _navigationPoints[routeIndex].transform;
         }
 
         private void StartRoute()
@@ -48,6 +48,6 @@ namespace Roguelike.Tutorials
             enabled = true;
         }
 
-        private void OnInteracted() => SetNextDestination();
+        private void OnInteracted(int routeIndex) => SetNextDestination(routeIndex);
     }
 }
