@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using Roguelike.StaticData.Levels;
 using UnityEngine.SceneManagement;
 
@@ -9,6 +10,8 @@ namespace Roguelike.Utilities
 {
     public static class EnumExtensions
     {
+        private const string Boss = "Boss";
+
         public static LevelId GetCurrentLevelId()
         {
             Enum.TryParse(SceneManager.GetActiveScene().name, true, out LevelId activeScene);
@@ -31,9 +34,19 @@ namespace Roguelike.Utilities
             foreach (char symb in stage.Where(char.IsDigit))
                 stringBuilder.Append(symb);
 
+            if (stringBuilder.Length == 0)
+                return TryParseBossStage(stage) ?? string.Empty;
+
             stringBuilder.Insert(1, '-');
 
             return stringBuilder.ToString();
+        }
+
+        private static string TryParseBossStage(string stage)
+        {
+            string[] words =  Regex.Split(stage, @"(?<!^)(?=[A-Z])");
+            
+            return words.FirstOrDefault(word => word == Boss);
         }
     }
 }
