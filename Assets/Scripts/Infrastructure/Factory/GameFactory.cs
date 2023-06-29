@@ -209,6 +209,14 @@ namespace Roguelike.Infrastructure.Factory
             return levelGeneratorPrefab;
         }
 
+        public void CreateTutorialEnding()
+        {
+            TutorialEnding tutorialEnding = _assetProvider.Instantiate(AssetPath.TutorialEndingPath)
+                .GetComponent<TutorialEnding>();
+
+            tutorialEnding.Construct(_persistentData, _tutorialService);
+        }
+
         public void CreateCharacterSelectionMode()
         {
             BaseWindow characterSelectionWindow = _windowService.Open(WindowId.CharacterSelection);
@@ -312,11 +320,13 @@ namespace Roguelike.Infrastructure.Factory
                 TutorialNavigationArrow navigationArrow = _assetProvider
                     .Instantiate(AssetPath.TutorialNavigationArrowPath, player.transform)
                     .GetComponent<TutorialNavigationArrow>();
-
-                List<TutorialNavigationPoint> navigationPoints = Object.FindObjectsOfType<TutorialNavigationPoint>()
-                    .OrderBy(point => point.RouteIndex)
-                    .ToList();
                 
+                TutorialNavigationPoint[] navigationPoints = Object.FindObjectsOfType<TutorialNavigationPoint>();
+                
+                if (navigationPoints.Length == 0)
+                    return;
+                
+                navigationPoints = navigationPoints.OrderBy(point => point.RouteIndex).ToArray();
                 navigationArrow.Construct(navigationPoints);
             }
         }

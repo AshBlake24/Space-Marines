@@ -33,5 +33,6 @@ namespace Roguelike.Infrastructure.AssetManagement
         public const string FocusController = "Infrastructure/FocusController";
         public const string TutorialRootPath = "UI/Tutorial/TutorialRoot";
         public const string TutorialNavigationArrowPath = "UI/Tutorial/TutorialNavigationArrow";
+        public const string TutorialEndingPath = "Tutorial/TutorialEnding";
     }
 }

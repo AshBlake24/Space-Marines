@@ -119,6 +119,7 @@ namespace Roguelike.Infrastructure.States
         private void InitDungeon()
         {
             _gameFactory.GenerateLevel();
+            _gameFactory.CreateTutorialEnding();
             _uiFactory.ShowStageName();
             InitWorld();
         }

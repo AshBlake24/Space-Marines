@@ -4,6 +4,7 @@ using Roguelike.Infrastructure.Services.Windows;
 using Roguelike.Logic.Interactables;
 using Roguelike.Player;
 using Roguelike.StaticData.Levels;
+using Roguelike.Tutorials;
 using Roguelike.UI.Windows;
 using Roguelike.UI.Windows.Regions;
 using UnityEngine;
@@ -18,12 +19,18 @@ namespace Roguelike.Logic.Portal
         [SerializeField] private Portal _portal;
         
         private IWindowService _windowService;
+        private ITutorialService _tutorialService;
 
+        public event Action Interacted;
+        
         public Outline Outline => _outline;
         public bool IsActive { get; private set; }
 
-        private void Awake() => 
+        private void Awake()
+        {
             _windowService = AllServices.Container.Single<IWindowService>();
+            _tutorialService = AllServices.Container.Single<ITutorialService>();
+        }
 
         private void OnEnable()
         {
@@ -41,10 +48,15 @@ namespace Roguelike.Logic.Portal
                     regionSelectionWindow.RegionSelected += OnRegionSelected;
                 else
                     throw new NullReferenceException(nameof(window));
+                
+                Interacted?.Invoke();
             }
         }
 
-        private void OnRegionSelected(RegionSelectionWindow regionSelectionWindow, RegionStaticData regionData) => 
+        private void OnRegionSelected(RegionSelectionWindow regionSelectionWindow, RegionStaticData regionData)
+        {
             _portal.Init(regionData.Id, regionData.Floors[0].Stages[0].Id);
+            _tutorialService.TryShowTutorial(TutorialId.Hub10);
+        }
     }
 }

@@ -11,5 +11,6 @@ namespace Roguelike.Infrastructure.Factory
         GameObject GenerateLevel();
         void CreateCharacterSelectionMode();
         void CreateFocusController();
+        void CreateTutorialEnding();
     }
 }
