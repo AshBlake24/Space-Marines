@@ -7,6 +7,7 @@ namespace Roguelike.Enemies.EnemyStates
     public class ChargeState : EnemyState
     {
         [SerializeField] private ParticleSystem _effects;
+        [SerializeField] private CollisionDamager _collisionDamager;
 
         private NavMeshAgent _agent;
 
@@ -18,6 +19,8 @@ namespace Roguelike.Enemies.EnemyStates
         public override void Enter(Enemy curentEnemy, EnemyAnimator enemyAnimator)
         {
             base.Enter(curentEnemy, enemyAnimator);
+
+            _collisionDamager.Init(enemy);
 
             _agent.SetDestination(enemy.Target.transform.position);
             _agent.speed = enemy.Speed * enemy.ChargeSpeedMultiplication;
@@ -31,6 +34,7 @@ namespace Roguelike.Enemies.EnemyStates
 
             animator.Move(0, _agent.isStopped);
 
+            _collisionDamager.Disable();
             _effects.Stop();
 
             base.Exit(nextState);

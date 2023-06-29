@@ -27,7 +27,7 @@ namespace Roguelike.Enemies.EnemyStates
 
         private void Update()
         {
-            LookAtPlayer();
+                LookAtPlayer();
         }
 
         public override void Enter(Enemy enemy, EnemyAnimator enemyAnimator)
@@ -95,17 +95,10 @@ namespace Roguelike.Enemies.EnemyStates
 
         private void OnTakeFromPool(Projectile projectile)
         {
-            Vector3 direction;
-            projectile.transform.SetPositionAndRotation(_shotPoint.position, Quaternion.identity);
-
-            if (_shotPoints.Count <= 1)
-                direction = (enemy.Target.transform.position - transform.position).normalized;
-            else
-                 direction = (_shotPoint.transform.position - _point.transform.position).normalized;
-
-            projectile.gameObject.SetActive(true);
+            projectile.transform.SetPositionAndRotation(_shotPoint.position, _shotPoint.rotation);
             projectile.ClearVFX();
-            projectile.Init(enemy.Damage, _projectileSpeed, direction);
+            projectile.gameObject.SetActive(true);
+            projectile.Init(enemy.Damage, _projectileSpeed);
         }
 
         private void OnReleaseToPool(Projectile bullet) =>

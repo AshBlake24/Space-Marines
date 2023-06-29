@@ -1,6 +1,6 @@
 ﻿namespace Roguelike.Enemies.Transitions
 {
-    public class TargetIsInRange : TargetIsNotInRange
+    public class TargetOnLineOfSight : TargetIsNotOnLineOfSight
     {
         protected override void CheackLineOfSight()
         {

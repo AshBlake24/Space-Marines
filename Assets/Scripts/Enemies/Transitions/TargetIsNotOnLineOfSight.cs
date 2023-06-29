@@ -3,7 +3,7 @@ using UnityEngine.AI;
 
 namespace Roguelike.Enemies.Transitions
 {
-    public class TargetIsNotInRange: Transition
+    public class TargetIsNotOnLineOfSight: Transition
     {
         protected const int MinCornersCount = 2;
 
