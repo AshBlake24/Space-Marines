@@ -1,19 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Roguelike.Tutorials
 {
     public class TutorialNavigationArrow : MonoBehaviour
     {
-        private List<TutorialNavigationPoint> _navigationPoints;
+        private TutorialNavigationPoint[] _navigationPoints;
         private Transform _currentNavigationPoint;
         private int _currentNavigationPointIndex;
 
-        public void Construct(List<TutorialNavigationPoint> navigationPoints)
+        public void Construct(TutorialNavigationPoint[] navigationPoints)
         {
             _navigationPoints = navigationPoints;
-            StartRoute();
+
+            foreach (TutorialNavigationPoint navigationPoint in _navigationPoints)
+                navigationPoint.Interacted += OnInteracted;
+        }
+
+        private void Start()
+        {
+            if (_navigationPoints == null || _navigationPoints.Length == 0)
+                Destroy(gameObject);
+            else
+                StartRoute();
         }
 
         private void Update()
@@ -23,11 +31,11 @@ namespace Roguelike.Tutorials
             transform.rotation = Quaternion.LookRotation(direction, Vector3.up);
         }
 
-        public void SetNextDestination()
+        private void SetNextDestination()
         {
             _currentNavigationPointIndex++;
 
-            if (_currentNavigationPointIndex >= _navigationPoints.Count) 
+            if (_currentNavigationPointIndex >= _navigationPoints.Length) 
                 Destroy(gameObject);
 
             _currentNavigationPoint = _navigationPoints[_currentNavigationPointIndex].transform;
@@ -35,12 +43,11 @@ namespace Roguelike.Tutorials
 
         private void StartRoute()
         {
-            if (_navigationPoints.Count <= 0)
-                throw new ArgumentOutOfRangeException(nameof(_navigationPoints));
-
             _currentNavigationPointIndex = 0;
             _currentNavigationPoint = _navigationPoints[_currentNavigationPointIndex].transform;
             enabled = true;
         }
+
+        private void OnInteracted() => SetNextDestination();
     }
 }
