@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using Roguelike.Tutorials;
 
 namespace Roguelike.Data
 {

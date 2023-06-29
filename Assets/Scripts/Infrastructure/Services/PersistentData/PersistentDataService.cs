@@ -51,6 +51,6 @@ namespace Roguelike.Infrastructure.Services.PersistentData
         }
 
         public void ResetTutorial() => 
-            PlayerProgress.TutorialData.IsTutorialCompleted = false;
+            PlayerProgress.TutorialData = new TutorialData();
     }
 }

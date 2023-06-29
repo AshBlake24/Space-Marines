@@ -88,6 +88,9 @@ namespace Roguelike.UI.Windows
 
         private void StartNewGame()
         {
+            if (ProgressService.PlayerProgress.TutorialData.IsTutorialCompleted == false)
+                ProgressService.ResetTutorial();
+            
             ProgressService.UpdateStatistics();
             ProgressService.PlayerProgress.WorldData = new WorldData(
                 _staticData.GameConfig.StartLevel);

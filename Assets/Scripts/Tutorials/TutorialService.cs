@@ -18,7 +18,11 @@ namespace Roguelike.Tutorials
         {
             if (_persistentData.PlayerProgress.TutorialData.IsTutorialCompleted)
                 return;
+
+            if (_persistentData.PlayerProgress.TutorialData.CompletedTutorials.Contains(tutorialId))
+                return;
             
+            _persistentData.PlayerProgress.TutorialData.CompletedTutorials.Add(tutorialId);
             _windowService.OpenTutorial(tutorialId);
         }
     }
