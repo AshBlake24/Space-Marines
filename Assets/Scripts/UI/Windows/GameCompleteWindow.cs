@@ -85,6 +85,6 @@ namespace Roguelike.UI.Windows
         }
 
         private void OnConfirm() => 
-            _sceneLoadingService.Load(_staticData.GameConfig.StartScene);
+            _sceneLoadingService.Load(_staticData.GameConfig.StartLevel);
     }
 }

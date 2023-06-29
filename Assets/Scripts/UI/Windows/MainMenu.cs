@@ -68,8 +68,7 @@ namespace Roguelike.UI.Windows
         private void OnNewGame()
         {
             ProgressService.PlayerProgress.WorldData = new WorldData(
-                _staticData.GameConfig.StartPlayerLevel,
-                _staticData.GameConfig.StartPlayerStage);
+                _staticData.GameConfig.StartLevel);
             
             LoadLevel();
         }

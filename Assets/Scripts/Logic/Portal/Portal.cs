@@ -17,7 +17,8 @@ namespace Roguelike.Logic.Portal
 
         private IPersistentDataService _progressService;
         private ISceneLoadingService _sceneLoadingService;
-        private LevelId _regionId;
+        private LevelId _levelId;
+        private RegionId _regionId;
         private StageId _startStageId;
 
         private void Awake()
@@ -27,8 +28,9 @@ namespace Roguelike.Logic.Portal
             _sceneLoadingService = AllServices.Container.Single<ISceneLoadingService>();
         }
 
-        public void Init(LevelId regionId, StageId startStageId)
+        public void Init(LevelId levelId, RegionId regionId, StageId startStageId)
         {
+            _levelId = levelId;
             _regionId = regionId;
             _startStageId = startStageId;
             _collider.enabled = true;
@@ -40,11 +42,8 @@ namespace Roguelike.Logic.Portal
         {
             if (other.TryGetComponent(out PlayerHealth player))
             {
-                _progressService.PlayerProgress.WorldData = new WorldData(
-                    _regionId,
-                    _startStageId);
-                
-                _sceneLoadingService.Load(_regionId);
+                _progressService.PlayerProgress.WorldData = new WorldData(_levelId, _startStageId);
+                _sceneLoadingService.Load(_levelId);
             }
         }
     }

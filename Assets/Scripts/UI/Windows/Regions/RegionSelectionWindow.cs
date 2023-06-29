@@ -55,7 +55,7 @@ namespace Roguelike.UI.Windows.Regions
 
         private void InitRegionViewers()
         {
-            IEnumerable<RegionStaticData> regionsData = _staticDataService.GetAllDataByType<LevelId, RegionStaticData>();
+            IEnumerable<RegionStaticData> regionsData = _staticDataService.GetAllDataByType<RegionId, RegionStaticData>();
 
             foreach (RegionStaticData regionData in regionsData)
             {

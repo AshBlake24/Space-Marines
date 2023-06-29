@@ -9,7 +9,8 @@ namespace Roguelike.StaticData.Levels
     [CreateAssetMenu(fileName = "New level", menuName = "Static Data/Level/Region")]
     public class RegionStaticData : ScriptableObject, IStaticData
     {
-        public LevelId Id;
+        public LevelId LevelId;
+        public RegionId RegionId;
         public LocalizedString Name;
         public Sprite Icon;
         public Floor[] Floors;
@@ -17,7 +18,7 @@ namespace Roguelike.StaticData.Levels
         [Range(1, 5)] 
         public int Difficulty;
         
-        public Enum Key => Id;
+        public Enum Key => RegionId;
         public int StagesCount => Floors.SelectMany(floor => floor.Stages).Count();
         
         [Serializable]

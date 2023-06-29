@@ -54,7 +54,7 @@ namespace Roguelike.Infrastructure.States
             _stateMachine.Enter<LoadLevelState, LevelId>(_staticDataService.GameConfig.StartScene);
         }
 
-        private PlayerProgress CreateNewProgress() => 
-            new(_staticDataService.GameConfig.StartPlayerLevel);
+        private PlayerProgress CreateNewProgress() =>
+            new(_staticDataService.GameConfig.StartLevel);
     }
 }

@@ -3,15 +3,16 @@
     public enum StageId
     {
         Exit = 0,
-        Level11 = 1,
-        Level12 = 2,
-        Level13 = 3,
-        Level21 = 4,
-        Level22 = 5,
-        Level23 = 6,
-        Level31 = 7,
-        Level32 = 8,
-        Level33 = 9,
+        DungeonLevel11,
+        DungeonLevel12,
+        DungeonLevel13,
+        DungeonLevel21,
+        DungeonLevel22,
+        DungeonLevel23,
+        DungeonLevel31,
+        DungeonLevel32,
+        DungeonLevel33,
+        DungeonLevelBossOnly,
         Unknown
     }
 }

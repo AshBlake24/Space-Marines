@@ -7,7 +7,6 @@ namespace Roguelike.StaticData
     public class GameConfig : ScriptableObject
     {
         public LevelId StartScene;
-        public LevelId StartPlayerLevel;
-        public StageId StartPlayerStage;
+        public LevelId StartLevel;
     }
 }
