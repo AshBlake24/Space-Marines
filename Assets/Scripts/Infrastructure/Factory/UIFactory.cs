@@ -72,7 +72,7 @@ namespace Roguelike.Infrastructure.Factory
             switch (window)
             {
                 case MainMenu mainMenu:
-                    mainMenu.Construct(_staticData, _sceneLoadingService);
+                    mainMenu.Construct(_staticData, _sceneLoadingService, windowService);
 
                     break;
                 case ConfirmationWindow confirmationWindow:

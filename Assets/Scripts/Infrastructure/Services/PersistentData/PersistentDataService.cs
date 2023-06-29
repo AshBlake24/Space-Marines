@@ -28,8 +28,11 @@ namespace Roguelike.Infrastructure.Services.PersistentData
             LevelId levelId = EnumExtensions.GetCurrentLevelId();
             int coins = PlayerProgress.Balance.GetCoinsToStatistics();
             
+            PlayerProgress.Statistics.Favourites.AddWeapons(PlayerProgress.PlayerWeapons.Weapons);
             PlayerProgress.Statistics.KillData.TrySaveOverallKills(levelId);
             PlayerProgress.Statistics.CollectablesData.AddCoins(coins);
+            
+            Reset();
         }
 
         public void Reset()

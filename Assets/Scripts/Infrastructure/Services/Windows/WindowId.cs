@@ -19,5 +19,6 @@ namespace Roguelike.Infrastructure.Services.Windows
         ResetProgressWindow = 14,
         StatisticsWindow = 15,
         ResetTutorialWindow = 16,
+        StartNewGameWindow = 17,
     }
 }

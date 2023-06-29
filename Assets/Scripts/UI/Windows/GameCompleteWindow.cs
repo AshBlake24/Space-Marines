@@ -93,14 +93,7 @@ namespace Roguelike.UI.Windows
             _gameCompleteWindowAnimations.Play();
         }
 
-        private void UpdateProgress()
-        {
-            ProgressService.PlayerProgress.Statistics.Favourites
-                .AddWeapons(ProgressService.PlayerProgress.PlayerWeapons.Weapons);
-            
-            ProgressService.UpdateStatistics();
-            ProgressService.Reset();
-        }
+        private void UpdateProgress() => ProgressService.UpdateStatistics();
 
         private void OnConfirm() => 
             _sceneLoadingService.Load(_staticData.GameConfig.StartLevel);

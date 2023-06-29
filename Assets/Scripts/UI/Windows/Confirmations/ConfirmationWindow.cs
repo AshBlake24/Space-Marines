@@ -13,7 +13,7 @@ namespace Roguelike.UI.Windows.Confirmations
         protected IStaticDataService StaticData;
         protected ISceneLoadingService SceneLoadingService;
 
-        public event Action Confirmed;
+        public event Action<ConfirmationWindow> Confirmed;
 
         public void Construct(IStaticDataService staticData, ISceneLoadingService sceneLoadingService)
         {
@@ -33,6 +33,6 @@ namespace Roguelike.UI.Windows.Confirmations
             _confirmButton.onClick.RemoveAllListeners();
         }
 
-        protected virtual void OnConfirm() => Confirmed?.Invoke();
+        protected virtual void OnConfirm() => Confirmed?.Invoke(this);
     }
 }
