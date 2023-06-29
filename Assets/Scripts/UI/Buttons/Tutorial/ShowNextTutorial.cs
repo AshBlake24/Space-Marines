@@ -3,7 +3,7 @@ using Roguelike.Tutorials;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Roguelike.UI.Buttons
+namespace Roguelike.UI.Buttons.Tutorial
 {
     public class ShowNextTutorial : MonoBehaviour
     {

@@ -28,6 +28,7 @@ namespace Roguelike.UI.Windows
         {
             if (ProgressService.PlayerProgress.TutorialData.IsTutorialCompleted == false)
             {
+                _openCost = 0;
                 _priceLabel.text = LocalizedConstants.Free.Value;
                 _openForCoinsButton.interactable = true;
                 _openForAdsButton.interactable = false;
