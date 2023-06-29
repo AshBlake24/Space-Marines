@@ -1,4 +1,5 @@
-﻿using Roguelike.Infrastructure.Services;
+﻿using System;
+using Roguelike.Infrastructure.Services;
 using Roguelike.Infrastructure.Services.Windows;
 using UnityEngine;
 
@@ -10,6 +11,8 @@ namespace Roguelike.Logic.Interactables
         
         private IWindowService _windowService;
 
+        public event Action Interacted;
+        
         public Outline Outline => _outline;
         public bool IsActive { get; private set; }
 
@@ -25,6 +28,7 @@ namespace Roguelike.Logic.Interactables
         public void Interact(GameObject interactor)
         {
             _windowService.Open(WindowId.StatisticsWindow);
+            Interacted?.Invoke();
         }
     }
 }

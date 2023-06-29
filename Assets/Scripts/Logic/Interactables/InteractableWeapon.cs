@@ -1,3 +1,4 @@
+using System;
 using Roguelike.Player;
 using Roguelike.StaticData.Weapons;
 using UnityEngine;
@@ -9,6 +10,8 @@ namespace Roguelike.Logic.Interactables
     {
         [SerializeField] private Transform _modelContainer;
 
+        public event Action Interacted;
+        
         public WeaponId Id { get; private set; }
         public Outline Outline { get; private set; }
         public bool IsActive { get; private set; }
@@ -28,6 +31,7 @@ namespace Roguelike.Logic.Interactables
             {
                 if (playerShooter.TryAddWeapon(Id))
                 {
+                    Interacted?.Invoke();
                     IsActive = false;
                     interactor.GetComponent<PlayerInteraction>().Cleanup();
                     Destroy(gameObject);

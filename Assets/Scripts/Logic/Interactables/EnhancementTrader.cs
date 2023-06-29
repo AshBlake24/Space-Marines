@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Roguelike.Infrastructure.Services;
 using Roguelike.Infrastructure.Services.Windows;
@@ -14,10 +15,12 @@ namespace Roguelike.Logic.Interactables
         
         private IWindowService _windowService;
         private HashSet<EnhancementStaticData> _soldEnhancements;
-
+        
+        public event Action Interacted;
+        
         public Outline Outline => _outline;
         public bool IsActive { get; private set; }
-        
+
         private void Awake() => 
             _windowService = AllServices.Container.Single<IWindowService>();
 
@@ -37,6 +40,8 @@ namespace Roguelike.Logic.Interactables
                     _soldEnhancements = enhancementShopWindow.InitNewEnhancementViewers();
                 else
                     enhancementShopWindow.InitEnhancementViewers(_soldEnhancements);
+                
+                Interacted?.Invoke();
             }
         }
     }

@@ -86,6 +86,7 @@ namespace Roguelike.Logic.CharacterSelection
             InitHud(player);
             InitCamera(player);
             
+            _tutorialService.TryShowTutorial(TutorialId.Hub01);
             _saveLoadService.InformProgressReaders();
             _characterSelected = true;
             enabled = false;
