@@ -13,6 +13,7 @@ namespace Roguelike.UI.Windows
         [SerializeField] private Button _openForCoinsButton;
         [SerializeField] private Button _openForAdsButton;
         [SerializeField] private Image _coinsButtonFadeColorImage;
+        [SerializeField] private Image _adsButtonFadeColorImage;
         [SerializeField] private int _openCost;
 
         private IAdsService _adsService;
@@ -33,13 +34,15 @@ namespace Roguelike.UI.Windows
                 _openForCoinsButton.interactable = true;
                 _openForAdsButton.interactable = false;
                 _coinsButtonFadeColorImage.gameObject.SetActive(false);
+                _adsButtonFadeColorImage.gameObject.SetActive(true);
             }
             else
             {
                 _priceLabel.text = _openCost.ToString();
                 _openForCoinsButton.interactable = PlayerHasMoney();
                 _openForAdsButton.interactable = true;
-                _coinsButtonFadeColorImage.gameObject.SetActive(true);
+                _coinsButtonFadeColorImage.gameObject.SetActive(!_openForCoinsButton.interactable);
+                _adsButtonFadeColorImage.gameObject.SetActive(false);
             }
         }
 
