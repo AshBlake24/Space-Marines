@@ -8,13 +8,16 @@ namespace Roguelike.Logic.Pause
         private const float DefaultTimeScale = 1.0f;
         private const float PausedTimeScale = 0f;
 
-        public PauseMenu PauseMenu { get; private set; }
         public bool IsPaused => Mathf.Approximately(Time.timeScale, PausedTimeScale);
-        
+        public bool IsPauseMenuOpen => PauseMenu != null;
+        public PauseMenu PauseMenu { get; private set; }
+
         public void PauseGame(PauseMenu pauseMenu = null)
         {
             Time.timeScale = PausedTimeScale;
-            PauseMenu = pauseMenu;
+            
+            if (PauseMenu == null)
+                PauseMenu = pauseMenu;
         }
 
         public void ResumeGame()

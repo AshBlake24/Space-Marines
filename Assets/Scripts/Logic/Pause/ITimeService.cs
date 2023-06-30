@@ -5,8 +5,10 @@ namespace Roguelike.Logic.Pause
 {
     public interface ITimeService : IService
     {
-        PauseMenu PauseMenu { get; }
         bool IsPaused { get; }
+        bool IsPauseMenuOpen { get; }
+        PauseMenu PauseMenu { get; }
+
         void PauseGame(PauseMenu pauseMenu = null);
         void ResumeGame();
     }

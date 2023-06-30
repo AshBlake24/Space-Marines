@@ -36,7 +36,9 @@ namespace Roguelike.Utilities
         {
             if (_adsService.IsVideoOpen == false)
             {
-                _timeService.ResumeGame();
+                if (_timeService.IsPauseMenuOpen == false)
+                    _timeService.ResumeGame();
+                
                 _audioService.SetChannelMute(AudioChannel.Master, false);
             }
         }
