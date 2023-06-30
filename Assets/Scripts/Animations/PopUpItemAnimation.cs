@@ -42,7 +42,8 @@ namespace Roguelike.Animations
         private void PlayAnimation(Vector3 defaultScale, Vector3 jumpDistance)
         {
             _sequence = DOTween.Sequence();
-
+            
+            _sequence.SetUpdate(false);
             _sequence.Append(transform
                 .DOScale(defaultScale, _scalingDuration)
                 .From(Vector3.zero));
