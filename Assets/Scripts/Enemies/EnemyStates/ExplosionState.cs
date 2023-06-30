@@ -1,4 +1,5 @@
 ﻿using System;
+using Roguelike.Logic;
 using Roguelike.Roguelike.Enemies.Animators;
 using Roguelike.StaticData.Enemies;
 using UnityEngine;
@@ -8,7 +9,9 @@ namespace Roguelike.Enemies.EnemyStates
     public class ExplosionState : EnemyState
     {
         private const EnemyId Mine = EnemyId.Mine;
+        private readonly Collider[] _hits = new Collider[1];
 
+        [SerializeField] private LayerMask _explosionMask;
         [SerializeField] private ParticleSystem _effects;
         [SerializeField] private float _explosionRadius;
 
@@ -24,18 +27,25 @@ namespace Roguelike.Enemies.EnemyStates
                 animator.PlayAttack();
         }
 
-        public void Explosion()
+        private void Explosion()
         {
             if (_effects != null)
                 _effects.Play();
 
-            if (Vector3.Distance(enemy.Target.transform.position, transform.position) <= _explosionRadius)
+            for (int i = 0; i < Explode(); i++)
             {
-                Exploded?.Invoke();
-                enemy.Target.TakeDamage(enemy.Damage);
+                if (_hits[i].transform.TryGetComponent(out IHealth health))
+                    health.TakeDamage(enemy.Damage);
             }
 
             enemy?.Health.TakeDamage(enemy.Health.MaxHealth);
+        }
+
+        private int Explode()
+        {
+            Exploded?.Invoke();
+            
+            return Physics.OverlapSphereNonAlloc(transform.position, _explosionRadius, _hits, _explosionMask);
         }
     }
 }

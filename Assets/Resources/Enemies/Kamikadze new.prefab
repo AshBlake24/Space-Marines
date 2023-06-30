@@ -613,8 +613,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _transitions: []
+  _explosionMask:
+    serializedVersion: 2
+    m_Bits: 1024
   _effects: {fileID: 4298831739208571267}
-  _explosionRadius: 2.3
+  _explosionRadius: 3.2
 --- !u!114 &6095422460904431471
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2177,15 +2180,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4758149014205656, guid: 72a5884a7c693ff4783ee5cdfc3e9e9c, type: 3}
       propertyPath: m_LocalScale.x
-      value: 2.5
+      value: 3.5
       objectReference: {fileID: 0}
     - target: {fileID: 4758149014205656, guid: 72a5884a7c693ff4783ee5cdfc3e9e9c, type: 3}
       propertyPath: m_LocalScale.y
-      value: 2.5
+      value: 3.5
       objectReference: {fileID: 0}
     - target: {fileID: 4758149014205656, guid: 72a5884a7c693ff4783ee5cdfc3e9e9c, type: 3}
       propertyPath: m_LocalScale.z
-      value: 2.5
+      value: 3.5
       objectReference: {fileID: 0}
     - target: {fileID: 4758149014205656, guid: 72a5884a7c693ff4783ee5cdfc3e9e9c, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2226,6 +2229,10 @@ PrefabInstance:
     - target: {fileID: 4758149014205656, guid: 72a5884a7c693ff4783ee5cdfc3e9e9c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4758149014205656, guid: 72a5884a7c693ff4783ee5cdfc3e9e9c, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 72a5884a7c693ff4783ee5cdfc3e9e9c, type: 3}
