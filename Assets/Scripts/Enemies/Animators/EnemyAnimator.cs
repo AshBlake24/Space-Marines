@@ -10,10 +10,11 @@ namespace Roguelike.Roguelike.Enemies.Animators
         private static readonly int s_isWait = Animator.StringToHash("IsWait");
         private static readonly int s_attackOptional = Animator.StringToHash("OptionalAttack");
         private static readonly int s_attack = Animator.StringToHash("Attack");
-        private static readonly int s_died = Animator.StringToHash("Died");
+        private static readonly int s_die = Animator.StringToHash("Died");
         private static readonly int s_hit = Animator.StringToHash("Hit");
 
         private Animator _animator;
+        private bool _isDied;
 
         private void Awake()
         {
@@ -26,11 +27,21 @@ namespace Roguelike.Roguelike.Enemies.Animators
             _animator.SetFloat(s_enemySpeed, speed);
         }
 
-        public void PlayAttack() => _animator.SetTrigger(s_attack);
+        public void PlayAttack() 
+        {
+            if (_isDied == true)
+                return;
+
+            _animator.SetTrigger(s_attack);
+        }
 
         public void PlayHit() => _animator.SetTrigger(s_hit);
 
-        public void PlayDie() => _animator.SetTrigger(s_died);
+        public void PlayDie() 
+        {
+            _animator.SetTrigger(s_die);
+            _isDied = true;
+        }
         public void PlayIdle(bool isWait) => _animator.SetBool(s_isWait, isWait);
         public void PlayOptionalAttack() => _animator.SetTrigger(s_attackOptional);
     }
