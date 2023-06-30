@@ -27,7 +27,7 @@ namespace Roguelike.Infrastructure.Services.Pools
         {
             if (_pools.ContainsKey(key) == false)
             {
-                ParticlesPool pool = new ParticlesPool(particlesPrefab, defaultSize, maxSize);
+                ParticlesPool pool = new(particlesPrefab, defaultSize, maxSize);
                 _pools.Add(key, pool);
             }
         }
