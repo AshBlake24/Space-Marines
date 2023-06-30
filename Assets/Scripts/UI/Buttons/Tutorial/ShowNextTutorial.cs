@@ -21,9 +21,7 @@ namespace Roguelike.UI.Buttons.Tutorial
         private void OnDisable() => 
             _button.onClick.RemoveListener(OnButtonClick);
 
-        private void OnButtonClick()
-        {
+        private void OnButtonClick() => 
             _tutorialService.TryShowTutorial(_nextTutorialId);
-        }
     }
 }

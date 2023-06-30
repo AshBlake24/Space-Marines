@@ -21,7 +21,10 @@
         Hub08,
         Hub09,
         Hub10,
-        Ending,
+        Ending01,
+        Ending02,
+        Ending03,
+        Ending04,
         Controls
     }
 }

@@ -30,8 +30,7 @@ namespace Roguelike.Tutorials
         {
             LoadingScreen.Hided -= OnLoadingScreenHided;
 
-            _tutorialService.TryShowTutorial(TutorialId.Ending);
-            _persistentData.PlayerProgress.TutorialData.IsTutorialCompleted = true;
+            _tutorialService.TryShowTutorial(TutorialId.Ending01);
             
             Destroy(gameObject);
         }
