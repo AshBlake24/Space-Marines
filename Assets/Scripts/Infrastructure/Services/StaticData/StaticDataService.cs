@@ -62,6 +62,7 @@ namespace Roguelike.Infrastructure.Services.StaticData
 
         private void LoadAllStaticData()
         {
+            _data.Clear();
             LoadData();
             LoadWindows();
             LoadMusic();

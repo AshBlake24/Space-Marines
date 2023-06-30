@@ -35,7 +35,7 @@ namespace Roguelike.Enemies.EnemyStates
                 enemy.Target.TakeDamage(enemy.Damage);
             }
 
-            enemy.Health.TakeDamage(enemy.Health.MaxHealth);
+            enemy?.Health.TakeDamage(enemy.Health.MaxHealth);
         }
     }
 }

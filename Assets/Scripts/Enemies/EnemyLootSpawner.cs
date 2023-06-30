@@ -28,8 +28,6 @@ namespace Roguelike.Enemies
         {
             float roll = _randomService.Next(0f, 100f);
             
-            Debug.Log($"Drop Roll: {roll}");
-
             if (roll <= _powerupDropChance)
                 _lootFactory.CreateRandomPowerup(transform.position);
         }

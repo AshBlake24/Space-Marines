@@ -4,6 +4,7 @@ using Roguelike.Infrastructure.AssetManagement;
 using Roguelike.Infrastructure.Services;
 using Roguelike.Infrastructure.Services.PersistentData;
 using Roguelike.Infrastructure.Services.SaveLoad;
+using Roguelike.Infrastructure.Services.StaticData;
 using Roguelike.Localization;
 using UnityEditor;
 using UnityEngine;
@@ -47,6 +48,13 @@ namespace Roguelike.Editor
             csvLoader.LoadCSV(AssetPath.LocalizationPath);
             csvLoader.SortByKeyNames(LocalizationSystem.LocalizationFilePath);
             AssetDatabase.Refresh();
+        }
+        
+        [MenuItem("Tools/Reload Configs")]
+        public static void ReloadConfigs()
+        {
+            IStaticDataService staticDataService = AllServices.Container.Single<IStaticDataService>();
+            staticDataService.Load();
         }
         
         private static void SaveToFile(string dataToStore)
