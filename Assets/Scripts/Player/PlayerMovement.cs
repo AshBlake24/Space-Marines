@@ -12,7 +12,7 @@ namespace Roguelike.Player
     {
         private const float SmoothTime = 0.05f;
 
-        [SerializeField] private float _moveSpeed;
+        [SerializeField] private float _moveSpeed = 5;
         [SerializeField] private PlayerAim _playerAim;
         [SerializeField] private Transform _playerAimTarget;
         [SerializeField] private PlayerAnimator _playerAnimator;

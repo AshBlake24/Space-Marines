@@ -7,23 +7,24 @@ namespace Roguelike.Logic
         private static readonly int s_color = Shader.PropertyToID("_Color");
         private readonly Color _defaultColor = new(1f, 1f, 1f, 1f);
         private readonly Color _transparentColor = new(1f, 1f, 1f, 0.5f);
-        private readonly Vector3 _rayOrigin = new(Screen.width / 2f, Screen.height / 2.5f, 0);
-
+        
         [SerializeField] private LayerMask _hideable;
         [SerializeField] private float _rayDistance;
         [SerializeField] private float _timeBetweenRender;
 
         private Camera _camera;
+        private Vector3 _rayOrigin;
         private GameObject _currentObject;
-        private MeshRenderer _currentRenderer;
-        private MeshRenderer _previousRenderer;
+        private MeshConcealer _currentMeshConcealer;
+        private MeshConcealer _previousMeshConcealer;
 
         private void Start()
         {
             _camera = Camera.main;
+            _rayOrigin = new Vector3(_camera.pixelWidth / 2f, _camera.pixelHeight / 3f, 0f);
             InvokeRepeating(nameof(Render), 1f, _timeBetweenRender);
         }
-
+        
         private void Render()
         {
             Ray ray = _camera.ScreenPointToRay(_rayOrigin);
@@ -45,29 +46,35 @@ namespace Roguelike.Logic
 
         private void SetObjectTransparent(RaycastHit hit)
         {
-            _previousRenderer = _currentRenderer;
+            _previousMeshConcealer = _currentMeshConcealer;
             _currentObject = hit.collider.gameObject;
-            _currentRenderer = hit.collider.GetComponentInParent<MeshRenderer>();
+            _currentMeshConcealer = hit.collider.GetComponent<MeshConcealer>();
 
-            foreach (Material material in _currentRenderer.materials) 
-                material.SetColor(s_color, _transparentColor);
+            for (int i = 0; i < _currentMeshConcealer.Meshes.Length; i++)
+            {
+                foreach (Material material in _currentMeshConcealer.Meshes[i].materials) 
+                    material.SetColor(s_color, _transparentColor);
+            }
         }
 
         private void ClearCurrentRenderer()
         {
-            _previousRenderer = _currentRenderer;
-            _currentRenderer = null;
+            _previousMeshConcealer = _currentMeshConcealer;
+            _currentMeshConcealer = null;
             _currentObject = null;
         }
 
         private void ReturnDefaultColor()
         {
-            if (_previousRenderer != null && _previousRenderer != _currentRenderer)
+            if (_previousMeshConcealer != null && _previousMeshConcealer != _currentMeshConcealer)
             {
-                foreach (Material material in _previousRenderer.materials) 
-                    material.SetColor(s_color, _defaultColor);
+                for (int i = 0; i < _previousMeshConcealer.Meshes.Length; i++)
+                {
+                    foreach (Material material in _previousMeshConcealer.Meshes[i].materials) 
+                        material.SetColor(s_color, _defaultColor);
+                }
                 
-                _previousRenderer = null;
+                _previousMeshConcealer = null;
             }
         }
     }
