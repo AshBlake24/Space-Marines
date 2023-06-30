@@ -7,7 +7,7 @@ namespace Roguelike.Enemies
     public class EnemyLootSpawner : MonoBehaviour
     {
         [SerializeField] private EnemyHealth _health;
-        [SerializeField, Range(0f, 100f)] private float _powerupDropChance;
+        [SerializeField, Range(0f, 100f)] private float _powerupDropChance = 20;
 
         private ILootFactory _lootFactory;
         private IRandomService _randomService;
@@ -27,6 +27,8 @@ namespace Roguelike.Enemies
         private void TrySpawnLoot()
         {
             float roll = _randomService.Next(0f, 100f);
+            
+            Debug.Log($"Drop Roll: {roll}");
 
             if (roll <= _powerupDropChance)
                 _lootFactory.CreateRandomPowerup(transform.position);
