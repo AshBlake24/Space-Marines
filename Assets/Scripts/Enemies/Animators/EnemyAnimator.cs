@@ -1,11 +1,13 @@
-using Roguelike.StaticData.Enemies;
 using UnityEngine;
 
 namespace Roguelike.Roguelike.Enemies.Animators
 {
+    [RequireComponent(typeof(Animator))]
+
     public class EnemyAnimator : MonoBehaviour
     {
         private const string ClipName = "Death";
+        private const string BossClipName = "BossDeath";
 
         private static readonly int s_enemySpeed = Animator.StringToHash("EnemySpeed");
         private static readonly int s_isStopped = Animator.StringToHash("IsStopped");
@@ -17,6 +19,7 @@ namespace Roguelike.Roguelike.Enemies.Animators
 
         private Animator _animator;
         private bool _isDied;
+        private AnimatorClipInfo[] _currentClips;
 
         private void Awake()
         {
@@ -27,12 +30,16 @@ namespace Roguelike.Roguelike.Enemies.Animators
         {
             if (_isDied == false)
                 return;
+            SwitchClipToDeath();
+        }
 
+        private void SwitchClipToDeath()
+        {
             _currentClips = _animator.GetCurrentAnimatorClipInfo(0);
 
             for (int i = 0; i < _currentClips.Length; i++)
             {
-                if (_currentClips[i].clip.name == ClipName)
+                if (_currentClips[i].clip.name == ClipName || _currentClips[i].clip.name == BossClipName)
                     enabled = false;
                 else
                     PlayDie();
@@ -58,8 +65,8 @@ namespace Roguelike.Roguelike.Enemies.Animators
         public void PlayDie() 
         {
             _animator.SetTrigger(s_die);
-            _isDied = true;
 
+            _isDied = true;
             enabled = true;
         }
         
