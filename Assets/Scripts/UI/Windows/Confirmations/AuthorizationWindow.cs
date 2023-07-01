@@ -24,7 +24,7 @@ namespace Roguelike.UI.Windows.Confirmations
 
             PlayerAccount.Authorize();
 #endif
-            Destroy(gameObject);
+            Close();
         }
     }
 }
