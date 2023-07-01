@@ -7,15 +7,17 @@ namespace Roguelike.Enemies
     public class EnemyLootSpawner : MonoBehaviour
     {
         [SerializeField] private EnemyHealth _health;
-        [SerializeField, Range(0f, 100f)] private float _powerupDropChance = 20;
+        [SerializeField, Range(0f, 100f)] private float _powerupDropChance = 25;
 
         private ILootFactory _lootFactory;
         private IRandomService _randomService;
+        private bool _received;
 
         public void Construct(ILootFactory lootFactory, IRandomService randomService)
         {
             _lootFactory = lootFactory;
             _randomService = randomService;
+            _received = false;
         }
 
         private void Start() =>
@@ -26,10 +28,15 @@ namespace Roguelike.Enemies
 
         private void TrySpawnLoot()
         {
-            float roll = _randomService.Next(0f, 100f);
+            if (_received == false)
+            {
+                float roll = _randomService.Next(0f, 100f);
             
-            if (roll <= _powerupDropChance)
-                _lootFactory.CreateRandomPowerup(transform.position);
+                if (roll <= _powerupDropChance)
+                    _lootFactory.CreateRandomPowerup(transform.position);
+
+                _received = true;
+            }
         }
     }
 }

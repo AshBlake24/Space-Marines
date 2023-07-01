@@ -3,7 +3,6 @@ using Roguelike.Infrastructure.Services;
 using Roguelike.Infrastructure.Services.Input;
 using Roguelike.Player.Enhancements;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace Roguelike.Player
 {
@@ -11,8 +10,9 @@ namespace Roguelike.Player
     public class PlayerMovement : MonoBehaviour, IEnhanceable<int>
     {
         private const float SmoothTime = 0.05f;
+        private const float MinPlayerSpeed = 5f;
 
-        [SerializeField] private float _moveSpeed = 5;
+        [SerializeField] private float _moveSpeed;
         [SerializeField] private PlayerAim _playerAim;
         [SerializeField] private Transform _playerAimTarget;
         [SerializeField] private PlayerAnimator _playerAnimator;
@@ -58,13 +58,21 @@ namespace Roguelike.Player
         public void BoostSpeed(float speedMultiplier)
         {
             _moveSpeed *= speedMultiplier;
+            ValidateMoveSpeed();
             Boosted = true;
         }
 
         public void ResetSpeed()
         {
             _moveSpeed = _defaultMoveSpeed;
+            ValidateMoveSpeed();
             Boosted = false;
+        }
+
+        private void ValidateMoveSpeed()
+        {
+            if (_moveSpeed < MinPlayerSpeed)
+                _moveSpeed = MinPlayerSpeed;
         }
 
         public void Enhance(int moveSpeedPercentage)

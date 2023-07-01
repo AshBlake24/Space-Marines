@@ -42,6 +42,7 @@ namespace Roguelike.Roguelike.Enemies.Animators
             _animator.SetTrigger(s_die);
             _isDied = true;
         }
+        
         public void PlayIdle(bool isWait) => _animator.SetBool(s_isWait, isWait);
         public void PlayOptionalAttack() => _animator.SetTrigger(s_attackOptional);
     }

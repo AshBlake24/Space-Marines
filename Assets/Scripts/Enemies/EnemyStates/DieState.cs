@@ -1,5 +1,4 @@
 ﻿using Roguelike.Roguelike.Enemies.Animators;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -7,7 +6,6 @@ namespace Roguelike.Enemies.EnemyStates
 {
     public class DieState : EnemyState
     {
-
         public override void Enter(Enemy curentEnemy, EnemyAnimator enemyAnimator)
         {
             base.Enter(curentEnemy, enemyAnimator);
@@ -37,7 +35,8 @@ namespace Roguelike.Enemies.EnemyStates
         {
             NavMeshAgent _agent = GetComponent<NavMeshAgent>();
 
-            _agent.enabled = false;
+            if (_agent != null)
+                _agent.enabled = false;
         }
     }
 }
