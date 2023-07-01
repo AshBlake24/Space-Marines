@@ -17,11 +17,11 @@ namespace Roguelike.UI.Buttons.Tutorial
         {
             _environmentService = AllServices.Container.Single<IEnvironmentService>();
             
-            if (_environmentService.GetDeviceType() != EnvironmentType.Desktop)
-                Destroy(gameObject);
-            
-            _tutorialService = AllServices.Container.Single<ITutorialService>();
-            _button.onClick.AddListener(OnButtonClick);
+            if (_environmentService.GetDeviceType() == EnvironmentType.Desktop)
+            {
+                _tutorialService = AllServices.Container.Single<ITutorialService>();
+                _button.onClick.AddListener(OnButtonClick);
+            }
         }
 
         private void OnDisable() => 
