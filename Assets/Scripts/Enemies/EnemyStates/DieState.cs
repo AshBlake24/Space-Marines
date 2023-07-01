@@ -10,7 +10,7 @@ namespace Roguelike.Enemies.EnemyStates
         {
             base.Enter(curentEnemy, enemyAnimator);
 
-            DisableNavMeshAgent();
+            DisableStateMachine();
             DisableColliders();
 
             animator.PlayDie();
@@ -31,12 +31,12 @@ namespace Roguelike.Enemies.EnemyStates
             }
         }
 
-        private void DisableNavMeshAgent()
+        private void DisableStateMachine()
         {
-            NavMeshAgent _agent = GetComponent<NavMeshAgent>();
+            EnemyStateMachine _stateMachine = GetComponent<EnemyStateMachine>();
 
-            if (_agent != null)
-                _agent.enabled = false;
+            if (_stateMachine != null)
+                _stateMachine.enabled = false;
         }
     }
 }
