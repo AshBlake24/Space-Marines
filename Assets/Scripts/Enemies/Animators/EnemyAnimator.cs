@@ -5,6 +5,8 @@ namespace Roguelike.Roguelike.Enemies.Animators
 {
     public class EnemyAnimator : MonoBehaviour
     {
+        private const string ClipName = "Death";
+
         private static readonly int s_enemySpeed = Animator.StringToHash("EnemySpeed");
         private static readonly int s_isStopped = Animator.StringToHash("IsStopped");
         private static readonly int s_isWait = Animator.StringToHash("IsWait");
@@ -15,10 +17,31 @@ namespace Roguelike.Roguelike.Enemies.Animators
 
         private Animator _animator;
         private bool _isDied;
+        private bool _isDeathPlayed;
+        private AnimatorClipInfo[] _currentClips;
 
         private void Awake()
         {
             _animator = GetComponent<Animator>();
+        }
+
+        private void Update()
+        {
+            if (_isDied == false)
+                return;
+
+            if (_isDeathPlayed)
+                return;
+
+            _currentClips = _animator.GetCurrentAnimatorClipInfo(0);
+
+            for (int i = 0; i < _currentClips.Length; i++)
+            {
+                if (_currentClips[i].clip.name == ClipName)
+                    _isDeathPlayed = true;
+                else
+                    PlayDie();
+            }
         }
 
         public void Move(float speed, bool isStopped)
