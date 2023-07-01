@@ -48,7 +48,8 @@ namespace Roguelike.Player
                 }
             }
         }
-
+        
+#if UNITY_EDITOR
         private void OnGUI()
         {
             if (GUI.Button(new Rect(30, 250, 100, 35), "Take Damage"))
@@ -57,6 +58,7 @@ namespace Roguelike.Player
             if (GUI.Button(new Rect(30, 350, 100, 35), "Heal"))
                 Heal(100);
         }
+#endif
 
         private void OnEnable() => 
             _playerDeath.Resurrected += OnResurrected;

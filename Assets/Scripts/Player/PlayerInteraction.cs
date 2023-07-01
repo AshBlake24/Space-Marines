@@ -27,6 +27,7 @@ namespace Roguelike.Player
         public event Action GotInteractable;
         public event Action LostInteractable;
 
+#if UNITY_EDITOR
         private void OnDrawGizmos()
         {
             if (_drawGizmos)
@@ -35,6 +36,7 @@ namespace Roguelike.Player
                 Gizmos.DrawWireSphere(transform.position, _radius);
             }
         }
+#endif
 
         public void Construct(IWindowService windowService, IInputService inputService)
         {

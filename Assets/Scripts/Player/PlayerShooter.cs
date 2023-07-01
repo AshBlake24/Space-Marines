@@ -34,6 +34,7 @@ namespace Roguelike.Player
         public IWeapon CurrentWeapon { get; private set; }
         public bool Boosted { get; private set; }
 
+#if UNITY_EDITOR
         private void OnGUI()
         {
             if (GUI.Button(new Rect(30, 300, 100, 35), "Refill ammo"))
@@ -45,6 +46,7 @@ namespace Roguelike.Player
                 }
             }
         }
+#endif
 
         private void Awake() =>
             _inputService = AllServices.Container.Single<IInputService>();

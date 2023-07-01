@@ -19,7 +19,8 @@ namespace Roguelike.Player
         private EnemyHealth _closetEnemy;
 
         public event Action<EnemyHealth> TargetChanged;
-
+        
+#if UNITY_EDITOR
         private void OnDrawGizmos()
         {
             if (_drawGizmos)
@@ -28,6 +29,7 @@ namespace Roguelike.Player
                 Gizmos.DrawWireSphere(transform.position, _radius);
             }
         }
+#endif
 
         private void Start()
         {

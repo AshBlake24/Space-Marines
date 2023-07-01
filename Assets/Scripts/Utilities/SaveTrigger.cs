@@ -23,6 +23,7 @@ namespace Roguelike.Utilities
             gameObject.SetActive(false);
         }
 
+#if UNITY_EDITOR
         private void OnDrawGizmos()
         {
             if (Collider == false)
@@ -31,5 +32,6 @@ namespace Roguelike.Utilities
             Gizmos.color = Color;
             Gizmos.DrawCube(transform.position + Collider.center, Collider.size);
         }
+#endif
     }
 }
