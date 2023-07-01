@@ -417,7 +417,6 @@ GameObject:
   - component: {fileID: 3730292728815793010}
   - component: {fileID: 3730292728815792998}
   - component: {fileID: 3730292728815793017}
-  - component: {fileID: 3730292728815793008}
   - component: {fileID: 7695795051017055042}
   - component: {fileID: 6095422460904431471}
   - component: {fileID: 9109506704565381627}
@@ -512,20 +511,6 @@ MonoBehaviour:
   _startState: {fileID: 8428388135367834003}
   _dieState: {fileID: 6095422460904431471}
   _playerDieState: {fileID: 4541921851281520700}
---- !u!114 &3730292728815793008
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3730292728815792999}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ef0eb0c65d5e48cab30ac4365bcba646, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _health: {fileID: 3602173282494063749}
-  _powerupDropChance: 15
 --- !u!114 &7695795051017055042
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -564,6 +549,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _transitions: []
+  _explosionMask:
+    serializedVersion: 2
+    m_Bits: 0
   _effects: {fileID: 377067430858325880}
   _explosionRadius: 2.3
 --- !u!114 &8428388135367834003
