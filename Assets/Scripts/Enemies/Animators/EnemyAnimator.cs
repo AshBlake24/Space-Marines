@@ -17,11 +17,6 @@ namespace Roguelike.Roguelike.Enemies.Animators
 
         private Animator _animator;
         private bool _isDied;
-<<<<<<< HEAD
-=======
-        private bool _isDeathPlayed;
->>>>>>> 47a1392b186820f0d9c1b465a2b09d9fecdcbbab
-        private AnimatorClipInfo[] _currentClips;
 
         private void Awake()
         {
@@ -33,22 +28,12 @@ namespace Roguelike.Roguelike.Enemies.Animators
             if (_isDied == false)
                 return;
 
-<<<<<<< HEAD
-=======
-            if (_isDeathPlayed)
-                return;
-
->>>>>>> 47a1392b186820f0d9c1b465a2b09d9fecdcbbab
             _currentClips = _animator.GetCurrentAnimatorClipInfo(0);
 
             for (int i = 0; i < _currentClips.Length; i++)
             {
                 if (_currentClips[i].clip.name == ClipName)
-<<<<<<< HEAD
                     enabled = false;
-=======
-                    _isDeathPlayed = true;
->>>>>>> 47a1392b186820f0d9c1b465a2b09d9fecdcbbab
                 else
                     PlayDie();
             }
