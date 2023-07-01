@@ -29,12 +29,13 @@ namespace Roguelike.Infrastructure.States
                     services.Single<IUIFactory>(), services.Single<IAudioFactory>(), services.Single<IWindowService>()),
 
                 [typeof(LoadProgressState)] = new LoadProgressState(this, services.Single<IPersistentDataService>(),
-                    services.Single<ISaveLoadService>(), services.Single<IStaticDataService>(), 
+                    services.Single<ISaveLoadService>(), services.Single<IStaticDataService>(),
                     services.Single<IAudioService>()),
 
-                [typeof(GameLoopState)] = new GameLoopState(this, services.Single<ISaveLoadService>(), 
-                    services.Single<ITimeService>(), services.Single<IPersistentDataService>()),
-                
+                [typeof(GameLoopState)] = new GameLoopState(this, services.Single<ISaveLoadService>(),
+                    services.Single<ITimeService>(), services.Single<IPersistentDataService>(),
+                    services.Single<IStaticDataService>()),
+
                 [typeof(ExitGameState)] = new ExitGameState(this)
             };
         }

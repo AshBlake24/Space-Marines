@@ -1,5 +1,7 @@
+using Roguelike.Data;
 using Roguelike.Infrastructure.Services.PersistentData;
 using Roguelike.Infrastructure.Services.SaveLoad;
+using Roguelike.Infrastructure.Services.StaticData;
 using Roguelike.Logic.Pause;
 
 namespace Roguelike.Infrastructure.States
@@ -10,14 +12,16 @@ namespace Roguelike.Infrastructure.States
         private readonly ISaveLoadService _saveLoadService;
         private readonly ITimeService _timeService;
         private readonly IPersistentDataService _persistentData;
+        private readonly IStaticDataService _staticDataService;
 
         public GameLoopState(GameStateMachine gameStateMachine, ISaveLoadService saveLoadService,
-            ITimeService timeService, IPersistentDataService persistentData)
+            ITimeService timeService, IPersistentDataService persistentData, IStaticDataService staticDataService)
         {
             _gameStateMachine = gameStateMachine;
             _saveLoadService = saveLoadService;
             _timeService = timeService;
             _persistentData = persistentData;
+            _staticDataService = staticDataService;
         }
 
         public void Enter()
@@ -28,8 +32,15 @@ namespace Roguelike.Infrastructure.States
 
         public void Exit()
         {
-            if (_persistentData.IsResetting == false)
-                _saveLoadService.SaveProgress();
+            if (_persistentData.IsResetting)
+            {
+                _persistentData.PlayerProgress = new PlayerProgress(
+                    _staticDataService.GameConfig.StartLevel,
+                    _staticDataService.GameConfig.StartRegion,
+                    _staticDataService.GameConfig.StartStage);
+            }
+
+            _saveLoadService.SaveProgress();
         }
     }
 }
