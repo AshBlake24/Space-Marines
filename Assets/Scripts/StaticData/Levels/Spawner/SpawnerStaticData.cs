@@ -12,11 +12,15 @@ namespace Roguelike.StaticData.Levels.Spawner
         public List<EnemyId> Enemies;
         public float Complexity;
         public int MinSpawnPointsInWave;
+        public int MaxSpawnPointsInWave;
 
         private void OnValidate()
         {
             if (MinSpawnPointsInWave <= 0)
                 MinSpawnPointsInWave = 1;
+
+            if (MaxSpawnPointsInWave < MinSpawnPointsInWave)
+                MaxSpawnPointsInWave = MinSpawnPointsInWave;
         }
     }
 }

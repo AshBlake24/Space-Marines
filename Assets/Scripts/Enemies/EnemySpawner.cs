@@ -85,9 +85,10 @@ namespace Roguelike.Enemies
             _player = player;
 
             int spawnPointsCount = _readySpawnPoints.Count;
+            int spawnPointsInWave = Random.Range(_data.MinSpawnPointsInWave, _data.MaxSpawnPointsInWave + 1);
 
-            if (_data.MinSpawnPointsInWave < _readySpawnPoints.Count)
-                spawnPointsCount = Random.Range(_data.MinSpawnPointsInWave, _readySpawnPoints.Count + 1);
+            if (spawnPointsInWave < _readySpawnPoints.Count)
+                spawnPointsCount = Random.Range(spawnPointsInWave, _readySpawnPoints.Count + 1);
 
             for (int i = 0; i < spawnPointsCount; i++)
             {
