@@ -62,8 +62,10 @@ namespace Roguelike.Infrastructure.Factory
             _enemy = new Enemy(_enemyData, _enemyPrefab.GetComponentInChildren<EnemyHealth>(), target);
 
             _enemyPrefab.GetComponentInChildren<EnemyStateMachine>().Init(_enemy);
-            _enemyPrefab.GetComponentInChildren<EnemyLootSpawner>()
-                .Construct(_lootFactory, _randomService);
+            EnemyLootSpawner lootSpawner = _enemyPrefab.GetComponentInChildren<EnemyLootSpawner>();
+            
+            if (lootSpawner != null)
+                lootSpawner.Construct(_lootFactory, _randomService);
 
             if (_enemyPrefab.TryGetComponent(out AudioPlayer audioPlayer))
                 audioPlayer.Construct(_audioFactory, _enemyData.Sound);
