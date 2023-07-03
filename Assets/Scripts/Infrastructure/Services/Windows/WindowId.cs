@@ -21,5 +21,6 @@ namespace Roguelike.Infrastructure.Services.Windows
         ResetTutorialWindow = 16,
         StartNewGameWindow = 17,
         WeaponChestWindow = 18,
+        AlreadyAuthorize = 19,
     }
 }

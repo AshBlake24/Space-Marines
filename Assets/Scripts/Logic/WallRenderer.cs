@@ -7,7 +7,7 @@ namespace Roguelike.Logic
         private static readonly int s_color = Shader.PropertyToID("_Color");
         private readonly Color _defaultColor = new(1f, 1f, 1f, 1f);
         private readonly Color _transparentColor = new(1f, 1f, 1f, 0.5f);
-        
+
         [SerializeField] private LayerMask _hideable;
         [SerializeField] private float _rayDistance;
         [SerializeField] private float _timeBetweenRender;
@@ -21,10 +21,10 @@ namespace Roguelike.Logic
         private void Start()
         {
             _camera = Camera.main;
-            _rayOrigin = new Vector3(_camera.pixelWidth / 2f, _camera.pixelHeight / 3f, 0f);
+            _rayOrigin = new Vector3(_camera.pixelWidth / 2f, _camera.pixelHeight / 2.5f, 0f);
             InvokeRepeating(nameof(Render), 1f, _timeBetweenRender);
         }
-        
+
         private void Render()
         {
             Ray ray = _camera.ScreenPointToRay(_rayOrigin);
@@ -52,7 +52,7 @@ namespace Roguelike.Logic
 
             for (int i = 0; i < _currentMeshConcealer.Meshes.Length; i++)
             {
-                foreach (Material material in _currentMeshConcealer.Meshes[i].materials) 
+                foreach (Material material in _currentMeshConcealer.Meshes[i].materials)
                     material.SetColor(s_color, _transparentColor);
             }
         }
@@ -70,10 +70,10 @@ namespace Roguelike.Logic
             {
                 for (int i = 0; i < _previousMeshConcealer.Meshes.Length; i++)
                 {
-                    foreach (Material material in _previousMeshConcealer.Meshes[i].materials) 
+                    foreach (Material material in _previousMeshConcealer.Meshes[i].materials)
                         material.SetColor(s_color, _defaultColor);
                 }
-                
+
                 _previousMeshConcealer = null;
             }
         }

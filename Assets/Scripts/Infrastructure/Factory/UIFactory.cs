@@ -81,7 +81,7 @@ namespace Roguelike.Infrastructure.Factory
 
                     break;
                 case ConfirmationWindow confirmationWindow:
-                    confirmationWindow.Construct(_staticData, _sceneLoadingService);
+                    confirmationWindow.Construct(_staticData, _sceneLoadingService, windowService);
 
                     break;
                 case GameCompleteWindow gameOverWindow:
