@@ -89,10 +89,6 @@ namespace Roguelike.Infrastructure.States
                     InitDungeon();
 
                     break;
-                case LevelId.Test:
-                    InitWorld();
-                    
-                    break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }

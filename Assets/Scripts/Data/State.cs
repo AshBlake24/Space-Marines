@@ -13,6 +13,11 @@ namespace Roguelike.Data
         public bool HasResurrected;
         public bool Dead;
 
+        public State()
+        {
+            Enhancements = new List<EnhancementData>();
+        }
+
         public void Reset()
         {
             Enhancements = new List<EnhancementData>();
