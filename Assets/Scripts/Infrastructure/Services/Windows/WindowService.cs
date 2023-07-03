@@ -27,7 +27,8 @@ namespace Roguelike.Infrastructure.Services.Windows
 
         public void OpenWeaponChestWindow(SalableWeaponChest salableWeaponChest)
         {
-            _uiFactory.CreateWeaponChestWindow(this, salableWeaponChest);
+            BaseWindow window = _uiFactory.CreateWeaponChestWindow(this, salableWeaponChest);
+            SubscribeToWindow(window);
         }
 
         public GameObject OpenWeaponStatsViewer(WeaponId weaponId) => 

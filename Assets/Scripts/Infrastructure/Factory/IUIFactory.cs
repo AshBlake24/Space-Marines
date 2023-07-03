@@ -21,7 +21,7 @@ namespace Roguelike.Infrastructure.Factory
         void CreateEnhancementWidget(EnhancementData enhancementProgress, Transform parent, 
             EnhancementTooltip tooltip);
 
-        void CreateWeaponChestWindow(WindowService windowService, SalableWeaponChest salableWeaponChest);
+        BaseWindow CreateWeaponChestWindow(WindowService windowService, SalableWeaponChest salableWeaponChest);
         void CreateTutorialRoot();
         void CreateUIRoot();
         void ShowStageName();

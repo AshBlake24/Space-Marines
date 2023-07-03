@@ -166,12 +166,14 @@ namespace Roguelike.Infrastructure.Factory
             }
         }
 
-        public void CreateWeaponChestWindow(WindowService windowService, SalableWeaponChest salableWeaponChest)
+        public BaseWindow CreateWeaponChestWindow(WindowService windowService, SalableWeaponChest salableWeaponChest)
         {
             BaseWindow window = CreateWindow(windowService, WindowId.WeaponChestWindow, isTutorial: false);
 
             if (window is WeaponChestWindow weaponChestWindow)
                 weaponChestWindow.Construct(_adsService, salableWeaponChest);
+
+            return window;
         }
 
         public void CreateUIRoot() =>
