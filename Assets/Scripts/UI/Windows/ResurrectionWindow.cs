@@ -9,6 +9,8 @@ namespace Roguelike.UI.Windows
         private const float FadeValue = 0.25f;
         
         [SerializeField] private Button _resurrectButton;
+        [SerializeField] private Image _usedLabel;
+        [SerializeField] private GameObject _adsInfo;
 
         private Image[] _resurrectButtonImages;
         private PlayerDeath _playerDeath;
@@ -37,6 +39,8 @@ namespace Roguelike.UI.Windows
             
             if (ProgressService.PlayerProgress.State.HasResurrected)
             {
+                _adsInfo.SetActive(false);
+                _usedLabel.gameObject.SetActive(true);
                 _resurrectButton.interactable = false;
 
                 foreach (Image image in _resurrectButtonImages)
@@ -50,6 +54,8 @@ namespace Roguelike.UI.Windows
             }
             else
             {
+                _adsInfo.SetActive(true);
+                _usedLabel.gameObject.SetActive(false);
                 _resurrectButton.interactable = true;
                 _resurrectButton.onClick.AddListener(OnResurrected);
             }
