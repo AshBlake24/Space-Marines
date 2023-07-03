@@ -6,44 +6,20 @@ namespace Roguelike.Roguelike.Enemies.Animators
 
     public class EnemyAnimator : MonoBehaviour
     {
-        private const string ClipName = "Death";
-        private const string BossClipName = "BossDeath";
-
         private static readonly int s_enemySpeed = Animator.StringToHash("EnemySpeed");
         private static readonly int s_isStopped = Animator.StringToHash("IsStopped");
         private static readonly int s_isWait = Animator.StringToHash("IsWait");
         private static readonly int s_attackOptional = Animator.StringToHash("OptionalAttack");
         private static readonly int s_attack = Animator.StringToHash("Attack");
-        private static readonly int s_die = Animator.StringToHash("Died");
         private static readonly int s_hit = Animator.StringToHash("Hit");
+        private static readonly int s_isDead = Animator.StringToHash("IsDead");
 
         private Animator _animator;
         private bool _isDied;
-        private AnimatorClipInfo[] _currentClips;
 
         private void Awake()
         {
             _animator = GetComponent<Animator>();
-        }
-
-        private void Update()
-        {
-            if (_isDied == false)
-                return;
-            SwitchClipToDeath();
-        }
-
-        private void SwitchClipToDeath()
-        {
-            _currentClips = _animator.GetCurrentAnimatorClipInfo(0);
-
-            for (int i = 0; i < _currentClips.Length; i++)
-            {
-                if (_currentClips[i].clip.name == ClipName || _currentClips[i].clip.name == BossClipName)
-                    enabled = false;
-                else
-                    PlayDie();
-            }
         }
 
         public void Move(float speed, bool isStopped)
@@ -64,13 +40,13 @@ namespace Roguelike.Roguelike.Enemies.Animators
 
         public void PlayDie() 
         {
-            _animator.SetTrigger(s_die);
+            _animator.SetBool(s_isDead, true);
 
             _isDied = true;
-            enabled = true;
         }
         
         public void PlayIdle(bool isWait) => _animator.SetBool(s_isWait, isWait);
         public void PlayOptionalAttack() => _animator.SetTrigger(s_attackOptional);
+        public void SetIsDeadToFalse() => _animator.SetBool(s_isDead, false);
     }
 }
