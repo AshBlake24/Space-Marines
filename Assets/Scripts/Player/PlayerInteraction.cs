@@ -43,17 +43,20 @@ namespace Roguelike.Player
             _isActive = true;
             _windowService = windowService;
             _input = inputService;
-            _input.Interacted += OnInteracted;
-            _windowService.WindowOpened += OnWindowOpened;
-            _windowService.WindowClosed += OnWindowClosed;
+            SubscribeToServices();
         }
 
-        private void OnDisable() => _isActive = false;
+        private void OnEnable()
+        {
+            _isActive = true;
+            SubscribeToServices();
+        }
 
-        private void OnEnable() => _isActive = true;
-
-        private void OnDestroy() =>
-            _input.Interacted -= OnInteracted;
+        private void OnDisable()
+        {
+            _isActive = false;
+            UnsubscribeFromServices();
+        }
 
         private void Start()
         {
@@ -91,7 +94,7 @@ namespace Roguelike.Player
                     ChangeCurrentInteractable(closestInteractable);
                     DisableComponents();
                 }
-                
+
                 GotInteractable?.Invoke();
             }
             else
@@ -147,6 +150,25 @@ namespace Roguelike.Player
                 _currentTargetInteractable.Outline.enabled = false;
                 _currentTargetInteractable = null;
             }
+        }
+
+        private void SubscribeToServices()
+        {
+            if (_input != null)
+                _input.Interacted += OnInteracted;
+
+            if (_windowService != null)
+            {
+                _windowService.WindowOpened += OnWindowOpened;
+                _windowService.WindowClosed += OnWindowClosed;
+            }
+        }
+
+        private void UnsubscribeFromServices()
+        {
+            _input.Interacted -= OnInteracted;
+            _windowService.WindowOpened -= OnWindowOpened;
+            _windowService.WindowClosed -= OnWindowClosed;
         }
 
         private void DisableComponents()

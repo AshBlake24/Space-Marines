@@ -65,6 +65,7 @@ namespace Roguelike.Enemies.EnemyStates
         private void ActivatePlayerInput(bool enabled)
         {
             PlayerHealth player = enemy.Target;
+            player.SetImmune(!enabled);
 
             if (_playerComponents.Count == 0)
             {
