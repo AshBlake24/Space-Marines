@@ -8,7 +8,6 @@ namespace Roguelike.Enemies.EnemyStates
 {
     public class ExplosionState : EnemyState
     {
-        private const EnemyId Mine = EnemyId.Mine;
         private readonly Collider[] _hits = new Collider[1];
 
         [SerializeField] private LayerMask _explosionMask;
@@ -20,11 +19,7 @@ namespace Roguelike.Enemies.EnemyStates
         public override void Enter(Enemy enemy, EnemyAnimator enemyAnimator)
         {
             base.Enter(enemy, enemyAnimator);
-
-            if (enemy.Id == Mine)
-                Explosion();
-            else
-                animator.PlayAttack();
+            animator.PlayAttack();
         }
 
         private void Explosion()

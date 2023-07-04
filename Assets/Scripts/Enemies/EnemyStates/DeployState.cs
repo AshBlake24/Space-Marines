@@ -1,7 +1,7 @@
-﻿using Roguelike.Infrastructure.Factory;
+﻿using Roguelike.Enemies.Traps;
+using Roguelike.Infrastructure.Factory;
 using Roguelike.Infrastructure.Services;
 using Roguelike.Roguelike.Enemies.Animators;
-using Roguelike.StaticData.Enemies;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -12,7 +12,7 @@ namespace Roguelike.Enemies.EnemyStates
         private const int DeployRadiusMax = 10;
         private const int DeployRadiusMin = 8;
 
-        [SerializeField] private EnemyId _mine;
+        [SerializeField] private Mine _mine;
 
         private SpawnPoint _parent;
         private IEnemyFactory _factory;
@@ -89,12 +89,7 @@ namespace Roguelike.Enemies.EnemyStates
 
         public void Spawn()
         {
-            GameObject mine = _factory.CreateMinion(transform, _mine, enemy.Target);
-
-            mine.transform.SetParent(_parent.transform);
-
-            mine.GetComponent<EnemyStateMachine>().enabled = true;
-
+            Instantiate(_mine, transform.position, Quaternion.identity);
             GetRandomDestination();
         }
     }

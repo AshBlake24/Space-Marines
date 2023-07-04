@@ -7,7 +7,6 @@ namespace Roguelike.StaticData.Enemies
         Shaman,
         Taran,
         Bomber,
-        Mine,
         Golem
     }
 }
