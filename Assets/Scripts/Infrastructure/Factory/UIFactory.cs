@@ -145,7 +145,7 @@ namespace Roguelike.Infrastructure.Factory
             BaseWindow window = CreateWindow(windowService, WindowId.Resurrection, isTutorial: false);
 
             if (window is ResurrectionWindow resurrectionWindow)
-                resurrectionWindow.Construct(playerDeath);
+                resurrectionWindow.Construct(playerDeath, _adsService);
         }
 
         public void CreateEnhancementWidget(EnhancementData enhancementProgress, Transform parent, 

@@ -17,7 +17,6 @@ namespace Roguelike.Level
         private const int LevelMapSizeHeight = 39;
         private const string ContainerName = "Rooms";
 
-        private IAdsService _adsService;
         private IEnemyFactory _enemyFactory;
         private ISceneLoadingService _sceneLoadingService;
         private IPersistentDataService _persistentDataService;
@@ -36,10 +35,9 @@ namespace Roguelike.Level
         private int _currentMapPositionY;
 
         public void Construct(StageStaticData stageData, IPersistentDataService persistentDataService,
-            ISceneLoadingService sceneLoadingService, IEnemyFactory enemyFactory, IAdsService adsService)
+            ISceneLoadingService sceneLoadingService, IEnemyFactory enemyFactory)
         {
             _data = stageData;
-            _adsService = adsService;
             _sceneLoadingService = sceneLoadingService;
             _persistentDataService = persistentDataService;
             _enemyFactory = enemyFactory;
@@ -260,7 +258,7 @@ namespace Roguelike.Level
             _finishRoom = _currentRoom.GetComponent<FinishRoom>();
             _finishRoom.SetNextLevel(_data.NextStageId, _persistentDataService);
 
-            _finishRoom.PlayerFinishedLevel += TryShowAd;
+            _finishRoom.PlayerFinishedLevel += GenerateNextLevel;
 
             if (_currentRoom.TryGetComponent<BossSpawner>(out BossSpawner spawner))
             {
@@ -273,7 +271,8 @@ namespace Roguelike.Level
 
         private void GenerateNextLevel()
         {
-            _finishRoom.PlayerFinishedLevel -= TryShowAd;
+            _finishRoom.PlayerFinishedLevel -= GenerateNextLevel;
+            _persistentDataService.PlayerProgress.State.HasResurrected = false;
             _persistentDataService.PlayerProgress.Statistics.OnStageComplete(_data.Score);
             _sceneLoadingService.Load(_persistentDataService.PlayerProgress.WorldData.CurrentLevel);
         }
@@ -307,25 +306,6 @@ namespace Roguelike.Level
             }
 
             return null;
-        }
-        
-        private void TryShowAd()
-        {
-#if UNITY_WEBGL && !UNITY_EDITOR
-            if (_persistentDataService.PlayerProgress.State.HasResurrected && 
-                _persistentDataService.PlayerProgress.State.ResurrectionAdWasShown == false)
-                _adsService.ShowVideoAd(OnAdShown);
-            else
-                GenerateNextLevel();
-#else
-            GenerateNextLevel();
-#endif 
-        }
-
-        private void OnAdShown()
-        {
-            _persistentDataService.PlayerProgress.State.ResurrectionAdWasShown = true;
-            GenerateNextLevel();
         }
     }
 }
