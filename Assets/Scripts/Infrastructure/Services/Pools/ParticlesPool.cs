@@ -45,8 +45,17 @@ namespace Roguelike.Infrastructure.Services.Pools
             return particles;
         }
 
-        private void OnTakeFromPool(ParticleSystem particles) => 
+        private void OnTakeFromPool(ParticleSystem particles)
+        {
+            if (particles == null || particles.gameObject == null)
+            {
+                _pool.Get();
+                return;
+            }
+                
+            
             particles.gameObject.SetActive(true);
+        }
 
         private void OnReleaseToPool(ParticleSystem particles) => 
             particles.gameObject.SetActive(false);
