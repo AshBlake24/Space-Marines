@@ -1,4 +1,5 @@
-﻿using Roguelike.Infrastructure.Services;
+﻿using System;
+using Roguelike.Infrastructure.Services;
 using Roguelike.Infrastructure.Services.Windows;
 using UnityEngine;
 
@@ -8,17 +9,22 @@ namespace Roguelike.Loot.Chest
     {
         private IWindowService _windowService;
 
+        public event Action Opened;
+
         public override void Interact(GameObject interactor)
         {
             if (IsActive)
+            {
                 _windowService.OpenWeaponChestWindow(this);
+                OnInteracted();
+            }
         }
 
         public void Open()
         {
             if (IsActive)
             {
-                OnInteracted();
+                Opened?.Invoke();
                 IsActive = false;
                 Outline.enabled = false;
                 GameObject weapon = LootFactory.CreateRandomWeapon(transform.position, MinimalRarity);
