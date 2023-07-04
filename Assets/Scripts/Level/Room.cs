@@ -13,25 +13,44 @@ namespace Roguelike.Level
         private ExitPoint _entryPoint;
         private List<ExitPoint> _doors = new List<ExitPoint>();
         private List<ExitPoint> _validExits = new List<ExitPoint>();
+        [SerializeField] private int _levelMapPositionX;
+        [SerializeField] private int _levelMapPositionY;
 
         public ExitPoint EntryPoint => _entryPoint;
         public int SpawnWeight => _spawnWeight;
         public int ExitCount => _exitPoints.Count;
         public int ValidExitCount => _validExits.Count;
+        public int LevelMapPositionX => _levelMapPositionX;
+        public int LevelMapPositionY => _levelMapPositionY;
 
-        public void Init(ExitPoint connectingPoint)
+        public void Init(ExitPoint connectingPoint, int PositionX, int PositionY)
         {
-            _entryPoint = SelectEntryPoint();
+            if (connectingPoint != null)
+            {
+                _entryPoint = SelectEntryPoint();
 
-            if (_entryPoint == null)
-                return;
+                if (_entryPoint == null)
+                    return;
 
+                RotateRoom(connectingPoint);
+            }
+
+            _levelMapPositionX = PositionX;
+            _levelMapPositionY = PositionY;
+
+            FillValidExits();
+
+            OpenDoor();
+        }
+
+        private void RotateRoom(ExitPoint connectingPoint)
+        {
             Room previousRoom = connectingPoint.GetComponentInParent<Room>();
 
             float rotateAngle =
-                -_entryPoint.Rotation 
-                + RotationModification 
-                + connectingPoint.Rotation 
+                -_entryPoint.Rotation
+                + RotationModification
+                + connectingPoint.Rotation
                 + previousRoom.transform.rotation.eulerAngles.y;
 
             transform.rotation = Quaternion.Euler(0, rotateAngle, 0);
@@ -41,27 +60,14 @@ namespace Roguelike.Level
 
             transform.position =
             Vector3.MoveTowards(transform.position, _entryPoint.transform.position, -GetShiftDistance());
-
-            FillValidExits();
         }
 
         public ExitPoint SelectExitPoint()
         {
+            if (_validExits.Count <= 0)
+                return null;
+
             ExitPoint connectingPoint = _validExits[Random.Range(0, _validExits.Count)];
-
-            while (connectingPoint.IsNextZoneFull(this) == true)
-            {
-                _validExits.Remove(connectingPoint);
-                connectingPoint.Hide();
-
-                if (_validExits.Count != 0)
-                    connectingPoint = _validExits[Random.Range(0, _validExits.Count)];
-                else
-                    break;
-            }
-
-            if (connectingPoint != null)
-                _doors.Add(connectingPoint);
 
             if (_validExits.Count != 0)
                 _validExits.Remove(connectingPoint);
@@ -77,6 +83,11 @@ namespace Roguelike.Level
             }
 
             OpenDoor();
+        }
+
+        public void AddDoor(ExitPoint door)
+        {
+            _doors.Add(door);
         }
 
         public void CloseDoor()
@@ -112,21 +123,7 @@ namespace Roguelike.Level
         {
             foreach (var exit in _exitPoints)
             {
-                if (exit.IsNextZoneFull(this) == false)
-                {
-                    _validExits.Add(exit);
-                }
-            }
-        }
-
-        public void UpdateValidExits()
-        {
-            for (int i = 0; i > _validExits.Count; i++)
-            {
-                if (_validExits[i].IsNextZoneFull(this))
-                {
-                    _validExits.Remove(_validExits[i]);
-                }
+                _validExits.Add(exit);
             }
         }
 
