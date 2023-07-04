@@ -28,8 +28,8 @@ namespace Roguelike.Enemies.EnemyStates
         {
             foreach (var transition in _transitions)
             {
-                transition.enabled = false;
                 transition.NeedTransit -= Exit;
+                transition.enabled = false;
             }
         }
 

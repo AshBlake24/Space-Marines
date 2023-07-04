@@ -26,7 +26,7 @@ namespace Roguelike.Enemies.EnemyStates
 
         private void Update()
         {
-                LookAtPlayer();
+            LookAtPlayer();
         }
 
         public override void Enter(Enemy enemy, EnemyAnimator enemyAnimator)
@@ -48,6 +48,8 @@ namespace Roguelike.Enemies.EnemyStates
             if (enemy == null)
                 return;
 
+            CheñkHealth();
+
             if (enemy.BulletInBurst > 0)
             {
                 foreach (var point in _shotPoints)
@@ -63,6 +65,12 @@ namespace Roguelike.Enemies.EnemyStates
             {
                 NeedReloaded?.Invoke();
             }
+        }
+
+        public void CheñkHealth()
+        {
+            if (enemy.Health == null)
+                animator.PlayDie();
         }
 
         private void LookAtPlayer() =>
