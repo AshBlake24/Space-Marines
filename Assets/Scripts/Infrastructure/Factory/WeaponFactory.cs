@@ -65,8 +65,16 @@ namespace Roguelike.Infrastructure.Factory
             AmmoData ammoData = null;
 
             if (_persistentData.PlayerProgress != null)
-                ammoData = _persistentData.PlayerProgress.PlayerWeapons.RangedWeaponsData
-                    .SingleOrDefault(data => data.ID == weaponData.Id)?.AmmoData;
+            {
+                if (_persistentData.PlayerProgress.PlayerWeapons.RangedWeaponsData.Count > 0)
+                {
+                    RangedWeaponData data = _persistentData.PlayerProgress.PlayerWeapons.RangedWeaponsData
+                        .SingleOrDefault(data => data.ID == weaponData.Id);
+                
+                    if (data != null && data.AmmoData != null) 
+                        ammoData = data.AmmoData;
+                }
+            }
 
             weapon.Construct(InitializeRangedWeaponStats(weaponData), ammoData, _projectileFactory, _randomService);
             weapon.transform.localPosition = weapon.PositionOffset;
