@@ -1,4 +1,7 @@
-﻿using DG.Tweening;
+﻿using System;
+using DG.Tweening;
+using DG.Tweening.Core;
+using DG.Tweening.Plugins.Options;
 using UnityEngine;
 
 namespace Roguelike.Enemies.Traps
@@ -11,6 +14,7 @@ namespace Roguelike.Enemies.Traps
         [SerializeField] private float _switchTimer = 1.5f;
         [SerializeField] private float _switchingAnimationDuration = 0.25f;
 
+        private Tween _tween;
         private Vector3 _onPosition;
         private Vector3 _offPosition;
         private bool _isActive;
@@ -24,6 +28,8 @@ namespace Roguelike.Enemies.Traps
             if (_switchingAnimationDuration > _switchTimer)
                 _switchingAnimationDuration = _switchTimer;
         }
+
+        private void OnDisable() => _tween.Kill();
 
         private void InitSpears()
         {
@@ -58,7 +64,7 @@ namespace Roguelike.Enemies.Traps
                 ? _onPosition 
                 : _offPosition;
 
-            transform.DOMove(targetPosition, _switchingAnimationDuration)
+            _tween = transform.DOMove(targetPosition, _switchingAnimationDuration)
                 .SetEase(Ease.OutBounce);
 
             SwitchColliders();
