@@ -85,6 +85,7 @@ namespace Roguelike.Weapons.Projectiles
         private void InitProjectile(int damage, float startSpeed, Vector3 direction)
         {
             Damage = damage;
+            Rigidbody.velocity = Vector3.zero;
             Rigidbody.angularVelocity = Vector3.zero;
             Rigidbody.AddForce(direction * startSpeed, ForceMode.VelocityChange);
             _accumulatedTime = 0f;

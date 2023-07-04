@@ -95,8 +95,8 @@ namespace Roguelike.Enemies.EnemyStates
         private void OnTakeFromPool(Projectile projectile)
         {
             projectile.transform.SetPositionAndRotation(_shotPoint.position, _shotPoint.rotation);
-            projectile.ClearVFX();
             projectile.gameObject.SetActive(true);
+            projectile.ClearVFX();
             projectile.Init(enemy.Damage, _projectileSpeed);
         }
 
