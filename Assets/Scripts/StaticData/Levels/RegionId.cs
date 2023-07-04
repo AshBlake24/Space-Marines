@@ -4,6 +4,5 @@
     {
         Unknown = -1,
         OldDungeon,
-        OldDungeonBossOnly
     }
 }
