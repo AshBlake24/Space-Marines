@@ -18,24 +18,46 @@ namespace Roguelike.Ads
 
         public bool IsVideoOpen { get; private set; }
 
+        public void ShowInterstitialAd()
+        {
+            if (YandexGamesSdk.IsInitialized) 
+                InterstitialAd.Show(OnAdsOpen, OnInterstitialClose);
+        }
+
         public void ShowVideoAd(Action onRewardedCallback = null)
         {
             if (YandexGamesSdk.IsInitialized)
                 VideoAd.Show(OnVideoOpen, onRewardedCallback, OnVideoClose);
         }
 
+        private void OnAdsOpen()
+        {
+            PauseGame();
+            MuteAudio();
+        }
+
+        private void OnAdsClose()
+        {
+            ResumeGame();
+            UnmuteAudio();
+        }
+
         private void OnVideoOpen()
         {
             IsVideoOpen = true;
-            PauseGame();
-            MuteAudio();
+            OnAdsOpen();
         }
 
         private void OnVideoClose()
         {
             IsVideoOpen = false;
-            ResumeGame();
-            UnmuteAudio();
+            OnAdsClose();
+            
+        }
+
+        private void OnInterstitialClose(bool wasShown)
+        {
+            OnAdsClose();
         }
 
         private void PauseGame() =>

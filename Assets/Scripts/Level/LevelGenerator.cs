@@ -17,6 +17,7 @@ namespace Roguelike.Level
         private const int LevelMapSizeHeight = 39;
         private const string ContainerName = "Rooms";
 
+        private IAdsService _adsService;
         private IEnemyFactory _enemyFactory;
         private ISceneLoadingService _sceneLoadingService;
         private IPersistentDataService _persistentDataService;
@@ -35,9 +36,10 @@ namespace Roguelike.Level
         private int _currentMapPositionY;
 
         public void Construct(StageStaticData stageData, IPersistentDataService persistentDataService,
-            ISceneLoadingService sceneLoadingService, IEnemyFactory enemyFactory)
+            ISceneLoadingService sceneLoadingService, IEnemyFactory enemyFactory, IAdsService adsService)
         {
             _data = stageData;
+            _adsService = adsService;
             _sceneLoadingService = sceneLoadingService;
             _persistentDataService = persistentDataService;
             _enemyFactory = enemyFactory;
@@ -258,7 +260,7 @@ namespace Roguelike.Level
             _finishRoom = _currentRoom.GetComponent<FinishRoom>();
             _finishRoom.SetNextLevel(_data.NextStageId, _persistentDataService);
 
-            _finishRoom.PlayerFinishedLevel += GenerateNextLevel;
+            _finishRoom.PlayerFinishedLevel += TryShowAds;
 
             if (_currentRoom.TryGetComponent<BossSpawner>(out BossSpawner spawner))
             {
@@ -271,7 +273,7 @@ namespace Roguelike.Level
 
         private void GenerateNextLevel()
         {
-            _finishRoom.PlayerFinishedLevel -= GenerateNextLevel;
+            _finishRoom.PlayerFinishedLevel -= TryShowAds;
             _persistentDataService.PlayerProgress.State.HasResurrected = false;
             _persistentDataService.PlayerProgress.Statistics.OnStageComplete(_data.Score);
             _sceneLoadingService.Load(_persistentDataService.PlayerProgress.WorldData.CurrentLevel);
@@ -306,6 +308,14 @@ namespace Roguelike.Level
             }
 
             return null;
+        }
+
+        private void TryShowAds()
+        {
+#if UNITY_WEBGL && !UNITY_EDITOR
+            _adsService.ShowInterstitialAd();
+#endif
+            GenerateNextLevel();
         }
     }
 }
