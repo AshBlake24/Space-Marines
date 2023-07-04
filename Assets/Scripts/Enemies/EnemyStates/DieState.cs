@@ -11,6 +11,7 @@ namespace Roguelike.Enemies.EnemyStates
             base.Enter(curentEnemy, enemyAnimator);
 
             DisableStateMachine();
+            DisableNavMeshAgent();
             DisableColliders();
 
             animator.PlayDie();
@@ -33,10 +34,19 @@ namespace Roguelike.Enemies.EnemyStates
 
         private void DisableStateMachine()
         {
-            EnemyStateMachine _stateMachine = GetComponent<EnemyStateMachine>();
+            if (TryGetComponent<EnemyStateMachine>(out EnemyStateMachine stateMachine))
+            {
+                stateMachine.enabled = false;
+            }
+        }
 
-            if (_stateMachine != null)
-                _stateMachine.enabled = false;
+        private void DisableNavMeshAgent()
+        {
+            if (TryGetComponent<NavMeshAgent>(out NavMeshAgent agent))
+            {
+                agent.isStopped= true;
+                agent.enabled = false;
+            }
         }
     }
 }
