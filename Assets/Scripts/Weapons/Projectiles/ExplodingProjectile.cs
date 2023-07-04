@@ -26,8 +26,8 @@ namespace Roguelike.Weapons.Projectiles
         {
             for (int i = 0; i < Explode(); i++)
             {
-                if (_hits[i].transform.TryGetComponent(out IHealth health))
-                    health.TakeDamage(Damage);
+                _hits[i].gameObject.GetComponentInChildren<IHealth>()
+                    ?.TakeDamage(Damage);
             }
 
             OnImpacted();
