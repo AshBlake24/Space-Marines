@@ -3,6 +3,7 @@ using Roguelike.Infrastructure.Services.PersistentData;
 using Roguelike.Infrastructure.Services.SaveLoad;
 using Roguelike.Infrastructure.Services.StaticData;
 using Roguelike.Logic.Pause;
+using Roguelike.StaticData.Levels;
 
 namespace Roguelike.Infrastructure.States
 {
@@ -35,9 +36,7 @@ namespace Roguelike.Infrastructure.States
             if (_persistentData.IsResetting)
             {
                 _persistentData.PlayerProgress = new PlayerProgress(
-                    _staticDataService.GameConfig.StartLevel,
-                    _staticDataService.GameConfig.StartRegion,
-                    _staticDataService.GameConfig.StartStage);
+                    _staticDataService.GameConfig.StartLevel);
             }
 
             _saveLoadService.SaveProgress();

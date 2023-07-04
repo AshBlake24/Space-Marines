@@ -99,6 +99,7 @@ namespace Roguelike.UI.Windows
         private void OnCharacterSelected()
         {
             IWeapon startWeapon = _weaponFactory.CreateWeapon(_characterData.StartWeapon);
+            
             ProgressService.PlayerProgress.PlayerWeapons = new PlayerWeapons(
                 startWeapon,
                 _characterData.MaxWeaponsCount);

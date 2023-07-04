@@ -41,7 +41,7 @@ namespace Roguelike.Infrastructure.Services.PersistentData
             PlayerProgress.State.Reset();
             PlayerProgress.Balance.DungeonBalance.Reset();
             PlayerProgress.Statistics.KillData.CurrentKillData.Reset();
-            PlayerProgress.WorldData = new WorldData(_staticData.GameConfig.StartScene);
+            PlayerProgress.WorldData = new WorldData(_staticData.GameConfig.StartLevel);
         }
 
         public void ResetAllProgress()
