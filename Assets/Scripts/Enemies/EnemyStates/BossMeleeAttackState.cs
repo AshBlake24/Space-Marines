@@ -1,4 +1,5 @@
 ﻿using Roguelike.Enemies.Transitions;
+using Roguelike.Logic;
 using Roguelike.Roguelike.Enemies.Animators;
 using UnityEngine;
 
@@ -6,6 +7,9 @@ namespace Roguelike.Enemies.EnemyStates
 {
     public class BossMeleeAttackState : EnemyState
     {
+        private readonly Collider[] _hits = new Collider[1];
+
+        [SerializeField] private LayerMask _explosionMask;
         [SerializeField] int _damageMultiplier;
         [SerializeField] float _attackRadius;
         [SerializeField] ParticleSystem _attackEffect;
@@ -25,15 +29,21 @@ namespace Roguelike.Enemies.EnemyStates
         {
             _attackEffect.Play();
 
-            if (Vector3.Distance(enemy.Target.transform.position, transform.position) <= _attackRadius)
+            for (int i = 0; i < DealAreaDamage(); i++)
             {
-                enemy.Target.TakeDamage(enemy.Damage * _damageMultiplier);
+                if (_hits[i].transform.TryGetComponent(out IHealth health))
+                    health.TakeDamage(enemy.Damage * _damageMultiplier);
             }
         }
 
         public void TryFinishMeleeState()
         {
             _enemyZoneCheker.TryFinishState();
+        }
+
+        private int DealAreaDamage()
+        {
+            return Physics.OverlapSphereNonAlloc(transform.position, _attackRadius, _hits, _explosionMask);
         }
     }
 }

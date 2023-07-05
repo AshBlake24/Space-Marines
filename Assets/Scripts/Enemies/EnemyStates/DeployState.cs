@@ -14,8 +14,6 @@ namespace Roguelike.Enemies.EnemyStates
 
         [SerializeField] private Mine _mine;
 
-        private SpawnPoint _parent;
-        private IEnemyFactory _factory;
         private NavMeshAgent _agent;
         private Vector3 _randomPoint;
         private bool _isCorrectPoint;
@@ -24,10 +22,6 @@ namespace Roguelike.Enemies.EnemyStates
         private void Awake()
         {
             _agent = GetComponent<NavMeshAgent>();
-
-            _factory = AllServices.Container.Single<IEnemyFactory>();
-
-            _parent = GetComponentInParent<SpawnPoint>();
         }
 
         private void Update()
