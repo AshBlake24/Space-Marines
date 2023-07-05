@@ -31,7 +31,7 @@ namespace Roguelike.Leaderboard
 
         private void OnGetEntries(LeaderboardGetEntriesResponse response)
         {
-            for (int i = 0; i < response.entries.Length; i++)
+            for (int i = 0; i < response.entries.Length - 1; i++)
             {
                 LeaderboardEntry leaderboardEntry = new(response.entries[i]);
                 _entries[i].SetData(leaderboardEntry);
