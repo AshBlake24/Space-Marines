@@ -30,6 +30,9 @@ namespace Roguelike.Animations.UI
         private GameObject[] _playerWeapons;
         private GameObject[] _playerEnhancements;
         private Sequence _stageSequence;
+        private Tween _counterTween;
+        private Tween _weaponsTween;
+        private Tween _enhancementsTween;
         private float _currentStage;
         private int _coins;
         private int _kills;
@@ -48,7 +51,10 @@ namespace Roguelike.Animations.UI
 
         private void OnDestroy()
         {
+            _counterTween.Kill();
+            _weaponsTween.Kill();
             _stageSequence.Kill();
+            _enhancementsTween.Kill();
             _coinsCounter.NumberReached -= OnNumberReached;
             _killsCounter.NumberReached -= OnNumberReached;
         }
@@ -97,7 +103,7 @@ namespace Roguelike.Animations.UI
 
             for (int i = 0; i < _playerWeapons.Length; i++)
             {
-                _playerWeapons[i].transform.DOScale(1f, _popupDuration)
+                _weaponsTween = _playerWeapons[i].transform.DOScale(1f, _popupDuration)
                     .SetEase(Ease.OutBack)
                     .SetDelay(delay);
 
@@ -108,7 +114,7 @@ namespace Roguelike.Animations.UI
             
             for (int i = 0; i < _playerEnhancements.Length; i++)
             {
-                _playerEnhancements[i].transform.DOScale(1f, _popupDuration)
+                _enhancementsTween = _playerEnhancements[i].transform.DOScale(1f, _popupDuration)
                     .SetEase(Ease.OutBack)
                     .SetDelay(delay);
 
@@ -121,7 +127,7 @@ namespace Roguelike.Animations.UI
         private void SetKillsField() => _killsCounter.UpdateText(_kills);
 
         private void OnNumberReached(TextMeshProUGUI counter) =>
-            counter.transform.DOScale(Vector2.one * _punchSize, _punchDuration)
+            _counterTween = counter.transform.DOScale(Vector2.one * _punchSize, _punchDuration)
                 .SetLoops(2, LoopType.Yoyo)
                 .SetEase(_punchEase);
     }

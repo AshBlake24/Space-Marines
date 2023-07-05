@@ -111,7 +111,10 @@ namespace Roguelike.Logic.CharacterSelection
             _characterSelectionCamera.Follow = character;
             _characterSelectionCamera.LookAt = character;
             _topDownCamera.enabled = false;
-            StopCoroutine(_tutorialCoroutine);
+            
+            if (_tutorialCoroutine != null)
+                StopCoroutine(_tutorialCoroutine);
+            
             _tutorialCoroutine = StartCoroutine(TryShowTutorial(TutorialId.CharacterStats01));
         }
 
