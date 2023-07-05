@@ -48,7 +48,7 @@ namespace Roguelike.Enemies.EnemyStates
             if (enemy == null)
                 return;
 
-            CheñkHealth();
+            CheckHealth();
 
             if (enemy.BulletInBurst > 0)
             {
@@ -67,7 +67,7 @@ namespace Roguelike.Enemies.EnemyStates
             }
         }
 
-        public void CheñkHealth()
+        public void CheckHealth()
         {
             if (enemy.Health == null)
                 animator.PlayDie();
