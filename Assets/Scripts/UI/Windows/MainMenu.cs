@@ -1,9 +1,11 @@
+using Agava.YandexGames;
 using Roguelike.Data;
 using Roguelike.Infrastructure.Services.Loading;
 using Roguelike.Infrastructure.Services.StaticData;
 using Roguelike.Infrastructure.Services.Windows;
 using Roguelike.Localization;
 using Roguelike.StaticData.Levels;
+using Roguelike.UI.Buttons;
 using Roguelike.UI.Windows.Confirmations;
 using Roguelike.Utilities;
 using TMPro;
@@ -33,6 +35,22 @@ namespace Roguelike.UI.Windows
         {
             InitNewGameButton();
             InitContinueButton();
+            InitAuthorizationButton();
+        }
+
+        private void InitAuthorizationButton()
+        {
+            AuthorizationButton authorizationButton = GetComponentInChildren<AuthorizationButton>();
+            
+            if (authorizationButton != null)
+            {
+#if UNITY_WEBGL && !UNITY_EDITOR
+                if (PlayerAccount.IsAuthorized)
+                    Destroy(authorizationButton.gameObject);
+#else
+                Destroy(authorizationButton.gameObject);
+#endif
+            }
         }
 
         protected override void SubscribeUpdates() => 
