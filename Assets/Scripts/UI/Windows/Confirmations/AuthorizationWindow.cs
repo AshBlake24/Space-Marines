@@ -1,3 +1,4 @@
+using System;
 using Roguelike.Infrastructure.Services;
 using Roguelike.Infrastructure.Services.Authorization;
 using Roguelike.Infrastructure.Services.Windows;
@@ -8,20 +9,20 @@ namespace Roguelike.UI.Windows.Confirmations
     {
         private IAuthorizationService _authorizationService;
 
-        public void Construct(IAuthorizationService authorizationService)
-        {
+        private void Awake() => 
             _authorizationService = AllServices.Container.Single<IAuthorizationService>();
-        }
-        
+
         protected override void Initialize()
         {
             base.Initialize();
-            
-            if (_authorizationService.IsAuthorized)
+
+#if UNITY_WEBGL && !UNITY_EDITOR
+           if (_authorizationService.IsAuthorized)
             {
                 WindowService.Open(WindowId.AlreadyAuthorize);
                 Destroy(gameObject);
-            }
+            } 
+#endif  
         }
 
         protected override void OnConfirm()

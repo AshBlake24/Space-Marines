@@ -56,8 +56,8 @@ namespace Roguelike.Infrastructure.States
         private void RegisterServices()
         {
             RegisterStaticData();
-            InitAuthorizationService();
             
+            _services.RegisterSingle<IAuthorizationService>(new YandexAuthorizationService());
             _services.RegisterSingle<IEnvironmentService>(new EnvironmentService());
             _services.RegisterSingle<IRandomService>(new UnityRandomService());
             _services.RegisterSingle<IParticlesPoolService>(new ParticlesPoolService());
@@ -159,13 +159,6 @@ namespace Roguelike.Infrastructure.States
                 _services.Single<ITutorialService>()));
             
             LocalizationSystem.Construct(_services.Single<IPersistentDataService>());
-        }
-
-        private void InitAuthorizationService()
-        {
-#if UNITY_WEBGL && !UNITY_EDITOR
-            _services.RegisterSingle<IAuthorizationService>(new YandexAuthorizationService());
-#endif
         }
 
         private void RegisterStaticData()

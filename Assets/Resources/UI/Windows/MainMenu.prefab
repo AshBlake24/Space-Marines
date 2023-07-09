@@ -559,7 +559,6 @@ GameObject:
   - component: {fileID: 4688494656537467299}
   - component: {fileID: 3485494486047041386}
   - component: {fileID: 7328529266356277534}
-  - component: {fileID: 610785609524838859}
   m_Layer: 5
   m_Name: Authorization Button
   m_TagString: Untagged
@@ -684,18 +683,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _button: {fileID: 3485494486047041386}
   _windowId: 10
---- !u!114 &610785609524838859
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3500242801572599317}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 91b2579a73f64fc2a82c58f510ec9aa6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &4783258744020356784
 GameObject:
   m_ObjectHideFlags: 0
@@ -1193,3 +1180,4 @@ MonoBehaviour:
   _closeButtons: []
   _newGameButton: {fileID: 1726933878487975668}
   _continueButton: {fileID: 2220748145247719468}
+  _authorizeButton: {fileID: 3485494486047041386}

@@ -75,10 +75,14 @@ namespace Roguelike.UI.Windows
         
         private void InitAuthorizeButton()
         {
+#if UNITY_WEBGL && !UNITY_EDITOR
             if (_authorizationService.IsAuthorized)
                OnAuthorized();
             else
                 _authorizationService.Authorized += OnAuthorized;
+#else
+            OnAuthorized();
+#endif
         }
 
         private void InitNewGameButton() => 
