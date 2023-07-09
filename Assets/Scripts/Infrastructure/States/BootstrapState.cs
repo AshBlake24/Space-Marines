@@ -1,3 +1,4 @@
+using System;
 using DG.Tweening;
 using Roguelike.Ads;
 using Roguelike.Audio.Factory;
@@ -5,6 +6,7 @@ using Roguelike.Audio.Service;
 using Roguelike.Infrastructure.AssetManagement;
 using Roguelike.Infrastructure.Factory;
 using Roguelike.Infrastructure.Services;
+using Roguelike.Infrastructure.Services.Authorization;
 using Roguelike.Infrastructure.Services.Environment;
 using Roguelike.Infrastructure.Services.Input;
 using Roguelike.Infrastructure.Services.Loading;
@@ -54,6 +56,8 @@ namespace Roguelike.Infrastructure.States
         private void RegisterServices()
         {
             RegisterStaticData();
+            InitAuthorizationService();
+            
             _services.RegisterSingle<IEnvironmentService>(new EnvironmentService());
             _services.RegisterSingle<IRandomService>(new UnityRandomService());
             _services.RegisterSingle<IParticlesPoolService>(new ParticlesPoolService());
@@ -122,7 +126,8 @@ namespace Roguelike.Infrastructure.States
                 _services.Single<ITimeService>(),
                 _services.Single<IAudioService>(),
                 _services.Single<IWeaponFactory>(),
-                _services.Single<IAdsService>()));
+                _services.Single<IAdsService>(),
+                _services.Single<IAuthorizationService>()));
 
             _services.RegisterSingle<IWindowService>(new WindowService(
                 _services.Single<IUIFactory>()));
@@ -154,6 +159,13 @@ namespace Roguelike.Infrastructure.States
                 _services.Single<ITutorialService>()));
             
             LocalizationSystem.Construct(_services.Single<IPersistentDataService>());
+        }
+
+        private void InitAuthorizationService()
+        {
+#if UNITY_WEBGL && !UNITY_EDITOR
+            _services.RegisterSingle<IAuthorizationService>(new YandexAuthorizationService());
+#endif
         }
 
         private void RegisterStaticData()

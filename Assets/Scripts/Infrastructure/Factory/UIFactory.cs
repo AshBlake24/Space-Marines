@@ -6,6 +6,7 @@ using Roguelike.Animations.UI;
 using Roguelike.Audio.Service;
 using Roguelike.Data;
 using Roguelike.Infrastructure.AssetManagement;
+using Roguelike.Infrastructure.Services.Authorization;
 using Roguelike.Infrastructure.Services.Loading;
 using Roguelike.Infrastructure.Services.PersistentData;
 using Roguelike.Infrastructure.Services.Random;
@@ -44,6 +45,7 @@ namespace Roguelike.Infrastructure.Factory
         private readonly IAudioService _audioService;
         private readonly IWeaponFactory _weaponFactory;
         private readonly IAdsService _adsService;
+        private readonly IAuthorizationService _authorizationService;
 
         private Transform _uiRoot;
         private Transform _tutorialRoot;
@@ -51,7 +53,7 @@ namespace Roguelike.Infrastructure.Factory
         public UIFactory(IAssetProvider assetProvider, IStaticDataService staticData,
             IPersistentDataService progressService, ISceneLoadingService sceneLoadingService,
             IRandomService randomService, ITimeService timeService, IAudioService audioService,
-            IWeaponFactory weaponFactory, IAdsService adsService)
+            IWeaponFactory weaponFactory, IAdsService adsService, IAuthorizationService authorizationService)
         {
             _assetProvider = assetProvider;
             _staticData = staticData;
@@ -62,6 +64,7 @@ namespace Roguelike.Infrastructure.Factory
             _audioService = audioService;
             _weaponFactory = weaponFactory;
             _adsService = adsService;
+            _authorizationService = authorizationService;
         }
 
         public BaseWindow CreateWindow<TKey>(IWindowService windowService, TKey windowId, bool isTutorial) 
@@ -77,7 +80,7 @@ namespace Roguelike.Infrastructure.Factory
             switch (window)
             {
                 case MainMenu mainMenu:
-                    mainMenu.Construct(_staticData, _sceneLoadingService, windowService);
+                    mainMenu.Construct(_staticData, _sceneLoadingService, _authorizationService, windowService);
 
                     break;
                 case ConfirmationWindow confirmationWindow:

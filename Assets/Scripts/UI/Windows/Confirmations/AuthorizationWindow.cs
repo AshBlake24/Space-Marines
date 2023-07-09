@@ -1,33 +1,35 @@
-using System;
-using Agava.YandexGames;
+using Roguelike.Infrastructure.Services;
+using Roguelike.Infrastructure.Services.Authorization;
 using Roguelike.Infrastructure.Services.Windows;
-using UnityEngine;
 
 namespace Roguelike.UI.Windows.Confirmations
 {
     public class AuthorizationWindow : ConfirmationWindow
     {
+        private IAuthorizationService _authorizationService;
+
+        public void Construct(IAuthorizationService authorizationService)
+        {
+            _authorizationService = AllServices.Container.Single<IAuthorizationService>();
+        }
+        
         protected override void Initialize()
         {
             base.Initialize();
             
-#if UNITY_WEBGL && !UNITY_EDITOR
-            if (PlayerAccount.IsAuthorized)
+            if (_authorizationService.IsAuthorized)
             {
                 WindowService.Open(WindowId.AlreadyAuthorize);
                 Destroy(gameObject);
             }
-#endif
         }
 
         protected override void OnConfirm()
         {
             base.OnConfirm();
+            
 #if UNITY_WEBGL && !UNITY_EDITOR
-            if (PlayerAccount.IsAuthorized)
-                throw new ArgumentNullException(nameof(PlayerAccount), "Account has already authorized");
-
-            PlayerAccount.Authorize();
+            _authorizationService.Authorize();
 #endif
             Close();
         }

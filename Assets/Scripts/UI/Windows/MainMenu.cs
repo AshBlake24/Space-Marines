@@ -1,11 +1,11 @@
-using Agava.YandexGames;
+using System;
 using Roguelike.Data;
+using Roguelike.Infrastructure.Services.Authorization;
 using Roguelike.Infrastructure.Services.Loading;
 using Roguelike.Infrastructure.Services.StaticData;
 using Roguelike.Infrastructure.Services.Windows;
 using Roguelike.Localization;
 using Roguelike.StaticData.Levels;
-using Roguelike.UI.Buttons;
 using Roguelike.UI.Windows.Confirmations;
 using Roguelike.Utilities;
 using TMPro;
@@ -18,39 +18,29 @@ namespace Roguelike.UI.Windows
     {
         [SerializeField] private Button _newGameButton;
         [SerializeField] private Button _continueButton;
+        [SerializeField] private Button _authorizeButton;
         
         private IStaticDataService _staticData;
         private ISceneLoadingService _sceneLoadingService;
         private IWindowService _windowService;
+        private IAuthorizationService _authorizationService;
+
+        public static event Action Authorized;
 
         public void Construct(IStaticDataService staticDataService, ISceneLoadingService sceneLoadingService, 
-            IWindowService windowService)
+            IAuthorizationService authorizationService, IWindowService windowService)
         {
             _staticData = staticDataService;
             _sceneLoadingService = sceneLoadingService;
             _windowService = windowService;
+            _authorizationService = authorizationService;
         }
         
         protected override void Initialize()
         {
             InitNewGameButton();
             InitContinueButton();
-            InitAuthorizationButton();
-        }
-
-        private void InitAuthorizationButton()
-        {
-            AuthorizationButton authorizationButton = GetComponentInChildren<AuthorizationButton>();
-            
-            if (authorizationButton != null)
-            {
-#if UNITY_WEBGL && !UNITY_EDITOR
-                if (PlayerAccount.IsAuthorized)
-                    Destroy(authorizationButton.gameObject);
-#else
-                Destroy(authorizationButton.gameObject);
-#endif
-            }
+            InitAuthorizeButton();
         }
 
         protected override void SubscribeUpdates() => 
@@ -61,6 +51,7 @@ namespace Roguelike.UI.Windows
             base.Cleanup();
             _newGameButton.onClick.RemoveAllListeners();
             _continueButton.onClick.RemoveAllListeners();
+            _authorizationService.Authorized -= OnAuthorized;
             Settings.LanguageChanged -= OnLanguageChanged;
         }
 
@@ -83,6 +74,14 @@ namespace Roguelike.UI.Windows
                 continueButtonText.text = $"{LocalizedConstants.Continue.Value}";
                 _continueButton.interactable = false;
             }
+        }
+        
+        private void InitAuthorizeButton()
+        {
+            if (_authorizationService.IsAuthorized)
+               OnAuthorized();
+            else
+                _authorizationService.Authorized += OnAuthorized;
         }
 
         private void InitNewGameButton() => 
@@ -138,5 +137,7 @@ namespace Roguelike.UI.Windows
             if (window is ConfirmationWindow confirmationWindow)
                 confirmationWindow.Confirmed -= OnConfirmed;
         }
+        
+        private void OnAuthorized() => Destroy(_authorizeButton.gameObject);
     }
 }
