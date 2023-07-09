@@ -1,4 +1,3 @@
-using System;
 using Roguelike.Data;
 using Roguelike.Infrastructure.Services.Authorization;
 using Roguelike.Infrastructure.Services.Loading;
@@ -24,8 +23,6 @@ namespace Roguelike.UI.Windows
         private ISceneLoadingService _sceneLoadingService;
         private IWindowService _windowService;
         private IAuthorizationService _authorizationService;
-
-        public static event Action Authorized;
 
         public void Construct(IStaticDataService staticDataService, ISceneLoadingService sceneLoadingService, 
             IAuthorizationService authorizationService, IWindowService windowService)
