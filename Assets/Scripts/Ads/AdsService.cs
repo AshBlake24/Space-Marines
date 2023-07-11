@@ -32,14 +32,14 @@ namespace Roguelike.Ads
 
         private void OnAdsOpen()
         {
-            PauseGame();
-            MuteAudio();
+            _timeService.PauseGame();
+            _audioService.SetChannelMute(AudioChannel.Master, true);
         }
 
         private void OnAdsClose()
         {
-            ResumeGame();
-            UnmuteAudio();
+            _timeService.ResumeGame();
+            _audioService.SetChannelMute(AudioChannel.Master, false);
         }
 
         private void OnVideoOpen()
@@ -52,24 +52,8 @@ namespace Roguelike.Ads
         {
             IsVideoOpen = false;
             OnAdsClose();
-            
         }
 
-        private void OnInterstitialClose(bool wasShown)
-        {
-            OnAdsClose();
-        }
-
-        private void PauseGame() =>
-            _timeService.PauseGame();
-
-        private void ResumeGame() =>
-            _timeService.ResumeGame();
-
-        private void MuteAudio() =>
-            _audioService.SetChannelMute(AudioChannel.Master, true);
-
-        private void UnmuteAudio() =>
-            _audioService.SetChannelMute(AudioChannel.Master, false);
+        private void OnInterstitialClose(bool wasShown) => OnAdsClose();
     }
 }
