@@ -57,7 +57,7 @@ namespace Roguelike.UI.Windows
             {
                 _usedLabel.gameObject.SetActive(false);
                 _resurrectButton.interactable = true;
-                _resurrectButton.onClick.AddListener(Resurrect);
+                _resurrectButton.onClick.AddListener(OnResurrectButtonClick);
             }
         }
 
